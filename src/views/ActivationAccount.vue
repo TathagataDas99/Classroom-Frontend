@@ -2,8 +2,10 @@
   <div class="h-screen w-full">
     <!-- {{ uid }}
     {{ token }} -->
-    <section class="flex flex-col justify-center items-center h-full ">
-      <button @click="handelSubmit" class="bttn"><span class="md:text-xl lg:text-2xl ">Activate Your account</span></button>
+    <section class="flex h-full flex-col items-center justify-center">
+      <button @click="handelSubmit" class="bttn">
+        <span class="md:text-xl lg:text-2xl">Activate Your account</span>
+      </button>
     </section>
   </div>
 </template>
