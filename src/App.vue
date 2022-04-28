@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col justify-evenly">
+  <div class="flex flex-col">
     <nav class="flex flex-row flex-wrap items-center justify-evenly shadow-lg">
       <router-link class="slow-effect link" :to="{ name: 'home' }"
         >Home</router-link

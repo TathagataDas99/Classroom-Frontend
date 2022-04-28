@@ -7,12 +7,22 @@
 }
 
 .link {
-  @apply my-1 rounded-2xl border-b-2 border-transparent px-4 py-2 text-sm decoration-transparent outline-none hover:border-primary-dark hover:font-semibold  hover:text-primary-dark md:text-base lg:text-lg 2xl:text-xl;
+  @apply my-1 cursor-pointer rounded-2xl border-b-2 border-transparent px-4 py-2 text-sm decoration-transparent outline-none hover:border-primary-dark  hover:font-semibold hover:text-primary-dark md:text-base lg:text-lg 2xl:text-xl;
 }
 .bttn {
   @apply mx-2 my-1 rounded-md border-2 border-transparent bg-slate-300/70 px-4 py-2 backdrop-blur-md backdrop-filter hover:border-primary-dark hover:font-semibold hover:text-primary-dark;
 }
-.form{
-@apply flex flex-col justify-evenly items-center rounded-md shadow-lg shadow-gray-400/40 px-2 py-1 m-2 w-3/4 h-2/4  md:h-3/6 md:w-3/6 lg:h-4/5 lg:w-3/5  ;
+.form {
+  @apply m-2 flex h-auto w-4/5 flex-col items-center justify-evenly rounded-md px-2 py-1 shadow-lg shadow-gray-400/40  md:h-3/6 md:w-3/6 lg:h-4/5 lg:w-3/5 ;
+}
+.form-section {
+  @apply flex w-full flex-col flex-wrap items-stretch justify-evenly py-2 sm:flex-row md:space-x-1 ;
 }
 
+.label {
+  @apply mb-2 px-2 py-1 text-sm uppercase md:mb-1 md:self-center md:text-center md:text-lg lg:text-xl;
+}
+
+.input-box {
+  @apply mx-1 my-1  px-3 py-2  text-sm text-zinc-500 outline-none ring-2  ring-transparent focus:font-semibold focus:text-primary-dark focus:ring-primary-dark md:w-4/6 md:text-lg lg:text-lg lg:py-4 shadow-md rounded-lg ;
+}
