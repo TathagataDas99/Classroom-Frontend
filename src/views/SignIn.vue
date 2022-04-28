@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit.prevent="handelSingup">
+    <form @submit.prevent="handelSignup">
       <div>
         <label for="firstName">First name</label>
         <input type="text" v-model.trim="formValues.first_name" />
@@ -17,12 +17,7 @@
         <label for="password">password</label>
         <input type="password" v-model="formValues.password" />
       </div>
-      <button
-        class="inline-block cursor-pointer rounded-md bg-gray-800 px-4 py-3 text-center text-sm font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-gray-900"
-        type="submit"
-      >
-        Submit
-      </button>
+      <button class="bttn slow-effect" type="submit">Submit</button>
     </form>
   </div>
 </template>
@@ -31,6 +26,7 @@
 import axios from "axios";
 
 export default {
+  name: "SignIn",
   data() {
     return {
       formValues: {
@@ -42,7 +38,7 @@ export default {
     };
   },
   methods: {
-    async handelSingup() {
+    async handelSignup() {
       await axios.post(
         "https://lms-classroom-api.herokuapp.com/auth/users/",
         this.formValues

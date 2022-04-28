@@ -1,21 +1,13 @@
 <template>
-  <div
-    class="flex h-screen w-screen flex-col items-center justify-evenly scrollbar-hide"
-  >
-    <nav class="flex flex-row items-center justify-evenly">
-      <router-link
-        class="m-1 rounded-3xl px-3 py-2 text-lg font-bold hover:bg-red-500 hover:text-white"
-        :to="{ name: 'home' }"
+  <div class="flex flex-col justify-evenly">
+    <nav class="flex flex-row flex-wrap items-center justify-evenly shadow-lg">
+      <router-link class="slow-effect link" :to="{ name: 'home' }"
         >Home</router-link
       >
-      <router-link
-        class="m-1 rounded-3xl px-3 py-2 text-lg font-bold hover:bg-green-500 hover:text-white"
-        :to="{ name: 'about' }"
+      <router-link class="slow-effect link" :to="{ name: 'about' }"
         >About</router-link
       >
-      <router-link
-        class="m-1 rounded-3xl px-3 py-2 text-lg font-bold hover:bg-green-500 hover:text-white"
-        :to="{ name: 'singIn' }"
+      <router-link class="slow-effect link" :to="{ name: 'signIn' }"
         >Sign In</router-link
       >
     </nav>

@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import AboutView from "../views/AboutView.vue";
-import singIn from "../views/singIn.vue";
+import SignIn from "../views/SignIn.vue";
 import ActivationAccount from "../views/ActivationAccount.vue";
 
 const router = createRouter({
@@ -18,9 +18,9 @@ const router = createRouter({
       component: AboutView,
     },
     {
-      path: "/sing-in",
-      name: "singIn",
-      component: singIn,
+      path: "/sign-in",
+      name: "signIn",
+      component: SignIn,
     },
     {
       path: "/activate/:uid/:token",
