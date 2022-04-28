@@ -4,11 +4,11 @@
       <router-link class="slow-effect link" :to="{ name: 'home' }"
         >Home</router-link
       >
-      <router-link class="slow-effect link" :to="{ name: 'about' }"
-        >About</router-link
-      >
       <router-link class="slow-effect link" :to="{ name: 'signIn' }"
         >Sign In</router-link
+      >
+      <router-link class="slow-effect link" :to="{ name: 'about' }"
+        >About</router-link
       >
     </nav>
     <router-view />
