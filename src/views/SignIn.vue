@@ -3,19 +3,33 @@
     <form class="form" @submit.prevent="handelSignup">
       <div class="form-section">
         <label class="label" for="firstName">First name</label>
-        <input class="input-box" type="text" v-model.trim="formValues.first_name" />
+        <input
+          class="input-box"
+          type="text"
+          v-model.trim="formValues.first_name"
+        />
       </div>
       <div class="form-section">
         <label class="label" for="lastName">Last name</label>
-        <input class="input-box" type="text" v-model.trim="formValues.last_name" />
+        <input
+          class="input-box"
+          type="text"
+          v-model.trim="formValues.last_name"
+        />
       </div>
-      <div class="form-section ">
-        <label class="label" for="email"><span class="md:px-1 lg:px-2">Email</span></label>
-        <input  class="input-box  " type="email" v-model.trim="formValues.email" />
+      <div class="form-section">
+        <label class="label" for="email"
+          ><span class="md:px-1 lg:px-2">Email</span></label
+        >
+        <input class="input-box" type="email" v-model.trim="formValues.email" />
       </div>
       <div class="form-section">
         <label class="label" for="password">password</label>
-        <input class="input-box" type="password" v-model="formValues.password" />
+        <input
+          class="input-box"
+          type="password"
+          v-model="formValues.password"
+        />
       </div>
       <button class="bttn slow-effect" type="submit">Submit</button>
     </form>
