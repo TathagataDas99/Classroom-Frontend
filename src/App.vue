@@ -4,7 +4,7 @@
   >
     <nav class="flex flex-row items-center justify-evenly">
       <router-link
-        class="m-1 rounded-3xl px-3 py-2 text-lg font-bold hover:bg-green-500 hover:text-white"
+        class="m-1 rounded-3xl px-3 py-2 text-lg font-bold hover:bg-red-500 hover:text-white"
         :to="{ name: 'home' }"
         >Home</router-link
       >
