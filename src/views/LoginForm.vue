@@ -42,7 +42,7 @@ export default {
       const response = await axios.post("/login/jwt/create/", this.formValues);
       console.log(response);
       localStorage.setItem("token", response.data.access);
-      this.$router.push({ name: "HomeView" });
+      this.$router.push({ name: "DashBoard" });
     },
   },
 };
