@@ -53,10 +53,7 @@ export default {
   },
   methods: {
     async handelSignup() {
-      await axios.post(
-        "https://lms-classroom-api.herokuapp.com/auth/users/",
-        this.formValues
-      );
+      await axios.post("/auth/users/", this.formValues);
     },
   },
 };

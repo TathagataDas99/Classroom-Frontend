@@ -5,5 +5,12 @@
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+export default {
+  name: "HomeView",
+  async beforeMount() {
+    const response = await axios.get("/auth/users/me/");
+    console.log(response);
+  },
+};
 </script>

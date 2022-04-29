@@ -17,13 +17,10 @@ export default {
   props: ["uid", "token"],
   methods: {
     async handelSubmit() {
-      await axios.post(
-        "https://lms-classroom-api.herokuapp.com/auth/users/activation/",
-        {
-          uid: this.uid,
-          token: this.token,
-        }
-      );
+      await axios.post("/auth/users/activation/", {
+        uid: this.uid,
+        token: this.token,
+      });
     },
   },
 };
