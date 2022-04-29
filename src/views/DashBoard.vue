@@ -1,7 +1,7 @@
 <template>
   <div class="h-3/4 text-lg">
-    <h1 v-if="!user">Unauthorize</h1>
-    <h1 v-else>{{ user }}</h1>
+    <h1 v-if="!$store.state.user">Unauthorize</h1>
+    <h1 v-else>{{ $store.state.user }}</h1>
   </div>
 </template>
 
@@ -9,11 +9,6 @@
 import axios from "axios";
 export default {
   name: "DashBoard",
-  data() {
-    return {
-      user: null,
-    };
-  },
   async created() {
     try {
       const response = await axios.get("/auth/users/me/", {
@@ -22,7 +17,8 @@ export default {
         },
       });
       console.log(response);
-      this.user = response.data.first_name + " " + response.data.last_name;
+      this.$store.state.user =
+        response.data.first_name + " " + response.data.last_name;
     } catch (e) {
       console.log(e.message);
     }
