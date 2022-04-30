@@ -51,6 +51,13 @@ export default {
       },
     };
   },
+  created() {
+    if (localStorage.getItem("token")) {
+      this.$router.push("/dashboard");
+    } else {
+      this.$router.push("/sign-in");
+    }
+  },
   methods: {
     async handelSignup() {
       await axios.post("/auth/users/", this.formValues);

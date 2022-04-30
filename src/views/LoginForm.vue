@@ -29,6 +29,13 @@ import axios from "axios";
 
 export default {
   name: "LoginForm",
+  created() {
+    if (localStorage.getItem("token")) {
+      this.$router.push("/dashboard");
+    } else {
+      this.$router.push("/log-in");
+    }
+  },
   data() {
     return {
       formValues: {

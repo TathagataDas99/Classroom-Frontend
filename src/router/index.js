@@ -5,8 +5,6 @@ import ActivationAccount from "../views/ActivationAccount.vue";
 import LoginForm from "../views/LoginForm.vue";
 import DashBoard from "../views/DashBoard.vue";
 
-import store from "../store";
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -35,12 +33,6 @@ const router = createRouter({
       path: "/dashboard",
       name: "DashBoard",
       component: DashBoard,
-      // beforeEnter: (next) => {
-      //   if (this.$store.state.user === null) next();
-      //   else {
-      //     next("/log-in");
-      //   }
-      // },
     },
   ],
 });
