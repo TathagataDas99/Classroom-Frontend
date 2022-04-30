@@ -8,6 +8,7 @@ export default defineConfig({
   plugins: [vue()],
   server: {
     https: true,
+    open: "/",
   },
   resolve: {
     alias: {
