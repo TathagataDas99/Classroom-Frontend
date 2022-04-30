@@ -1,7 +1,6 @@
 <template>
   <div class="h-screen text-lg">
-    <h1 v-if="!$store.state.user">{{ msg }}</h1>
-    <h1 v-else>{{ $store.state.user }}</h1>
+    <h1>{{ $store.state.user }}</h1>
   </div>
 </template>
 
@@ -25,7 +24,7 @@ export default {
       this.$store.state.user =
         response.data.first_name + " " + response.data.last_name;
     } catch (e) {
-      this.msg = e.message;
+      this.$router.push({ name: "Home" });
     }
   },
 };

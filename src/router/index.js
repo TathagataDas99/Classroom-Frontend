@@ -5,6 +5,8 @@ import ActivationAccount from "../views/ActivationAccount.vue";
 import LoginForm from "../views/LoginForm.vue";
 import DashBoard from "../views/DashBoard.vue";
 
+import store from "../store";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -33,14 +35,11 @@ const router = createRouter({
       path: "/dashboard",
       name: "DashBoard",
       component: DashBoard,
-      // // beforeEnter: (to, from, next) => {
-      // //   if ($store.state.user === null)
-      // //     next({ name: "Login" });
-      // //   // if the user is not authenticated, `next` is called twice
-      // //   else{
-
-      // //     next();
-      // //   }
+      // beforeEnter: (next) => {
+      //   if (this.$store.state.user === null) next();
+      //   else {
+      //     next("/log-in");
+      //   }
       // },
     },
   ],
