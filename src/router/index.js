@@ -10,12 +10,12 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "HomeView",
+      name: "Home",
       component: HomeView,
     },
     {
       path: "/sign-in",
-      name: "SignIn",
+      name: "Signin",
       component: SignIn,
     },
     {
@@ -26,7 +26,7 @@ const router = createRouter({
     },
     {
       path: "/log-in",
-      name: "LoginForm",
+      name: "Login",
       component: LoginForm,
     },
     {

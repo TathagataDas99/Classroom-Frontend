@@ -4,7 +4,7 @@
       <router-link
         @click="handelLogout"
         class="slow-effect link"
-        :to="{ name: 'LoginForm' }"
+        :to="{ name: 'Login' }"
         >Log-out</router-link
       >
     </nav>
@@ -12,15 +12,11 @@
   </div>
   <div v-else class="flex flex-col">
     <nav class="flex flex-row flex-wrap items-center justify-evenly shadow-lg">
-      <router-link class="slow-effect link" :to="{ name: 'HomeView' }"
-        >Home</router-link
-      >
-      <router-link class="slow-effect link" :to="{ name: 'SignIn' }"
-        >Sign In</router-link
-      >
-      <router-link class="slow-effect link" :to="{ name: 'LoginForm' }"
-        >Log In</router-link
-      >
+      <template v-for="route in routes" :key="route.name">
+        <router-link class="slow-effect link" :to="route">{{
+          route.name
+        }}</router-link>
+      </template>
     </nav>
     <router-view />
   </div>
@@ -28,6 +24,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      routes: [{ name: "Home" }, { name: "Signin" }, { name: "Login" }],
+    };
+  },
   methods: {
     handelLogout() {
       localStorage.removeItem("token");
