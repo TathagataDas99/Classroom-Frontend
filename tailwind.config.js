@@ -8,6 +8,10 @@ module.exports = {
           dark: "#00BFA6",
           light: "#3af0d1",
         },
+        danger: {
+          dark: "#ba293a",
+          light: "#f2384e",
+        },
       },
     },
   },

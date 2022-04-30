@@ -1,17 +1,17 @@
 <template>
   <div v-if="$store.state.user" class="flex flex-col">
-    <nav class="flex flex-row flex-wrap items-center justify-evenly shadow-lg">
+    <nav class="navbar">
       <router-link
         @click="handelLogout"
-        class="slow-effect link"
+        class="slow-effect link-danger"
         :to="{ name: 'Login' }"
-        >Log-out</router-link
+        >Logout</router-link
       >
     </nav>
     <router-view />
   </div>
   <div v-else class="flex flex-col">
-    <nav class="flex flex-row flex-wrap items-center justify-evenly shadow-lg">
+    <nav class="navbar">
       <template v-for="route in routes" :key="route.name">
         <router-link class="slow-effect link" :to="route">{{
           route.name
@@ -33,6 +33,7 @@ export default {
     handelLogout() {
       localStorage.removeItem("token");
       this.$store.state.user = null;
+      this.$router.push({ name: "Home" });
     },
   },
 };
