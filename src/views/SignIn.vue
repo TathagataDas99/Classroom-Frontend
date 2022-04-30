@@ -1,6 +1,6 @@
 <template>
   <div class="flex h-screen flex-col items-center justify-evenly">
-    <form class="form" @submit.prevent="handelSignup">
+    <form class="form" @submit.prevent="handelSignup" autocomplete="off">
       <div class="form-section">
         <label class="label" for="firstName">First name</label>
         <input
