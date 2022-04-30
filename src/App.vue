@@ -1,5 +1,8 @@
 <template>
-  <NavBar />
+  <div>
+    <NavBar />
+    <router-view class="relative" />
+  </div>
 </template>
 
 <script>

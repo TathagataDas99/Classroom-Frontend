@@ -9,7 +9,7 @@ module.exports = {
           light: "#3af0d1",
         },
         danger: {
-          dark: "#ba293a",
+          dark: "#F50057",
           light: "#f2384e",
         },
       },

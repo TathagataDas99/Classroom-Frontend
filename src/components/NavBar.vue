@@ -1,5 +1,5 @@
 <template>
-  <div v-if="$store.state.user" class="flex flex-col">
+  <div v-if="$store.state.user" class="sticky top-0 z-20 flex flex-col">
     <nav class="navbar">
       <router-link
         @click="handelLogout"
@@ -8,9 +8,9 @@
         >Logout</router-link
       >
     </nav>
-    <router-view />
+    <!-- <router-view /> -->
   </div>
-  <div v-else class="flex flex-col">
+  <div v-else class="sticky top-0 z-20 flex flex-col">
     <nav class="navbar">
       <template v-for="route in routes" :key="route.name">
         <router-link class="slow-effect link" :to="route">{{
@@ -18,7 +18,7 @@
         }}</router-link>
       </template>
     </nav>
-    <router-view />
+    <!-- <router-view /> -->
   </div>
 </template>
 
