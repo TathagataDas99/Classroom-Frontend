@@ -6,7 +6,7 @@
       <h1 class="text-xl font-bold sm:text-4xl">Welcome to</h1>
       <h1 class="text-2xl font-bold sm:text-5xl">
         <span class="text-primary-dark">Classroom</span>
-        <span class="text-danger-dark">LMS</span>
+        <span class="px-3 text-danger-dark">LMS</span>
       </h1>
     </header>
     <img
