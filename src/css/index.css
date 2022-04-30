@@ -6,9 +6,6 @@
   @apply transition duration-200 ease-linear;
 }
 
-.h-screen-custom {
-  height: calc(90vh-100px);
-}
 .navbar {
   @apply sticky top-0 z-20 flex flex-row flex-wrap items-center justify-end rounded-b-lg bg-gray-300/30 shadow-lg backdrop-blur-sm backdrop-filter;
 }

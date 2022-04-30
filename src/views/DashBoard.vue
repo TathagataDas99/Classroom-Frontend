@@ -1,5 +1,5 @@
 <template>
-  <div class="h-3/4 text-lg">
+  <div class="h-screen text-lg">
     <h1 v-if="!$store.state.user">Unauthorize</h1>
     <h1 v-else>{{ $store.state.user }}</h1>
   </div>
