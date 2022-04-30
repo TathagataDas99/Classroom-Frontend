@@ -33,6 +33,15 @@ const router = createRouter({
       path: "/dashboard",
       name: "DashBoard",
       component: DashBoard,
+      // // beforeEnter: (to, from, next) => {
+      // //   if ($store.state.user === null)
+      // //     next({ name: "Login" });
+      // //   // if the user is not authenticated, `next` is called twice
+      // //   else{
+
+      // //     next();
+      // //   }
+      // },
     },
   ],
 });

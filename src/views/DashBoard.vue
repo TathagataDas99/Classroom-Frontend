@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen text-lg">
-    <h1 v-if="!$store.state.user">Unauthorize</h1>
+    <h1 v-if="!$store.state.user">{{ msg }}</h1>
     <h1 v-else>{{ $store.state.user }}</h1>
   </div>
 </template>
@@ -9,6 +9,11 @@
 import axios from "axios";
 export default {
   name: "DashBoard",
+  data() {
+    return {
+      msg: "",
+    };
+  },
   async created() {
     try {
       const response = await axios.get("/auth/users/me/", {
@@ -20,7 +25,7 @@ export default {
       this.$store.state.user =
         response.data.first_name + " " + response.data.last_name;
     } catch (e) {
-      console.log(e.message);
+      this.msg = e.message;
     }
   },
 };
