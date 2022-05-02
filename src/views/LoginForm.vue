@@ -19,6 +19,7 @@
           v-model="formValues.password"
         />
       </div>
+      <div class="text-pink-500" v-if="error">{{ error }}</div>
       <button type="submit" class="bttn">Submit</button>
     </form>
   </div>
@@ -42,14 +43,22 @@ export default {
         email: "",
         password: "",
       },
+      error: "",
     };
   },
   methods: {
     async handelLogin() {
-      const response = await axios.post("/login/jwt/create/", this.formValues);
-      console.log(response);
-      localStorage.setItem("token", response.data.access);
-      this.$router.push({ name: "DashBoard" });
+      try {
+        const response = await axios.post(
+          "/login/jwt/create/",
+          this.formValues
+        );
+        console.log(response);
+        localStorage.setItem("token", response.data.access);
+        this.$router.push({ name: "DashBoard" });
+      } catch (e) {
+        this.error = e.response.data.detail;
+      }
     },
   },
 };
