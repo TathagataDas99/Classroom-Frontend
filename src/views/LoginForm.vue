@@ -19,7 +19,9 @@
           v-model="formValues.password"
         />
       </div>
-      <div class="text-pink-500" v-if="error">{{ error }}</div>
+      <div class="text-2xl font-bold text-pink-500" v-if="error">
+        {{ error }}
+      </div>
       <button type="submit" class="bttn">Submit</button>
     </form>
   </div>
