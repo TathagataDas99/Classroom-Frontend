@@ -1,5 +1,8 @@
 <template>
   <div class="flex h-screen flex-col items-center justify-evenly">
+    <div v-if="loder">
+      <LoderView />
+    </div>
     <form class="form" @submit.prevent="handelSignup" autocomplete="off">
       <div class="form-section">
         <label class="label" for="firstName">First name</label>
@@ -43,9 +46,13 @@
 
 <script>
 import axios from "axios";
+import LoderView from "../components/LoderView.vue";
 
 export default {
   name: "SignIn",
+  components: {
+    LoderView,
+  },
   data() {
     return {
       error: [],
@@ -55,6 +62,7 @@ export default {
         email: "",
         password: "",
       },
+      loder: false,
     };
   },
   created() {
@@ -67,10 +75,12 @@ export default {
   methods: {
     async handelSignup() {
       try {
+        this.loder = true;
         await axios.post("/auth/users/", this.formValues);
       } catch (e) {
         this.error = Object.values(e.response.data)[0];
       }
+      this.loder = false;
     },
   },
 };
