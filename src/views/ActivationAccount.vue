@@ -17,10 +17,15 @@ export default {
   props: ["uid", "token"],
   methods: {
     async handelSubmit() {
-      await axios.post("/auth/users/activation/", {
-        uid: this.uid,
-        token: this.token,
-      });
+      try {
+        await axios.post("/auth/users/activation/", {
+          uid: this.uid,
+          token: this.token,
+        });
+        this.$router.push("/log-in");
+      } catch (e) {
+        console.log(e.message);
+      }
     },
   },
 };
