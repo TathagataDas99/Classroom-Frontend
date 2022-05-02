@@ -31,6 +31,11 @@
           v-model="formValues.password"
         />
       </div>
+      <div class="text-2xl font-bold text-pink-500" v-if="error">
+        <div v-for="e in error" :key="e">
+          {{ e }}
+        </div>
+      </div>
       <button class="bttn slow-effect" type="submit">Submit</button>
     </form>
   </div>
@@ -43,6 +48,7 @@ export default {
   name: "SignIn",
   data() {
     return {
+      error: [],
       formValues: {
         first_name: "",
         last_name: "",
@@ -60,7 +66,11 @@ export default {
   },
   methods: {
     async handelSignup() {
-      await axios.post("/auth/users/", this.formValues);
+      try {
+        await axios.post("/auth/users/", this.formValues);
+      } catch (e) {
+        this.error = Object.values(e.response.data)[0];
+      }
     },
   },
 };
