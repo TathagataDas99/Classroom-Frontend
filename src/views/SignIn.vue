@@ -94,7 +94,6 @@ export default {
       }
       this.loder = false;
       this.isSubmitted = true;
-      this.mailto += this.formValues.email;
     },
   },
 };
