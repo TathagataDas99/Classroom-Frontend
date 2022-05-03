@@ -1,7 +1,7 @@
 <template>
   <div class="flex h-screen flex-col items-center justify-evenly">
-    <div v-if="loder">
-      <LoderView />
+    <div v-if="loader">
+      <LoaderView />
     </div>
     <form class="form" @submit.prevent="handelLogin">
       <div class="form-section">
@@ -32,12 +32,12 @@
 
 <script>
 import axios from "axios";
-import LoderView from "../components/LoderView.vue";
+import LoaderView from "../components/LoaderView.vue";
 
 export default {
   name: "LoginForm",
   components: {
-    LoderView,
+    LoaderView,
   },
   created() {
     if (localStorage.getItem("token")) {
@@ -53,12 +53,12 @@ export default {
         password: "",
       },
       error: "",
-      loder: false,
+      loader: false,
     };
   },
   methods: {
     async handelLogin() {
-      this.loder = true;
+      this.loader = true;
       try {
         const response = await axios.post(
           "/login/jwt/create/",
@@ -70,7 +70,7 @@ export default {
       } catch (e) {
         this.error = e.response.data.detail;
       }
-      this.loder = false;
+      this.loader = false;
     },
   },
 };

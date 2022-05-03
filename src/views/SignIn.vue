@@ -1,7 +1,7 @@
 <template>
   <div class="flex h-screen flex-col items-center justify-evenly">
-    <div v-if="loder">
-      <LoderView />
+    <div v-if="loader">
+      <LoaderView />
     </div>
     <form class="form" @submit.prevent="handelSignup" autocomplete="off">
       <div class="form-section">
@@ -56,12 +56,12 @@
 
 <script>
 import axios from "axios";
-import LoderView from "../components/LoderView.vue";
+import LoaderView from "../components/LoaderView.vue";
 
 export default {
   name: "SignIn",
   components: {
-    LoderView,
+    LoaderView,
   },
   data() {
     return {
@@ -73,7 +73,7 @@ export default {
         password: "",
       },
       mailto: "mailto : ",
-      loder: false,
+      loader: false,
       isSubmitted: false,
     };
   },
@@ -87,13 +87,14 @@ export default {
   methods: {
     async handelSignup() {
       this.error = [];
+      this.loader = true;
       try {
-        this.loder = true;
-        await axios.post("/auth/users/", this.formValues);
+        const response = await axios.post("/auth/users/", this.formValues);
+        console.log(response);
       } catch (e) {
         this.error = Object.values(e.response.data)[0];
       }
-      this.loder = false;
+      this.loader = false;
       this.isSubmitted = true;
     },
   },
