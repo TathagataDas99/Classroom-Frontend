@@ -27,11 +27,12 @@ export default {
 
 <style scoped>
 .loading-box {
+  color: rgb(34, 193, 156);
   position: fixed;
   top: 30%;
   width: 25%;
   margin: auto;
-  background: #ffffff;
+  background: #2d2d2d;
   box-shadow: 0px 0px 9px -2px #000;
   z-index: 999;
   left: 0px;
@@ -54,8 +55,8 @@ export default {
   content: " ";
   display: block;
   position: absolute;
-  width: 7px;
-  height: 7px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
   background: rgb(34, 193, 156);
   margin: -4px 0 0 -4px;
