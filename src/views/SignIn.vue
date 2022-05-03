@@ -39,7 +39,17 @@
           {{ e }}
         </div>
       </div>
-      <button class="bttn slow-effect" type="submit">Submit</button>
+      <div
+        class="flex w-full flex-col flex-wrap items-center justify-evenly md:flex-row"
+      >
+        <button class="bttn slow-effect" type="submit">Submit</button>
+        <a
+          v-show="!loader & isSubmitted"
+          class="bttn slow-effect text-center"
+          :href="`mailto:${formValues.email}`"
+          >Open Mail</a
+        >
+      </div>
     </form>
   </div>
 </template>
@@ -62,7 +72,9 @@ export default {
         email: "",
         password: "",
       },
+      mailto: "mailto : ",
       loder: false,
+      isSubmitted: false,
     };
   },
   created() {
@@ -81,6 +93,8 @@ export default {
         this.error = Object.values(e.response.data)[0];
       }
       this.loder = false;
+      this.isSubmitted = true;
+      this.mailto += this.formValues.email;
     },
   },
 };

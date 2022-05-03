@@ -38,6 +38,7 @@ export default {
   right: 0px;
   text-align: center;
   padding: 10px;
+  border-radius: 25px;
 }
 .lds-roller {
   display: inline-block;
@@ -56,7 +57,7 @@ export default {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #000;
+  background: rgb(34, 193, 156);
   margin: -4px 0 0 -4px;
 }
 .lds-roller div:nth-child(1) {
