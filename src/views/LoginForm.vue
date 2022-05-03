@@ -59,6 +59,7 @@ export default {
   methods: {
     async handelLogin() {
       this.loader = true;
+      this.error = "";
       try {
         const response = await axios.post(
           "/login/jwt/create/",
