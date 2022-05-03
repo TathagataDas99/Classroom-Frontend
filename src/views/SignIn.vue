@@ -44,7 +44,7 @@
       >
         <button class="bttn slow-effect" type="submit">Submit</button>
         <a
-          v-show="!loader & isSubmitted"
+          v-show="!loader & isSubmitted & (error.length === 0)"
           class="bttn slow-effect text-center"
           :href="`mailto:${formValues.email}`"
           >Open Mail</a
@@ -86,6 +86,7 @@ export default {
   },
   methods: {
     async handelSignup() {
+      this.error = [];
       try {
         this.loder = true;
         await axios.post("/auth/users/", this.formValues);
