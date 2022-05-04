@@ -8,19 +8,31 @@
         <label class="label">Password</label>
         <input
           required
-          type="password"
+          :type="typePassword"
           class="input-box"
           v-model="formValues.password"
         />
       </div>
       <div class="form-section">
         <label class="label">Confirm Password</label>
+        <!-- <div class="input-box"> -->
         <input
           required
-          type="password"
+          :type="typePassword"
           class="input-box"
           v-model="formValues.confirmPassword"
         />
+        <!-- </div> -->
+        <EyeOffIcon
+          v-if="!isEyeOpen"
+          @click="openEye"
+          class="h-5 w-5 self-center text-gray-600"
+        ></EyeOffIcon>
+        <EyeIcon
+          class="h-5 w-5 self-center text-primary-light"
+          v-else
+          @click="openEye"
+        ></EyeIcon>
       </div>
       <div class="text-2xl font-bold text-pink-500" v-if="error">
         <div v-for="e in error" :key="e">
@@ -35,12 +47,15 @@
 <script>
 import axios from "axios";
 import LoaderView from "../components/LoaderView.vue";
+import { EyeIcon, EyeOffIcon } from "@heroicons/vue/outline";
 
 export default {
   name: "ActivationAccount",
   props: ["uid", "token"],
   components: {
     LoaderView,
+    EyeIcon,
+    EyeOffIcon,
   },
   created() {
     if (localStorage.getItem("token")) {
@@ -57,9 +72,19 @@ export default {
         password: "",
         confirmPassword: "",
       },
+      typePassword: "password",
+      isEyeOpen: false,
     };
   },
   methods: {
+    openEye() {
+      this.isEyeOpen = !this.isEyeOpen;
+      if (this.isEyeOpen) {
+        this.typePassword = "text";
+      } else {
+        this.typePassword = "password";
+      }
+    },
     async handelSubmit() {
       this.loader = true;
       this.error = [];
