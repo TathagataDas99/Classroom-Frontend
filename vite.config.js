@@ -7,7 +7,7 @@ import vue from "@vitejs/plugin-vue";
 export default defineConfig({
   plugins: [vue()],
   server: {
-    https: true,
+    // https: true, //#TODO: uncomment in production
     open: "/",
   },
   resolve: {
