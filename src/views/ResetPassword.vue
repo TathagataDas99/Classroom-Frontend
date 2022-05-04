@@ -26,10 +26,10 @@
         <EyeOffIcon
           v-if="!isEyeOpen"
           @click="openEye"
-          class="h-5 w-5 self-center text-gray-600"
+          class="h-5 w-5 self-center text-primary-dark"
         ></EyeOffIcon>
         <EyeIcon
-          class="h-5 w-5 self-center text-primary-light"
+          class="h-5 w-5 self-center text-danger-dark"
           v-else
           @click="openEye"
         ></EyeIcon>
