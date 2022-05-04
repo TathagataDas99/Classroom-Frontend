@@ -35,7 +35,7 @@
 
 <script>
 import axios from "axios";
-import LoaderView from "../components/LoaderView.vue";
+import LoaderView from "../../components/LoaderView.vue";
 
 export default {
   name: "LoginForm",

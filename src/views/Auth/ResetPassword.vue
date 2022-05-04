@@ -46,7 +46,7 @@
 
 <script>
 import axios from "axios";
-import LoaderView from "../components/LoaderView.vue";
+import LoaderView from "../../components/LoaderView.vue";
 import { EyeIcon, EyeOffIcon } from "@heroicons/vue/outline";
 
 export default {

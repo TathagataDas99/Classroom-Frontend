@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import SignIn from "../views/SignIn.vue";
-import ActivationAccount from "../views/ActivationAccount.vue";
-import LoginForm from "../views/LoginForm.vue";
+import SignIn from "../views/Auth/SignIn.vue";
+import ActivationAccount from "../views/Auth/ActivationAccount.vue";
+import LoginForm from "../views/Auth/LoginForm.vue";
 import DashBoard from "../views/DashBoard.vue";
-import ForgotPassword from "../views/ForgotPassword.vue";
-import ResetPassword from "../views/ResetPassword.vue";
+import ForgotPassword from "../views/Auth/ForgotPassword.vue";
+import ResetPassword from "../views/Auth/ResetPassword.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
