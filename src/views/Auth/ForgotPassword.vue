@@ -17,6 +17,12 @@
         {{ error }}
       </div>
       <button type="submit" class="bttn">Submit</button>
+      <a
+        v-show="!loader & isSubmitted & (error.length === 0)"
+        class="bttn slow-effect text-center"
+        :href="`mailto:${formValues.email}`"
+        >Open Mail</a
+      >
     </form>
   </div>
 </template>
@@ -60,6 +66,7 @@ export default {
         this.error = e.response.data.detail;
       }
       this.loader = false;
+      this.isSubmitted = true;
     },
   },
 };
