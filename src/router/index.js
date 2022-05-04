@@ -4,6 +4,8 @@ import SignIn from "../views/SignIn.vue";
 import ActivationAccount from "../views/ActivationAccount.vue";
 import LoginForm from "../views/LoginForm.vue";
 import DashBoard from "../views/DashBoard.vue";
+import ForgotPassword from "../views/ForgotPassword.vue";
+import ResetPassword from "../views/ResetPassword.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +30,17 @@ const router = createRouter({
       path: "/log-in",
       name: "Login",
       component: LoginForm,
+    },
+    {
+      path: "/forgot-password",
+      name: "ForgotPassword",
+      component: ForgotPassword,
+    },
+    {
+      path: "/reset_password_confirm/:uid/:token",
+      name: "ResetPassword",
+      component: ResetPassword,
+      props: true,
     },
     {
       path: "/dashboard",

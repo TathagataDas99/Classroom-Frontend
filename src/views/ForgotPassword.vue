@@ -3,7 +3,7 @@
     <div v-if="loader">
       <LoaderView />
     </div>
-    <form class="form" @submit.prevent="handelLogin">
+    <form class="form" @submit.prevent="handelSubmit">
       <div class="form-section">
         <label class="label">Email</label>
         <input
@@ -13,22 +13,10 @@
           v-model="formValues.email"
         />
       </div>
-      <div class="form-section">
-        <label class="label">Password</label>
-        <input
-          required
-          type="password"
-          class="input-box"
-          v-model="formValues.password"
-        />
-      </div>
       <div class="text-2xl font-bold text-pink-500" v-if="error">
         {{ error }}
       </div>
       <button type="submit" class="bttn">Submit</button>
-      <router-link class="text-green-700" to="/forgot-password">
-        Forgot password?</router-link
-      >
     </form>
   </div>
 </template>
@@ -38,7 +26,7 @@ import axios from "axios";
 import LoaderView from "../components/LoaderView.vue";
 
 export default {
-  name: "LoginForm",
+  name: "ForgotPassword",
   components: {
     LoaderView,
   },
@@ -46,31 +34,28 @@ export default {
     if (localStorage.getItem("token")) {
       this.$router.push("/dashboard");
     } else {
-      this.$router.push("/log-in");
+      this.$router.push("/forgot-password");
     }
   },
   data() {
     return {
       formValues: {
         email: "",
-        password: "",
       },
       error: "",
       loader: false,
     };
   },
   methods: {
-    async handelLogin() {
+    async handelSubmit() {
       this.loader = true;
       this.error = "";
       try {
         const response = await axios.post(
-          "/login/jwt/create/",
+          "/auth/users/reset_password/",
           this.formValues
         );
         console.log(response);
-        localStorage.setItem("token", response.data.access);
-        this.$router.push({ name: "DashBoard" });
       } catch (e) {
         this.error = e.response.data.detail;
       }
@@ -79,3 +64,5 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped></style>
