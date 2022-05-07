@@ -24,7 +24,7 @@ export default {
       this.$store.state.user =
         response.data.first_name + " " + response.data.last_name;
     } catch (e) {
-      this.$router.push({ name: "Home" });
+      this.$router.replace({ name: "Home" });
     }
   },
 };
