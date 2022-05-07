@@ -8,20 +8,20 @@ import ForgotPassword from "../views/Auth/ForgotPassword.vue";
 import ResetPassword from "../views/Auth/ResetPassword.vue";
 import store from "../store/";
 
-const isAuth = (to, from, next)=>{
+const isAuth = (to, from, next) => {
   console.log(store.state.isAuth);
-  if(!store.state.isAuth){
-    next("/log-in")
-  }else{
+  if (!store.state.isAuth) {
+    next("/log-in");
+  } else {
     next();
   }
 };
 const unAuth = (to, from, next) => {
   console.log(store.state.isAuth);
-  if(store.state.isAuth === null || store.state.isAuth === false){
+  if (store.state.isAuth === null || store.state.isAuth === false) {
     next();
-  }else{
-    next("/dashboard")
+  } else {
+    next("/dashboard");
   }
 };
 const router = createRouter({
@@ -31,45 +31,45 @@ const router = createRouter({
       path: "/",
       name: "Home",
       component: HomeView,
-      beforeEnter: unAuth
+      beforeEnter: unAuth,
     },
     {
       path: "/sign-in",
       name: "Signin",
       component: SignIn,
-      beforeEnter: unAuth
+      beforeEnter: unAuth,
     },
     {
       path: "/activate/:uid/:token",
       name: "ActivationAccount",
       component: ActivationAccount,
       props: true,
-      beforeEnter: unAuth
+      beforeEnter: unAuth,
     },
     {
       path: "/log-in",
       name: "Login",
       component: LoginForm,
-      beforeEnter: unAuth
+      beforeEnter: unAuth,
     },
     {
       path: "/forgot-password",
       name: "ForgotPassword",
       component: ForgotPassword,
-      beforeEnter: unAuth
+      beforeEnter: unAuth,
     },
     {
       path: "/reset_password_confirm/:uid/:token",
       name: "ResetPassword",
       component: ResetPassword,
       props: true,
-      beforeEnter: unAuth
+      beforeEnter: unAuth,
     },
     {
       path: "/dashboard",
       name: "DashBoard",
       component: DashBoard,
-      beforeEnter: isAuth
+      beforeEnter: isAuth,
     },
   ],
 });

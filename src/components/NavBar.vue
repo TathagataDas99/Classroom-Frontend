@@ -34,6 +34,7 @@ export default {
       localStorage.removeItem("token");
       this.$store.state.user = null;
       localStorage.removeItem("Auth");
+      this.$store.state.isAuth = false;
       this.$router.replace({ name: "Home" });
     },
   },
