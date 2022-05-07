@@ -36,13 +36,13 @@ export default {
   components: {
     LoaderView,
   },
-  created() {
-    if (localStorage.getItem("token")) {
-      this.$router.push("/dashboard");
-    } else {
-      this.$router.push("/forgot-password");
-    }
-  },
+  // created() {
+  //   if (localStorage.getItem("token")) {
+  //     this.$router.push("/dashboard");
+  //   } else {
+  //     this.$router.push("/forgot-password");
+  //   }
+  // },
   data() {
     return {
       formValues: {

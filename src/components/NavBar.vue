@@ -1,5 +1,5 @@
 <template>
-  <div v-if="$store.state.user" class="sticky top-0 z-20 flex flex-col">
+  <div v-if="$store.state.isAuth" class="sticky top-0 z-20 flex flex-col">
     <nav class="navbar">
       <router-link
         @click="handelLogout"
@@ -33,6 +33,7 @@ export default {
     handelLogout() {
       localStorage.removeItem("token");
       this.$store.state.user = null;
+      localStorage.removeItem("Auth");
       this.$router.replace({ name: "Home" });
     },
   },

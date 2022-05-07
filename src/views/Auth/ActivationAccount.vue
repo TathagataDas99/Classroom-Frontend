@@ -32,13 +32,13 @@ export default {
   components: {
     LoaderView,
   },
-  created() {
-    if (localStorage.getItem("token")) {
-      this.$router.push("/dashboard");
-    } else {
-      this.$router.push({ name: "ActivationAccount" });
-    }
-  },
+  // created() {
+  //   if (localStorage.getItem("token")) {
+  //     this.$router.push("/dashboard");
+  //   } else {
+  //     this.$router.push({ name: "ActivationAccount" });
+  //   }
+  // },
   data() {
     return {
       loader: false,

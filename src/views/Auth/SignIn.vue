@@ -77,13 +77,13 @@ export default {
       isSubmitted: false,
     };
   },
-  created() {
-    if (localStorage.getItem("token")) {
-      this.$router.push("/dashboard");
-    } else {
-      this.$router.push("/sign-in");
-    }
-  },
+  // created() {
+  //   if (localStorage.getItem("token")) {
+  //     this.$router.push("/dashboard");
+  //   } else {
+  //     this.$router.push("/sign-in");
+  //   }
+  // },
   methods: {
     async handelSignup() {
       this.error = [];

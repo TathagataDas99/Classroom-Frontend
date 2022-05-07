@@ -57,13 +57,13 @@ export default {
     EyeIcon,
     EyeOffIcon,
   },
-  created() {
-    if (localStorage.getItem("token")) {
-      this.$router.push("/dashboard");
-    } else {
-      this.$router.push({ name: "ResetPassword" });
-    }
-  },
+  // created() {
+  //   if (localStorage.getItem("token")) {
+  //     this.$router.push("/dashboard");
+  //   } else {
+  //     this.$router.push({ name: "ResetPassword" });
+  //   }
+  // },
   data() {
     return {
       loader: false,

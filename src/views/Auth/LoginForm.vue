@@ -42,13 +42,13 @@ export default {
   components: {
     LoaderView,
   },
-  created() {
-    if (localStorage.getItem("token")) {
-      this.$router.push("/dashboard");
-    } else {
-      this.$router.push("/log-in");
-    }
-  },
+  // created() {
+  //   if (localStorage.getItem("token")) {
+  //     this.$router.push("/dashboard");
+  //   } else {
+  //     this.$router.push("/log-in");
+  //   }
+  // },
   data() {
     return {
       formValues: {
@@ -70,6 +70,8 @@ export default {
         );
         console.log(response);
         localStorage.setItem("token", response.data.access);
+        localStorage.setItem("Auth", true);
+        this.$store.state.isAuth = true;
         this.$router.push({ name: "DashBoard" });
       } catch (e) {
         this.error = e.response.data.detail;
