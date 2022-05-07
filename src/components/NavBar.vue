@@ -33,7 +33,7 @@ export default {
     handelLogout() {
       localStorage.removeItem("token");
       this.$store.state.user = null;
-      this.$router.push({ name: "Home" });
+      this.$router.replace({ name: "Home" });
     },
   },
 };
