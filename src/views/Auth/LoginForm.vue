@@ -88,8 +88,13 @@ export default {
           userTypeId: Object.values(userTypeResponse.data)[1],
         };
         // console.log(user);
-        this.$store.state.user = user;//TODO: check the user type
-        this.$router.push({ name: "StudentDashboard"});
+        //this.$store.state.user = user;
+        if (user.userType === "student") {
+          this.$router.push({ name: "StudentDashboard" });
+        }
+        // else{
+
+        // }
         // console.log(this.$store.state.user);
       } catch (e) {
         this.error = e.response.data.detail;
