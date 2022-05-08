@@ -36,3 +36,13 @@
 .input-box {
   @apply slow-effect mx-1  my-1 rounded-lg  px-3 py-2 text-sm text-zinc-500  shadow-md outline-none ring-2 ring-transparent focus:font-semibold focus:text-primary-dark focus:ring-primary-dark md:w-4/6 md:text-lg lg:py-4 lg:text-lg;
 }
+
+.btn {
+  @apply btn-outline mx-2 w-full border-0 bg-primary-dark font-medium text-white outline-none hover:bg-primary-light;
+}
+.sem-badge {
+  @apply slow-effect absolute top-3 right-3 z-20 h-7 w-7 text-primary-light hover:animate-bounce;
+}
+.card {
+  @apply slow-effect relative flex h-96 w-96 flex-col items-center justify-evenly bg-base-100 px-10 shadow-xl hover:scale-105 md:h-64 md:w-64;
+}

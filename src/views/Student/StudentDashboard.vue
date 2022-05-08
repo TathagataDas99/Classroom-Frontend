@@ -6,21 +6,16 @@
     <h1>{{ userProfile }}</h1>
     <br />
     <section
-      class="flex flex-col flex-wrap items-center justify-evenly md:flex-row"
+      class="flex flex-col flex-wrap items-center justify-evenly space-y-2 md:flex-row md:space-y-4 md:space-x-2 lg:space-y-0"
     >
-      <div
-        class="card relative flex h-44 w-44 flex-col items-center justify-evenly bg-base-100 shadow-xl"
-        v-for="semCard in semCards"
-        :key="semCard.id"
-      >
-        <BadgeCheckIcon
-          class="absolute top-3 right-3 z-20 h-7 w-7 text-primary-light"
-          v-show="semCard.is_current_sem"
-        />
-        <h1 class="card-title">Semester-{{ semCard.sem_no }}</h1>
-        <div class="card-actions justify-end">
-          <button class="btn w-full bg-primary-dark">Open</button>
-        </div>
+      <div class="card" v-for="semCard in semCards" :key="semCard.id">
+        <button title="This is the on going semester">
+          <BadgeCheckIcon class="sem-badge" v-show="semCard.is_current_sem" />
+        </button>
+        <h1 class="card-title text-2xl text-primary-light">
+          Semester-{{ semCard.sem_no }}
+        </h1>
+        <button class="btn">Open</button>
       </div>
     </section>
   </div>
