@@ -68,11 +68,29 @@ export default {
           "/login/jwt/create/",
           this.formValues
         );
-        console.log(response);
+        // console.log(response);
         localStorage.setItem("token", response.data.access);
         localStorage.setItem("Auth", true);
         this.$store.state.isAuth = true;
-        this.$router.push({ name: "DashBoard" });
+        const response1 = await axios.get("/auth/users/me/", {
+          headers: {
+            Authorization: "JWT " + localStorage.getItem("token"),
+          },
+        });
+        // console.log(response1.data.id);
+        const userId = response1.data.id;
+        const userTypeResponse = await axios.get(
+          `/classroom-app/user-type/${userId}`
+        );
+        // console.log(userTypeResponse);
+        const user = {
+          userType: userTypeResponse.data.user_type,
+          userTypeId: Object.values(userTypeResponse.data)[1],
+        };
+        // console.log(user);
+        this.$store.state.user = user;//TODO: check the user type
+        this.$router.push({ name: "StudentDashboard"});
+        // console.log(this.$store.state.user);
       } catch (e) {
         this.error = e.response.data.detail;
       }

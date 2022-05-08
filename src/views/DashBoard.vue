@@ -23,7 +23,6 @@ export default {
       console.log(response);
       this.$store.state.user =
         response.data.first_name + " " + response.data.last_name;
-      this.$store.state.isAuth = true;
       console.log(this.$store.state.user);
       console.log(this.$store.state.isAuth);
     } catch (e) {

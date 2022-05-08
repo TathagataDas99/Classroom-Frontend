@@ -3,7 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import SignIn from "../views/Auth/SignIn.vue";
 import ActivationAccount from "../views/Auth/ActivationAccount.vue";
 import LoginForm from "../views/Auth/LoginForm.vue";
-import DashBoard from "../views/DashBoard.vue";
+import StudentDashboard from "../views/Student/StudentDashboard.vue";
 import ForgotPassword from "../views/Auth/ForgotPassword.vue";
 import ResetPassword from "../views/Auth/ResetPassword.vue";
 import store from "../store/";
@@ -67,8 +67,8 @@ const router = createRouter({
     },
     {
       path: "/dashboard",
-      name: "DashBoard",
-      component: DashBoard,
+      name: "StudentDashboard",
+      component: StudentDashboard,
       beforeEnter: isAuth,
     },
   ],
