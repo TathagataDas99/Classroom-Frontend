@@ -3,6 +3,7 @@
     <div v-if="loader">
       <LoaderView />
     </div>
+    {{ this.subjectCards }}
   </div>
 </template>
 
@@ -14,9 +15,10 @@ export default {
   data() {
     return {
       loader: false,
+      subjectCards: {},
     };
   },
-  props: ["no"],
+  props: ["no", "id"],
   components: {
     LoaderView,
   },
@@ -28,9 +30,9 @@ export default {
     console.log(this.userProfile.classroom.slug);
     try {
       const subjectCards = await axios.get(
-        `/classroom-app/classroom/${this.userProfile.classroom.slug}/semester/${this.userType.userTypeId}/`
+        `/classroom-app/classroom/${this.userProfile.classroom.slug}/semester/${this.id}/`
       );
-      console.log(subjectCards);
+      this.subjectCards = subjectCards;
     } catch (e) {
       console.log(e);
     }

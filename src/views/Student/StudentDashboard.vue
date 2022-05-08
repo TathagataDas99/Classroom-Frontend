@@ -15,10 +15,7 @@
         <h1 class="card-title text-2xl text-primary-light">
           Semester-{{ semCard.sem_no }}
         </h1>
-        <button
-          class="btn"
-          @click="$router.push(`/student-dashboard/semester-${semCard.sem_no}`)"
-        >
+        <button class="btn" @click="handelOpen(semCard.sem_no, semCard.id)">
           Open
         </button>
       </div>
@@ -82,6 +79,17 @@ export default {
       console.log(e);
     }
     this.loader = false;
+  },
+  methods: {
+    handelOpen(no, id) {
+      this.$router.push({
+        name: "SubjectCards",
+        params: {
+          no: no,
+          id: id,
+        },
+      });
+    },
   },
 };
 </script>

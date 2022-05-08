@@ -73,7 +73,7 @@ const router = createRouter({
       beforeEnter: isAuth,
     },
     {
-      path: "/student-dashboard/semester-:no",
+      path: "/student-dashboard/semester-:no/:id",
       name: "SubjectCards",
       component: SubjectCards,
       props: true,
