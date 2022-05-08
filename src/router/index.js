@@ -9,7 +9,7 @@ import ResetPassword from "../views/Auth/ResetPassword.vue";
 import store from "../store/";
 
 const isAuth = (to, from, next) => {
-  console.log("isAuth : "+store.state.isAuth); //TODO: have to remove this console log
+  console.log("isAuth : " + store.state.isAuth); //TODO: have to remove this console log
   if (!store.state.isAuth) {
     next("/log-in");
   } else {
