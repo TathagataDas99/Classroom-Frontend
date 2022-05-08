@@ -15,7 +15,12 @@
         <h1 class="card-title text-2xl text-primary-light">
           Semester-{{ semCard.sem_no }}
         </h1>
-        <button class="btn">Open</button>
+        <button
+          class="btn"
+          @click="$router.push(`/student-dashboard/semester-${semCard.sem_no}`)"
+        >
+          Open
+        </button>
       </div>
     </section>
   </div>

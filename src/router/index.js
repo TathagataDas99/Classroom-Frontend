@@ -3,9 +3,10 @@ import HomeView from "../views/HomeView.vue";
 import SignIn from "../views/Auth/SignIn.vue";
 import ActivationAccount from "../views/Auth/ActivationAccount.vue";
 import LoginForm from "../views/Auth/LoginForm.vue";
-import StudentDashboard from "../views/Student/StudentDashboard.vue";
 import ForgotPassword from "../views/Auth/ForgotPassword.vue";
 import ResetPassword from "../views/Auth/ResetPassword.vue";
+import StudentDashboard from "../views/Student/StudentDashboard.vue";
+import SubjectCards from "../views/Student/SubjectCards.vue";
 import store from "../store/";
 
 const isAuth = (to, from, next) => {
@@ -21,7 +22,7 @@ const unAuth = (to, from, next) => {
   if (store.state.isAuth === null || store.state.isAuth === false) {
     next();
   } else {
-    next("/dashboard");
+    next({ name: "StudentDashboard" });
   }
 };
 const router = createRouter({
@@ -66,9 +67,16 @@ const router = createRouter({
       beforeEnter: unAuth,
     },
     {
-      path: "/dashboard",
+      path: "/student-dashboard",
       name: "StudentDashboard",
       component: StudentDashboard,
+      beforeEnter: isAuth,
+    },
+    {
+      path: "/student-dashboard/semester-:no",
+      name: "SubjectCards",
+      component: SubjectCards,
+      props: true,
       beforeEnter: isAuth,
     },
   ],
