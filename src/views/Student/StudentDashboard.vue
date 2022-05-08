@@ -5,15 +5,21 @@
   <div class="h-screen text-lg">
     <h1>{{ userProfile }}</h1>
     <br />
-    <section class="flex flex-col flex-wrap md:flex-row justify-evenly items-center">
+    <section
+      class="flex flex-col flex-wrap items-center justify-evenly md:flex-row"
+    >
       <div
-        class="card w-44 h-44 bg-base-100 shadow-xl"
+        class="card relative flex h-44 w-44 flex-col items-center justify-evenly bg-base-100 shadow-xl"
         v-for="semCard in semCards"
         :key="semCard.id"
       >
+        <BadgeCheckIcon
+          class="absolute top-3 right-3 z-20 h-7 w-7 text-primary-light"
+          v-show="semCard.is_current_sem"
+        />
         <h1 class="card-title">Semester-{{ semCard.sem_no }}</h1>
         <div class="card-actions justify-end">
-          <button class="btn btn-primary">Open</button>
+          <button class="btn w-full bg-primary-dark">Open</button>
         </div>
       </div>
     </section>
@@ -24,6 +30,7 @@
 import axios from "axios";
 import LoaderView from "../../components/LoaderView.vue";
 import { mapGetters } from "vuex";
+import { BadgeCheckIcon } from "@heroicons/vue/solid";
 // import { mapActions } from "vuex";
 export default {
   name: "StudentDashboard",
@@ -36,6 +43,7 @@ export default {
   },
   components: {
     LoaderView,
+    BadgeCheckIcon,
   },
   computed: {
     ...mapGetters(["userType", "userProfile"]),
