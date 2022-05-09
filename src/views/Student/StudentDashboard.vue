@@ -36,7 +36,7 @@
     <aside class="mt-4 mr-4 grid h-screen grid-cols-1 gap-2">
       <section
         tabindex="0"
-        class="collapse-plus collapse rounded-box border border-base-300 bg-base-100"
+        class="collapse-plus collapse glass rounded-box border border-base-300 bg-base-100"
       >
         <div
           class="slow-effect collapse-title text-xl font-medium hover:text-danger-dark"
@@ -59,14 +59,14 @@
               {{ userProfile.user.contact_no }}
             </template>
             <template v-else>
-              <span>Not Availabel</span>
+              <span>Not Available</span>
             </template>
           </p>
         </div>
       </section>
       <section
         tabindex="1"
-        class="collapse-plus collapse rounded-box border border-base-300 bg-base-100"
+        class="collapse-plus collapse glass rounded-box border border-base-300 bg-base-100"
       >
         <div
           class="slow-effect collapse-title text-xl font-medium hover:text-danger-dark"
@@ -91,7 +91,7 @@
       </section>
       <section
         tabindex="3"
-        class="collapse-plus collapse rounded-box border border-base-300 bg-base-100"
+        class="collapse-plus collapse glass rounded-box border border-base-300 bg-base-100"
       >
         <div
           class="slow-effect collapse-title text-xl font-medium hover:text-danger-dark"
