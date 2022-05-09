@@ -67,7 +67,7 @@ export default {
         name: "ParticularSubject",
         params: {
           no: no,
-          subject_slug : slug,
+          subject_slug: slug,
         },
       });
     },
