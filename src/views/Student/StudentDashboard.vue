@@ -17,7 +17,7 @@
       class="relative col-span-2 mt-4 grid justify-items-center gap-y-4 lg:grid-cols-2"
     >
       <img
-        src="../../assets/background/sem_page_card_bg_3.svg"
+        src="../../assets/background/sem_page_card_bg_4.svg"
         alt="No Sem BG found"
         class="absolute bottom-0 left-24 w-full"
       />
