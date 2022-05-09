@@ -3,7 +3,20 @@
     <div v-if="loader">
       <LoaderView />
     </div>
-    {{ subjectCards }}
+    <div class="card" v-for="subject in subjects" :key="subject.slug">
+      <h1 class="card-title text-2xl text-zinc-700">
+        {{ subject.title }}
+      </h1>
+      <h1 class="card-title text-sm text-zinc-700">
+        {{ subject.subject_code }}
+      </h1>
+      <span class="text-2xl font-semibold text-zinc-700"
+        >{{ subject.created_by.user.first_name }}
+        {{ subject.created_by.user.last_name }}</span
+      >
+      <button class="btn" @click="handelOpen(semCard.sem_no)">Open</button>
+    </div>
+    <!-- {{ subjects }} -->
   </div>
 </template>
 
@@ -16,7 +29,7 @@ export default {
   data() {
     return {
       loader: false,
-      subjectCards: {},
+      subjects: [],
       id: "",
     };
   },
@@ -35,11 +48,11 @@ export default {
       }
     }
     try {
-      const subjectCards = await axios.get(
+      const subjectResponse = await axios.get(
         `/classroom-app/classroom/${this.userProfile.classroom.slug}/semester/${this.id}/subject`
       );
-      this.subjectCards = subjectCards.data;
-      console.log(this.semCards);
+      this.subjects = subjectResponse.data;
+      // console.log(this.semCards);
     } catch (e) {
       console.log(e);
     }
