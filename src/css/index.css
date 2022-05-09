@@ -44,5 +44,5 @@
   @apply slow-effect absolute top-3 right-3 z-20 h-7 w-7 text-primary-light hover:animate-bounce;
 }
 .card {
-  @apply slow-effect relative flex h-96 w-96 flex-col items-center justify-evenly bg-base-100 px-10 shadow-xl hover:scale-105 md:h-64 md:w-64;
+  @apply slow-effect relative flex h-96 w-96 flex-col items-center justify-evenly self-center bg-base-100 px-10 shadow-xl hover:scale-105 md:h-64 md:w-64;
 }

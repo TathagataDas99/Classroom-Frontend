@@ -2,11 +2,9 @@
   <div v-if="loader">
     <LoaderView />
   </div>
-  <div class="h-screen text-lg">
-    <h1>{{ userProfile }}</h1>
-    <br />
-    <section
-      class="flex flex-col flex-wrap items-center justify-evenly space-y-2 md:flex-row md:space-y-4 md:space-x-2 lg:space-y-0"
+  <div class="grid h-screen grid-rows-2 gap-2 text-lg lg:grid-cols-3">
+    <main
+      class="col-span-2 mt-4 grid justify-items-center gap-y-4 lg:grid-cols-2"
     >
       <div class="card" v-for="semCard in semCards" :key="semCard.id">
         <button title="This is the on going semester">
@@ -19,7 +17,91 @@
           Open
         </button>
       </div>
-    </section>
+    </main>
+    <aside class="mt-4 mr-4 grid h-screen grid-cols-1 gap-2">
+      <section
+        tabindex="0"
+        class="collapse-plus collapse rounded-box border border-base-300 bg-base-100"
+      >
+        <div
+          class="slow-effect collapse-title text-xl font-medium hover:text-danger-dark"
+        >
+          <span class="font-semibold text-danger-dark">Welcome</span>
+          {{ userProfile.user.first_name }} {{ userProfile.user.last_name }}
+        </div>
+        <div class="collapse-content text-lg">
+          <p>
+            <span class="text-primary-dark">Universit Roll: </span>
+            {{ userProfile.university_roll }}
+          </p>
+          <p>
+            <span class="text-primary-dark">Email : </span>
+            {{ userProfile.user.email }}
+          </p>
+          <p>
+            <span class="text-primary-dark">Contact No : </span>
+            {{ userProfile.user.contact_no }}
+          </p>
+        </div>
+      </section>
+      <section
+        tabindex="1"
+        class="collapse-plus collapse rounded-box border border-base-300 bg-base-100"
+      >
+        <div
+          class="slow-effect collapse-title text-xl font-medium hover:text-danger-dark"
+        >
+          {{ userProfile.classroom.college.name }}
+        </div>
+        <div class="collapse-content text-lg">
+          <p>
+            <span class="text-primary-dark">City : </span>
+            {{ userProfile.classroom.college.city }}
+          </p>
+          <p>
+            <span class="text-primary-dark">State : </span>
+            {{ userProfile.classroom.college.state }}
+          </p>
+          <p>
+            <span class="text-primary-dark">Address: </span>
+            {{ userProfile.classroom.college.address }}
+          </p>
+        </div>
+      </section>
+      <section
+        tabindex="3"
+        class="collapse-plus collapse rounded-box border border-base-300 bg-base-100"
+      >
+        <div
+          class="slow-effect collapse-title text-xl font-medium hover:text-danger-dark"
+        >
+          {{ userProfile.classroom.title }}
+        </div>
+        <div class="collapse-content text-lg">
+          <p>
+            <span class="text-primary-dark">Level : </span>
+            {{ userProfile.classroom.level }}
+          </p>
+          <p>
+            <span class="text-primary-dark">Stream : </span>
+            {{ userProfile.classroom.stream }}
+          </p>
+          <p>
+            <span class="text-primary-dark">Section : </span>
+            {{ userProfile.classroom.section }}
+          </p>
+          <p>
+            <span class="text-primary-dark">Number of Sems: </span>
+            {{ userProfile.classroom.no_of_semesters }}
+          </p>
+          <p>
+            <span class="text-primary-dark">Batch of: </span>
+            {{ userProfile.classroom.start_year }} -
+            {{ userProfile.classroom.end_year }}
+          </p>
+        </div>
+      </section>
+    </aside>
   </div>
 </template>
 
