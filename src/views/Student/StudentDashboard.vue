@@ -1,9 +1,17 @@
 <template>
-  <div v-if="loader">
-    <LoaderView />
-  </div>
-  <div class="grid h-screen grid-rows-2 gap-2 text-lg lg:grid-cols-3">
+  <div class="grid h-screen w-screen grid-rows-2 gap-2 text-lg lg:grid-cols-3">
     <main
+      v-if="loader"
+      class="col-span-2 mt-4 grid justify-items-center gap-y-4 lg:grid-cols-2"
+    >
+      <LoaderCard></LoaderCard>
+      <LoaderCard></LoaderCard>
+      <LoaderCard></LoaderCard>
+      <LoaderCard></LoaderCard>
+    </main>
+    <!-- <LoaderView /> -->
+    <main
+      v-else
       class="col-span-2 mt-4 grid justify-items-center gap-y-4 lg:grid-cols-2"
     >
       <div class="card" v-for="semCard in semCards" :key="semCard.id">
@@ -112,9 +120,10 @@
 
 <script>
 import axios from "axios";
-import LoaderView from "../../components/LoaderView.vue";
+// import LoaderView from "../../components/LoaderView.vue";
 import { mapGetters } from "vuex";
 import { BadgeCheckIcon } from "@heroicons/vue/solid";
+import LoaderCard from "../../components/LoaderCard.vue";
 // import { mapActions } from "vuex";
 export default {
   name: "StudentDashboard",
@@ -126,8 +135,9 @@ export default {
     };
   },
   components: {
-    LoaderView,
+    // LoaderView,
     BadgeCheckIcon,
+    LoaderCard,
   },
   computed: {
     ...mapGetters(["userType", "userProfile"]),
