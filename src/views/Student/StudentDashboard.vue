@@ -1,5 +1,7 @@
 <template>
-  <div class="grid h-screen w-screen grid-rows-2 gap-2 text-lg lg:grid-cols-3">
+  <div
+    class="grid min-h-screen w-screen grid-rows-1 gap-2 pb-10 text-lg lg:grid-cols-3"
+  >
     <main
       v-if="loader"
       class="col-span-2 mt-4 grid justify-items-center gap-y-4 lg:grid-cols-2"
