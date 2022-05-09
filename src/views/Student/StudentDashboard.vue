@@ -28,9 +28,7 @@
         <h1 class="card-title text-2xl text-zinc-700">
           Semester-{{ semCard.sem_no }}
         </h1>
-        <button class="btn" @click="handelOpen(semCard.sem_no, semCard.id)">
-          Open
-        </button>
+        <button class="btn" @click="handelOpen(semCard.sem_no)">Open</button>
       </div>
     </main>
     <aside class="mt-4 mr-4 grid h-screen grid-cols-1 gap-2">
@@ -140,7 +138,7 @@ export default {
     return {
       msg: "",
       loader: "",
-      semCards: [],
+      // semCards: [],
     };
   },
   components: {
@@ -149,7 +147,7 @@ export default {
     LoaderCard,
   },
   computed: {
-    ...mapGetters(["userType", "userProfile"]),
+    ...mapGetters(["userType", "userProfile", "semCards"]),
   },
   // methods: {
   //   ...mapActions(["userType", "userProfile"]),
@@ -180,19 +178,20 @@ export default {
       const semCardsResponse = await axios.get(
         `/classroom-app/classroom/${this.userProfile.classroom.slug}/semester/`
       );
-      this.semCards = semCardsResponse.data;
+      // this.semCards = semCardsResponse.data;
+      this.$store.dispatch("semCards", semCardsResponse.data);
+      console.log(semCardsResponse.data);
     } catch (e) {
       console.log(e);
     }
     this.loader = false;
   },
   methods: {
-    handelOpen(no, id) {
+    handelOpen(no) {
       this.$router.push({
         name: "SubjectCards",
         params: {
           no: no,
-          id: id,
         },
       });
     },

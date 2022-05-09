@@ -17,23 +17,31 @@ export default {
     return {
       loader: false,
       subjectCards: {},
+      id: "",
     };
   },
-  props: ["no", "id"],
+  props: ["no"],
   components: {
     LoaderView,
   },
   computed: {
-    ...mapGetters(["userType", "userProfile"]),
+    ...mapGetters(["userType", "userProfile", "semCards"]),
   },
   async created() {
     this.loader = true;
+    for (let semCard of this.semCards) {
+      if (`${semCard.sem_no}` === this.no) {
+        this.id = semCard.id;
+      }
+    }
+    console.log(this.id);
     console.log(this.userProfile.classroom.slug);
     try {
       const subjectCards = await axios.get(
         `/classroom-app/classroom/${this.userProfile.classroom.slug}/semester/${this.id}/`
       );
       this.subjectCards = subjectCards;
+      console.log(this.semCards);
     } catch (e) {
       console.log(e);
     }

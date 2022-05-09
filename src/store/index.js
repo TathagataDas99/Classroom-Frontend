@@ -6,6 +6,7 @@ const store = createStore({
     userType: null,
     isAuth: localStorage.getItem("Auth"),
     userProfile: null,
+    semCards: [],
   },
   plugins: [
     createPersistedState({
@@ -19,6 +20,9 @@ const store = createStore({
     userProfile(state) {
       return state.userProfile;
     },
+    semCards(state) {
+      return state.semCards;
+    },
   },
   mutations: {
     userType(state, payload) {
@@ -27,6 +31,9 @@ const store = createStore({
     userProfile(state, payload) {
       state.userProfile = payload;
     },
+    semCards(state, payload) {
+      state.semCards = payload;
+    },
   },
   actions: {
     userType(context, payload) {
@@ -34,6 +41,9 @@ const store = createStore({
     },
     userProfile(context, payload) {
       context.commit("userProfile", payload);
+    },
+    semCards(context, payload) {
+      context.commit("semCards", payload);
     },
   },
 });
