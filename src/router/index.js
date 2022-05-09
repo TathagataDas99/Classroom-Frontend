@@ -7,6 +7,7 @@ import ForgotPassword from "../views/Auth/ForgotPassword.vue";
 import ResetPassword from "../views/Auth/ResetPassword.vue";
 import StudentDashboard from "../views/Student/StudentDashboard.vue";
 import SubjectCards from "../views/Student/SubjectCards.vue";
+import ParticularSubject from "../views/Student/ParticularSubject.vue";
 import store from "../store/";
 
 const isAuth = (to, from, next) => {
@@ -76,6 +77,13 @@ const router = createRouter({
       path: "/student-dashboard/semester-:no/subjects",
       name: "SubjectCards",
       component: SubjectCards,
+      props: true,
+      beforeEnter: isAuth,
+    },
+    {
+      path: "/student-dashboard/semester-:no/subjects/:slug",
+      name: "ParticularSubject",
+      component: ParticularSubject,
       props: true,
       beforeEnter: isAuth,
     },
