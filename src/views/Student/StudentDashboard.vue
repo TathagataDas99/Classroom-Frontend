@@ -40,7 +40,12 @@
           </p>
           <p>
             <span class="text-primary-dark">Contact No : </span>
-            {{ userProfile.user.contact_no }}
+            <template v-if="userProfile.user.contact_no">
+              {{ userProfile.user.contact_no }}
+            </template>
+            <template v-else>
+              <span>Not Availabel</span>
+            </template>
           </p>
         </div>
       </section>
