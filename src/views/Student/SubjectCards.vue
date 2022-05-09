@@ -34,8 +34,6 @@ export default {
         this.id = semCard.id;
       }
     }
-    console.log(this.id);
-    console.log(this.userProfile.classroom.slug);
     try {
       const subjectCards = await axios.get(
         `/classroom-app/classroom/${this.userProfile.classroom.slug}/semester/${this.id}/`
