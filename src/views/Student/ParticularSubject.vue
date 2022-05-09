@@ -3,8 +3,22 @@
     <div v-if="loader">
       <LoaderView />
     </div>
-    <h1>{{ announcements }}</h1>
-    
+    <!-- <h1>{{ announcements }}</h1> -->
+    <div
+      class="card"
+      v-for="announcement in announcements"
+      :key="announcement.id"
+    >
+      <h1 class="card-title text-2xl text-zinc-700">
+        {{ announcement.heading }}
+      </h1>
+      <h1 class="card-title text-xl text-zinc-700">
+        {{ announcement.body }}
+      </h1>
+      <!-- <button class="btn" @click="handelOpen(this.no, subject.slug)">
+        Open
+      </button> -->
+    </div>
   </div>
 </template>
 
@@ -17,7 +31,7 @@ export default {
   data() {
     return {
       loader: false,
-      announcements : "",
+      announcements: "",
       id: "",
     };
   },
