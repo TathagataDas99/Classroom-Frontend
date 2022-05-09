@@ -4,7 +4,6 @@
       <LoaderView />
     </div>
     {{ subjectCards }}
-    <button class="btn" @click="update()">update</button>
   </div>
 </template>
 
@@ -29,7 +28,6 @@ export default {
   },
   async created() {
     this.loader = true;
-    this.$store.dispatch("update");
     console.log(this.userProfile.classroom.slug);
     try {
       const subjectCards = await axios.get(
@@ -40,11 +38,6 @@ export default {
       console.log(e);
     }
     this.loader = false;
-  },
-  methods: {
-    update() {
-      this.$store.dispatch("update");
-    },
   },
 };
 </script>

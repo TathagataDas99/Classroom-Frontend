@@ -1,5 +1,5 @@
 import { createStore } from "vuex";
-import axios from "axios";
+import createPersistedState from "vuex-persistedstate";
 
 const store = createStore({
   state: {
@@ -7,6 +7,11 @@ const store = createStore({
     isAuth: localStorage.getItem("Auth"),
     userProfile: null,
   },
+  plugins: [
+    createPersistedState({
+      storage: window.sessionStorage,
+    }),
+  ],
   getters: {
     userType(state) {
       return state.userType;
@@ -29,31 +34,6 @@ const store = createStore({
     },
     userProfile(context, payload) {
       context.commit("userProfile", payload);
-    },
-    async update(context) {
-      try {
-        const response1 = await axios.get("/auth/users/me/", {
-          headers: {
-            Authorization: "JWT " + localStorage.getItem("token"),
-          },
-        });
-        const userId = response1.data.id;
-        const userTypeResponse = await axios.get(
-          `/classroom-app/user-type/${userId}`
-        );
-        const userTypeObj = {
-          userType: userTypeResponse.data.user_type,
-          userTypeId: Object.values(userTypeResponse.data)[1],
-        };
-        context.commit("userType", userTypeObj);
-
-        const userProfileResponse = await axios.get(
-          `/classroom-app/student/${userTypeObj.userTypeId}/`
-        );
-        context.commit("userProfile", userProfileResponse.data);
-      } catch (e) {
-        console.log(e);
-      }
     },
   },
 });
