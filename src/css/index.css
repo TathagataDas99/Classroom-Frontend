@@ -41,7 +41,7 @@
   @apply btn-outline mx-2 w-full border-0 bg-primary-dark font-medium text-white outline-none hover:bg-primary-light;
 }
 .sem-badge {
-  @apply slow-effect absolute top-3 right-3 z-20 h-7 w-7 text-primary-light hover:animate-bounce;
+  @apply slow-effect absolute top-3 right-3 z-20 h-7 w-7 text-primary-dark hover:animate-bounce hover:text-primary-light;
 }
 .card {
   @apply slow-effect relative flex h-96 w-96 flex-col items-center justify-evenly self-center bg-gray-100/70 px-10 shadow-xl backdrop-blur-md backdrop-filter hover:scale-105 hover:backdrop-blur-lg md:h-64 md:w-64;
