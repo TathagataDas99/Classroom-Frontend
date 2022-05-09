@@ -14,7 +14,9 @@
         >{{ subject.created_by.user.first_name }}
         {{ subject.created_by.user.last_name }}</span
       >
-      <button class="btn" @click="handelOpen(this.no, subject.slug)">Open</button>
+      <button class="btn" @click="handelOpen(this.no, subject.slug)">
+        Open
+      </button>
     </div>
     <!-- {{ subjects }} -->
   </div>
@@ -58,11 +60,18 @@ export default {
     }
     this.loader = false;
   },
-  methods:{
-    handelOpen(no, slug){
-      this.$router.push(`/student-dashboard/semester-${no}/subjects/${slug}`)
-    }
-  }
+  methods: {
+    handelOpen(no, slug) {
+      // this.$router.push(`/student-dashboard/semester-${no}/subjects/${slug}`)
+      this.$router.push({
+        name: "ParticularSubject",
+        params: {
+          no: no,
+          subject_slug : slug,
+        },
+      });
+    },
+  },
 };
 </script>
 
