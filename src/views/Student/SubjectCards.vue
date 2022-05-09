@@ -36,9 +36,9 @@ export default {
     }
     try {
       const subjectCards = await axios.get(
-        `/classroom-app/classroom/${this.userProfile.classroom.slug}/semester/${this.id}/`
+        `/classroom-app/classroom/${this.userProfile.classroom.slug}/semester/${this.id}/subject`
       );
-      this.subjectCards = subjectCards;
+      this.subjectCards = subjectCards.data;
       console.log(this.semCards);
     } catch (e) {
       console.log(e);
