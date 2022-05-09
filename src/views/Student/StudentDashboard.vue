@@ -64,6 +64,7 @@
         <div
           class="slow-effect collapse-title text-xl font-medium hover:text-danger-dark"
         >
+          <span class="font-semibold text-danger-dark">College : </span>
           {{ userProfile.classroom.college.name }}
         </div>
         <div class="collapse-content text-lg">
@@ -88,6 +89,7 @@
         <div
           class="slow-effect collapse-title text-xl font-medium hover:text-danger-dark"
         >
+          <span class="font-semibold text-danger-dark">Classroom : </span>
           {{ userProfile.classroom.title }}
         </div>
         <div class="collapse-content text-lg">
