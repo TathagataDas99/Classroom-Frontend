@@ -6,7 +6,7 @@
     <section class="mt-5">
       <div
         tabindex="0"
-        class="collapse-plus collapse rounded-box mx-24 my-2 border border-base-300 bg-base-100 h-3/5"
+        class="collapse-plus collapse rounded-box mx-24 my-2 h-3/5 border border-base-300 bg-base-100"
         v-for="note in notes"
         :key="note"
       >
@@ -26,8 +26,11 @@
           <p>created at :- {{ note.created_at.split("T")[0] }}</p>
         </div>
         <!-- <button class="btn btn-accent" @click="note.file_path">Button</button> -->
-        <div class="collapse-content flex flex-wrap flex-row justify-end items-center">
-          <a class="flex-1"
+        <div
+          class="collapse-content flex flex-row flex-wrap items-center justify-end"
+        >
+          <a
+            class="flex-1"
             :href="file.file_path"
             v-for="file in note.attached_files"
             :key="file.title"
