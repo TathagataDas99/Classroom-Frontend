@@ -1,14 +1,16 @@
 <template>
-  <div>
+  <div @click="isDownloaded">
     <div v-if="loader">
       <LoaderView />
     </div>
     <section class="mt-5">
       <div
         tabindex="0"
-        class="collapse-plus collapse rounded-box mx-24 my-2 h-3/5 border border-base-300 bg-base-100"
+        class="collapse-plus collapse rounded-box mx-24 my-2 h-3/5 overflow-clip border border-base-300 bg-base-100"
         v-for="note in notes"
         :key="note"
+        :class="{ 'collapse-open': isDownload }"
+        @click="isDownloaded"
       >
         <div class="collapse-title text-xl font-medium">
           {{ note.title }}
@@ -38,13 +40,16 @@
           >
             <!-- <span class="font-bold">Attached Files</span> -->
             <a
-              class="flex-1"
+              class="slow-effect flex-1 hover:text-primary-light focus:text-center"
               :href="file.file_path"
               v-for="(file, index) in note.attached_files"
               :key="file.title"
+              @click="isDownloaded"
             >
+              <DocumentDownloadIcon
+                class="slow-effect h-12 w-10 text-primary-dark hover:scale-110 hover:text-primary-light"
+              />
               <span class="text-sm font-bold">file-{{ index + 1 }}</span>
-              <DocumentDownloadIcon class="h-12 w-10 text-primary-dark" />
             </a>
           </div>
         </div>
@@ -66,6 +71,7 @@ export default {
       notes: [],
       id: "",
       isActive: 1,
+      isDownload: false,
     };
   },
   components: {
@@ -97,6 +103,9 @@ export default {
   methods: {
     activeTab(no) {
       this.isActive = no;
+    },
+    isDownloaded() {
+      this.isDownload = !this.isDownload;
     },
   },
 };
