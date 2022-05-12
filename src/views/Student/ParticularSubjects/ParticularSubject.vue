@@ -3,6 +3,19 @@
     <div v-if="loader">
       <LoaderView />
     </div>
+    <div>
+      <button
+        class="bttn"
+        @click="
+          $router.replace({
+            name: 'SubjectCards',
+            no,
+          })
+        "
+      >
+        Go Back
+      </button>
+    </div>
     <div class="tabs flex flex-row items-stretch justify-start px-3 pt-3">
       <router-link
         :to="{ name: 'AnnouncementView', props: { no, subject_slug } }"
@@ -61,7 +74,7 @@ export default {
     }
     try {
       const announcementsResponse = await axios.get(
-        `/classroom-app/classroom/${this.userProfile.classroom.slug}/semester/${this.id}/subject/${this.subject_slug}/`
+        `/classroom-app/classroom/${this.userProfile.classroom.slug}/semester/${this.id}/subject/${this.subject_slug}`
       );
       this.announcements = announcementsResponse.data;
     } catch (e) {
