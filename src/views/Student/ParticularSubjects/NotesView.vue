@@ -3,23 +3,20 @@
     <div v-if="loader">
       <LoaderView />
     </div>
-    <!-- <div>{{announcements}}</div> -->
     <section class="mt-5">
       <div
         tabindex="0"
         class="collapse-plus collapse rounded-box mx-24 my-2 border border-base-300 bg-base-100"
-        v-for="announcement in announcements"
-        :key="announcement.id"
+        v-for="note in notes"
+        :key="note"
       >
         <div class="collapse-title text-xl font-medium">
-          {{ announcement.heading }}
+          {{ note.title }}
         </div>
         <div class="collapse-content">
-          <p>{{ announcement.body }}</p>
+          <p>created at :- {{ note.created_at.split("T")[0] }}</p>
         </div>
-        <!-- <div class="collapse-content">
-          <p>{{ announcement.created_at }}</p> //TODO:show time
-        </div> -->
+        <!-- <button class="btn btn-accent" @click="note.file_path">Button</button> -->
       </div>
     </section>
   </div>
@@ -34,7 +31,7 @@ export default {
   data() {
     return {
       loader: false,
-      announcements: [],
+      notes: [],
       id: "",
       isActive: 1,
     };
@@ -56,8 +53,8 @@ export default {
       const notesResponse = await axios.get(
         `/classroom-app/classroom/${this.userProfile.classroom.slug}/semester/${this.id}/subject/${this.subject_slug}/notes/`
       );
-      this.announcements = notesResponse;
-      console.log(this.announcements);
+      this.notes = notesResponse.data[0].attached_files;
+      console.log(this.notes);
     } catch (e) {
       console.log(e);
     }

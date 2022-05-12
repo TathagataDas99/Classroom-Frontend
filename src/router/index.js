@@ -91,16 +91,16 @@ const router = createRouter({
       beforeEnter: isAuth,
       children: [
         {
-          path: "notes",
-          name: "NotesView",
-          component: NotesView,
+          path: "announcements",
+          name: "AnnouncementView",
+          component: AnnouncementView,
           props: true,
           beforeEnter: isAuth,
         },
         {
-          path: "announcements",
-          name: "AnnouncementView",
-          component: AnnouncementView,
+          path: "notes",
+          name: "NotesView",
+          component: NotesView,
           props: true,
           beforeEnter: isAuth,
         },
