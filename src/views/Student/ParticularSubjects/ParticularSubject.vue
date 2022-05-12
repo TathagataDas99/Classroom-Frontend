@@ -1,11 +1,9 @@
 <template>
-  <div>
+  <div class="h-screen">
     <div v-if="loader">
       <LoaderView />
     </div>
-    <div
-      class="tabs sticky flex flex-row items-stretch justify-start px-3 pt-3"
-    >
+    <div class="tabs flex flex-row items-stretch justify-start px-3 pt-3">
       <router-link
         :to="{ name: 'AnnouncementView', props: { no, subject_slug } }"
         class="tab tab-lifted"
@@ -13,7 +11,7 @@
         @click="activeTab(1)"
         >Announcement</router-link
       >
-      <router-view></router-view>
+
       <router-link
         class="tab tab-lifted"
         :to="{ name: 'NotesView', props: { no, subject_slug } }"
@@ -21,7 +19,7 @@
         @click="activeTab(2)"
         >Notes</router-link
       >
-      <router-view></router-view>
+
       <router-link
         class="tab tab-lifted"
         :to="{ name: 'AssignmentsView', props: { no, subject_slug } }"
@@ -29,8 +27,8 @@
         @click="activeTab(3)"
         >Assignments</router-link
       >
-      <router-view></router-view>
     </div>
+    <router-view />
   </div>
 </template>
 
