@@ -6,9 +6,11 @@
     <section class="mt-5">
       <div
         tabindex="0"
-        class="collapse-plus collapse collapse-open rounded-box mx-24 my-2 h-3/5 overflow-clip border border-base-300 bg-base-100"
+        class="collapse-plus collapse rounded-box mx-24 my-2 h-3/5 overflow-clip border border-base-300 bg-base-100"
         v-for="note in notes"
         :key="note"
+        @focusin="isDownloaded"
+        :class="{ 'collapse-open': isDownload }"
       >
         <div class="collapse-title text-xl font-medium">
           {{ note.title }}
@@ -41,6 +43,7 @@
               class="slow-effect flex-1 hover:text-primary-light"
               :href="file.file_path"
               v-for="(file, index) in note.attached_files"
+              @focus="isDownloaded"
               :key="file.title"
             >
               <DocumentDownloadIcon
@@ -68,7 +71,7 @@ export default {
       notes: [],
       id: "",
       isActive: 1,
-      isDownload: true,
+      isDownload: false,
     };
   },
   components: {
