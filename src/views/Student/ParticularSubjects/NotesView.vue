@@ -13,30 +13,40 @@
         <div class="collapse-title text-xl font-medium">
           {{ note.title }}
         </div>
-        <div class="collapse-content">
-          <p>{{ note.description }}</p>
-        </div>
-        <div class="collapse-content">
-          <p>
-            {{ note.posted_by.user.first_name }}
-            {{ note.posted_by.user.last_name }}
-          </p>
-        </div>
-        <div class="collapse-content">
-          <p>created at :- {{ note.created_at.split("T")[0] }}</p>
-        </div>
-        <!-- <button class="btn btn-accent" @click="note.file_path">Button</button> -->
-        <div
-          class="collapse-content flex flex-row flex-wrap items-center justify-end"
-        >
-          <a
-            class="flex-1"
-            :href="file.file_path"
-            v-for="file in note.attached_files"
-            :key="file.title"
+        <div class="collapse-content grid grid-cols-4 grid-rows-3">
+          <div
+            class="collapse-content col-span-3 col-start-1 row-span-3 row-start-1 columns-1"
           >
-            <DocumentDownloadIcon class="h-12 w-10 text-primary-dark" />
-          </a>
+            <p>{{ note.description }}</p>
+          </div>
+          <div class="collapse-content col-span-1 row-span-1">
+            <p>Created By</p>
+            <p class="font-bold">
+              {{ note.posted_by.user.first_name }}
+              {{ note.posted_by.user.last_name }}
+            </p>
+          </div>
+          <div class="collapse-content col-span-1 row-span-1">
+            <p>
+              created at :-
+              <span class="font-bold">{{ note.created_at.split("T")[0] }}</span>
+            </p>
+            <p class="font-bold text-primary-light">Download Attached files:</p>
+          </div>
+          <div
+            class="collapse-content col-span-1 col-start-4 row-span-1 row-start-3 flex flex-row flex-wrap items-center justify-end"
+          >
+            <!-- <span class="font-bold">Attached Files</span> -->
+            <a
+              class="flex-1"
+              :href="file.file_path"
+              v-for="(file, index) in note.attached_files"
+              :key="file.title"
+            >
+              <span class="text-sm font-bold">file-{{ index + 1 }}</span>
+              <DocumentDownloadIcon class="h-12 w-10 text-primary-dark" />
+            </a>
+          </div>
         </div>
       </div>
     </section>
