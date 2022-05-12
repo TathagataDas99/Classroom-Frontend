@@ -1,25 +1,23 @@
 <template>
-  <div @click="isDownloaded">
+  <div>
     <div v-if="loader">
       <LoaderView />
     </div>
     <section class="mt-5">
       <div
         tabindex="0"
-        class="collapse-plus collapse rounded-box mx-24 my-2 h-3/5 overflow-clip border border-base-300 bg-base-100"
+        class="collapse-plus collapse collapse-open rounded-box mx-24 my-2 h-3/5 overflow-clip border border-base-300 bg-base-100"
         v-for="note in notes"
         :key="note"
-        :class="{ 'collapse-open': isDownload }"
-        @click="isDownloaded"
       >
         <div class="collapse-title text-xl font-medium">
           {{ note.title }}
         </div>
         <div class="collapse-content grid grid-cols-4 grid-rows-3">
           <div
-            class="collapse-content col-span-3 col-start-1 row-span-3 row-start-1 columns-1"
+            class="collapse-content col-span-3 col-start-1 row-span-3 row-start-1"
           >
-            <p>{{ note.description }}</p>
+            <p class="coloumn-1">{{ note.description }}</p>
           </div>
           <div class="collapse-content col-span-1 row-span-1">
             <p>Created By</p>
@@ -40,11 +38,10 @@
           >
             <!-- <span class="font-bold">Attached Files</span> -->
             <a
-              class="slow-effect flex-1 hover:text-primary-light focus:text-center"
+              class="slow-effect flex-1 hover:text-primary-light"
               :href="file.file_path"
               v-for="(file, index) in note.attached_files"
               :key="file.title"
-              @click="isDownloaded"
             >
               <DocumentDownloadIcon
                 class="slow-effect h-12 w-10 text-primary-dark hover:scale-110 hover:text-primary-light"
@@ -71,7 +68,7 @@ export default {
       notes: [],
       id: "",
       isActive: 1,
-      isDownload: false,
+      isDownload: true,
     };
   },
   components: {
