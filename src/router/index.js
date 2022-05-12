@@ -7,7 +7,10 @@ import ForgotPassword from "../views/Auth/ForgotPassword.vue";
 import ResetPassword from "../views/Auth/ResetPassword.vue";
 import StudentDashboard from "../views/Student/StudentDashboard.vue";
 import SubjectCards from "../views/Student/SubjectCards.vue";
-import ParticularSubject from "../views/Student/ParticularSubject.vue";
+import ParticularSubject from "../views/Student/ParticularSubjects/ParticularSubject.vue";
+import AnnouncementView from "../views/Student/ParticularSubjects/AnnouncementView.vue";
+import AssignmentsView from "../views/Student/ParticularSubjects/AssignmentsView.vue";
+import NotesView from "../views/Student/ParticularSubjects/NotesView.vue";
 import store from "../store/";
 
 const isAuth = (to, from, next) => {
@@ -84,6 +87,27 @@ const router = createRouter({
       path: "/student-dashboard/semester-:no/subjects/:subject_slug",
       name: "ParticularSubject",
       component: ParticularSubject,
+      props: true,
+      beforeEnter: isAuth,
+    },
+    {
+      path: "/student-dashboard/semester-:no/subjects/:subject_slug/notes",
+      name: "NotesView",
+      component: NotesView,
+      props: true,
+      beforeEnter: isAuth,
+    },
+    {
+      path: "/student-dashboard/semester-:no/subjects/:subject_slug/announcements",
+      name: "AnnouncementView",
+      component: AnnouncementView,
+      props: true,
+      beforeEnter: isAuth,
+    },
+    {
+      path: "/student-dashboard/semester-:no/subjects/:subject_slug/assignments",
+      name: "AssignmentsView",
+      component: AssignmentsView,
       props: true,
       beforeEnter: isAuth,
     },
