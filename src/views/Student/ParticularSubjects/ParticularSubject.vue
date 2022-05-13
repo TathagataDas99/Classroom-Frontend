@@ -3,43 +3,53 @@
     <div v-if="loader">
       <LoaderView />
     </div>
-    <div>
-      <button
-        class="bttn"
-        @click="
-          $router.replace({
-            name: 'SubjectCards',
-            no,
-          })
-        "
-      >
-        Go Back
-      </button>
-    </div>
-    <div class="tabs flex flex-row items-stretch justify-start px-3 pt-3">
-      <router-link
-        :to="{ name: 'AnnouncementView', props: { no, subject_slug } }"
-        class="tab tab-lifted"
-        :class="{ 'tab-active': isActive === 1 }"
-        @click="activeTab(1)"
-        >Announcement</router-link
-      >
 
-      <router-link
-        class="tab tab-lifted"
-        :to="{ name: 'NotesView', props: { no, subject_slug } }"
-        :class="{ 'tab-active': isActive === 2 }"
-        @click="activeTab(2)"
-        >Notes</router-link
-      >
-
-      <router-link
-        class="tab tab-lifted"
-        :to="{ name: 'AssignmentsView', props: { no, subject_slug } }"
-        :class="{ 'tab-active': isActive === 3 }"
-        @click="activeTab(3)"
-        >Assignments</router-link
-      >
+    <div class="flex flex-row items-stretch justify-between px-3 pt-3">
+      <nav class="tabs w-1/2">
+        <router-link
+          :to="{ name: 'AnnouncementView', props: { no, subject_slug } }"
+          class="tab tab-lifted tab-lg"
+          :class="{
+            'tab-active': isActive === 1,
+            'font-semibold text-primary-light': isActive === 1,
+          }"
+          @click="activeTab(1)"
+          >Announcement</router-link
+        >
+        <router-link
+          class="tab tab-lifted tab-lg"
+          :to="{ name: 'NotesView', props: { no, subject_slug } }"
+          :class="{
+            'tab-active': isActive === 2,
+            'font-semibold text-primary-light': isActive === 2,
+          }"
+          @click="activeTab(2)"
+          >Notes</router-link
+        >
+        <router-link
+          class="tab tab-lifted tab-lg"
+          :to="{ name: 'AssignmentsView', props: { no, subject_slug } }"
+          :class="{
+            'tab-active': isActive === 3,
+            'font-semibold text-primary-light': isActive === 3,
+          }"
+          @click="activeTab(3)"
+          >Assignments</router-link
+        >
+      </nav>
+      <div>
+        <button
+          class="btn"
+          @click="
+            $router.replace({
+              name: 'SubjectCards',
+              no,
+            })
+          "
+        >
+          Go Back
+        </button>
+      </div>
     </div>
     <router-view />
   </div>
