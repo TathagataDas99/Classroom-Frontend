@@ -39,7 +39,7 @@ import axios from "axios";
 import { mapGetters } from "vuex";
 import LoaderCard from "../../components/LoaderCard.vue";
 export default {
-  name: "StudentDashboard",
+  name: "TeacherDashboard",
   data() {
     return {
       msg: "",
