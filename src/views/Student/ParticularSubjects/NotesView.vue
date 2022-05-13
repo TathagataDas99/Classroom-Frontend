@@ -36,7 +36,7 @@
             <p class="font-bold text-primary-light">Download Attached files:</p>
           </div>
           <div
-            class="collapse-content col-span-1 lg:col-start-4 row-span-1 lg:row-start-3 flex flex-row flex-wrap items-center justify-end"
+            class="collapse-content col-span-1 row-span-1 flex flex-row flex-wrap items-center justify-end lg:col-start-4 lg:row-start-3"
           >
             <!-- <span class="font-bold">Attached Files</span> -->
             <a
