@@ -6,7 +6,7 @@
     <section class="mt-5">
       <div
         tabindex="0"
-        class="collapse-plus collapse rounded-box mx-24 my-2 h-3/5 overflow-clip border border-base-300 bg-base-100 shadow-lg"
+        class="collapse-plus collapse rounded-box mx-2 my-2 h-3/5 overflow-clip border border-base-300 bg-base-100 shadow-lg md:mx-10 md:mx-24"
         v-for="note in notes"
         :key="note"
         @focusin="isDownloaded"
