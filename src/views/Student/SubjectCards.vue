@@ -1,9 +1,17 @@
 <template>
-  <div>
-    <div v-if="loader">
-      <LoaderView />
-    </div>
-    <div class="card" v-for="subject in subjects" :key="subject.slug">
+  <div
+    class="mt-5 grid grid-flow-row grid-cols-1 items-center justify-evenly gap-3 md:grid-cols-2 lg:grid-cols-4 lg:grid-rows-3"
+  >
+    <template v-if="loader">
+      <template v-for="i in 8" :key="i">
+        <LoaderCard class="col-span-1 row-span-1 place-self-center" />
+      </template>
+    </template>
+    <section
+      class="card col-span-1 row-span-1 place-self-center"
+      v-for="subject in subjects"
+      :key="subject.slug"
+    >
       <h1 class="card-title text-2xl text-zinc-700">
         {{ subject.title }}
       </h1>
@@ -17,15 +25,16 @@
       <button class="btn" @click="handelOpen(this.no, subject.slug)">
         Open
       </button>
-    </div>
+    </section>
     <!-- {{ subjects }} -->
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import LoaderView from "../../components/LoaderView.vue";
+// import LoaderView from "../../components/LoaderView.vue";
 import { mapGetters } from "vuex";
+import LoaderCard from "../../components/LoaderCard.vue";
 // import { mapActions } from "vuex";
 export default {
   data() {
@@ -37,7 +46,7 @@ export default {
   },
   props: ["no"],
   components: {
-    LoaderView,
+    LoaderCard,
   },
   computed: {
     ...mapGetters(["userType", "userProfile", "semCards"]),
