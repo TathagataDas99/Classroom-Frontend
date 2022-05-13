@@ -10,7 +10,7 @@
           required
           type="email"
           class="input-box"
-          v-model="formValues.email"
+          v-model.trim.lazy="formValues.email"
         />
       </div>
       <div class="form-section">
@@ -43,7 +43,7 @@ export default {
     LoaderView,
   },
   // created() {
-  //   if (localStorage.getItem("token")) {
+  //   if (sessionStorage.getItem("token")) {
   //     this.$router.push("/dashboard");
   //   } else {
   //     this.$router.push("/log-in");
@@ -69,12 +69,12 @@ export default {
           this.formValues
         );
         // console.log(response);
-        localStorage.setItem("token", response.data.access);
-        localStorage.setItem("Auth", true);
+        sessionStorage.setItem("token", response.data.access);
+        sessionStorage.setItem("Auth", true);
         this.$store.state.isAuth = true;
         const response1 = await axios.get("/auth/users/me/", {
           headers: {
-            Authorization: "JWT " + localStorage.getItem("token"),
+            Authorization: "JWT " + sessionStorage.getItem("token"),
           },
         });
         // console.log(response1.data.id);

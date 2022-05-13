@@ -37,7 +37,7 @@ export default {
     LoaderView,
   },
   // created() {
-  //   if (localStorage.getItem("token")) {
+  //   if (sessionStorage.getItem("token")) {
   //     this.$router.push("/dashboard");
   //   } else {
   //     this.$router.push("/forgot-password");

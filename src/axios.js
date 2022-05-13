@@ -4,4 +4,4 @@ import axios from "axios";
 axios.defaults.baseURL = "http://localhost:8000/"; //TODO: Comment in production
 
 // axios.defaults.headers.common["Authorization"] =
-//   "JWT " + localStorage.getItem("token");
+//   "JWT " + sessionStorage.getItem("token");

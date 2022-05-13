@@ -4,7 +4,7 @@ import createPersistedState from "vuex-persistedstate";
 const store = createStore({
   state: {
     userType: null,
-    isAuth: localStorage.getItem("Auth"),
+    isAuth: sessionStorage.getItem("Auth"),
     userProfile: null,
     semCards: [],
   },

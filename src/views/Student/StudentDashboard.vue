@@ -157,7 +157,7 @@ export default {
     try {
       const response1 = await axios.get("/auth/users/me/", {
         headers: {
-          Authorization: "JWT " + localStorage.getItem("token"),
+          Authorization: "JWT " + sessionStorage.getItem("token"),
         },
       });
       const userId = response1.data.id;

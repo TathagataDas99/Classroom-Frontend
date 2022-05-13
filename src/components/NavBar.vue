@@ -31,9 +31,9 @@ export default {
   },
   methods: {
     handelLogout() {
-      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
       this.$store.state.user = null;
-      localStorage.removeItem("Auth");
+      sessionStorage.removeItem("Auth");
       sessionStorage.clear();
       this.$store.state.isAuth = false;
       this.$router.replace({ name: "Home" });
