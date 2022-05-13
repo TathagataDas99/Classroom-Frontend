@@ -1,5 +1,5 @@
 <template>
-  <div @focusin="isDownloaded">
+  <main>
     <div v-if="loader">
       <LoaderView />
     </div>
@@ -55,7 +55,7 @@
         </div>
       </div>
     </section>
-  </div>
+  </main>
 </template>
 
 <script>
