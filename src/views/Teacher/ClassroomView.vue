@@ -1,8 +1,8 @@
 <template>
-    <div v-if="loader">
-      <LoaderCard />
-    </div>
-    <!-- {{ subjects.semesters_list }} -->
+  <div v-if="loader">
+    <LoaderCard />
+  </div>
+  <!-- {{ subjects.semesters_list }} -->
   <section v-else>
     <div
       class="card"
