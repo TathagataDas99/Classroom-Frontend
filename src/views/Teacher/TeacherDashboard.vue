@@ -1,5 +1,5 @@
 <template>
-<h1>Hello teacher</h1>
+  <h1>Hello teacher</h1>
   <div
     class="grid min-h-screen w-screen grid-rows-1 gap-2 pb-10 text-lg lg:grid-cols-3"
   >
