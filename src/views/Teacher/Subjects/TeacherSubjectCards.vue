@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <!-- <div>
     {{ subjects }}
-  </div>
+  </div> -->
   <div>
     <button
       class="btn rounded-full"
@@ -15,27 +15,41 @@
         <input
           class="input-box"
           type="text"
-          v-model="formValues.subject_code"
+          v-model.trim.lazy="formValues.subject_code"
+          required
         />
       </div>
       <div class="form-section">
         <label class="label">title</label>
-        <input class="input-box" type="text" v-model="formValues.title" />
-      </div>
-      <div class="form-section">
-        <label class="label">subject_type</label>
         <input
           class="input-box"
           type="text"
-          v-model="formValues.subject_type"
+          v-model.trim.lazy="formValues.title"
+          required
         />
+      </div>
+      <div class="form-section">
+        <label class="label" for="subject_type">subject_type</label>
+        <select
+          name="subject_type"
+          id="subject_type"
+          v-model="formValues.subject_type"
+        >
+          <option value="TH">Theory</option>
+          <option value="PRC">Practical</option>
+          <option value="PRJ">Project</option>
+          <option value="ELC">Elective</option>
+        </select>
       </div>
       <div class="form-section">
         <label class="label">credit_points</label>
         <input
           class="input-box"
+          form="credit_points"
           type="integer"
           v-model="formValues.credit_points"
+          placeholder="between 1-15"
+          required
         />
       </div>
       <button class="bttn">Add</button>
@@ -80,7 +94,7 @@ export default {
       formValues: {
         subject_code: "",
         title: "",
-        subject_type: "",
+        subject_type: "TH",
         credit_points: null,
       },
     };
