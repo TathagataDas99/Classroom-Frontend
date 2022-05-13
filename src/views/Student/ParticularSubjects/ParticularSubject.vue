@@ -4,11 +4,13 @@
       <LoaderView />
     </div>
 
-    <div class="flex flex-row items-stretch justify-between px-3 pt-3">
-      <nav class="tabs w-1/2">
+    <div
+      class="flex flex-col items-stretch justify-between px-3 pt-3 md:flex-row"
+    >
+      <nav class="tabs w-full md:w-1/2">
         <router-link
           :to="{ name: 'AnnouncementView', props: { no, subject_slug } }"
-          class="tab tab-lifted tab-lg"
+          class="tab tab-lifted md:tab-md"
           :class="{
             'tab-active': isActive === 1,
             'font-semibold text-primary-light': isActive === 1,
@@ -17,7 +19,7 @@
           >Announcement</router-link
         >
         <router-link
-          class="tab tab-lifted tab-lg"
+          class="tab tab-lifted md:tab-md"
           :to="{ name: 'NotesView', props: { no, subject_slug } }"
           :class="{
             'tab-active': isActive === 2,
@@ -27,7 +29,7 @@
           >Notes</router-link
         >
         <router-link
-          class="tab tab-lifted tab-lg"
+          class="tab tab-lifted md:tab-md"
           :to="{ name: 'AssignmentsView', props: { no, subject_slug } }"
           :class="{
             'tab-active': isActive === 3,
@@ -37,7 +39,7 @@
           >Assignments</router-link
         >
       </nav>
-      <div>
+      <div class="mr-7">
         <button
           class="btn"
           @click="
@@ -64,7 +66,7 @@ export default {
   data() {
     return {
       loader: false,
-      announcements: "",
+      announcements: "", //#FIXME: this might be an array
       id: "",
       isActive: 1,
     };

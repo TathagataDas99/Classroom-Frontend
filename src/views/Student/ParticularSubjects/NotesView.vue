@@ -6,7 +6,7 @@
     <section class="mt-5">
       <div
         tabindex="0"
-        class="collapse-plus collapse rounded-box mx-24 my-2 h-3/5 overflow-clip border border-base-300 bg-base-100"
+        class="collapse-plus collapse rounded-box mx-24 my-2 h-3/5 overflow-clip border border-base-300 bg-base-100 shadow-lg"
         v-for="note in notes"
         :key="note"
         @focusin="isDownloaded"
@@ -15,9 +15,9 @@
         <div class="collapse-title text-xl font-medium">
           {{ note.title }}
         </div>
-        <div class="collapse-content grid grid-cols-4 grid-rows-3">
+        <div class="collapse-content grid lg:grid-cols-4 lg:grid-rows-3">
           <div
-            class="collapse-content col-span-3 col-start-1 row-span-3 row-start-1"
+            class="collapse-content lg:col-span-3 lg:col-start-1 lg:row-span-3 lg:row-start-1"
           >
             <p class="coloumn-1">{{ note.description }}</p>
           </div>
@@ -36,7 +36,7 @@
             <p class="font-bold text-primary-light">Download Attached files:</p>
           </div>
           <div
-            class="collapse-content col-span-1 col-start-4 row-span-1 row-start-3 flex flex-row flex-wrap items-center justify-end"
+            class="collapse-content col-span-1 lg:col-start-4 row-span-1 lg:row-start-3 flex flex-row flex-wrap items-center justify-end"
           >
             <!-- <span class="font-bold">Attached Files</span> -->
             <a
