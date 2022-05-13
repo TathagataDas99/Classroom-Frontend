@@ -91,11 +91,9 @@ export default {
         //this.$store.state.user = user;
         if (user.userType === "student") {
           this.$router.push({ name: "StudentDashboard" });
+        } else if (user.userType === "teacher") {
+          this.$router.push({ name: "TeacherDashboard" });
         }
-        // else{
-
-        // }
-        // console.log(this.$store.state.user);
       } catch (e) {
         this.error = e.response.data.detail;
       }
