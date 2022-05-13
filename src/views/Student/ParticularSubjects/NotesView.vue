@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main @focusout="isDownloaded">
     <div v-if="loader">
       <LoaderView />
     </div>
@@ -9,8 +9,8 @@
         class="collapse-plus collapse rounded-box mx-2 my-2 h-3/5 overflow-clip border border-base-300 bg-base-100 shadow-lg md:mx-10 md:mx-24"
         v-for="note in notes"
         :key="note"
-        @focusin="isDownloaded"
         :class="{ 'collapse-open': isDownload }"
+        @focusin="isDownload = true"
       >
         <div class="collapse-title text-xl font-medium">
           {{ note.title }}
@@ -71,7 +71,7 @@ export default {
       notes: [],
       id: "",
       isActive: 1,
-      isDownload: false,
+      isDownload: true,
     };
   },
   components: {
