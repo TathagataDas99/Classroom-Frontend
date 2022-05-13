@@ -10,7 +10,7 @@
           required
           type="email"
           class="input-box"
-          v-model="formValues.email"
+          v-model.trim.lazy="formValues.email"
         />
       </div>
       <div class="text-2xl font-bold text-pink-500" v-if="error">
