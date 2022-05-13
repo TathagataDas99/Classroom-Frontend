@@ -2,8 +2,8 @@
   <div v-if="loader">
     <LoaderCard />
   </div>
-  <!-- {{ subjects.semesters_list }} -->
   <section v-else>
+    {{ subjects }}
     <div
       class="card"
       v-for="semCard in subjects.semesters_list"
@@ -52,6 +52,16 @@ export default {
       console.log(e);
     }
     this.loader = false;
+  },
+  methods: {
+    handelOpen(semester_no) {
+      this.$router.push({
+        name: "TeacherSubjectCards",
+        params: {
+          semester_no,
+        },
+      });
+    },
   },
 };
 </script>
