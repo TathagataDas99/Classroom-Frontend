@@ -4,7 +4,7 @@
       <LoaderCard />
     </div>
     <section v-else>
-      <!-- {{ userProfile.classroom_list }} -->
+      {{ userProfile }}
       <div
         class="card"
         v-for="classroom in userProfile.classroom_list"
@@ -28,6 +28,7 @@
         <div class="card-title text-2xl text-zinc-700">
           {{ classroom.level }}
         </div>
+        <button class="btn" @click="handelOpen(classroom.slug)">Open</button>
       </div>
     </section>
   </div>
@@ -35,7 +36,6 @@
 
 <script>
 import axios from "axios";
-// import LoaderView from "../../components/LoaderView.vue";
 import { mapGetters } from "vuex";
 import LoaderCard from "../../components/LoaderCard.vue";
 export default {
@@ -81,11 +81,11 @@ export default {
     this.loader = false;
   },
   methods: {
-    handelOpen(no) {
+    handelOpen(slug) {
       this.$router.push({
-        name: "SubjectCards",
+        name: "ClassroomView",
         params: {
-          no: no,
+          classroom_slug: slug,
         },
       });
     },
