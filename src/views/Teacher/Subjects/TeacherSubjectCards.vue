@@ -197,7 +197,7 @@ export default {
           this.formValues
         );
       } catch (e) {
-        console.log(e.status);
+        console.log(e);
       }
       this.$router.push({
         name: "TeacherSubjectCards",
