@@ -1,6 +1,6 @@
 <template>
   <!-- <div>
-    {{ subjects }}
+    {{ semCards }}
   </div> -->
   <div>
     <button
@@ -99,6 +99,7 @@ export default {
       subjects: null,
       loader: "",
       isFormOpen: false,
+      id: "",
       formValues: {
         subject_code: "",
         title: "",
@@ -111,14 +112,19 @@ export default {
     LoaderCard,
   },
   computed: {
-    ...mapGetters(["userType", "userProfile"]),
+    ...mapGetters(["userType", "userProfile", "semCards"]),
   },
   props: ["semester_no"],
   async created() {
     this.loader = true;
+    for (let semCard of this.semCards) {
+      if (`${semCard.sem_no}` === this.semester_no) {
+        this.id = semCard.id;
+      }
+    }
     try {
       const subjectResponse = await axios.get(
-        `/classroom-app/teacher/${this.userProfile.teacher_id}/sem/${this.semester_no}/subject/`
+        `/classroom-app/teacher/${this.userProfile.teacher_id}/sem/${this.id}/subject/`
       );
       this.subjects = subjectResponse.data;
     } catch (e) {
@@ -130,7 +136,7 @@ export default {
     async addSubject() {
       try {
         await axios.post(
-          `/classroom-app/teacher/${this.userProfile.teacher_id}/sem/${this.semester_no}/subject/`,
+          `/classroom-app/teacher/${this.userProfile.teacher_id}/sem/${this.id}/subject/`,
           this.formValues
         );
       } catch (e) {

@@ -48,6 +48,7 @@ export default {
         `/classroom-app/teacher/${this.userProfile.teacher_id}/teacher-classrooms/${this.classroom_slug}/`
       );
       this.subjects = subjectResponse.data;
+      this.$store.dispatch("semCards", this.subjects.semesters_list);
     } catch (e) {
       console.log(e);
     }
