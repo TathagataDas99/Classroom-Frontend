@@ -76,7 +76,7 @@
       class="card col-span-1 row-span-1 place-self-center"
       v-for="subject in subjects"
       :key="subject.slug"
-      :class="{ 'h-5/6 w-4/5': !subjectEdit }"
+      :class="{ 'h-full w-full overflow-auto scrollbar-hide': !subjectEdit }"
     >
       <div class="absolute top-5 right-5">
         <PencilIcon
