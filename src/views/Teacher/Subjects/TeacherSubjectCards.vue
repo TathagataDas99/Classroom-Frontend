@@ -1,7 +1,7 @@
 <template>
-  <!-- <div>
+  <div>
     {{ subjects }}
-  </div> -->
+  </div>
   <div>
     <button
       class="btn rounded-full"
@@ -103,6 +103,7 @@
         class="w-full bg-slate-50 text-lg text-zinc-700"
         :class="{ 'input-box': !subjectEdit }"
         :disabled="subjectEdit"
+        placeholder="subject title"
       />
       <!-- TODO: @priyesh :- make proper design -->
       <input
@@ -111,6 +112,7 @@
         class="w-full bg-slate-50 text-lg text-zinc-700"
         :class="{ 'input-box': !subjectEdit }"
         :disabled="subjectEdit"
+        placeholder="subject code"
       />
       <select
         name="subject_type"
@@ -176,6 +178,14 @@ export default {
     ...mapGetters(["userType", "userProfile", "semCards"]),
   },
   props: ["semester_no"],
+  beforeUpdate() {
+    this.$router.replace({
+      name: "TeacherSubjectCards",
+      params: {
+        semester_no: this.semester_no,
+      },
+    });
+  },
   async created() {
     this.loader = true;
     for (let semCard of this.semCards) {
@@ -199,18 +209,15 @@ export default {
       try {
         // this.subjectEdit = !this.subjectEdit;
         console.log(slug);
+        this.subjects = this.subjects.filter(function (obj) {
+          return obj.slug !== slug;
+        });
         await axios.delete(
           `/classroom-app/teacher/${this.userProfile.teacher_id}/sem/${this.id}/subject/${slug}/`
         );
       } catch (e) {
         console.log(e);
       }
-      this.$router.push({
-        name: "TeacherSubjectCards",
-        params: {
-          semester_no: this.semester_no,
-        },
-      });
     },
     async editPatch(subject) {
       try {
@@ -226,12 +233,6 @@ export default {
       } catch (e) {
         console.log(e);
       }
-      this.$router.push({
-        name: "TeacherSubjectCards",
-        params: {
-          semester_no: this.semester_no,
-        },
-      });
     },
     async addSubject() {
       try {
@@ -242,12 +243,6 @@ export default {
       } catch (e) {
         console.log(e);
       }
-      this.$router.push({
-        name: "TeacherSubjectCards",
-        params: {
-          semester_no: this.semester_no,
-        },
-      });
     },
   },
 };
