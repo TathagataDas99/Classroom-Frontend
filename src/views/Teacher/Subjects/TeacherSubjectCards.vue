@@ -9,7 +9,11 @@
     >
       Add subject+
     </button>
-    <form v-if="isFormOpen" class="form" @submit="addSubject">
+    <form
+      v-if="isFormOpen"
+      class="form accent-primary-dark"
+      @submit="addSubject"
+    >
       <div class="form-section">
         <label class="label">subject_code</label>
         <input
@@ -42,11 +46,15 @@
         </select>
       </div>
       <div class="form-section">
-        <label class="label">credit_points</label>
+        <label class="label"
+          >credit_points [{{ formValues.credit_points }}]</label
+        >
         <input
-          class="input-box"
+          class="range"
           form="credit_points"
-          type="integer"
+          type="range"
+          min="1"
+          max="15"
           v-model="formValues.credit_points"
           placeholder="between 1-15"
           required
@@ -95,7 +103,7 @@ export default {
         subject_code: "",
         title: "",
         subject_type: "TH",
-        credit_points: null,
+        credit_points: 1,
       },
     };
   },
