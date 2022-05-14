@@ -1,6 +1,7 @@
 <template>
   <div>
     {{ subjects }}
+    {{ classroom_slug }}
   </div>
   <div>
     <button
@@ -140,7 +141,10 @@
       />
       <!-- #TODO: @priyesh :- make proper design -->
 
-      <button class="btn" @click="handelOpen(this.no, subject.slug)">
+      <button
+        class="btn"
+        @click="handelOpen(classroom_slug, semester_no, subject.slug)"
+      >
         Open
       </button>
     </section>
@@ -151,7 +155,7 @@
 import axios from "axios";
 import { mapGetters } from "vuex";
 import { PencilIcon, CheckIcon, TrashIcon } from "@heroicons/vue/solid";
-import LoaderCard from "../../../components/LoaderCard.vue";
+import LoaderCard from "../../components/LoaderCard.vue";
 export default {
   data() {
     return {
@@ -177,7 +181,7 @@ export default {
   computed: {
     ...mapGetters(["userType", "userProfile", "semCards"]),
   },
-  props: ["semester_no"],
+  props: ["semester_no", "classroom_slug"],
   beforeUpdate() {
     this.$router.replace({
       name: "TeacherSubjectCards",
@@ -243,6 +247,16 @@ export default {
       } catch (e) {
         console.log(e);
       }
+    },
+    handelOpen(classroom_slug, semester_no, subject_slug) {
+      this.$router.push({
+        name: "particularSubjectView",
+        params: {
+          classroom_slug,
+          semester_no,
+          subject_slug,
+        },
+      });
     },
   },
 };
