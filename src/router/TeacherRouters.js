@@ -45,7 +45,7 @@ export default [
     beforeEnter: isAuth,
     children: [
       {
-        path: "/",
+        path: "",
         name: "announcementTeacher",
         component: announcementTeacher,
         props: true,
