@@ -93,7 +93,7 @@
       <!-- TODO:Dynamic v-model : LINK: https://stackoverflow.com/questions/60703994/how-do-you-conditional-bind-v-model-in-vue -->
       <input
         type="text"
-        :v-model="subjectEdit ? subject.title : formValues.title"
+        v-model="formValues.title"
         class="w-full bg-slate-50 text-lg text-zinc-700"
         :class="{ 'input-box': !subjectEdit }"
         :disabled="subjectEdit"
@@ -189,15 +189,15 @@ export default {
   },
   methods: {
     async editPatch(subject_slug) {
-      this.subjectEdit = !this.subjectEdit;
       try {
+        this.subjectEdit = !this.subjectEdit;
         console.log(this.formValues);
         await axios.patch(
           `/classroom-app/teacher/${this.userProfile.teacher_id}/sem/${this.id}/subject/${subject_slug}/`,
           this.formValues
         );
       } catch (e) {
-        console.log(e);
+        console.log(e.status);
       }
       this.$router.push({
         name: "TeacherSubjectCards",
