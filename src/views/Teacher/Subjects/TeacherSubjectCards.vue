@@ -67,21 +67,70 @@
     class="mt-5 grid grid-flow-row grid-cols-1 items-center justify-evenly gap-3 md:grid-cols-2 lg:grid-cols-4 lg:grid-rows-3"
   >
     <template v-if="loader">
-      <template v-for="i in 8" :key="i">
+      <template v-for="i in 4" :key="i">
         <LoaderCard class="col-span-1 row-span-1 place-self-center" />
       </template>
     </template>
+    <!-- Priyesh make own card -->
     <section
       class="card col-span-1 row-span-1 place-self-center"
       v-for="subject in subjects"
       :key="subject.slug"
+      :class="{ 'h-5/6 w-4/5': !subjectEdit }"
     >
-      <h1 class="card-title text-2xl text-zinc-700">
-        {{ subject.title }}
-      </h1>
-      <h1 class="card-title text-sm text-zinc-700">
-        {{ subject.subject_code }}
-      </h1>
+      <div class="absolute top-5 right-5">
+        <PencilIcon
+          v-if="subjectEdit"
+          @click="subjectEdit = !subjectEdit"
+          class="slow-effect h-7 w-5 text-zinc-700 hover:text-zinc-500"
+        />
+        <CheckIcon
+          v-else
+          @click="subjectEdit = !subjectEdit"
+          class="slow-effect h-7 w-5 rounded-lg border-2 border-primary-light text-primary-dark hover:text-primary-light"
+        />
+      </div>
+      <input
+        type="text"
+        v-model="subject.title"
+        class="w-full bg-slate-50 text-lg text-zinc-700"
+        :class="{ 'input-box': !subjectEdit }"
+        :disabled="subjectEdit"
+      />
+      <!-- TODO: @priyesh :- make proper design -->
+      <input
+        type="text"
+        v-model="subject.subject_code"
+        class="w-full bg-slate-50 text-lg text-zinc-700"
+        :class="{ 'input-box': !subjectEdit }"
+        :disabled="subjectEdit"
+      />
+      <select
+        name="subject_type"
+        id="subject_type"
+        class="w-full bg-slate-50 text-lg text-zinc-700"
+        :class="{ 'input-box': !subjectEdit }"
+        :disabled="subjectEdit"
+        v-model="formValues.subject_type"
+      >
+        <option class="text-zinc-700" value="TH">Theory</option>
+        <option class="text-zinc-700" value="PRC">Practical</option>
+        <option class="text-zinc-700" value="PRJ">Project</option>
+        <option class="text-zinc-700" value="ELC">Elective</option>
+      </select>
+
+      <input
+        type="number"
+        min="1"
+        max="15"
+        placeholder="between 1 to 15"
+        v-model="subject.credit_points"
+        class="w-full bg-slate-50 text-lg text-zinc-700"
+        :class="{ 'input-box': !subjectEdit }"
+        :disabled="subjectEdit"
+      />
+      <!-- #TODO: @priyesh :- make proper design -->
+
       <button class="btn" @click="handelOpen(this.no, subject.slug)">
         Open
       </button>
@@ -92,6 +141,7 @@
 <script>
 import axios from "axios";
 import { mapGetters } from "vuex";
+import { PencilIcon, CheckIcon } from "@heroicons/vue/solid";
 import LoaderCard from "../../../components/LoaderCard.vue";
 export default {
   data() {
@@ -100,6 +150,7 @@ export default {
       loader: "",
       isFormOpen: false,
       id: "",
+      subjectEdit: true,
       formValues: {
         subject_code: "",
         title: "",
@@ -110,6 +161,8 @@ export default {
   },
   components: {
     LoaderCard,
+    PencilIcon,
+    CheckIcon,
   },
   computed: {
     ...mapGetters(["userType", "userProfile", "semCards"]),
