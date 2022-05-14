@@ -89,6 +89,12 @@
           @click="editPatch(subject)"
           class="slow-effect h-7 w-5 rounded-lg border-2 border-primary-light text-primary-dark hover:text-primary-light"
         />
+        <div class="tooltip" data-tip="Delete Subject">
+          <TrashIcon
+            @click="deleteSubject(subject.slug)"
+            class="slow-effect h-7 w-5 text-pink-500 hover:text-pink-300"
+          />
+        </div>
       </div>
       <!-- TODO:Dynamic v-model : LINK: https://stackoverflow.com/questions/60703994/how-do-you-conditional-bind-v-model-in-vue -->
       <input
@@ -142,7 +148,7 @@
 <script>
 import axios from "axios";
 import { mapGetters } from "vuex";
-import { PencilIcon, CheckIcon } from "@heroicons/vue/solid";
+import { PencilIcon, CheckIcon, TrashIcon } from "@heroicons/vue/solid";
 import LoaderCard from "../../../components/LoaderCard.vue";
 export default {
   data() {
@@ -164,6 +170,7 @@ export default {
     LoaderCard,
     PencilIcon,
     CheckIcon,
+    TrashIcon,
   },
   computed: {
     ...mapGetters(["userType", "userProfile", "semCards"]),
@@ -188,6 +195,23 @@ export default {
     this.loader = false;
   },
   methods: {
+    async deleteSubject(slug) {
+      try {
+        // this.subjectEdit = !this.subjectEdit;
+        console.log(slug);
+        await axios.delete(
+          `/classroom-app/teacher/${this.userProfile.teacher_id}/sem/${this.id}/subject/${slug}/`
+        );
+      } catch (e) {
+        console.log(e);
+      }
+      this.$router.push({
+        name: "TeacherSubjectCards",
+        params: {
+          semester_no: this.semester_no,
+        },
+      });
+    },
     async editPatch(subject) {
       try {
         this.subjectEdit = !this.subjectEdit;
