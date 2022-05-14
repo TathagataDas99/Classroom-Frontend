@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <!-- <div>
     {{ subjects }}
-  </div>
+  </div> -->
   <div>
     <button
       class="btn rounded-full"
@@ -86,14 +86,14 @@
         />
         <CheckIcon
           v-else
-          @click="editPatch(subject.slug)"
+          @click="editPatch(subject)"
           class="slow-effect h-7 w-5 rounded-lg border-2 border-primary-light text-primary-dark hover:text-primary-light"
         />
       </div>
       <!-- TODO:Dynamic v-model : LINK: https://stackoverflow.com/questions/60703994/how-do-you-conditional-bind-v-model-in-vue -->
       <input
         type="text"
-        v-model="formValues.title"
+        v-model="subject.title"
         class="w-full bg-slate-50 text-lg text-zinc-700"
         :class="{ 'input-box': !subjectEdit }"
         :disabled="subjectEdit"
@@ -101,7 +101,7 @@
       <!-- TODO: @priyesh :- make proper design -->
       <input
         type="text"
-        v-model="formValues.subject_code"
+        v-model="subject.subject_code"
         class="w-full bg-slate-50 text-lg text-zinc-700"
         :class="{ 'input-box': !subjectEdit }"
         :disabled="subjectEdit"
@@ -112,7 +112,7 @@
         class="w-full bg-slate-50 text-lg text-zinc-700"
         :class="{ 'input-box': !subjectEdit }"
         :disabled="subjectEdit"
-        v-model="formValues.subject_type"
+        v-model="subject.subject_type"
       >
         <option class="text-zinc-700" value="TH">Theory</option>
         <option class="text-zinc-700" value="PRC">Practical</option>
@@ -125,7 +125,7 @@
         min="1"
         max="15"
         placeholder="between 1 to 15"
-        v-model="formValues.credit_points"
+        v-model="subject.credit_points"
         class="w-full bg-slate-50 text-lg text-zinc-700"
         :class="{ 'input-box': !subjectEdit }"
         :disabled="subjectEdit"
@@ -188,13 +188,16 @@ export default {
     this.loader = false;
   },
   methods: {
-    async editPatch(subject_slug) {
+    async editPatch(subject) {
       try {
         this.subjectEdit = !this.subjectEdit;
-        console.log(this.formValues);
+        const slug = subject.slug;
+        delete subject.slug;
+        delete subject.created_at;
+        console.log(subject);
         await axios.patch(
-          `/classroom-app/teacher/${this.userProfile.teacher_id}/sem/${this.id}/subject/${subject_slug}/`,
-          this.formValues
+          `/classroom-app/teacher/${this.userProfile.teacher_id}/sem/${this.id}/subject/${slug}/`,
+          subject
         );
       } catch (e) {
         console.log(e);
