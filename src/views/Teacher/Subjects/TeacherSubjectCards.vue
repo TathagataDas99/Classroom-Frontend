@@ -1,13 +1,13 @@
 <template>
-  <!-- <div>
-    {{ semCards }}
-  </div> -->
+  <div>
+    {{ subjects }}
+  </div>
   <div>
     <button
       class="btn rounded-full"
       @click="this.isFormOpen = !this.isFormOpen"
     >
-      Add subject+
+      Add subject
     </button>
     <form
       v-if="isFormOpen"
@@ -86,13 +86,14 @@
         />
         <CheckIcon
           v-else
-          @click="subjectEdit = !subjectEdit"
+          @click="editPatch(subject.slug)"
           class="slow-effect h-7 w-5 rounded-lg border-2 border-primary-light text-primary-dark hover:text-primary-light"
         />
       </div>
+      <!-- TODO:Dynamic v-model : LINK: https://stackoverflow.com/questions/60703994/how-do-you-conditional-bind-v-model-in-vue -->
       <input
         type="text"
-        v-model="subject.title"
+        :v-model="subjectEdit ? subject.title : formValues.title"
         class="w-full bg-slate-50 text-lg text-zinc-700"
         :class="{ 'input-box': !subjectEdit }"
         :disabled="subjectEdit"
@@ -100,7 +101,7 @@
       <!-- TODO: @priyesh :- make proper design -->
       <input
         type="text"
-        v-model="subject.subject_code"
+        v-model="formValues.subject_code"
         class="w-full bg-slate-50 text-lg text-zinc-700"
         :class="{ 'input-box': !subjectEdit }"
         :disabled="subjectEdit"
@@ -124,7 +125,7 @@
         min="1"
         max="15"
         placeholder="between 1 to 15"
-        v-model="subject.credit_points"
+        v-model="formValues.credit_points"
         class="w-full bg-slate-50 text-lg text-zinc-700"
         :class="{ 'input-box': !subjectEdit }"
         :disabled="subjectEdit"
@@ -180,12 +181,31 @@ export default {
         `/classroom-app/teacher/${this.userProfile.teacher_id}/sem/${this.id}/subject/`
       );
       this.subjects = subjectResponse.data;
+      // this.formValues = this.subjects[0]; //TODO:
     } catch (e) {
       console.log(e);
     }
     this.loader = false;
   },
   methods: {
+    async editPatch(subject_slug) {
+      this.subjectEdit = !this.subjectEdit;
+      try {
+        console.log(this.formValues);
+        await axios.patch(
+          `/classroom-app/teacher/${this.userProfile.teacher_id}/sem/${this.id}/subject/${subject_slug}/`,
+          this.formValues
+        );
+      } catch (e) {
+        console.log(e);
+      }
+      this.$router.push({
+        name: "TeacherSubjectCards",
+        params: {
+          semester_no: this.semester_no,
+        },
+      });
+    },
     async addSubject() {
       try {
         await axios.post(
