@@ -11,7 +11,7 @@
       <form
         v-if="isFormOpen"
         class="form accent-primary-dark"
-        @submit="addAnnouncement"
+        @submit.prevent="addAnnouncement"
       >
         <div class="form-section">
           <label class="label">Announcement Heading</label>
@@ -145,10 +145,11 @@ export default {
         delete announcement.id;
         delete announcement.created_at;
         delete announcement.updated_at;
-        await axios.patch(
+        const res = await axios.patch(
           `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/announcement/${id}/`,
           announcement
         );
+        console.log(res);
         this.$router.go();
       } catch (e) {
         console.log(e);
@@ -169,11 +170,14 @@ export default {
       }
     },
     async addAnnouncement() {
+      this.isFormOpen = !this.isFormOpen;
       try {
-        await axios.post(
+        const res = await axios.post(
           `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/announcement/`,
           this.formValues
         );
+        console.log(res);
+        this.announcements.push(res.data);
       } catch (e) {
         console.log(e);
       }
