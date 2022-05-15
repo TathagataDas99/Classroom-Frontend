@@ -13,7 +13,7 @@
     <form
       v-if="isFormOpen"
       class="form accent-primary-dark"
-      @submit="addSubject"
+      @submit.prevent="addSubject"
     >
       <div class="form-section">
         <label class="label">subject_code</label>
@@ -183,14 +183,14 @@ export default {
     ...mapGetters(["userType", "userProfile", "semCards"]),
   },
   props: ["semester_no", "classroom_slug"],
-  beforeUpdate() {
-    this.$router.replace({
-      name: "TeacherSubjectCards",
-      params: {
-        semester_no: this.semester_no,
-      },
-    });
-  },
+  // beforeUpdate() {
+  //   this.$router.replace({
+  //     name: "TeacherSubjectCards",
+  //     params: {
+  //       semester_no: this.semester_no,
+  //     },
+  //   });
+  // },
   async created() {
     this.loader = true;
     for (let semCard of this.semCards) {
@@ -235,16 +235,19 @@ export default {
           `/classroom-app/teacher/${this.userProfile.teacher_id}/sem/${this.id}/subject/${slug}/`,
           subject
         );
+        this.$router.go();
       } catch (e) {
         console.log(e);
       }
     },
     async addSubject() {
+      this.isFormOpen = !this.isFormOpen;
       try {
-        await axios.post(
+        const res = await axios.post(
           `/classroom-app/teacher/${this.userProfile.teacher_id}/sem/${this.id}/subject/`,
           this.formValues
         );
+        this.subjects.push(res.data);
       } catch (e) {
         console.log(e);
       }
