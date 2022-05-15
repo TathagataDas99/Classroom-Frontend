@@ -1,6 +1,39 @@
 <template>
   <div>
     <h1>{{ announcements }}</h1>
+    <div>
+      <button
+        class="btn rounded-full"
+        @click="this.isFormOpen = !this.isFormOpen"
+      >
+        Add subject
+      </button>
+      <form
+        v-if="isFormOpen"
+        class="form accent-primary-dark"
+        @submit="addAnnouncement"
+      >
+        <div class="form-section">
+          <label class="label">Announcement Heading</label>
+          <input
+            class="input-box"
+            type="text"
+            v-model.trim.lazy="formValues.heading"
+            required
+          />
+        </div>
+        <div class="form-section">
+          <label class="label">Announcement Body</label>
+          <input
+            class="input-box"
+            type="text"
+            v-model.trim.lazy="formValues.body"
+            required
+          />
+        </div>
+        <button class="bttn">Add</button>
+      </form>
+    </div>
     <div
       class="mt-5 grid grid-flow-row grid-cols-1 items-center justify-evenly gap-3 md:grid-cols-2 lg:grid-cols-4 lg:grid-rows-3"
     >
@@ -28,7 +61,7 @@
           />
           <div class="tooltip" data-tip="Delete Subject">
             <TrashIcon
-              @click="deleteSubject(announcement.id)"
+              @click="deleteAnnouncement(announcement.id)"
               class="slow-effect h-7 w-5 text-pink-500 hover:text-pink-300"
             />
           </div>
@@ -65,6 +98,11 @@ export default {
   props: ["classroom_slug", "no", "subject_slug"],
   data() {
     return {
+      isFormOpen: false,
+      formValues: {
+        heading: "",
+        body: "",
+      },
       loader: false,
       announcements: "", //#FIXME: this might be an array
       id: "",
@@ -81,18 +119,7 @@ export default {
   computed: {
     ...mapGetters(["userType", "userProfile", "semCards"]),
   },
-  // beforeUpdate() {
-  //   this.$router.push({
-  //     name: "particularSubjectView",
-  //     params: {
-  //       classroom_slug: this.classroom_slug,
-  //       semester_no: this.no,
-  //       subject_slug: this.subject_slug,
-  //     },
-  //   });
-  // },
   async created() {
-    //   this.$router.go();
     this.loader = true;
     for (let semCard of this.semCards) {
       if (`${semCard.sem_no}` === this.no) {
@@ -126,7 +153,7 @@ export default {
         console.log(e);
       }
     },
-    async deleteSubject(id) {
+    async deleteAnnouncement(id) {
       try {
         // this.subjectEdit = !this.subjectEdit;
         console.log(id);
@@ -135,6 +162,16 @@ export default {
         });
         await axios.delete(
           `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/announcement/${id}/`
+        );
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async addAnnouncement() {
+      try {
+        await axios.post(
+          `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/announcement/`,
+          this.formValues
         );
       } catch (e) {
         console.log(e);
