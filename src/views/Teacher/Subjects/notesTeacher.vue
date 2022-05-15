@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>{{ notes }}</h1>
+    <hr />
     <div>
       <button
         class="btn rounded-full"
@@ -30,6 +31,10 @@
             v-model.trim.lazy="formValues.description"
             required
           />
+        </div>
+        <div class="form-section">
+          <label class="label">Add notes</label>
+          <input ref="file" @change="handleFileUpload" type="file" multiple />
         </div>
         <button class="bttn">Add</button>
       </form>
@@ -104,6 +109,7 @@ export default {
         title: "",
         description: "",
       },
+      attached_files: [],
       loader: false,
       notes: "", //#FIXME: this might be an array
       id: "",
@@ -174,11 +180,23 @@ export default {
           `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/notes/`,
           this.formValues
         );
-        console.log(res);
+        // console.log(res);
         this.notes.push(res.data);
+        const link = `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/notes/${res.data.slug}/notes-files/`;
+        await axios.post(link, this.attached_files, {
+          headers: {
+            "Content-Type": "media-type",
+            // "content-type": "form-data",
+          },
+        });
+        console.log(this.attached_files);
       } catch (e) {
         console.log(e);
       }
+    },
+    async handleFileUpload(event) {
+      this.attached_files = event.target.files[0];
+      console.log(this.attached_files);
     },
   },
 };
