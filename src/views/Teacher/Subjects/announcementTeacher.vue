@@ -48,6 +48,7 @@
         :key="announcement.id"
         :class="{ 'h-full w-full overflow-auto scrollbar-hide': !subjectEdit }"
       >
+        <!-- #FIXME: Edit card opening all at same time -->
         <div class="absolute top-5 right-5">
           <PencilIcon
             v-if="subjectEdit"
