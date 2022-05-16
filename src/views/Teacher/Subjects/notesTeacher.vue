@@ -13,6 +13,7 @@
         v-if="isFormOpen"
         class="form accent-primary-dark"
         @submit.prevent="addAnnouncement"
+        enctype="multipart/form-data"
       >
         <div class="form-section">
           <label class="label">Notes Title</label>
@@ -35,6 +36,7 @@
         <div class="form-section">
           <label class="label">Add notes</label>
           <input ref="file" @change="handleFileUpload" type="file" multiple />
+          <!-- multiple -->
         </div>
         <button class="bttn">Add</button>
       </form>
@@ -182,11 +184,21 @@ export default {
         );
         // console.log(res);
         this.notes.push(res.data);
+        let fd = new FormData();
+        fd.append("file", this.attached_files);
+        fd.append("filename", this.attached_files.name);
+        console.log(fd);
         const link = `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/notes/${res.data.slug}/notes-files/`;
-        await axios.post(link, this.attached_files, {
+        await axios.post(link, fd, {
           headers: {
-            "Content-Type": "media-type",
-            // "content-type": "form-data",
+            // "Access-Control-Allow-Origin": "*",
+            // "access-control-allow-headers":
+            //   "origin, x-requested-with, content-type, accept",
+            "Content-Type": "multipart/form-data",
+            Accept: "*/*",
+            "Content-Disposition": this.attached_files,
+            Filename: this.attached_files.name,
+            // boundary: "file",
           },
         });
         console.log(this.attached_files);
