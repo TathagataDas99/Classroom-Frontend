@@ -185,8 +185,17 @@ export default {
         // console.log(res);
         this.notes.push(res.data);
         let fd = new FormData();
-        fd.append("file", this.attached_files);
+        fd.append(
+          "file_path",
+          this.attached_files
+          // "filename",
+          // this.attached_files.name
+        );
         fd.append("filename", this.attached_files.name);
+        fd.append(
+          "csrfmiddlewaretoken ",
+          "WPlnkfpIGxgkz9aNz4M7tPKGyvJ8ONxHeJ3g5NEd6RRJgmKHGJwzLvrRjyZvu1NL"
+        );
         console.log(fd);
         const link = `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/notes/${res.data.slug}/notes-files/`;
         await axios.post(link, fd, {
@@ -196,9 +205,11 @@ export default {
             //   "origin, x-requested-with, content-type, accept",
             "Content-Type": "multipart/form-data",
             Accept: "*/*",
+            csrfmiddlewaretoken:
+              "WPlnkfpIGxgkz9aNz4M7tPKGyvJ8ONxHeJ3g5NEd6RRJgmKHGJwzLvrRjyZvu1NL",
             "Content-Disposition": this.attached_files,
+            boundary: "file_path",
             Filename: this.attached_files.name,
-            // boundary: "file",
           },
         });
         console.log(this.attached_files);
