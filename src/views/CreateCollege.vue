@@ -114,12 +114,19 @@
 
 <script>
 import { PlusCircleIcon, XCircleIcon } from "@heroicons/vue/outline";
-// import VueTagsInput from "@sipec/vue3-tags-input";
+
 export default {
   components: {
     // VueTagsInput,
     PlusCircleIcon,
     XCircleIcon,
+  },
+  computed: {
+    // validEmail(email) {
+    //   let re =
+    //     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    //   return re.test(email);
+    // },
   },
   data() {
     return {
@@ -148,9 +155,18 @@ export default {
     };
   },
   methods: {
+    validEmail(email) {
+      let re =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
     addEmail() {
-      this.formValues.allowed_dbas.push({ email: this.tempEmail });
-      this.tempEmail = "";
+      if (this.validEmail(this.tempEmail)) {
+        this.formValues.allowed_dbas.push({ email: this.tempEmail });
+        this.tempEmail = "";
+      } else {
+        console.log("email not valid");
+      }
     },
     removeMail(index) {
       this.formValues.allowed_dbas.splice(index, 1);
