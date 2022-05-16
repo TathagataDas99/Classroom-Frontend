@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>{{ notes }}</h1>
+    <!-- <h1>{{attached_files}}</h1> -->
     <hr />
     <div>
       <button
@@ -35,7 +36,13 @@
         </div>
         <div class="form-section">
           <label class="label">Add notes</label>
-          <input ref="file" @change="handleFileUpload" type="file" multiple />
+          <input
+            ref="file"
+            @change="handleFileUpload"
+            type="file"
+            multiple
+            accept=".xlsx, .pdf, .docs"
+          />
           <!-- multiple -->
         </div>
         <button class="bttn">Add</button>
@@ -92,6 +99,17 @@
           :disabled="subjectEdit"
           placeholder="note code"
         />
+        <a
+          class="slow-effect bottom-5 flex flex-row hover:text-primary-light"
+          :href="'http://localhost:8000' + file.file_path"
+          v-for="(file) in note.attached_files"
+          :key="file.title"
+        >
+          <DocumentDownloadIcon
+            class="slow-effect h-4 w-4 inline-block text-primary-dark hover:scale-110 hover:text-primary-light"
+          />
+          <!-- <span class="text-sm font-bold">file-{{ index + 1 }}</span> -->
+        </a>
       </section>
     </div>
   </div>
@@ -102,6 +120,7 @@ import axios from "axios";
 import { mapGetters } from "vuex";
 import { PencilIcon, CheckIcon, TrashIcon } from "@heroicons/vue/solid";
 import LoaderCard from "../../../components/LoaderCard.vue";
+import { DocumentDownloadIcon } from "@heroicons/vue/solid";
 export default {
   props: ["classroom_slug", "no", "subject_slug"],
   data() {
@@ -124,6 +143,7 @@ export default {
     PencilIcon,
     CheckIcon,
     TrashIcon,
+    DocumentDownloadIcon,
   },
   computed: {
     ...mapGetters(["userType", "userProfile", "semCards"]),
@@ -184,41 +204,29 @@ export default {
         );
         // console.log(res);
         this.notes.push(res.data);
-        let fd = new FormData();
-        fd.append(
-          "file_path",
-          this.attached_files
-          // "filename",
-          // this.attached_files.name
-        );
-        fd.append("filename", this.attached_files.name);
-        // fd.append(
-        //   "csrfmiddlewaretoken ",
-        //   "WPlnkfpIGxgkz9aNz4M7tPKGyvJ8ONxHeJ3g5NEd6RRJgmKHGJwzLvrRjyZvu1NL"
-        // );
-        console.log(fd);
-        const link = `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/notes/${res.data.slug}/notes-files/`;
-        await axios.post(link, fd, {
-          headers: {
-            // "Access-Control-Allow-Origin": "*",
-            // "access-control-allow-headers":
-            //   "origin, x-requested-with, content-type, accept",
-            "Content-Type": "multipart/form-data",
-            Accept: "*/*",
-            // csrfmiddlewaretoken:
-            //   "WPlnkfpIGxgkz9aNz4M7tPKGyvJ8ONxHeJ3g5NEd6RRJgmKHGJwzLvrRjyZvu1NL",
-            "Content-Disposition": this.attached_files,
-            boundary: "file_path",
-            Filename: this.attached_files.name,
-          },
-        });
+        for (let i of this.attached_files) {
+          let fd = new FormData();
+          fd.append("file_path", i);
+          console.log(fd);
+          const link = `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/notes/${res.data.slug}/notes-files/`;
+          await axios.post(link, fd, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Accept: "*/*",
+              "Content-Disposition": i,
+              boundary: "file_path",
+              Filename: i.name,
+            },
+          });
+        }
+        this.$router.go();
         console.log(this.attached_files);
       } catch (e) {
         console.log(e);
       }
     },
     async handleFileUpload(event) {
-      this.attached_files = event.target.files[0];
+      this.attached_files = event.target.files;
       console.log(this.attached_files);
     },
   },
