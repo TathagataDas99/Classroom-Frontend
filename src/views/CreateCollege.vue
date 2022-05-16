@@ -1,22 +1,17 @@
 <template>
   {{ formValues }}
-  {{ tags }}
   <div>
-    <form class="form accent-primary-dark" enctype="multipart/form-data">
+    <form
+      class="form accent-primary-dark"
+      enctype="multipart/form-data"
+      @submit.prevent="createCollege"
+    >
       <div class="form-section">
         <label class="label">Name</label>
         <input
           class="input-box"
           type="text"
           v-model.trim.lazy="formValues.name"
-        />
-      </div>
-      <div class="form-section">
-        <label class="label">city</label>
-        <input
-          class="input-box"
-          type="text"
-          v-model.trim.lazy="formValues.city"
         />
       </div>
       <div class="form-section">
@@ -71,7 +66,6 @@
           v-model="tempEmail"
           class="input-box"
           placeholder="dba@email.com"
-          required
         />
         <PlusCircleIcon
           @click="addEmail"
@@ -107,13 +101,14 @@
           </ul>
         </section>
       </div>
-      <button class="bttn">Add</button>
+      <button class="bttn">Create</button>
     </form>
   </div>
 </template>
 
 <script>
 import { PlusCircleIcon, XCircleIcon } from "@heroicons/vue/outline";
+import axios from "axios";
 
 export default {
   components: {
@@ -121,29 +116,10 @@ export default {
     PlusCircleIcon,
     XCircleIcon,
   },
-  computed: {
-    // validEmail(email) {
-    //   let re =
-    //     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    //   return re.test(email);
-    // },
-  },
   data() {
     return {
       count: 0,
       tempEmail: "",
-      tag: "",
-      tags: [],
-      validation: [
-        {
-          classes: "font-bold text-danger-dark",
-          rule: (tags) => tags.length < 1,
-        },
-        {
-          classes: "text-danger-dark",
-          rule: /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/,
-        },
-      ],
       formValues: {
         name: "",
         city: "",
@@ -172,8 +148,40 @@ export default {
       this.formValues.allowed_dbas.splice(index, 1);
     },
     handleFileUpload(event) {
-      this.attached_file = event.target.files;
-      console.log(this.attached_files);
+      this.formValues.allowed_teacher_list = event.target.files[0];
+      console.log(this.formValues.allowed_teacher_list);
+    },
+    async createCollege() {
+      try {
+        if (this.formValues.allowed_dbas.length >= 1) {
+          let formData = new FormData();
+          formData.append("name", this.formValues.name);
+          formData.append("city", this.formValues.city);
+          formData.append("state", this.formValues.state);
+          formData.append("address", this.formValues.address);
+          formData.append(
+            "allowed_teacher_list",
+            this.formValues.allowed_teacher_list
+          );
+          formData.append("allowed_dbas", this.formValues.allowed_dbas);
+          const res = await axios.post(
+            "/classroom-app/college-create/",
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Accept: "*/*",
+                "Content-Disposition": this.formValues.allowed_teacher_list,
+                boundary: "allowed_teacher_list",
+                Filename: this.formValues.allowed_teacher_list.name,
+              },
+            }
+          );
+          console.log(res);
+        }
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 };
