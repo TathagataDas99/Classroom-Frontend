@@ -3,7 +3,6 @@ import ActivationAccount from "../views/Auth/ActivationAccount.vue";
 import LoginForm from "../views/Auth/LoginForm.vue";
 import ForgotPassword from "../views/Auth/ForgotPassword.vue";
 import ResetPassword from "../views/Auth/ResetPassword.vue";
-import HomeView from "../views/HomeView.vue";
 import store from "../store/";
 
 const unAuth = (to, from, next) => {
@@ -16,12 +15,6 @@ const unAuth = (to, from, next) => {
 };
 
 export default [
-  {
-    path: "/",
-    name: "Home",
-    component: HomeView,
-    beforeEnter: unAuth,
-  },
   {
     path: "/sign-in",
     name: "Signin",

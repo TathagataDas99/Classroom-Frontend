@@ -26,7 +26,12 @@
 export default {
   data() {
     return {
-      routes: [{ name: "Home" }, { name: "Signin" }, { name: "Login" }],
+      routes: [
+        { name: "Home" },
+        { name: "Signin" },
+        { name: "Login" },
+        { name: "CreateCollege" },
+      ],
     };
   },
   methods: {
