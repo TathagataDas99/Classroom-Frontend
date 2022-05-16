@@ -102,11 +102,11 @@
         <a
           class="slow-effect bottom-5 flex flex-row hover:text-primary-light"
           :href="'http://localhost:8000' + file.file_path"
-          v-for="(file) in note.attached_files"
+          v-for="file in note.attached_files"
           :key="file.title"
         >
           <DocumentDownloadIcon
-            class="slow-effect h-4 w-4 inline-block text-primary-dark hover:scale-110 hover:text-primary-light"
+            class="slow-effect inline-block h-4 w-4 text-primary-dark hover:scale-110 hover:text-primary-light"
           />
           <!-- <span class="text-sm font-bold">file-{{ index + 1 }}</span> -->
         </a>
