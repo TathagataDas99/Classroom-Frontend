@@ -1,6 +1,6 @@
 <template>
-  {{ formValues }}
   <div>
+    {{ formValues }}
     <form
       class="form accent-primary-dark"
       enctype="multipart/form-data"
@@ -42,11 +42,10 @@
         <label class="label col-span-3">Teachers list</label>
         <input
           class="col-span-4 block w-full text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:py-2 file:px-4 file:text-sm file:font-semibold file:text-violet-700 hover:file:bg-violet-100"
-          ref="file"
+          ref="file_teacher"
           @change="handleFileUpload"
           type="file"
-          multiple
-          accept=".xlsx, .pdf, .docs"
+          accept=".xlsx, .csv"
         />
         <!-- <div class="form-section">
           <label class="label">DBAS</label>
@@ -60,7 +59,17 @@
           <button @click="count++">+</button>
         </div> -->
       </div>
-      <div class="form-section">
+      <div class="grid grid-flow-col grid-cols-7">
+        <label class="label col-span-3">DBA list</label>
+        <input
+          class="col-span-4 block w-full text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:py-2 file:px-4 file:text-sm file:font-semibold file:text-violet-700 hover:file:bg-violet-100"
+          ref="file_dba"
+          @change="handleDBAFileUpload"
+          type="file"
+          accept=".xlsx, .csv"
+        />
+      </div>
+      <!-- <div class="form-section">
         <input
           type="email"
           v-model="tempEmail"
@@ -71,7 +80,7 @@
           @click="addEmail"
           class="h-10 w-10 self-center font-semibold text-primary-dark"
         />
-      </div>
+      </div> -->
       <!-- <div class="form-sections">
         <VueTagsInput
           class="w-full"
@@ -81,7 +90,7 @@
           @tags-changed="(newTags) => (tags = newTags)"
         />
       </div> -->
-      <div class="form-section">
+      <!-- <div class="form-section">
         <section
           tabindex="0"
           class="mx-10 h-4/5 w-full justify-evenly rounded-md border border-base-300 bg-base-100 shadow-md"
@@ -100,21 +109,21 @@
             </li>
           </ul>
         </section>
-      </div>
+      </div> -->
       <button class="bttn">Create</button>
     </form>
   </div>
 </template>
 
 <script>
-import { PlusCircleIcon, XCircleIcon } from "@heroicons/vue/outline";
+// import { PlusCircleIcon, XCircleIcon } from "@heroicons/vue/outline";
 import axios from "axios";
 
 export default {
   components: {
     // VueTagsInput,
-    PlusCircleIcon,
-    XCircleIcon,
+    // PlusCircleIcon,
+    // XCircleIcon,
   },
   data() {
     return {
@@ -126,7 +135,7 @@ export default {
         state: "",
         address: "",
         allowed_teacher_list: null,
-        allowed_dbas: [],
+        allowed_dba_list: null,
       },
     };
   },
@@ -150,6 +159,10 @@ export default {
     handleFileUpload(event) {
       this.formValues.allowed_teacher_list = event.target.files[0];
       console.log(this.formValues.allowed_teacher_list);
+    },
+    handleDBAFileUpload(event) {
+      this.formValues.allowed_dba_list = event.target.files[0];
+      console.log(this.formValues.allowed_dba_list);
     },
     async createCollege() {
       try {
