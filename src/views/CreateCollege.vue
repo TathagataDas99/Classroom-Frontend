@@ -166,32 +166,39 @@ export default {
     },
     async createCollege() {
       try {
-        if (this.formValues.allowed_dbas.length >= 1) {
-          let formData = new FormData();
-          formData.append("name", this.formValues.name);
-          formData.append("city", this.formValues.city);
-          formData.append("state", this.formValues.state);
-          formData.append("address", this.formValues.address);
-          formData.append(
-            "allowed_teacher_list",
-            this.formValues.allowed_teacher_list
-          );
-          formData.append("allowed_dbas", this.formValues.allowed_dbas);
-          const res = await axios.post(
-            "/classroom-app/college-create/",
-            formData,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-                Accept: "*/*",
-                "Content-Disposition": this.formValues.allowed_teacher_list,
-                boundary: "allowed_teacher_list",
-                Filename: this.formValues.allowed_teacher_list.name,
-              },
-            }
-          );
-          console.log(res);
-        }
+        // if (this.formValues.allowed_dbas.length >= 1) {
+        let formData = new FormData();
+        formData.append("name", this.formValues.name);
+        formData.append("city", this.formValues.city);
+        formData.append("state", this.formValues.state);
+        formData.append("address", this.formValues.address);
+        formData.append(
+          "allowed_teacher_list",
+          this.formValues.allowed_teacher_list
+        );
+        formData.append("allowed_dba_list", this.formValues.allowed_dba_list);
+        // formData.append("allowed_dbas", this.formValues.allowed_dbas);
+        const res = await axios.post(
+          "/classroom-app/college-create/",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Accept: "*/*",
+              "Content-Disposition": [
+                this.formValues.allowed_teacher_list,
+                this.formValues.allowed_dba_list,
+              ],
+              // boundary: "allowed_teacher_list",
+              Filename: [
+                this.formValues.allowed_teacher_list.name,
+                this.formValues.allowed_dba_list.name,
+              ],
+            },
+          }
+        );
+        console.log(res);
+        // }
       } catch (e) {
         console.log(e);
       }
