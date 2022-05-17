@@ -1,4 +1,7 @@
 <template>
+  <div v-if="loader">
+    <LoaderView />
+  </div>
   <div>
     {{ formValues }}
     <form
@@ -118,17 +121,22 @@
 <script>
 // import { PlusCircleIcon, XCircleIcon } from "@heroicons/vue/outline";
 import axios from "axios";
+import LoaderView from "../components/LoaderView.vue";
 
 export default {
+  // components: {
+  //   // VueTagsInput,
+  //   // PlusCircleIcon,
+  //   // XCircleIcon,
+  // },
   components: {
-    // VueTagsInput,
-    // PlusCircleIcon,
-    // XCircleIcon,
+    LoaderView,
   },
   data() {
     return {
       count: 0,
       tempEmail: "",
+      loader: false,
       formValues: {
         name: "",
         city: "",
@@ -165,6 +173,7 @@ export default {
       console.log(this.formValues.allowed_dba_list);
     },
     async createCollege() {
+      this.loader = true;
       try {
         // if (this.formValues.allowed_dbas.length >= 1) {
         let formData = new FormData();
@@ -197,11 +206,13 @@ export default {
             },
           }
         );
+        this.$router.push({ name: "Signin" });
         console.log(res);
         // }
       } catch (e) {
         console.log(e);
       }
+      this.loader = false;
     },
   },
 };
