@@ -93,6 +93,8 @@ export default {
           this.$router.push({ name: "StudentDashboard" });
         } else if (user.userType === "teacher") {
           this.$router.push({ name: "TeacherDashboard" });
+        } else {
+          this.$router.push({ name: "DbaDashboard" });
         }
       } catch (e) {
         this.error = e.response.data.detail;
