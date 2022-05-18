@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer {
+  .notification {
+    @apply absolute top-20 z-20 flex animate-pulse flex-row items-center justify-evenly rounded-2xl bg-info-dark px-5 py-3 font-body text-lg font-semibold text-bglight-shade  duration-500 md:text-xl;
+  }
+}
 .slow-effect {
   @apply transition duration-200 ease-linear;
 }
@@ -84,11 +89,13 @@
   @apply relative col-span-full  row-span-full self-end;
 }
 
-@layer {
-  .notification {
-    @apply absolute top-20 z-20 flex animate-pulse flex-row items-center justify-evenly rounded-2xl bg-info-dark px-5 py-3 font-body text-lg font-semibold text-bglight-shade  duration-500 md:text-xl;
-  }
-}
 .forgot-password {
   @apply py-1 px-2 text-center text-danger-light underline decoration-danger-light decoration-wavy underline-offset-2 hover:text-xl;
+}
+
+.forgot-password-email-form{
+  @apply flex h-screen flex-col items-center justify-evenly bg-gradient-to-br from-sky-400/75 to-green-300/70;
+}
+.login-view{
+  @apply grid h-screen grid-flow-row grid-cols-1 grid-rows-1 content-center justify-center gap-2 bg-gradient-to-br from-green-400/50 to-sky-400/90 lg:min-h-screen lg:grid-flow-col lg:grid-cols-2;
 }

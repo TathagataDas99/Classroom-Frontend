@@ -10,9 +10,7 @@
       />
     </div>
   </div>
-  <div
-    class="grid h-screen grid-flow-row grid-cols-1 grid-rows-1 content-center justify-center gap-2 bg-gradient-to-br from-green-400/50 to-sky-400/90 lg:min-h-screen lg:grid-flow-col lg:grid-cols-2"
-  >
+  <div class="login-view">
     <div class="absolute" v-if="loader">
       <LoaderView />
     </div>
