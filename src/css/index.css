@@ -17,7 +17,7 @@
   @apply my-1 mx-2 cursor-pointer rounded-2xl border-b-2 border-transparent px-7 py-1 text-sm decoration-transparent shadow-sm outline-none  hover:border-danger-dark hover:font-semibold hover:text-danger-dark hover:shadow-md md:text-base lg:text-lg 2xl:text-xl;
 }
 .button-section {
-  @apply flex flex-col items-stretch justify-evenly md:flex-row;
+  @apply mb-4 flex flex-col items-stretch justify-evenly md:flex-row;
 }
 .bttn {
   @apply mx-5 my-3 flex-1 rounded-lg bg-primary-light py-3 px-4 text-bglight-shade shadow-md outline-none md:w-3/5 md:flex-initial lg:w-2/5;
@@ -71,8 +71,15 @@
   @apply bg-slate-200/60 backdrop-blur-md backdrop-filter hover:backdrop-blur-lg;
 }
 .college-create-view {
-  @apply lg:grid-cols-5 grid grid-flow-row grid-cols-1 grid-rows-2 gap-2 lg:grid-flow-col lg:grid-rows-1;
+  @apply grid grid-flow-row grid-cols-1 grid-rows-2 gap-2 lg:grid-flow-col lg:grid-cols-5 lg:grid-rows-1;
 }
+
 .college-form-info {
-  @apply grid-cols-3 grid-rows-3 gap-2 lg:col-span-5 lg:gap-3;
+  @apply grid grid-flow-row grid-cols-3 grid-rows-3 gap-2 lg:col-span-5 lg:gap-3  ;
+}
+.college-form-text {
+  @apply col-span-2 row-span-1 lg:col-span-3  ;
+}
+.college-form-icon {
+  @apply relative col-span-1 row-span-1  ;
 }

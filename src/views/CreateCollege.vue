@@ -4,7 +4,11 @@
   </div>
   <main class="college-create-view ">
     <!-- {{ formValues }} -->
-    <section class="college-form-info bg-danger-dark" >
+    <section class="college-form-info " >
+      <div class="college-form-icon"><span class="w-2/3 h-2/3 mx-auto text-center align-middle rounded-full   bg-info-dark text-xl font-extrabold ordinal text-bglight-shade">1st</span></div>
+      <article class="college-form-text col-start-3  "> Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione sit et voluptates cupiditate consequatur, laudantium at tempore suscipit facilis consectetur neque quidem, error obcaecati aspernatur delectus unde officiis. Aliquam, corporis!</article>
+      <img src="" alt="College details">
+      <article></article>
       <img src="" alt="College details">
       <article></article>
     </section>
