@@ -2,14 +2,24 @@
   <div v-if="loader">
     <LoaderView />
   </div>
-  <main class="college-create-view ">
+  <main class="college-create-view">
     <!-- {{ formValues }} -->
-    <section class="college-form-info " >
-      <div class="college-form-icon"><span class="w-2/3 h-2/3 mx-auto text-center align-middle rounded-full   bg-info-dark text-xl font-extrabold ordinal text-bglight-shade">1st</span></div>
-      <article class="college-form-text col-start-3  "> Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione sit et voluptates cupiditate consequatur, laudantium at tempore suscipit facilis consectetur neque quidem, error obcaecati aspernatur delectus unde officiis. Aliquam, corporis!</article>
-      <img src="" alt="College details">
+    <section class="college-form-info">
+      <div class="college-form-icon">
+        <span
+          class="mx-auto h-2/3 w-2/3 rounded-full bg-info-dark text-center align-middle text-xl font-extrabold ordinal text-bglight-shade"
+          >1st</span
+        >
+      </div>
+      <article class="college-form-text col-start-3">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione sit et
+        voluptates cupiditate consequatur, laudantium at tempore suscipit
+        facilis consectetur neque quidem, error obcaecati aspernatur delectus
+        unde officiis. Aliquam, corporis!
+      </article>
+      <img src="" alt="College details" />
       <article></article>
-      <img src="" alt="College details">
+      <img src="" alt="College details" />
       <article></article>
     </section>
     <form
@@ -19,10 +29,10 @@
     >
       <section class="form-section">
         <label class="label">Name</label>
-        <section class="input-section ">
-          <AcademicCapIcon class="input-icon "/>
+        <section class="input-section">
+          <AcademicCapIcon class="input-icon" />
           <input
-            class="input-box "
+            class="input-box"
             type="text"
             v-model.trim.lazy="formValues.name"
           />
@@ -31,7 +41,7 @@
       <section class="form-section">
         <label class="label">city</label>
         <section class="input-section">
-          <LocationMarkerIcon class="input-icon "/>
+          <LocationMarkerIcon class="input-icon" />
           <input
             class="input-box"
             type="text"
@@ -42,7 +52,7 @@
       <section class="form-section">
         <label class="label">state</label>
         <section class="input-section">
-          <LocationMarkerIcon class="input-icon "/>
+          <LocationMarkerIcon class="input-icon" />
           <input
             class="input-box"
             type="text"
@@ -53,7 +63,7 @@
       <section class="form-section">
         <label class="label">address</label>
         <section class="input-section">
-          <LocationMarkerIcon class="input-icon "/>
+          <LocationMarkerIcon class="input-icon" />
           <input
             class="input-box"
             type="text"
@@ -62,7 +72,7 @@
         </section>
       </section>
       <section class="form-section">
-        <label class="label  ">Teachers list</label>
+        <label class="label">Teachers list</label>
         <section class="input-section-file">
           <input
             class="input-file"
@@ -137,7 +147,9 @@
           </ul>
         </section>
       </div> -->
-      <section class="button-section"><button class="bttn">Create</button></section>
+      <section class="button-section">
+        <button class="bttn">Create</button>
+      </section>
     </form>
   </main>
 </template>
@@ -146,8 +158,7 @@
 // import { PlusCircleIcon, XCircleIcon } from "@heroicons/vue/outline";
 import axios from "axios";
 import LoaderView from "../components/LoaderView.vue";
-import { PencilIcon ,AcademicCapIcon , LocationMarkerIcon } from "@heroicons/vue/solid";
-
+import { AcademicCapIcon, LocationMarkerIcon } from "@heroicons/vue/solid";
 
 export default {
   // components: {
@@ -157,7 +168,7 @@ export default {
   // },
   components: {
     LoaderView,
-    PencilIcon,
+    // PencilIcon,
     AcademicCapIcon,
     LocationMarkerIcon,
   },
