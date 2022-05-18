@@ -48,7 +48,7 @@
   @apply absolute top-2 left-2 h-7 w-5 text-bgdark-shade md:left-3 md:my-auto md:h-7 md:w-7;
 }
 .input-box {
-  @apply slow-effect h-full w-full  rounded-xl  border-b-2 border-b-gray-500/70 pl-16 font-body font-semibold outline-none  invalid:animate-pulse invalid:border-b-danger-dark invalid:text-danger-dark focus:border-b-primary-light focus:text-primary-dark focus:invalid:border-danger-dark focus:invalid:text-danger-dark focus:invalid:ring-danger-dark md:rounded-3xl md:border-b-4;
+  @apply slow-effect h-full w-full  rounded-xl  border-b-2 border-b-gray-500/70 pl-10 md:pl-16 font-body font-semibold outline-none  invalid:text-danger-dark  focus:border-b-primary-light focus:text-primary-dark focus:invalid:animate-pulse focus:invalid:border-b-danger-dark focus:invalid:text-danger-dark focus:invalid:ring-danger-dark md:rounded-3xl md:border-b-4;
 }
 .input-file {
   @apply slow-effect col-span-2 h-full w-full  text-sm text-bgdark-shade shadow-primary-light file:mr-4 file:rounded-full file:border-0 file:bg-primary-light file:py-2 file:px-4 file:text-base file:font-semibold file:text-bglight-shade hover:file:bg-primary-dark  hover:file:shadow-md;
@@ -82,4 +82,11 @@
 } */
 .college-form-icon {
   @apply relative col-span-full  row-span-full self-end;
+}
+
+@layer{
+  .notification{
+    @apply absolute rounded-2xl bg-info-dark text-bglight-shade px-5 py-3 top-20 font-semibold font-body z-20   ;
+  }
+
 }

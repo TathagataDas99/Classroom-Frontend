@@ -1,45 +1,70 @@
 <template>
-  <div class="flex h-screen flex-col items-center justify-evenly">
-    <div v-if="loader">
-      <LoaderView />
+<div class="flex flex-row justify-evenly  " v-if="error">
+      <div class="notification bg-warning-light"  >
+            {{ error }}
+          </div>
     </div>
-    <form class="form" @submit.prevent="handelLogin">
-      <div class="form-section">
-        <label class="label">Email</label>
-        <input
-          required
-          type="email"
-          class="input-box"
-          v-model.trim.lazy="formValues.email"
-        />
-      </div>
-      <div class="form-section">
-        <label class="label">Password</label>
-        <input
-          required
-          type="password"
-          class="input-box"
-          v-model="formValues.password"
-        />
-      </div>
-      <div class="text-2xl font-bold text-pink-500" v-if="error">
-        {{ error }}
-      </div>
-      <button type="submit" class="bttn">Submit</button>
-      <router-link class="text-green-700" to="/forgot-password">
-        Forgot password?</router-link
-      >
-    </form>
+  <div class="grid grid-cols-1 grid-rows-1 grid-flow-row lg:grid-cols-2 lg:grid-flow-col h-screen lg:min-h-screen content-center justify-center gap-2 bg-gradient-to-br from-green-400/50 to-sky-400/90 ">
+    <div class="absolute" v-if="loader">
+      <LoaderView />
+
+    </div>
+    
+    <img src="../../assets/login/login_3.svg" alt="" class="w-5/6 h-full hidden lg:col-start-2  lg:block self-end">
+    <main class="login-form">
+      <img
+        src="../../assets/login/man_2.png"
+        alt="no user image found"
+        class="mx-auto h-auto w-2/6 mt-5 shadow-lg rounded-full shadow-green-300/70"
+      />
+      <form class="form" @submit.prevent="handelLogin">
+        <section class="form-section">
+          <label class="label">Email</label>
+          <section class="input-section">
+            <MailIcon class="input-icon" />
+            <input
+              required
+              type="email"
+              class="input-box"
+              v-model.trim.lazy="formValues.email"
+            />
+          </section>
+        </section>
+        <section class="form-section">
+          <label class="label">Password</label>
+          <section class="input-section">
+            <LockClosedIcon class="input-icon" />
+            <input
+              required
+              type="password"
+              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{6,15}$"
+              class="input-box"
+              v-model="formValues.password"
+            />
+          </section>
+        </section>
+        
+        <div class="button-section">
+          <button type="submit" class="bttn">Login</button>
+        </div>
+        <router-link class="text-green-700" to="/forgot-password">
+          Forgot password?</router-link
+        >
+      </form>
+    </main>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import LoaderView from "../../components/LoaderView.vue";
+import { MailIcon, LockClosedIcon, LockOpenIcon } from "@heroicons/vue/solid";
 
 export default {
   name: "LoginForm",
   components: {
+    MailIcon,
+    LockClosedIcon,
     LoaderView,
   },
   // created() {
@@ -64,10 +89,7 @@ export default {
       this.loader = true;
       this.error = "";
       try {
-        const response = await axios.post(
-          "/login/jwt/create/",
-          this.formValues
-        );
+        const response = await axios.post("/login/jwt/create/", this.formValues);
         // console.log(response);
         sessionStorage.setItem("token", response.data.access);
         sessionStorage.setItem("Auth", true);
@@ -79,9 +101,7 @@ export default {
         });
         // console.log(response1.data.id);
         const userId = response1.data.id;
-        const userTypeResponse = await axios.get(
-          `/classroom-app/user-type/${userId}`
-        );
+        const userTypeResponse = await axios.get(`/classroom-app/user-type/${userId}`);
         // console.log(userTypeResponse);
         const user = {
           userType: userTypeResponse.data.user_type,
