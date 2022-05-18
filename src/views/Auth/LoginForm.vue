@@ -1,6 +1,6 @@
 <template>
 <div class="flex flex-row justify-evenly  " v-if="error">
-      <div class="notification bg-warning-light"  >
+      <div class="notification bg-danger-light"  >
             {{ error }}
           </div>
     </div>
@@ -47,9 +47,11 @@
         <div class="button-section">
           <button type="submit" class="bttn">Login</button>
         </div>
-        <router-link class="text-green-700" to="/forgot-password">
-          Forgot password?</router-link
-        >
+        <div class="button-section ">
+          <router-link class="forgot-password" to="/forgot-password">
+            Forgot password?</router-link
+          >
+        </div>
       </form>
     </main>
   </div>
