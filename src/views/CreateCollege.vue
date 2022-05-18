@@ -5,25 +5,14 @@
   <main class="college-create-view">
     <!-- {{ formValues }} -->
     <section class="college-form-info">
-      <div class="college-form-icon">
-        <span
-          class="mx-auto h-2/3 w-2/3 rounded-full bg-info-dark text-center align-middle text-xl font-extrabold ordinal text-bglight-shade"
-          >1st</span
-        >
-      </div>
-      <article class="college-form-text col-start-3">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione sit et
-        voluptates cupiditate consequatur, laudantium at tempore suscipit
-        facilis consectetur neque quidem, error obcaecati aspernatur delectus
-        unde officiis. Aliquam, corporis!
-      </article>
-      <img src="" alt="College details" />
-      <article></article>
-      <img src="" alt="College details" />
-      <article></article>
+      <img
+        class="college-form-icon h-full w-full"
+        src="../assets/createcollege/cc_bg1.svg"
+        alt=""
+      />
     </section>
     <form
-      class="form accent-primary-dark"
+      class="form place-content-center accent-primary-dark lg:col-span-2"
       enctype="multipart/form-data"
       @submit.prevent="createCollege"
     >
@@ -34,6 +23,7 @@
           <input
             class="input-box"
             type="text"
+            placeholder="college name"
             v-model.trim.lazy="formValues.name"
           />
         </section>
@@ -45,6 +35,7 @@
           <input
             class="input-box"
             type="text"
+            placeholder="college city"
             v-model.trim.lazy="formValues.city"
           />
         </section>
@@ -56,6 +47,7 @@
           <input
             class="input-box"
             type="text"
+            placeholder="college state"
             v-model.trim.lazy="formValues.state"
           />
         </section>
@@ -67,6 +59,7 @@
           <input
             class="input-box"
             type="text"
+            placeholder="college address"
             v-model.trim.lazy="formValues.address"
           />
         </section>
@@ -79,20 +72,10 @@
             ref="file_teacher"
             @change="handleFileUpload"
             type="file"
+            title="upload the full teacher list of the college"
             accept=".xlsx, .csv"
           />
         </section>
-        <!-- <div class="form-section">
-          <label class="label">DBAS</label>
-          <template v-for="i in count" :key="i">
-            <input
-              class="input-box"
-              type="text"
-              v-model.trim.lazy="formValues.allowed_dbs"
-            />
-          </template>
-          <button @click="count++">+</button>
-        </div> -->
       </section>
       <section class="form-section">
         <label class="label">DBA list</label>
@@ -102,51 +85,12 @@
             ref="file_dba"
             @change="handleDBAFileUpload"
             type="file"
+            title="upload the full dba list of the college"
             accept=".xlsx, .csv"
           />
         </section>
       </section>
-      <!-- <div class="form-section">
-        <input
-          type="email"
-          v-model="tempEmail"
-          class="input-box"
-          placeholder="dba@email.com"
-        />
-        <PlusCircleIcon
-          @click="addEmail"
-          class="h-10 w-10 self-center font-semibold text-primary-dark"
-        />
-      </div> -->
-      <!-- <div class="form-sections">
-        <VueTagsInput
-          class="w-full"
-          v-model="tag"
-          :tags="tags"
-          :validation="validation"
-          @tags-changed="(newTags) => (tags = newTags)"
-        />
-      </div> -->
-      <!-- <div class="form-section">
-        <section
-          tabindex="0"
-          class="mx-10 h-4/5 w-full justify-evenly rounded-md border border-base-300 bg-base-100 shadow-md"
-        >
-          <ul class="grid grid-flow-row grid-cols-3">
-            <li
-              v-for="(dba_email, index) in formValues.allowed_dbas"
-              :key="dba_email.email"
-              class="badge badge-outline badge-lg badge-info col-span-1 row-span-1 m-1 px-3"
-            >
-              {{ dba_email.email }}
-              <XCircleIcon
-                class="mx-1 inline-block h-5 w-5 self-center"
-                @click="removeMail(index)"
-              />
-            </li>
-          </ul>
-        </section>
-      </div> -->
+
       <section class="button-section">
         <button class="bttn">Create</button>
       </section>
@@ -155,20 +99,13 @@
 </template>
 
 <script>
-// import { PlusCircleIcon, XCircleIcon } from "@heroicons/vue/outline";
 import axios from "axios";
 import LoaderView from "../components/LoaderView.vue";
 import { AcademicCapIcon, LocationMarkerIcon } from "@heroicons/vue/solid";
 
 export default {
-  // components: {
-  //   // VueTagsInput,
-  //   // PlusCircleIcon,
-  //   // XCircleIcon,
-  // },
   components: {
     LoaderView,
-    // PencilIcon,
     AcademicCapIcon,
     LocationMarkerIcon,
   },
