@@ -86,9 +86,9 @@
 
 @layer {
   .notification {
-    @apply absolute top-20 z-20 rounded-2xl bg-info-dark px-5 py-3 font-body font-semibold text-bglight-shade;
+    @apply absolute top-20 z-20 flex animate-pulse flex-row items-center justify-evenly rounded-2xl bg-info-dark px-5 py-3 font-body text-lg font-semibold text-bglight-shade  duration-500 md:text-xl;
   }
 }
 .forgot-password {
-  @apply  py-1 px-2 text-center text-danger-light underline decoration-danger-light decoration-wavy underline-offset-2 hover:text-xl;
+  @apply py-1 px-2 text-center text-danger-light underline decoration-danger-light decoration-wavy underline-offset-2 hover:text-xl;
 }

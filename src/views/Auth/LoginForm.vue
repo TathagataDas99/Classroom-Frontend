@@ -1,21 +1,32 @@
 <template>
-<div class="flex flex-row justify-evenly  " v-if="error">
-      <div class="notification bg-danger-light"  >
-            {{ error }}
-          </div>
+  <div class="flex flex-row justify-evenly" v-if="error && showError">
+    <div class="notification bg-danger-light">
+      <p class="mx-1">
+        {{ error }}
+      </p>
+      <XCircleIcon
+        @click="closeNotification"
+        class="inline-block h-10 w-10 font-bold text-bglight-shade md:h-6 md:w-6"
+      />
     </div>
-  <div class="grid grid-cols-1 grid-rows-1 grid-flow-row lg:grid-cols-2 lg:grid-flow-col h-screen lg:min-h-screen content-center justify-center gap-2 bg-gradient-to-br from-green-400/50 to-sky-400/90 ">
+  </div>
+  <div
+    class="grid h-screen grid-flow-row grid-cols-1 grid-rows-1 content-center justify-center gap-2 bg-gradient-to-br from-green-400/50 to-sky-400/90 lg:min-h-screen lg:grid-flow-col lg:grid-cols-2"
+  >
     <div class="absolute" v-if="loader">
       <LoaderView />
-
     </div>
-    
-    <img src="../../assets/login/login_3.svg" alt="" class="w-5/6 h-full hidden lg:col-start-2  lg:block self-end">
+
+    <img
+      src="../../assets/login/login_3.svg"
+      alt=""
+      class="hidden h-full w-5/6 self-end lg:col-start-2 lg:block"
+    />
     <main class="login-form">
       <img
         src="../../assets/login/man_2.png"
         alt="no user image found"
-        class="mx-auto h-auto w-2/6 mt-5 shadow-lg rounded-full shadow-green-300/70"
+        class="mx-auto mt-5 h-auto w-2/6 rounded-full shadow-lg shadow-green-300/70"
       />
       <form class="form" @submit.prevent="handelLogin">
         <section class="form-section">
@@ -43,11 +54,11 @@
             />
           </section>
         </section>
-        
+
         <div class="button-section">
           <button type="submit" class="bttn">Login</button>
         </div>
-        <div class="button-section ">
+        <div class="button-section">
           <router-link class="forgot-password" to="/forgot-password">
             Forgot password?</router-link
           >
@@ -60,13 +71,19 @@
 <script>
 import axios from "axios";
 import LoaderView from "../../components/LoaderView.vue";
-import { MailIcon, LockClosedIcon, LockOpenIcon } from "@heroicons/vue/solid";
+import {
+  MailIcon,
+  LockClosedIcon,
+  // LockOpenIcon,
+  XCircleIcon,
+} from "@heroicons/vue/solid";
 
 export default {
   name: "LoginForm",
   components: {
     MailIcon,
     LockClosedIcon,
+    XCircleIcon,
     LoaderView,
   },
   // created() {
@@ -83,15 +100,22 @@ export default {
         password: "",
       },
       error: "",
+      showError: false,
       loader: false,
     };
   },
   methods: {
+    closeNotification() {
+      this.showError = !this.showError;
+    },
     async handelLogin() {
       this.loader = true;
       this.error = "";
       try {
-        const response = await axios.post("/login/jwt/create/", this.formValues);
+        const response = await axios.post(
+          "/login/jwt/create/",
+          this.formValues
+        );
         // console.log(response);
         sessionStorage.setItem("token", response.data.access);
         sessionStorage.setItem("Auth", true);
@@ -103,7 +127,9 @@ export default {
         });
         // console.log(response1.data.id);
         const userId = response1.data.id;
-        const userTypeResponse = await axios.get(`/classroom-app/user-type/${userId}`);
+        const userTypeResponse = await axios.get(
+          `/classroom-app/user-type/${userId}`
+        );
         // console.log(userTypeResponse);
         const user = {
           userType: userTypeResponse.data.user_type,
@@ -120,6 +146,7 @@ export default {
         }
       } catch (e) {
         this.error = e.response.data.detail;
+        this.showError = true;
       }
       this.loader = false;
     },
