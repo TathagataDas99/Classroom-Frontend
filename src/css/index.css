@@ -71,7 +71,7 @@
   @apply bg-slate-200/60 backdrop-blur-md backdrop-filter hover:backdrop-blur-lg;
 }
 .college-create-view {
-  @apply grid grid-flow-row grid-cols-1 gap-2 bg-gradient-to-br from-primary-light  to-sky-400/70 lg:grid-flow-col lg:grid-cols-4 lg:grid-rows-1;
+  @apply grid grid-flow-row grid-cols-1 gap-2 bg-gradient-to-br from-primary-light  to-sky-400/70 lg:grid-flow-col lg:grid-cols-4 lg:grid-rows-1 h-screen;
 }
 
 .college-form-info {
