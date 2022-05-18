@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 .slow-effect {
   @apply transition duration-200 ease-linear;
 }
@@ -18,25 +16,42 @@
 .link-danger {
   @apply my-1 mx-2 cursor-pointer rounded-2xl border-b-2 border-transparent px-7 py-1 text-sm decoration-transparent shadow-sm outline-none  hover:border-danger-dark hover:font-semibold hover:text-danger-dark hover:shadow-md md:text-base lg:text-lg 2xl:text-xl;
 }
-.bttn {
-  @apply mx-2 my-1 w-4/5 rounded-md border-2 border-transparent bg-slate-300/70 px-4 py-2 font-semibold backdrop-blur-md backdrop-filter hover:border-primary-dark hover:font-semibold hover:text-primary-dark md:w-1/2 md:py-4 md:text-lg lg:w-1/3 lg:text-xl;
+.button-section {
+  @apply flex flex-col items-stretch justify-evenly md:flex-row;
 }
+.bttn {
+  @apply mx-5 my-3 flex-1 rounded-lg bg-primary-light py-3 px-4 text-bglight-shade shadow-md outline-none md:w-3/5 md:flex-initial lg:w-2/5;
+}
+
 .bttn-dangr {
   @apply mx-2 my-1 w-4/5 rounded-md border-2 border-transparent bg-slate-300/70 px-4 py-2 font-semibold backdrop-blur-md backdrop-filter hover:border-danger-dark hover:font-semibold hover:text-danger-dark md:w-1/2 md:py-4 md:text-lg lg:w-1/3 lg:text-xl;
 }
 .form {
-  @apply m-2 flex h-auto w-4/5 flex-col items-center justify-evenly rounded-md px-2 py-1 shadow-lg shadow-gray-400/40  md:h-3/6 md:w-3/6 lg:h-4/5 lg:w-3/5;
+  @apply mx-2 my-4 grid h-auto grid-flow-row grid-cols-1 gap-1 rounded-md shadow-lg sm:mx-5  md:mx-10 md:w-5/6 md:gap-2  lg:mx-14 lg:gap-3 xl:mx-20;
 }
+
 .form-section {
-  @apply flex w-full flex-col flex-wrap items-stretch justify-evenly py-2 sm:flex-row md:space-x-1;
+  @apply mx-4 grid grid-flow-row grid-cols-2 grid-rows-2 items-stretch justify-evenly gap-1 md:mx-6 lg:mx-8;
 }
 
 .label {
-  @apply mb-2 px-2 py-1 text-sm uppercase md:mb-1 md:self-center md:text-center md:text-lg lg:text-xl;
+  @apply col-span-1 col-start-1 row-start-1 ml-5 font-heading text-base text-bgdark-base md:text-xl lg:text-2xl xl:text-3xl;
 }
 
+.input-section {
+  @apply relative col-span-2 col-start-1 row-start-2 mx-5  overflow-clip;
+}
+.input-section-file {
+  @apply relative col-span-2 col-start-1 ml-4 self-center overflow-clip;
+}
+.input-icon {
+  @apply absolute top-2 left-2 h-7 w-5 text-bgdark-shade md:left-3 md:my-auto md:h-7 md:w-7;
+}
 .input-box {
-  @apply slow-effect mx-1  my-1 rounded-lg  px-3 py-2 text-sm text-zinc-500  shadow-md outline-none ring-2 ring-transparent focus:font-semibold focus:text-primary-dark focus:ring-primary-dark md:w-4/6 md:text-lg lg:py-4 lg:text-lg;
+  @apply slow-effect h-full w-full  rounded-xl  border-b-2 border-b-gray-500/70 pl-10   outline-none invalid:border-danger-dark  invalid:text-danger-dark focus:border-b-primary-light focus:text-primary-dark focus:invalid:border-danger-dark focus:invalid:ring-danger-dark md:rounded-3xl md:border-b-4;
+}
+.input-file {
+  @apply slow-effect col-span-2 h-full w-full  text-sm text-bgdark-shade shadow-primary-light file:mr-4 file:rounded-full file:border-0 file:bg-primary-light file:py-2 file:px-4 file:text-sm file:font-semibold file:text-bglight-shade hover:file:bg-primary-dark  hover:file:shadow-md;
 }
 
 .btn {
@@ -54,4 +69,10 @@
 }
 .blur-md {
   @apply bg-slate-200/60 backdrop-blur-md backdrop-filter hover:backdrop-blur-lg;
+}
+.college-create-view {
+  @apply lg:grid-cols-5 grid grid-flow-row grid-cols-1 grid-rows-2 gap-2 lg:grid-flow-col lg:grid-rows-1;
+}
+.college-form-info {
+  @apply grid-cols-3 grid-rows-3 gap-2 lg:col-span-5 lg:gap-3;
 }

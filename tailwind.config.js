@@ -9,12 +9,12 @@ module.exports = {
       },
       colors: {
         bgdark: {
-          base : "1E293B",
-          shade: "64748B",
+          base : "#1E293B",
+          shade: "#64748B",
         },
         bglight: {
-          base : "F8FAFC",
-          shade: "E2E8F0",
+          base : "#F8FAFC",
+          shade: "#f1f5f9",
         },
         
 
@@ -27,20 +27,20 @@ module.exports = {
           light: "#EC1D64",
         },
         info:{
-          dark:"00B0FF",
-          light:"4CCAF1"
+          dark:"#00B0FF",
+          light:"#4CCAF1"
         },
         warning:{
-          dark:"F9A826",
-          light:"F3B155"
+          dark:"#F9A826",
+          light:"#F3B155"
 
         }
       },
     },
   },
-  daisyui: {
-    themes: ["light"],
-    darkMode: "light",
-  },
+  // daisyui: {
+  //   themes: ["light"],
+  //   darkMode: "light",
+  // },
   plugins: [require("tailwind-scrollbar-hide"), require("daisyui")],
 };

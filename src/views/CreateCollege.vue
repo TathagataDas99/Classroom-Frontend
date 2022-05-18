@@ -2,54 +2,72 @@
   <div v-if="loader">
     <LoaderView />
   </div>
-  <div>
-    {{ formValues }}
+  <main class="college-create-view ">
+    <!-- {{ formValues }} -->
+    <section class="college-form-info bg-danger-dark" >
+      <img src="" alt="College details">
+      <article></article>
+    </section>
     <form
       class="form accent-primary-dark"
       enctype="multipart/form-data"
       @submit.prevent="createCollege"
     >
-      <div class="form-section">
+      <section class="form-section">
         <label class="label">Name</label>
-        <input
-          class="input-box"
-          type="text"
-          v-model.trim.lazy="formValues.name"
-        />
-      </div>
-      <div class="form-section">
+        <section class="input-section ">
+          <AcademicCapIcon class="input-icon "/>
+          <input
+            class="input-box "
+            type="text"
+            v-model.trim.lazy="formValues.name"
+          />
+        </section>
+      </section>
+      <section class="form-section">
         <label class="label">city</label>
-        <input
-          class="input-box"
-          type="text"
-          v-model.trim.lazy="formValues.city"
-        />
-      </div>
-      <div class="form-section">
+        <section class="input-section">
+          <LocationMarkerIcon class="input-icon "/>
+          <input
+            class="input-box"
+            type="text"
+            v-model.trim.lazy="formValues.city"
+          />
+        </section>
+      </section>
+      <section class="form-section">
         <label class="label">state</label>
-        <input
-          class="input-box"
-          type="text"
-          v-model.trim.lazy="formValues.state"
-        />
-      </div>
-      <div class="form-section">
+        <section class="input-section">
+          <LocationMarkerIcon class="input-icon "/>
+          <input
+            class="input-box"
+            type="text"
+            v-model.trim.lazy="formValues.state"
+          />
+        </section>
+      </section>
+      <section class="form-section">
         <label class="label">address</label>
-        <input
-          class="input-box"
-          type="text"
-          v-model.trim.lazy="formValues.address"
-        />
-      </div>
-      <div class="grid grid-flow-col grid-cols-7">
-        <label class="label col-span-3">Teachers list</label>
-        <input
-          class="col-span-4 block w-full text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:py-2 file:px-4 file:text-sm file:font-semibold file:text-violet-700 hover:file:bg-violet-100"
-          ref="file_teacher"
-          @change="handleFileUpload"
-          type="file"
-          accept=".xlsx, .csv"
-        />
+        <section class="input-section">
+          <LocationMarkerIcon class="input-icon "/>
+          <input
+            class="input-box"
+            type="text"
+            v-model.trim.lazy="formValues.address"
+          />
+        </section>
+      </section>
+      <section class="form-section">
+        <label class="label  ">Teachers list</label>
+        <section class="input-section-file">
+          <input
+            class="input-file"
+            ref="file_teacher"
+            @change="handleFileUpload"
+            type="file"
+            accept=".xlsx, .csv"
+          />
+        </section>
         <!-- <div class="form-section">
           <label class="label">DBAS</label>
           <template v-for="i in count" :key="i">
@@ -61,17 +79,19 @@
           </template>
           <button @click="count++">+</button>
         </div> -->
-      </div>
-      <div class="grid grid-flow-col grid-cols-7">
-        <label class="label col-span-3">DBA list</label>
-        <input
-          class="col-span-4 block w-full text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:py-2 file:px-4 file:text-sm file:font-semibold file:text-violet-700 hover:file:bg-violet-100"
-          ref="file_dba"
-          @change="handleDBAFileUpload"
-          type="file"
-          accept=".xlsx, .csv"
-        />
-      </div>
+      </section>
+      <section class="form-section">
+        <label class="label">DBA list</label>
+        <section class="input-section-file">
+          <input
+            class="input-file"
+            ref="file_dba"
+            @change="handleDBAFileUpload"
+            type="file"
+            accept=".xlsx, .csv"
+          />
+        </section>
+      </section>
       <!-- <div class="form-section">
         <input
           type="email"
@@ -113,15 +133,17 @@
           </ul>
         </section>
       </div> -->
-      <button class="bttn">Create</button>
+      <section class="button-section"><button class="bttn">Create</button></section>
     </form>
-  </div>
+  </main>
 </template>
 
 <script>
 // import { PlusCircleIcon, XCircleIcon } from "@heroicons/vue/outline";
 import axios from "axios";
 import LoaderView from "../components/LoaderView.vue";
+import { PencilIcon ,AcademicCapIcon , LocationMarkerIcon } from "@heroicons/vue/solid";
+
 
 export default {
   // components: {
@@ -131,6 +153,9 @@ export default {
   // },
   components: {
     LoaderView,
+    PencilIcon,
+    AcademicCapIcon,
+    LocationMarkerIcon,
   },
   data() {
     return {
