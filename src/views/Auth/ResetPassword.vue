@@ -2,44 +2,80 @@
   <div v-if="loader">
     <LoaderView />
   </div>
-  <div class="flex h-screen flex-col items-center justify-evenly">
-    <form class="form" @submit.prevent="handelSubmit">
+  <Transition>
+    <div class="flex flex-row justify-evenly" v-if="error && showError">
+      <div class="notification bg-danger-light">
+        <p class="mx-1 block">
+          {{ error[0] }}
+        </p>
+        <XCircleIcon
+          @click="closeNotification"
+          class="inline-block h-10 w-10 font-bold text-bglight-shade md:h-6 md:w-6"
+        />
+      </div>
+    </div>
+  </Transition>
+  <div
+    class="grid h-screen grid-cols-1 grid-rows-5 place-content-center bg-gradient-to-br from-sky-200 to-green-200 align-middle"
+  >
+    <form
+      class="form row-span-3 row-start-2 place-self-center self-center"
+      @submit.prevent="handelSubmit"
+    >
       <div class="form-section">
         <label class="label">Password</label>
-        <input
-          required
-          :type="typePassword"
-          class="input-box"
-          v-model="formValues.password"
-        />
+        <section class="input-section">
+          <LockClosedIcon
+            v-if="!isEyeOpen"
+            @click="openEye"
+            class="input-icon"
+          ></LockClosedIcon>
+          <LockOpenIcon
+            class="input-icon"
+            v-else
+            @click="openEye"
+          ></LockOpenIcon>
+          <input
+            required
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{6,15}$"
+            :type="typePassword"
+            class="input-box"
+            v-model="formValues.password"
+          />
+        </section>
       </div>
-      <div class="form-section">
-        <label class="label">Confirm Password</label>
+      <section class="form-section">
+        <label class="label col-span-2">Confirm Password</label>
         <!-- <div class="input-box"> -->
-        <input
-          required
-          :type="typePassword"
-          class="input-box"
-          v-model="formValues.confirmPassword"
-        />
-        <!-- </div> -->
-        <EyeOffIcon
-          v-if="!isEyeOpen"
-          @click="openEye"
-          class="h-5 w-5 self-center text-primary-dark"
-        ></EyeOffIcon>
-        <EyeIcon
-          class="h-5 w-5 self-center text-danger-dark"
-          v-else
-          @click="openEye"
-        ></EyeIcon>
-      </div>
-      <div class="text-2xl font-bold text-pink-500" v-if="error">
+        <section class="input-section">
+          <input
+            required
+            :type="typePassword"
+            class="input-box"
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{6,15}$"
+            v-model="formValues.confirmPassword"
+          />
+          <!-- </div> -->
+          <LockClosedIcon
+            v-if="!isEyeOpen"
+            @click="openEye"
+            class="input-icon"
+          ></LockClosedIcon>
+          <LockOpenIcon
+            class="input-icon"
+            v-else
+            @click="openEye"
+          ></LockOpenIcon>
+        </section>
+      </section>
+      <!-- <div class="text-2xl font-bold text-pink-500" v-if="error">
         <div v-for="e in error" :key="e">
           {{ e }}
         </div>
-      </div>
-      <button type="submit" class="bttn">Submit</button>
+      </div> -->
+      <section class="button-section">
+        <button type="submit" class="bttn">Submit</button>
+      </section>
     </form>
   </div>
 </template>
@@ -47,15 +83,20 @@
 <script>
 import axios from "axios";
 import LoaderView from "../../components/LoaderView.vue";
-import { EyeIcon, EyeOffIcon } from "@heroicons/vue/outline";
+import {
+  LockOpenIcon,
+  LockClosedIcon,
+  XCircleIcon,
+} from "@heroicons/vue/outline";
 
 export default {
   name: "ActivationAccount",
   props: ["uid", "token"],
   components: {
     LoaderView,
-    EyeIcon,
-    EyeOffIcon,
+    XCircleIcon,
+    LockOpenIcon,
+    LockClosedIcon,
   },
   // created() {
   //   if (sessionStorage.getItem("token")) {
@@ -68,6 +109,8 @@ export default {
     return {
       loader: false,
       error: [],
+      showError: false,
+      errorShowInterval: 2000,
       formValues: {
         password: "",
         confirmPassword: "",
@@ -77,6 +120,9 @@ export default {
     };
   },
   methods: {
+    closeNotification() {
+      this.showError = !this.showError;
+    },
     openEye() {
       this.isEyeOpen = !this.isEyeOpen;
       if (this.isEyeOpen) {
@@ -98,10 +144,18 @@ export default {
           this.$router.push("/log-in");
         } catch (e) {
           console.log(e);
+          this.showError = true;
           this.error = Object.values(e.response.data)[0];
+          setTimeout(() => {
+            this.showError = false;
+          }, this.errorShowInterval);
         }
       } else {
+        this.showError = true;
         this.error[0] = "Password and Confirm Password should be same.";
+        setTimeout(() => {
+          this.showError = false;
+        }, this.errorShowInterval);
       }
       this.loader = false;
     },
@@ -109,4 +163,15 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>
