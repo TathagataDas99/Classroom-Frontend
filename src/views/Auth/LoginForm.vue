@@ -26,7 +26,7 @@
       <img
         src="../../assets/login/man_2.png"
         alt="no user image found"
-        class="mx-auto mt-5 h-auto w-2/6 rounded-full shadow-lg shadow-green-300/70"
+        class="mx-auto mt-5 h-auto w-2/6 rounded-full shadow-lg"
       />
       <form class="form" @submit.prevent="handelLogin">
         <section class="form-section">

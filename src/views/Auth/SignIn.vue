@@ -1,6 +1,6 @@
 <template>
   <div
-    class="grid h-screen grid-flow-row grid-cols-1 grid-rows-6 place-content-center gap-2 bg-bglight-shade md:grid-cols-7 md:grid-rows-5"
+    class="grid h-screen grid-flow-row grid-cols-1 grid-rows-6 place-content-center gap-2 bg-gradient-to-br from-fuchsia-300 to-sky-400 md:grid-cols-7 md:grid-rows-5"
   >
     <div v-if="loader">
       <LoaderView />
