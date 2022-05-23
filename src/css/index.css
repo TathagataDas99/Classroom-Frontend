@@ -4,7 +4,10 @@
 
 @layer {
   .notification {
-    @apply absolute top-20 z-20 flex animate-pulse flex-row items-center justify-evenly rounded-2xl bg-info-dark px-5 py-3 font-body text-lg font-semibold text-bglight-shade  duration-500 md:text-xl;
+    @apply absolute top-20 z-50 flex animate-pulse flex-row items-center justify-evenly rounded-2xl bg-info-dark px-5 py-3 font-body text-lg font-semibold text-bglight-shade  duration-500 md:text-xl;
+  }
+  .label {
+    @apply col-span-1 col-start-1 row-start-1 ml-5 font-heading text-base capitalize text-bgdark-base md:text-xl lg:text-2xl xl:text-3xl;
   }
 }
 .slow-effect {
@@ -25,7 +28,7 @@
   @apply mb-4 flex flex-col items-stretch justify-evenly md:flex-row;
 }
 .bttn {
-  @apply slow-effect mx-5 my-3 flex-1 rounded-lg bg-primary-light py-3 px-4 font-heading text-xl text-bglight-shade shadow-md outline-none delay-75 hover:-translate-y-2 hover:scale-105 hover:bg-primary-dark hover:font-extrabold md:w-3/5 md:flex-initial lg:w-2/5;
+  @apply slow-effect mx-5 my-3 flex-1 rounded-lg bg-primary-light py-3 px-4 font-heading text-xl text-bglight-shade shadow-md outline-none delay-75 hover:-translate-y-1 hover:scale-105 hover:bg-primary-dark hover:font-extrabold hover:shadow-xl md:w-3/5 md:flex-initial lg:w-2/5;
 }
 
 .bttn-dangr {
@@ -39,9 +42,9 @@
   @apply mx-4 grid grid-flow-row grid-cols-2 grid-rows-2 items-stretch justify-evenly gap-1 md:mx-6 lg:mx-8;
 }
 
-.label {
-  @apply col-span-1 col-start-1 row-start-1 ml-5 font-heading text-base text-bgdark-base md:text-xl lg:text-2xl xl:text-3xl;
-}
+/* .label {
+  @apply col-span-1 col-start-1 row-start-1 ml-5 font-heading text-base capitalize text-bgdark-base md:text-xl lg:text-2xl xl:text-3xl;
+} */
 
 .input-section {
   @apply relative col-span-2 col-start-1 row-start-2 mx-5  overflow-clip;
@@ -50,7 +53,7 @@
   @apply relative col-span-2 col-start-1 ml-4 self-center overflow-clip;
 }
 .input-icon {
-  @apply absolute top-2 left-2 h-7 w-5 text-bgdark-shade md:left-3 md:my-auto md:h-7 md:w-7;
+  @apply absolute top-2 left-2 h-7 w-5 cursor-pointer text-bgdark-shade md:left-3 md:my-auto md:h-7 md:w-7;
 }
 .input-box {
   @apply slow-effect h-full w-full  rounded-xl  border-b-2 border-b-gray-500/70 pl-10 font-body font-semibold outline-none invalid:text-danger-dark  focus:border-b-primary-light  focus:text-primary-dark focus:invalid:animate-pulse focus:invalid:border-b-danger-dark focus:invalid:text-danger-dark focus:invalid:ring-danger-dark md:rounded-3xl md:border-b-4 md:pl-16;
@@ -90,12 +93,12 @@
 }
 
 .forgot-password {
-  @apply py-1 px-2 text-center text-danger-light underline decoration-danger-light decoration-wavy underline-offset-2 hover:text-xl;
+  @apply slow-effect py-1 px-2 text-center font-body text-danger-light underline decoration-danger-light decoration-wavy underline-offset-4 outline-none ease-in-out hover:scale-105 hover:font-body;
 }
 
-.forgot-password-email-form{
-  @apply flex h-screen flex-col items-center justify-evenly bg-gradient-to-br from-sky-400/75 to-green-300/70;
+.forgot-password-email-form {
+  @apply flex min-h-screen flex-col items-center justify-evenly bg-gradient-to-br from-sky-400/75 to-green-300/70;
 }
-.login-view{
-  @apply grid h-screen grid-flow-row grid-cols-1 grid-rows-1 content-center justify-center gap-2 bg-gradient-to-br from-green-400/50 to-sky-400/90 lg:min-h-screen lg:grid-flow-col lg:grid-cols-2;
+.login-view {
+  @apply grid min-h-screen grid-flow-row grid-cols-1 grid-rows-1 content-center justify-center gap-2 bg-gradient-to-br from-green-400/50 to-sky-400/90 lg:min-h-screen lg:grid-flow-col lg:grid-cols-2;
 }
