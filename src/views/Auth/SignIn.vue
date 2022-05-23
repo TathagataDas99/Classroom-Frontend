@@ -1,13 +1,15 @@
 <template>
-  <div class="flex h-screen flex-col items-center justify-evenly">
+  <div
+    class="grid h-screen grid-flow-row grid-cols-1 grid-rows-6 place-content-center gap-2 bg-bglight-shade md:grid-cols-7 md:grid-rows-5"
+  >
     <div v-if="loader">
       <LoaderView />
     </div>
     <Transition>
       <div class="flex flex-row justify-evenly" v-if="error && showError">
-        <div class="notification bg-danger-light" v-for="e in error" :key="e">
+        <div class="notification bg-danger-light">
           <p class="mx-1">
-            {{ e }}
+            {{ error[0] }}
           </p>
           <XCircleIcon
             @click="closeNotification"
@@ -16,7 +18,21 @@
         </div>
       </div>
     </Transition>
-    <form class="form" @submit.prevent="handelSignup" autocomplete="off">
+    <img
+      src="../../assets/signin/Certificate_Boy.svg"
+      alt="No Certificate Boy Img Found"
+      class="hidden place-self-end md:col-span-2 md:row-span-full md:block"
+    />
+    <img
+      src="../../assets/signin/Teacher.svg"
+      alt="No Certificate Boy Img Found"
+      class="hidden place-self-end xl:col-span-2 xl:col-start-6 xl:row-span-full xl:block"
+    />
+    <form
+      class="form row-span-full md:col-span-6 md:col-start-3 md:row-span-5 xl:col-span-3 xl:row-span-full"
+      @submit.prevent="handelSignup"
+      autocomplete="off"
+    >
       <section class="form-section">
         <label class="label" for="firstName">First name</label>
         <section class="input-section">
@@ -62,11 +78,6 @@
           />
         </section>
       </section>
-      <!-- <div class="text-2xl font-bold text-pink-500" v-if="error">
-        <div v-for="e in error" :key="e">
-          {{ e }}
-        </div>
-      </div> -->
       <div class="button-section">
         <button class="bttn slow-effect" type="submit">Signin</button>
         <a
