@@ -65,12 +65,39 @@
         </section>
       </section>
       <section class="form-section">
+        <label class="label col-span-2">Owner Email</label>
+        <section class="input-section">
+          <MailIcon class="input-icon" />
+          <input
+            required
+            type="email"
+            class="input-box"
+            v-model.trim.lazy="formValues.owner_email_id"
+          />
+        </section>
+      </section>
+      <section class="form-section">
+        <label class="label col-span-2">Stream list</label>
+        <section class="input-section-file">
+          <input
+            required
+            class="input-file"
+            ref="file_stream"
+            @change="handleStreamFileUpload"
+            type="file"
+            title="upload the full stream list of the college"
+            accept=".xlsx, .csv"
+          />
+        </section>
+      </section>
+      <section class="form-section">
         <label class="label col-span-2">Teachers list</label>
         <section class="input-section-file">
           <input
+            required
             class="input-file"
             ref="file_teacher"
-            @change="handleFileUpload"
+            @change="handleTeacherFileUpload"
             type="file"
             title="upload the full teacher list of the college"
             accept=".xlsx, .csv"
@@ -101,13 +128,18 @@
 <script>
 import axios from "axios";
 import LoaderView from "../components/LoaderView.vue";
-import { AcademicCapIcon, LocationMarkerIcon } from "@heroicons/vue/solid";
+import {
+  AcademicCapIcon,
+  LocationMarkerIcon,
+  MailIcon,
+} from "@heroicons/vue/solid";
 
 export default {
   components: {
     LoaderView,
     AcademicCapIcon,
     LocationMarkerIcon,
+    MailIcon,
   },
   data() {
     return {
@@ -119,6 +151,8 @@ export default {
         city: "",
         state: "",
         address: "",
+        owner_email_id: "",
+        stream_list: null,
         allowed_teacher_list: null,
         allowed_dba_list: null,
       },
@@ -141,7 +175,11 @@ export default {
     removeMail(index) {
       this.formValues.allowed_dbas.splice(index, 1);
     },
-    handleFileUpload(event) {
+    handleStreamFileUpload(event) {
+      this.formValues.stream_list = event.target.files[0];
+      console.log(this.formValues.stream_list);
+    },
+    handleTeacherFileUpload(event) {
       this.formValues.allowed_teacher_list = event.target.files[0];
       console.log(this.formValues.allowed_teacher_list);
     },
@@ -158,6 +196,8 @@ export default {
         formData.append("city", this.formValues.city);
         formData.append("state", this.formValues.state);
         formData.append("address", this.formValues.address);
+        formData.append("owner_email_id", this.formValues.owner_email_id);
+        formData.append("stream_list", this.formValues.stream_list);
         formData.append(
           "allowed_teacher_list",
           this.formValues.allowed_teacher_list
@@ -172,11 +212,13 @@ export default {
               "Content-Type": "multipart/form-data",
               Accept: "*/*",
               "Content-Disposition": [
+                this.formValues.stream_list,
                 this.formValues.allowed_teacher_list,
                 this.formValues.allowed_dba_list,
               ],
               // boundary: "allowed_teacher_list",
               Filename: [
+                this.formValues.stream_list.name,
                 this.formValues.allowed_teacher_list.name,
                 this.formValues.allowed_dba_list.name,
               ],
