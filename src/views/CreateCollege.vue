@@ -65,7 +65,7 @@
         </section>
       </section>
       <section class="form-section">
-        <label class="label">Teachers list</label>
+        <label class="label col-span-2">Teachers list</label>
         <section class="input-section-file">
           <input
             class="input-file"
