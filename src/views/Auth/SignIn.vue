@@ -12,9 +12,7 @@
       </div>
     </div>
   </Transition>
-  <div
-    class="signin-view"
-  >
+  <div class="signin-view">
     <div v-if="loader">
       <LoaderView />
     </div>

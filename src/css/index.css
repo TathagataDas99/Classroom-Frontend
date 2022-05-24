@@ -68,7 +68,7 @@
 }
 
 .page-header {
-  @apply mt-6 flex w-3/5 flex-col items-center justify-between rounded-2xl border-l-8 border-b-4 border-danger-dark px-10 py-3 font-heading text-2xl shadow-lg md:flex-row;
+  @apply mt-6 flex w-3/5 flex-col items-center justify-between rounded-2xl border-l-8 border-b-4 border-danger-dark bg-bglight-shade px-10 py-3 font-heading text-2xl shadow-lg md:flex-row;
 }
 
 .sem-badge {
