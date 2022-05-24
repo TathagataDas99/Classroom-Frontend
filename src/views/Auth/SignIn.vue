@@ -1,35 +1,35 @@
 <template>
+  <Transition>
+    <div class="flex flex-row justify-evenly" v-if="error && showError">
+      <div class="notification bg-danger-light">
+        <p class="mx-1">
+          {{ error[0] }}
+        </p>
+        <XCircleIcon
+          @click="closeNotification"
+          class="inline-block h-10 w-10 font-bold text-bglight-shade md:h-6 md:w-6"
+        />
+      </div>
+    </div>
+  </Transition>
   <div
-    class="grid h-screen grid-flow-row grid-cols-1 grid-rows-6 place-content-center gap-2 bg-gradient-to-br from-fuchsia-300 to-sky-400 md:grid-cols-7 md:grid-rows-5"
+    class="grid min-h-screen grid-flow-row grid-cols-1 grid-rows-3 place-content-center gap-2 bg-gradient-to-br from-fuchsia-300 to-sky-400 md:grid-cols-7 md:place-items-end"
   >
     <div v-if="loader">
       <LoaderView />
     </div>
-    <Transition>
-      <div class="flex flex-row justify-evenly" v-if="error && showError">
-        <div class="notification bg-danger-light">
-          <p class="mx-1">
-            {{ error[0] }}
-          </p>
-          <XCircleIcon
-            @click="closeNotification"
-            class="inline-block h-10 w-10 font-bold text-bglight-shade md:h-6 md:w-6"
-          />
-        </div>
-      </div>
-    </Transition>
     <img
       src="../../assets/signin/Certificate_Boy.svg"
       alt="No Certificate Boy Img Found"
-      class="hidden place-self-end md:col-span-2 md:row-span-full md:block"
+      class="hidden md:col-span-2 md:row-span-full md:block md:place-self-end"
     />
     <img
       src="../../assets/signin/Teacher.svg"
       alt="No Certificate Boy Img Found"
-      class="hidden place-self-end xl:col-span-2 xl:col-start-6 xl:row-span-full xl:block"
+      class="hidden md:place-self-end xl:col-span-2 xl:col-start-6 xl:row-span-full xl:block"
     />
     <form
-      class="form row-span-full md:col-span-6 md:col-start-3 md:row-span-5 xl:col-span-3 xl:row-span-full"
+      class="form row-span-full md:col-span-6 md:col-start-3 xl:col-span-3"
       @submit.prevent="handelSignup"
       autocomplete="off"
     >
@@ -69,13 +69,46 @@
       <section class="form-section">
         <label class="label" for="password">password</label>
         <section class="input-section">
-          <LockClosedIcon class="input-icon" />
           <input
             class="input-box"
-            type="password"
+            :type="typePassword"
             v-model="formValues.password"
             pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{6,15}$"
           />
+          <LockClosedIcon
+            v-if="!isEyeOpen"
+            @click="openEye"
+            class="input-icon"
+          ></LockClosedIcon>
+          <LockOpenIcon
+            class="input-icon"
+            v-else
+            @click="openEye"
+          ></LockOpenIcon>
+        </section>
+      </section>
+      <section class="form-section">
+        <label class="label col-span-2">Confirm Password</label>
+        <!-- <div class="input-box"> -->
+        <section class="input-section">
+          <input
+            required
+            class="input-box"
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{6,15}$"
+            :type="typePassword"
+            v-model="formValues.confirmPassword"
+          />
+          <!-- </div> -->
+          <LockClosedIcon
+            v-if="!isEyeOpen"
+            @click="openEye"
+            class="input-icon"
+          ></LockClosedIcon>
+          <LockOpenIcon
+            class="input-icon"
+            v-else
+            @click="openEye"
+          ></LockOpenIcon>
         </section>
       </section>
       <div class="button-section">
@@ -97,6 +130,7 @@ import LoaderView from "../../components/LoaderView.vue";
 import {
   UserIcon,
   LockClosedIcon,
+  LockOpenIcon,
   MailIcon,
   XCircleIcon,
 } from "@heroicons/vue/solid";
@@ -107,6 +141,7 @@ export default {
     UserIcon,
     LockClosedIcon,
     MailIcon,
+    LockOpenIcon,
     XCircleIcon,
   },
   data() {
@@ -123,6 +158,8 @@ export default {
       isSubmitted: false,
       notificationInterval: 2000,
       showError: false,
+      typePassword: "password",
+      isEyeOpen: false,
     };
   },
   // created() {
@@ -136,12 +173,26 @@ export default {
     closeNotification() {
       this.showError = !this.showError;
     },
+    openEye() {
+      this.isEyeOpen = !this.isEyeOpen;
+      if (this.isEyeOpen) {
+        this.typePassword = "text";
+      } else {
+        this.typePassword = "password";
+      }
+    },
     async handelSignup() {
       this.error = [];
       this.loader = true;
       try {
-        const response = await axios.post("/auth/users/", this.formValues);
-        console.log(response);
+        if (this.formValues.password === this.formValues.confirmPassword) {
+          const response = await axios.post("/auth/users/", this.formValues);
+          console.log(response);
+        } else {
+          throw {
+            response: { data: [["Confirm Password Should Be Matched"]] },
+          };
+        }
       } catch (e) {
         this.error = Object.values(e.response.data)[0];
         this.showError = true;
