@@ -34,7 +34,7 @@
     <aside class="mt-4 mr-4 grid h-screen grid-cols-1 gap-2">
       <section
         tabindex="0"
-        class="collapse-plus collapse glass rounded-box border border-base-300 bg-base-100"
+        class="collapse-plus collapse collapse-open rounded-box border border-base-300 bg-bglight-shade"
       >
         <div
           class="slow-effect collapse-title text-xl font-medium hover:text-danger-dark"
@@ -44,27 +44,48 @@
         </div>
         <div class="collapse-content text-lg">
           <p>
-            <span class="text-primary-dark">Universit Roll: </span>
+            <span class="text-primary-dark">University Roll: </span>
             {{ userProfile.university_roll }}
           </p>
           <p>
             <span class="text-primary-dark">Email : </span>
             {{ userProfile.user.email }}
           </p>
-          <p>
-            <span class="text-primary-dark">Contact No : </span>
+          <p class="flex flex-row justify-evenly">
+            <span class="text-primary-dark">Contact </span>
             <template v-if="userProfile.user.contact_no">
-              {{ userProfile.user.contact_no }}
+              <input
+                class="bg-bglight-shade px-4 outline-none"
+                :class="{
+                  'mr-4 border-b-2 border-primary-light': !contactEdit,
+                }"
+                type="tel"
+                :disabled="contactEdit"
+                v-model="userProfile.user.contact_no"
+              />
+              <!-- {{ userProfile.user.contact_no }} -->
             </template>
             <template v-else>
-              <span>Not Available</span>
+              <div class="flex w-full flex-row items-center justify-around">
+                <span class="flex-1 px-2">Not Available</span>
+              </div>
             </template>
+            <PencilIcon
+              class="h-6 w-6 cursor-pointer"
+              @click="contactEdit = !contactEdit"
+              v-if="contactEdit"
+            />
+            <CheckCircleIcon
+              class="h-6 w-6 cursor-pointer text-primary-light"
+              v-if="!contactEdit"
+              @click="editContact"
+            />
           </p>
         </div>
       </section>
       <section
         tabindex="1"
-        class="collapse-plus collapse glass rounded-box border border-base-300 bg-base-100"
+        class="collapse-plus collapse rounded-box border border-base-300 bg-bglight-shade"
       >
         <div
           class="slow-effect collapse-title text-xl font-medium hover:text-danger-dark"
@@ -89,7 +110,7 @@
       </section>
       <section
         tabindex="3"
-        class="collapse-plus collapse glass rounded-box border border-base-300 bg-base-100"
+        class="collapse-plus collapse rounded-box border border-base-300 bg-bglight-shade"
       >
         <div
           class="slow-effect collapse-title text-xl font-medium hover:text-danger-dark"
@@ -129,7 +150,11 @@
 import axios from "axios";
 // import LoaderView from "../../components/LoaderView.vue";
 import { mapGetters } from "vuex";
-import { BadgeCheckIcon } from "@heroicons/vue/solid";
+import {
+  BadgeCheckIcon,
+  PencilIcon,
+  CheckCircleIcon,
+} from "@heroicons/vue/solid";
 import LoaderCard from "../../components/LoaderCard.vue";
 // import { mapActions } from "vuex";
 export default {
@@ -138,6 +163,7 @@ export default {
     return {
       msg: "",
       loader: "",
+      contactEdit: true,
       // semCards: [],
     };
   },
@@ -145,6 +171,8 @@ export default {
     // LoaderView,
     BadgeCheckIcon,
     LoaderCard,
+    PencilIcon,
+    CheckCircleIcon,
   },
   computed: {
     ...mapGetters(["userType", "userProfile", "semCards"]),
@@ -187,6 +215,15 @@ export default {
     this.loader = false;
   },
   methods: {
+    editContact() {
+      this.contactEdit = !this.contactEdit;
+      // TODO: implement this function
+      // try{
+      //   const response = await axios.patch('')
+      // } catch(error){
+      //   console.log(error)
+      // }
+    },
     handelOpen(no) {
       this.$router.push({
         name: "SubjectCards",

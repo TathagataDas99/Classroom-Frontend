@@ -10,6 +10,7 @@
     @apply col-span-1 col-start-1 row-start-1 ml-5 font-heading text-base capitalize text-bgdark-base md:text-lg lg:text-xl xl:text-2xl;
   }
 }
+
 .slow-effect {
   @apply transition duration-200 ease-linear;
 }
