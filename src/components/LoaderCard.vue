@@ -1,23 +1,11 @@
 <template>
-  <section class="card mx-10 my-10">
-    <div
-      class="h-3/6 w-full animate-pulse rounded-md bg-slate-400/30 transition duration-300"
-    ></div>
-    <div
-      class="h-3 w-3/5 animate-pulse self-start rounded-3xl bg-slate-300/30 transition duration-150"
-    ></div>
-    <div
-      class="h-2 w-full animate-pulse self-start rounded-3xl bg-slate-300/30 transition duration-200"
-    ></div>
-    <div
-      class="h-2 w-full animate-pulse self-start rounded-3xl bg-slate-400/30 transition duration-300"
-    ></div>
-    <div
-      class="h-2 w-full animate-pulse self-start rounded-3xl bg-slate-300/30 transition duration-200"
-    ></div>
-    <div
-      class="h-2 w-full animate-pulse self-start rounded-3xl bg-slate-400/30 transition duration-300"
-    ></div>
+  <section
+    class="relative grid h-3/5 w-3/5 grid-flow-row grid-cols-9 grid-rows-6 place-items-center place-self-center overflow-clip rounded-lg bg-slate-400 backdrop-blur-md backdrop-filter"
+  >
+    <img
+      class="col-span-7 col-start-2 row-span-4 row-start-2 animate-pulse rounded-lg bg-slate-500"
+      src="../assets/components/card_img_placeholder_1.svg"
+    />
   </section>
 </template>
 
