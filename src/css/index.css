@@ -7,7 +7,7 @@
     @apply absolute top-20 z-50 flex animate-pulse flex-row items-center justify-evenly rounded-2xl bg-info-dark px-5 py-3 font-body text-lg font-semibold text-bglight-shade  duration-500 md:text-xl;
   }
   .label {
-    @apply col-span-1 col-start-1 row-start-1 ml-5 font-heading text-base capitalize text-bgdark-base md:text-xl lg:text-2xl xl:text-3xl;
+    @apply col-span-1 col-start-1 row-start-1 ml-5 font-heading text-base capitalize text-bgdark-base md:text-lg lg:text-xl xl:text-2xl;
   }
 }
 .slow-effect {
@@ -53,10 +53,10 @@
   @apply relative col-span-2 col-start-1 ml-4 self-center overflow-clip;
 }
 .input-icon {
-  @apply absolute top-2 left-2 h-7 w-5 cursor-pointer text-bgdark-shade md:left-3 md:my-auto md:h-7 md:w-7;
+  @apply absolute top-3 left-2 h-7 w-5 cursor-pointer text-bgdark-shade md:top-2 md:left-3 md:my-auto md:h-7 md:w-7;
 }
 .input-box {
-  @apply slow-effect h-full w-full  rounded-xl  border-b-2 border-b-gray-500/70 pl-10 font-body font-semibold outline-none invalid:text-danger-dark  focus:border-b-primary-light  focus:text-primary-dark focus:invalid:animate-pulse focus:invalid:border-b-danger-dark focus:invalid:text-danger-dark focus:invalid:ring-danger-dark md:rounded-3xl md:border-b-4 md:pl-16;
+  @apply slow-effect h-full w-full  rounded-xl  border-b-2 border-b-gray-500/70 pl-10 font-body font-semibold outline-none invalid:text-danger-dark  focus:border-b-primary-light  focus:text-primary-dark focus:invalid:animate-pulse focus:invalid:border-b-danger-dark focus:invalid:text-danger-dark focus:invalid:ring-danger-dark md:rounded-3xl md:border-b-4 md:pl-12;
 }
 .input-file {
   @apply slow-effect col-span-2 h-full w-full  text-sm text-bgdark-shade shadow-primary-light file:mr-4 file:rounded-full file:border-0 file:bg-primary-light file:py-2 file:px-4 file:text-base file:font-semibold file:text-bglight-shade hover:file:bg-primary-dark  hover:file:shadow-md;
