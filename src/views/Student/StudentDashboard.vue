@@ -6,11 +6,11 @@
       </template>
     </section>
     <main v-else class="student-dashboard-card-section">
-      <img
+      <!-- <img
         src="../../assets/semester_student/bg_1.svg"
         alt="No Sem BG found"
         class="absolute bottom-0 left-24 hidden lg:col-span-full lg:block"
-      />
+      /> -->
       <div class="SemCard" v-for="semCard in semCards" :key="semCard.id">
         <button title="This is the on going semester">
           <BadgeCheckIcon class="sem-badge" v-show="semCard.is_current_sem" />
