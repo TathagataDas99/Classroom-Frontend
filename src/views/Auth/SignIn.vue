@@ -156,7 +156,7 @@ export default {
       mailto: "mailto : ",
       loader: false,
       isSubmitted: false,
-      notificationInterval: 2000,
+      notificationInterval: 4000,
       showError: false,
       typePassword: "password",
       isEyeOpen: false,
@@ -190,11 +190,11 @@ export default {
           console.log(response);
         } else {
           throw {
-            response: { data: [["Confirm Password Should Be Matched"]] },
+            response: { data: ["Confirm Password Should Be Matched"] },
           };
         }
       } catch (e) {
-        this.error = Object.values(e.response.data)[0];
+        this.error = Object.values(e.response.data);
         this.showError = true;
         setTimeout(() => {
           this.showError = false;
