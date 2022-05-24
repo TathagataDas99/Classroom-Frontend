@@ -1,21 +1,11 @@
 <template>
-  <div
-    class="grid min-h-screen w-screen grid-cols-1 place-content-center gap-3 bg-gradient-to-tr from-sky-300 to-green-300 pb-10 text-lg lg:grid-cols-3 lg:grid-rows-1"
-  >
-    <section
-      v-if="loader"
-      class="col-span-2 mt-4 grid justify-items-center gap-y-4 lg:grid-cols-2"
-    >
-      <LoaderCard></LoaderCard>
-      <LoaderCard></LoaderCard>
-      <LoaderCard></LoaderCard>
-      <LoaderCard></LoaderCard>
+  <div class="student-dashboard">
+    <section v-if="loader" class="student-dashboard-card-section">
+      <template v-for="i in 4" :key="i">
+        <LoaderCard></LoaderCard>
+      </template>
     </section>
-    <!-- <LoaderView /> -->
-    <main
-      v-else
-      class="relative grid justify-items-center gap-y-4 lg:col-span-2 lg:grid-cols-2"
-    >
+    <main v-else class="student-dashboard-card-section">
       <img
         src="../../assets/semester_student/bg_1.svg"
         alt="No Sem BG found"
@@ -39,111 +29,98 @@
       <section
         tabindex="0"
         :class="{ 'collapse-open': !contactEdit }"
-        class="collapse-plus collapse rounded-box row-span-1 place-self-stretch border border-base-300 bg-bglight-shade"
+        class="collapse"
       >
-        <div
-          class="slow-effect collapse-title font-heading text-xl font-medium hover:text-danger-dark"
-        >
+        <div class="collapse-title-addition collapse-title">
           <span class="font-semibold text-danger-dark">Welcome</span>
           {{ userProfile.user.first_name }} {{ userProfile.user.last_name }}
         </div>
-        <div class="collapse-content text-lg">
-          <p>
-            <span class="text-primary-dark">University Roll: </span>
+        <div class="collapse-content-layout collapse-content">
+          <span class="collapse-content-label">University Roll: </span>
+          <p class="col-span-3">
             {{ userProfile.university_roll }}
           </p>
-          <p>
-            <span class="text-primary-dark">Email : </span>
+          <span class="collapse-content-label">Email : </span>
+          <p class="col-span-3">
             {{ userProfile.user.email }}
           </p>
-          <p class="flex flex-row justify-evenly">
-            <span class="text-primary-dark">Contact </span>
-            <template v-if="userProfile.user.contact_no">
-              <input
-                class="bg-bglight-shade px-4 outline-none"
-                :class="{
-                  'mr-4 border-b-2 border-primary-light': !contactEdit,
-                }"
-                type="tel"
-                :disabled="contactEdit"
-                v-model="userProfile.user.contact_no"
-              />
-              <!-- {{ userProfile.user.contact_no }} -->
-            </template>
+          <span class="collapse-content-label">Contact </span>
+          <p class="col-span-2">
+            <input
+              minlength="10"
+              maxlength="10"
+              v-if="userProfile.user.contact_no || !contactEdit"
+              class="w-full bg-bglight-shade px-4 outline-none focus:invalid:text-danger-dark"
+              :class="{
+                'mr-4 border-b-2 border-primary-light focus:invalid:border-danger-dark':
+                  !contactEdit,
+              }"
+              type="tel"
+              :disabled="contactEdit"
+              v-model="userProfile.user.contact_no"
+            />
             <template v-else>
-              <div class="flex w-full flex-row items-center justify-around">
-                <span class="flex-1 px-2">Not Available</span>
-              </div>
+              <span class="col-span-3">Not Available</span>
             </template>
-            <PencilIcon
-              class="h-6 w-6 cursor-pointer"
-              @click="contactEdit = !contactEdit"
-              v-if="contactEdit"
-            />
-            <CheckCircleIcon
-              class="h-6 w-6 cursor-pointer text-primary-light"
-              v-if="!contactEdit"
-              @click="editContact"
-            />
           </p>
+          <PencilIcon
+            class="collapse-content-icon"
+            @click="contactEdit = !contactEdit"
+            v-if="contactEdit"
+          />
+          <CheckCircleIcon
+            class="collapse-content-icon text-primary-light"
+            v-if="!contactEdit"
+            @click="editContact"
+          />
         </div>
       </section>
-      <section
-        tabindex="1"
-        class="collapse-plus collapse rounded-box row-span-1 place-self-stretch border border-base-300 bg-bglight-shade"
-      >
-        <div
-          class="slow-effect collapse-title font-heading text-xl font-medium hover:text-danger-dark"
-        >
+      <section tabindex="2" class="collapse">
+        <div class="collapse-title-addition collapse-title">
           <span class="font-semibold text-danger-dark">College : </span>
           {{ userProfile.classroom.college.name }}
         </div>
-        <div class="collapse-content text-lg">
-          <p>
-            <span class="text-primary-dark">City : </span>
+        <div class="collapse-content-layout collapse-content">
+          <span class="collapse-content-label">City : </span>
+          <p class="col-span-3">
             {{ userProfile.classroom.college.city }}
           </p>
-          <p>
-            <span class="text-primary-dark">State : </span>
+          <span class="collapse-content-label">State : </span>
+          <p class="col-span-3">
             {{ userProfile.classroom.college.state }}
           </p>
-          <p>
-            <span class="text-primary-dark">Address: </span>
+          <span class="collapse-content-label">Address : </span>
+          <p class="col-span-3">
             {{ userProfile.classroom.college.address }}
           </p>
         </div>
       </section>
-      <section
-        tabindex="3"
-        class="collapse-plus collapse rounded-box row-span-1 place-self-stretch border border-base-300 bg-bglight-shade"
-      >
-        <div
-          class="slow-effect collapse-title font-heading text-xl font-medium hover:text-danger-dark"
-        >
+      <section tabindex="3" class="collapse">
+        <div class="collapse-title-addition collapse-title">
           <span class="font-semibold text-danger-dark">Classroom : </span>
           {{ userProfile.classroom.title }}
         </div>
-        <div class="collapse-content text-lg">
-          <p>
-            <span class="text-primary-dark">Level : </span>
+        <div class="collapse-content-layout collapse-content">
+          <span class="collapse-content-label">Level : </span>
+          <p class="col-span-3">
             {{ userProfile.classroom.level }}
           </p>
-          <p>
-            <span class="text-primary-dark">Stream : </span>
+          <span class="collapse-content-label">Stream : </span>
+          <p class="col-span-3">
             {{ userProfile.classroom.stream }}
           </p>
-          <p>
-            <span class="text-primary-dark">Section : </span>
+          <span class="collapse-content-label">Section : </span>
+          <p class="col-span-3">
             {{ userProfile.classroom.section }}
           </p>
-          <p>
-            <span class="text-primary-dark">Number of Sems: </span>
-            {{ userProfile.classroom.no_of_semesters }}
-          </p>
-          <p>
-            <span class="text-primary-dark">Batch of: </span>
+          <span class="collapse-content-label">Batch of: </span>
+          <p class="col-span-3">
             {{ userProfile.classroom.start_year }} -
             {{ userProfile.classroom.end_year }}
+          </p>
+          <span class="collapse-content-label"># Semesters: </span>
+          <p class="col-span-3">
+            {{ userProfile.classroom.no_of_semesters }}
           </p>
         </div>
       </section>
@@ -167,7 +144,7 @@ export default {
   data() {
     return {
       msg: "",
-      loader: "",
+      loader: true,
       contactEdit: true,
       // semCards: [],
     };

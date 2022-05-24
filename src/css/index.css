@@ -103,3 +103,25 @@
 .login-view {
   @apply grid min-h-screen grid-flow-row grid-cols-1 grid-rows-1 content-center justify-center gap-2 bg-gradient-to-br from-sky-200 to-sky-400/80 lg:min-h-screen lg:grid-flow-col lg:grid-cols-2;
 }
+
+.collapse {
+  @apply collapse-plus rounded-box row-span-1 place-self-stretch border border-base-300 bg-bglight-shade;
+}
+.collapse-title-addition {
+  @apply slow-effect font-heading text-xl font-medium hover:text-danger-dark;
+}
+.collapse-content-layout {
+  @apply grid grid-flow-row grid-cols-5 place-content-stretch content-evenly font-body text-lg;
+}
+.collapse-content-label {
+  @apply col-span-2 place-self-center text-primary-dark;
+}
+.collapse-content-icon {
+  @apply col-span-1 h-6 w-6 cursor-pointer place-self-center;
+}
+.student-dashboard {
+  @apply grid min-h-screen w-screen grid-cols-1 place-content-center gap-3 bg-gradient-to-tr from-sky-300 to-green-300 pb-10 text-lg lg:grid-cols-3 lg:grid-rows-1;
+}
+.student-dashboard-card-section {
+  @apply relative grid justify-items-center gap-y-4 lg:col-span-2 lg:grid-cols-2;
+}
