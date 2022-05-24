@@ -70,7 +70,7 @@
   @apply slow-effect absolute top-3 right-3 z-20 h-7 w-7 text-primary-dark hover:animate-bounce hover:text-primary-light;
 }
 .card {
-  @apply slow-effect relative flex h-96 w-96 flex-col items-center justify-evenly self-center bg-gray-100/70 px-10 shadow-xl backdrop-blur-sm backdrop-filter hover:scale-105 hover:backdrop-blur-md md:h-64 md:w-64;
+  @apply slow-effect m-4 grid h-4/5 w-3/5 grid-flow-row grid-cols-1 place-content-center content-center gap-3  bg-gray-200/80 backdrop-blur-sm backdrop-filter hover:scale-105 hover:backdrop-blur-md;
 }
 
 .blur-sm {

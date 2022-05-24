@@ -1,8 +1,8 @@
 <template>
   <div
-    class="grid min-h-screen w-screen grid-rows-1 gap-2 pb-10 text-lg lg:grid-cols-3"
+    class="grid min-h-screen w-screen grid-rows-1 gap-2 bg-gradient-to-tr from-sky-200 to-fuchsia-300 pb-10 text-lg lg:grid-cols-3"
   >
-    <main
+    <section
       v-if="loader"
       class="col-span-2 mt-4 grid justify-items-center gap-y-4 lg:grid-cols-2"
     >
@@ -10,14 +10,14 @@
       <LoaderCard></LoaderCard>
       <LoaderCard></LoaderCard>
       <LoaderCard></LoaderCard>
-    </main>
+    </section>
     <!-- <LoaderView /> -->
     <main
       v-else
       class="relative col-span-2 mt-4 grid justify-items-center gap-y-4 lg:grid-cols-2"
     >
       <img
-        src="../../assets/background/sem_page_card_bg_4.svg"
+        src="../../assets/semester_student/bg_1.svg"
         alt="No Sem BG found"
         class="absolute bottom-0 left-24 w-full"
       />
@@ -28,13 +28,16 @@
         <h1 class="card-title text-2xl text-zinc-700">
           Semester-{{ semCard.sem_no }}
         </h1>
-        <button class="btn" @click="handelOpen(semCard.sem_no)">Open</button>
+        <section class="button-section">
+          <button class="bttn" @click="handelOpen(semCard.sem_no)">Open</button>
+        </section>
       </div>
     </main>
     <aside class="mt-4 mr-4 grid h-screen grid-cols-1 gap-2">
       <section
         tabindex="0"
-        class="collapse-plus collapse collapse-open rounded-box border border-base-300 bg-bglight-shade"
+        :class="{ 'collapse-open': !contactEdit }"
+        class="collapse-plus collapse rounded-box border border-base-300 bg-bglight-shade"
       >
         <div
           class="slow-effect collapse-title text-xl font-medium hover:text-danger-dark"
