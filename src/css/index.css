@@ -66,13 +66,20 @@
 .btn {
   @apply btn-outline mx-2 w-full border-0 bg-primary-dark font-medium text-white outline-none hover:bg-primary-light;
 }
+
+.page-header {
+  @apply mt-6 flex w-3/5 flex-col items-center justify-between rounded-2xl border-l-8 border-b-4 border-danger-dark px-10 py-3 font-heading text-2xl shadow-lg md:flex-row;
+}
+
 .sem-badge {
   @apply slow-effect absolute top-3 right-3 z-20 h-7 w-7 text-primary-dark hover:animate-bounce hover:text-primary-light;
 }
 .SemCard {
   @apply slow-effect m-4 grid h-4/5 w-3/5 grid-flow-row grid-cols-1 place-content-center  gap-3  rounded-lg bg-gray-200/80 shadow-xl backdrop-blur-sm backdrop-filter hover:scale-105 hover:backdrop-blur-md;
 }
-
+.SubjectCard-View {
+  @apply mt-5 grid min-h-screen w-screen grid-flow-row grid-cols-1 items-center justify-evenly gap-3 bg-bglight-base md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-3;
+}
 .SubjectCard {
   @apply slow-effect mx-2 flex aspect-video w-4/6 flex-col justify-evenly rounded-xl border-l-8 border-primary-dark bg-bglight-shade p-2 text-bgdark-base opacity-90 shadow-lg backdrop-blur-lg backdrop-filter hover:scale-105 hover:border-warning-light  hover:shadow-2xl;
 }

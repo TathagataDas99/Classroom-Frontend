@@ -1,8 +1,6 @@
 <template>
   <main class="flex flex-col items-center justify-evenly bg-bglight-base">
-    <div
-      class="mt-6 flex w-3/5 flex-col items-center justify-between rounded-2xl border-l-8 border-b-4 border-danger-dark px-10 py-3 font-heading text-2xl shadow-lg md:flex-row"
-    >
+    <div class="page-header">
       <p>Semester - {{ no }}</p>
       <router-link
         class="link-danger slow-effect text-center font-body font-medium underline shadow-md"
@@ -10,9 +8,7 @@
         >Go To Semester Page</router-link
       >
     </div>
-    <div
-      class="mt-5 grid min-h-screen w-screen grid-flow-row grid-cols-1 items-center justify-evenly gap-3 bg-bglight-base md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-3"
-    >
+    <div class="SubjectCard-View">
       <template v-if="loader">
         <template v-for="i in 8" :key="i">
           <LoaderCard class="col-span-1 row-span-1 place-self-center" />
