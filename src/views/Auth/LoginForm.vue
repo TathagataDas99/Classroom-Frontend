@@ -24,9 +24,9 @@
     />
     <main class="login-form">
       <img
-        src="../../assets/login/man_2.png"
+        src="../../assets/login/man_2.svg"
         alt="no user image found"
-        class="mx-auto mt-5 h-auto w-2/6 rounded-full shadow-lg"
+        class="mx-auto mt-5 h-1/6 w-1/6 rounded-full"
       />
       <form class="form" @submit.prevent="handelLogin">
         <section class="form-section">

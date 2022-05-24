@@ -109,7 +109,7 @@
   @apply flex min-h-screen flex-col items-center justify-evenly bg-gradient-to-br from-sky-400/75 to-green-300/70;
 }
 .login-view {
-  @apply grid min-h-screen grid-flow-row grid-cols-1 grid-rows-1 content-center justify-center gap-2 bg-gradient-to-br from-sky-200 to-sky-400/80 lg:min-h-screen lg:grid-flow-col lg:grid-cols-2;
+  @apply grid min-h-screen grid-flow-row grid-cols-1 grid-rows-1 content-center justify-center gap-2 bg-gradient-to-tr from-green-200  to-sky-200 lg:min-h-screen lg:grid-flow-col lg:grid-cols-2;
 }
 
 .collapse {
@@ -128,8 +128,11 @@
   @apply col-span-1 h-6 w-6 cursor-pointer place-self-center;
 }
 .student-dashboard {
-  @apply grid min-h-screen w-screen grid-cols-1 place-content-center gap-3 bg-gradient-to-br from-fuchsia-300 to-sky-400/80 pb-10 text-lg lg:grid-cols-3 lg:grid-rows-1;
+  @apply grid min-h-screen w-screen grid-cols-1 place-content-center gap-3 bg-gradient-to-tr from-green-200  to-sky-200 pb-10 text-lg lg:grid-cols-3 lg:grid-rows-1;
 }
 .student-dashboard-card-section {
   @apply relative grid justify-items-center gap-y-4 lg:col-span-2 lg:grid-cols-2;
+}
+.signin-view {
+  @apply grid min-h-screen grid-flow-row grid-cols-1 grid-rows-3 place-content-center gap-2 bg-gradient-to-tr from-green-200 to-sky-200 md:grid-cols-7 md:place-items-end;
 }

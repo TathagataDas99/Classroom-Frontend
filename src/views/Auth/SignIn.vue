@@ -13,7 +13,7 @@
     </div>
   </Transition>
   <div
-    class="grid min-h-screen grid-flow-row grid-cols-1 grid-rows-3 place-content-center gap-2 bg-gradient-to-br from-fuchsia-300 to-sky-400 md:grid-cols-7 md:place-items-end"
+    class="signin-view"
   >
     <div v-if="loader">
       <LoaderView />
