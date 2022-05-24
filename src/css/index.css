@@ -73,11 +73,14 @@
   @apply slow-effect m-4 grid h-4/5 w-3/5 grid-flow-row grid-cols-1 place-content-center  gap-3  rounded-lg bg-gray-200/80 shadow-xl backdrop-blur-sm backdrop-filter hover:scale-105 hover:backdrop-blur-md;
 }
 
-.blur-sm {
-  @apply bg-slate-200/60 backdrop-blur-sm backdrop-filter hover:backdrop-blur-md;
+.SubjectCard {
+  @apply slow-effect mx-2 flex aspect-video w-4/6 flex-col justify-evenly rounded-xl border-l-8 border-primary-dark bg-bglight-shade p-2 text-bgdark-base opacity-90 shadow-lg backdrop-blur-lg backdrop-filter hover:scale-105 hover:border-warning-light  hover:shadow-2xl;
 }
-.blur-md {
-  @apply bg-slate-200/60 backdrop-blur-md backdrop-filter hover:backdrop-blur-lg;
+.SubjectCard-section {
+  @apply flex flex-row flex-wrap;
+}
+.subject-card-title {
+  @apply slow-effect pl-4 font-heading text-2xl font-semibold;
 }
 .college-create-view {
   @apply grid min-h-screen grid-flow-row grid-cols-1 gap-2 bg-gradient-to-tr from-green-200  to-sky-200 md:h-auto lg:grid-flow-col lg:grid-cols-4 lg:grid-rows-1;
@@ -86,9 +89,7 @@
 .college-form-info {
   @apply col-span-2 hidden grid-flow-row grid-cols-1 grid-rows-1 content-end gap-1 lg:grid;
 }
-/* .college-form-text {
-  @apply relative col-span-2 row-span-1 content-center;
-} */
+
 .college-form-icon {
   @apply relative col-span-full  row-span-full self-end;
 }
