@@ -115,7 +115,7 @@
         <button class="bttn slow-effect" type="submit">Signin</button>
         <a
           v-show="!loader & isSubmitted & (error.length === 0)"
-          class="bttn slow-effect"
+          class="bttn slow-effect text-center"
           :href="`mailto:${formValues.email}`"
           >Open Mail</a
         >
