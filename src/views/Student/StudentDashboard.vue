@@ -21,11 +21,11 @@
         alt="No Sem BG found"
         class="absolute bottom-0 left-24 w-full"
       />
-      <div class="card" v-for="semCard in semCards" :key="semCard.id">
+      <div class="Card" v-for="semCard in semCards" :key="semCard.id">
         <button title="This is the on going semester">
           <BadgeCheckIcon class="sem-badge" v-show="semCard.is_current_sem" />
         </button>
-        <h1 class="card-title text-2xl text-zinc-700">
+        <h1 class="text-center text-2xl text-zinc-700">
           Semester-{{ semCard.sem_no }}
         </h1>
         <section class="button-section">
