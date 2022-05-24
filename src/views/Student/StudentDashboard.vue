@@ -1,6 +1,6 @@
 <template>
   <div
-    class="grid min-h-screen w-screen grid-rows-1 gap-2 bg-gradient-to-tr from-sky-200 to-fuchsia-300 pb-10 text-lg lg:grid-cols-3"
+    class="grid min-h-screen w-screen grid-cols-1 place-content-center gap-3 bg-gradient-to-tr from-sky-300 to-green-300 pb-10 text-lg lg:grid-cols-3 lg:grid-rows-1"
   >
     <section
       v-if="loader"
@@ -14,18 +14,18 @@
     <!-- <LoaderView /> -->
     <main
       v-else
-      class="relative col-span-2 mt-4 grid justify-items-center gap-y-4 lg:grid-cols-2"
+      class="relative grid justify-items-center gap-y-4 lg:col-span-2 lg:grid-cols-2"
     >
       <img
         src="../../assets/semester_student/bg_1.svg"
         alt="No Sem BG found"
-        class="absolute bottom-0 left-24 w-full"
+        class="absolute bottom-0 left-24 hidden lg:col-span-full lg:block"
       />
       <div class="Card" v-for="semCard in semCards" :key="semCard.id">
         <button title="This is the on going semester">
           <BadgeCheckIcon class="sem-badge" v-show="semCard.is_current_sem" />
         </button>
-        <h1 class="text-center text-2xl text-zinc-700">
+        <h1 class="text-center font-heading text-2xl text-zinc-700">
           Semester-{{ semCard.sem_no }}
         </h1>
         <section class="button-section">
@@ -33,14 +33,16 @@
         </section>
       </div>
     </main>
-    <aside class="mt-4 mr-4 grid h-screen grid-cols-1 gap-2">
+    <aside
+      class="row-start-2 my-2 mx-2 grid grid-cols-1 grid-rows-3 gap-2 lg:row-start-auto"
+    >
       <section
         tabindex="0"
         :class="{ 'collapse-open': !contactEdit }"
-        class="collapse-plus collapse rounded-box border border-base-300 bg-bglight-shade"
+        class="collapse-plus collapse rounded-box row-span-1 place-self-stretch border border-base-300 bg-bglight-shade"
       >
         <div
-          class="slow-effect collapse-title text-xl font-medium hover:text-danger-dark"
+          class="slow-effect collapse-title font-heading text-xl font-medium hover:text-danger-dark"
         >
           <span class="font-semibold text-danger-dark">Welcome</span>
           {{ userProfile.user.first_name }} {{ userProfile.user.last_name }}
@@ -88,10 +90,10 @@
       </section>
       <section
         tabindex="1"
-        class="collapse-plus collapse rounded-box border border-base-300 bg-bglight-shade"
+        class="collapse-plus collapse rounded-box row-span-1 place-self-stretch border border-base-300 bg-bglight-shade"
       >
         <div
-          class="slow-effect collapse-title text-xl font-medium hover:text-danger-dark"
+          class="slow-effect collapse-title font-heading text-xl font-medium hover:text-danger-dark"
         >
           <span class="font-semibold text-danger-dark">College : </span>
           {{ userProfile.classroom.college.name }}
@@ -113,10 +115,10 @@
       </section>
       <section
         tabindex="3"
-        class="collapse-plus collapse rounded-box border border-base-300 bg-bglight-shade"
+        class="collapse-plus collapse rounded-box row-span-1 place-self-stretch border border-base-300 bg-bglight-shade"
       >
         <div
-          class="slow-effect collapse-title text-xl font-medium hover:text-danger-dark"
+          class="slow-effect collapse-title font-heading text-xl font-medium hover:text-danger-dark"
         >
           <span class="font-semibold text-danger-dark">Classroom : </span>
           {{ userProfile.classroom.title }}

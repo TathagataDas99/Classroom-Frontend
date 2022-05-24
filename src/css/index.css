@@ -26,7 +26,7 @@
   @apply my-1 mx-2 cursor-pointer rounded-2xl border-b-2 border-transparent px-7 py-1 text-sm decoration-transparent shadow-sm outline-none  hover:border-danger-dark hover:font-semibold hover:text-danger-dark hover:shadow-md md:text-base lg:text-lg 2xl:text-xl;
 }
 .button-section {
-  @apply mb-4 flex flex-col items-stretch justify-evenly md:flex-row;
+  @apply mb-4 flex w-full flex-col items-stretch justify-evenly md:flex-row;
 }
 .bttn {
   @apply slow-effect mx-5 my-3 flex-1 rounded-lg bg-primary-light py-3 px-4 font-heading text-xl text-bglight-shade shadow-md outline-none delay-75 hover:-translate-y-1 hover:scale-105 hover:bg-primary-dark hover:font-extrabold hover:shadow-xl md:w-3/5 md:flex-initial lg:w-2/5;
