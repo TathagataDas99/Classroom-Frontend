@@ -1,6 +1,6 @@
 <template>
   <main class="flex flex-col items-center justify-evenly bg-bglight-base">
-    <div class="page-header">
+    <div class="page-header-1">
       <p>Semester - {{ no }}</p>
       <router-link
         class="link-danger slow-effect text-center font-body font-medium underline shadow-md"
