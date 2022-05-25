@@ -73,6 +73,9 @@
 .page-header-1 {
   @apply mt-6 flex w-3/5 flex-col items-center justify-between rounded-2xl border-l-8 border-b-4 border-danger-dark bg-bglight-shade px-10 py-3 font-heading text-xl shadow-lg md:flex-row;
 }
+.page-header-2 {
+  @apply mt-3 flex flex-row flex-wrap items-end justify-evenly rounded-xl border-b-4 border-danger-dark py-3 px-2 font-heading text-lg font-semibold shadow-lg;
+}
 
 .sem-badge {
   @apply slow-effect absolute top-3 right-3 z-20 h-7 w-7 text-primary-dark hover:animate-bounce hover:text-primary-light;

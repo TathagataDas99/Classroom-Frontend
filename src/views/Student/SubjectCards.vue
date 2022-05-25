@@ -5,7 +5,8 @@
       <router-link
         class="link-danger slow-effect text-center font-body font-medium underline shadow-md"
         :to="{ name: 'StudentDashboard' }"
-        >Go To Semester Page</router-link
+        ><ReplyIcon class="mr-2 inline-block w-7 font-body text-danger-dark" />
+        Semester Page</router-link
       >
     </div>
     <div class="SubjectCard-View">
@@ -78,7 +79,7 @@ import axios from "axios";
 // import LoaderView from "../../components/LoaderView.vue";
 import { mapGetters } from "vuex";
 import LoaderCard from "../../components/LoaderCard.vue";
-import { BookOpenIcon } from "@heroicons/vue/solid";
+import { BookOpenIcon, ReplyIcon } from "@heroicons/vue/solid";
 // import { mapActions } from "vuex";
 export default {
   data() {
@@ -91,6 +92,7 @@ export default {
   props: ["no"],
   components: {
     LoaderCard,
+    ReplyIcon,
     BookOpenIcon,
   },
   computed: {

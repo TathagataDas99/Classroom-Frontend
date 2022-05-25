@@ -1,47 +1,57 @@
 <template>
-  <div class="h-screen">
+  <div
+    class="flex h-screen flex-col items-center justify-evenly bg-bglight-base"
+  >
     <div v-if="loader">
       <LoaderView />
     </div>
 
     <div
-      class="flex flex-col items-stretch justify-between px-3 pt-3 md:flex-row"
+      class="grid w-full flex-shrink grid-rows-2 place-content-center md:grid-cols-5 md:grid-rows-1"
     >
-      <nav class="tabs w-full md:w-1/2">
+      <nav class="tabs col-span-1 place-self-center md:col-span-2">
         <router-link
           :to="{ name: 'AnnouncementView', props: { no, subject_slug } }"
-          class="tab tab-lifted md:tab-md"
+          class="tab tab-lifted tab-sm lg:tab-lg"
           :class="{
             'tab-active': isActive === 1,
-            'font-semibold text-primary-light': isActive === 1,
+            'tab-active-dynamic': isActive === 1,
           }"
           @click="activeTab(1)"
           >Announcement</router-link
         >
         <router-link
-          class="tab tab-lifted md:tab-md"
+          class="tab tab-lifted tab-sm lg:tab-lg"
           :to="{ name: 'NotesView', props: { no, subject_slug } }"
           :class="{
             'tab-active': isActive === 2,
-            'font-semibold text-primary-light': isActive === 2,
+            'tab-active-dynamic': isActive === 2,
           }"
           @click="activeTab(2)"
           >Notes</router-link
         >
         <router-link
-          class="tab tab-lifted md:tab-md"
+          class="tab tab-lifted tab-sm lg:tab-lg"
           :to="{ name: 'AssignmentsView', props: { no, subject_slug } }"
           :class="{
             'tab-active': isActive === 3,
-            'font-semibold text-primary-light': isActive === 3,
+            'tab-active-dynamic': isActive === 3,
           }"
           @click="activeTab(3)"
           >Assignments</router-link
         >
       </nav>
-      <div class="mr-7">
+      <div
+        class="row-start-2 hidden md:col-span-2 md:col-start-3 md:row-start-1 md:block"
+      >
+        <div class="page-header-2">
+          <p>Semester - {{ no }}</p>
+          <p>Subject - {{ subject_slug }}</p>
+        </div>
+      </div>
+      <div class="col-span-1 row-start-1 place-self-center md:col-start-5">
         <button
-          class="link-danger"
+          class="link-danger columns-1"
           @click="
             $router.replace({
               name: 'SubjectCards',
@@ -49,11 +59,15 @@
             })
           "
         >
-          Go Back
+          <ReplyIcon
+            class="my-3 inline-block h-5 w-7 font-semibold text-danger-dark"
+          />
+          subject page
         </button>
       </div>
     </div>
-    <router-view />
+
+    <router-view class="flex-1" />
   </div>
 </template>
 
@@ -61,6 +75,7 @@
 import axios from "axios";
 import LoaderView from "../../../components/LoaderView.vue";
 import { mapGetters } from "vuex";
+import { ReplyIcon } from "@heroicons/vue/solid";
 export default {
   props: ["subject_slug", "no"],
   data() {
@@ -73,6 +88,7 @@ export default {
   },
   components: {
     LoaderView,
+    ReplyIcon,
   },
   computed: {
     ...mapGetters(["userType", "userProfile", "semCards"]),
