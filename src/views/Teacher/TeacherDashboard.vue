@@ -7,33 +7,57 @@
     </div>
     <main
       v-else
-      class="grid grid-flow-row grid-cols-1 place-content-center place-items-stretch justify-items-center gap-3 md:col-span-3 md:grid-cols-2 md:grid-rows-2 lg:col-span-5"
+      class="mt-2 grid grid-flow-row grid-cols-1 place-content-center place-items-stretch justify-items-center gap-3 md:col-span-3 md:grid-cols-2 md:grid-rows-2 lg:col-span-5"
     >
-      {{ userProfile }}
+      <!-- {{ userProfile }} -->
       <template
         v-for="classroom in userProfile.classroom_list"
         :key="classroom.slug"
       >
         <section class="col-span-1 row-span-1">
           <div class="ClassroomCard">
-            <div class="text-2xl text-zinc-700">
-              {{ classroom.stream }}
-            </div>
-            <div class="text-2xl text-zinc-700">
-              {{ classroom.title }}
-            </div>
-            <div class="text-2xl text-zinc-700">
-              {{ classroom.start_year }}
-            </div>
-            <div class="text-2xl text-zinc-700">
-              {{ classroom.end_year }}
-            </div>
-            <div class="text-2xl text-zinc-700">
-              {{ classroom.section }}
-            </div>
-            <div class="card-title text-2xl text-zinc-700">
-              {{ classroom.level }}
-            </div>
+            <table class="mx-3 mt-4 table-fixed px-2">
+              <tr>
+                <td class="font-heading text-xl font-bold text-primary-dark">
+                  Title:
+                </td>
+                <td class="font-body text-lg font-semibold">
+                  {{ classroom.title }}
+                </td>
+              </tr>
+              <tr>
+                <td class="font-heading text-xl font-bold text-primary-dark">
+                  Stream:
+                </td>
+                <td class="font-body text-lg font-semibold">
+                  {{ classroom.stream }}
+                </td>
+              </tr>
+              <tr>
+                <td class="font-heading text-xl font-bold text-primary-dark">
+                  Batch:
+                </td>
+                <td class="font-body text-lg font-semibold">
+                  {{ classroom.start_year }} - {{ classroom.end_year }}
+                </td>
+              </tr>
+              <tr>
+                <td class="font-heading text-xl font-bold text-primary-dark">
+                  Section:
+                </td>
+                <td class="font-body text-lg font-semibold">
+                  {{ classroom.section }}
+                </td>
+              </tr>
+              <tr>
+                <td class="font-heading text-xl font-bold text-primary-dark">
+                  Level:
+                </td>
+                <td class="font-body text-lg font-semibold">
+                  {{ classroom.level }}
+                </td>
+              </tr>
+            </table>
             <div class="button-section">
               <button
                 class="bttn place-self-end"
@@ -47,7 +71,7 @@
       </template>
     </main>
     <aside
-      class="row-start-2 my-2 mx-2 grid grid-cols-1 grid-rows-3 gap-2 md:col-span-2 md:row-start-1 lg:col-span-3 lg:row-start-auto"
+      class="row-start-2 my-4 mx-2 grid grid-cols-1 grid-rows-3 gap-2 md:col-span-2 md:row-start-1 lg:col-span-3 lg:row-start-auto"
     >
       <section
         tabindex="0"

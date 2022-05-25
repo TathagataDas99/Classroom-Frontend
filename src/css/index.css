@@ -147,5 +147,8 @@
   @apply collapse-plus slow-effect collapse rounded-box mx-3 my-2 border border-base-300 bg-base-100 hover:animate-pulse hover:bg-green-100 focus:animate-none focus:bg-bglight-shade focus:shadow-lg md:mx-24;
 }
 .ClassroomCard {
-  @apply slow-effect mx-5 my-5 w-60 rounded-xl bg-bglight-shade shadow-lg hover:shadow-xl md:w-60 lg:w-72;
+  @apply slow-effect mx-5 my-5  flex w-60 flex-col rounded-xl bg-bglight-shade shadow-lg backdrop-filter hover:translate-y-1 hover:bg-gradient-to-br hover:from-transparent hover:to-green-200/60 hover:shadow-2xl hover:backdrop-blur-md md:w-60 lg:w-72;
+}
+.class-card-section {
+  @apply flex flex-row flex-wrap justify-around py-2;
 }
