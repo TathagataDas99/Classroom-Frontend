@@ -22,9 +22,9 @@
       <div class="form-section">
         <label class="label" for="stream">stream</label>
         <div>
-          <select name="stream" id="stream" v-model="streamId">
+          <select name="stream" id="stream" v-model="formValues.title">
             <option
-              :value="stream.stream_id"
+              :value="stream.title"
               v-for="stream in userProfile.streams"
               :key="stream.stream_id"
             >
@@ -58,8 +58,8 @@ export default {
       isFormOpen: true,
       formValues: {
         dba: "",
+        title: "",
       },
-      streamId: "",
       dbaList: [],
     };
   },
@@ -101,8 +101,8 @@ export default {
   methods: {
     async addDbaToTheStream() {
       this.isFormOpen = !this.isFormOpen;
-      const res = await axios.patch(
-        `/classroom-app/college-streams/${this.userProfile.college.slug}/stream/${this.streamId}/`,
+      const res = await axios.post(
+        `/classroom-app/college-streams/${this.userProfile.college.slug}/stream/`,
         this.formValues
       );
       console.log(res);
