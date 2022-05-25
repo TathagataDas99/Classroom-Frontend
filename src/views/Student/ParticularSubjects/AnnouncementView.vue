@@ -7,7 +7,7 @@
     <section class="mt-5">
       <div
         tabindex="0"
-        class="collapse collapse-plus rounded-box mx-24 my-2 border border-base-300 bg-base-100"
+        class="collapse-plus collapse rounded-box mx-24 my-2 border border-base-300 bg-base-100"
         v-for="announcement in announcements"
         :key="announcement.id"
       >
