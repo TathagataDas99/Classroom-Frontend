@@ -146,3 +146,6 @@
 .announcement-collapse {
   @apply collapse-plus slow-effect collapse rounded-box mx-3 my-2 border border-base-300 bg-base-100 hover:animate-pulse hover:bg-green-100 focus:animate-none focus:bg-bglight-shade focus:shadow-lg md:mx-24;
 }
+.ClassroomCard {
+  @apply slow-effect mx-5 my-5 w-60 rounded-xl bg-bglight-shade shadow-lg hover:shadow-xl md:w-60 lg:w-72;
+}
