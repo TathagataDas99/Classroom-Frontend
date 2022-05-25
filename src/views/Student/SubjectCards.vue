@@ -64,6 +64,7 @@
           class="bttn place-self-end group-hover:bg-warning-dark"
           @click="handelOpen(this.no, subject.slug)"
         >
+          <BookOpenIcon class="inline-block w-7" />
           View
         </button>
       </section>
@@ -77,6 +78,7 @@ import axios from "axios";
 // import LoaderView from "../../components/LoaderView.vue";
 import { mapGetters } from "vuex";
 import LoaderCard from "../../components/LoaderCard.vue";
+import { BookOpenIcon } from "@heroicons/vue/solid";
 // import { mapActions } from "vuex";
 export default {
   data() {
@@ -89,6 +91,7 @@ export default {
   props: ["no"],
   components: {
     LoaderCard,
+    BookOpenIcon,
   },
   computed: {
     ...mapGetters(["userType", "userProfile", "semCards"]),
