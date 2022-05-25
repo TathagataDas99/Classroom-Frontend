@@ -41,7 +41,7 @@
       </nav>
       <div class="mr-7">
         <button
-          class="btn"
+          class="link-danger"
           @click="
             $router.replace({
               name: 'SubjectCards',
@@ -89,6 +89,9 @@ export default {
         `/classroom-app/classroom/${this.userProfile.classroom.slug}/semester/${this.id}/subject/${this.subject_slug}`
       );
       this.announcements = announcementsResponse.data;
+      this.$router.replace({
+        name: "AnnouncementView",
+      });
     } catch (e) {
       console.log(e);
     }

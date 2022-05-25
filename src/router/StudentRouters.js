@@ -32,6 +32,7 @@ export default [
   {
     path: "/student-dashboard/semester-:no/subjects/:subject_slug/",
     name: "ParticularSubject",
+    redirect: { name: "AnnouncementView" },
     component: ParticularSubject,
     props: true,
     beforeEnter: isAuth,
