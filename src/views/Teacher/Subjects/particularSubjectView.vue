@@ -115,6 +115,7 @@ export default {
         `/classroom-app/classroom/${this.userProfile.classroom.slug}/semester/${this.id}/subject/${this.subject_slug}`
       );
       this.announcements = announcementsResponse.data;
+      this.$router.replace({ name: "announcementTeacher" });
     } catch (e) {
       console.log(e);
     }

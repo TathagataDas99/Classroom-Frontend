@@ -41,6 +41,7 @@ export default [
     path: "/teacher-dashboard/:classroom_slug/semester-:semester_no/:subject_slug/",
     name: "particularSubjectView",
     component: particularSubjectView,
+    redirect: { name: "announcementTeacher" },
     props: true,
     beforeEnter: isAuth,
     children: [
