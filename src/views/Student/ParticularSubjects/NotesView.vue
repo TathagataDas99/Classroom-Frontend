@@ -1,18 +1,19 @@
 <template>
-  <main @focusout="isDownloaded">
+  <main @click="openedNotes = -1" class="w-screen">
     <div v-if="loader">
       <LoaderView />
     </div>
     <section class="mt-5">
       <div
-        tabindex="0"
-        class="collapse-plus collapse rounded-box mx-2 my-2 h-3/5 overflow-clip border border-base-300 bg-base-100 shadow-lg md:mx-10"
-        v-for="note in notes"
+        :tabindex="index"
+        class="announcement-collapse"
+        v-for="(note, index) in notes"
         :key="note"
-        :class="{ 'collapse-open': isDownload }"
-        @focusin="isDownload = true"
+        :class="{ 'collapse-open': openedNotes === index }"
+        @focusin="openedNotes = index"
       >
-        <div class="collapse-title text-xl font-medium">
+        <div class="collapse-title font-heading text-xl font-medium">
+          <span class="text-primary-dark">{{ index + 1 }} .</span>
           {{ note.title }}
         </div>
         <div class="collapse-content grid lg:grid-cols-4 lg:grid-rows-3">
@@ -36,16 +37,16 @@
             <p class="font-bold text-primary-light">Download Attached files:</p>
           </div>
           <div
-            class="collapse-content col-span-1 row-span-1 flex flex-row flex-wrap items-center justify-end lg:col-start-4 lg:row-start-3"
+            class="collapse-content col-span-1 row-span-1 flex flex-row flex-wrap items-center justify-end font-body lg:col-start-4 lg:row-start-3"
           >
             <!-- <span class="font-bold">Attached Files</span> -->
             <a
               class="slow-effect flex-1 hover:text-primary-light"
               :href="file.file_path"
               v-for="(file, index) in note.attached_files"
-              @focus="isDownloaded"
               :key="file.title"
             >
+              <!-- @focus="isDownloaded" -->
               <DocumentDownloadIcon
                 class="slow-effect h-12 w-10 text-primary-dark hover:scale-110 hover:text-primary-light"
               />
@@ -71,7 +72,8 @@ export default {
       notes: [],
       id: "",
       isActive: 1,
-      isDownload: true,
+      // isDownload: true,
+      openedNotes: -1,
     };
   },
   components: {
@@ -104,9 +106,9 @@ export default {
     activeTab(no) {
       this.isActive = no;
     },
-    isDownloaded() {
-      this.isDownload = !this.isDownload;
-    },
+    // isDownloaded() {
+    //   this.isDownload = !this.isDownload;
+    // },
   },
 };
 </script>
