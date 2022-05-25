@@ -9,7 +9,7 @@
       v-else
       class="grid grid-flow-row grid-cols-1 place-content-center place-items-stretch justify-items-center gap-3 md:col-span-3 md:grid-cols-2 md:grid-rows-2 lg:col-span-5"
     >
-      <!-- {{ userProfile }} -->
+      {{ userProfile }}
       <template
         v-for="classroom in userProfile.classroom_list"
         :key="classroom.slug"
