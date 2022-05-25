@@ -6,15 +6,18 @@
     <!-- <div>{{announcements}}</div> -->
     <section class="mt-5">
       <div
-        tabindex="0"
-        class="collapse-plus collapse rounded-box mx-24 my-2 border border-base-300 bg-base-100"
-        v-for="announcement in announcements"
+        :tabindex="announcement.id"
+        class="announcement-collapse"
+        v-for="(announcement, index) in announcements"
         :key="announcement.id"
       >
-        <div class="collapse-title text-xl font-medium">
+        <div
+          class="collapse-title font-heading text-base font-medium uppercase md:text-lg lg:text-xl"
+        >
+          <span class="text-primary-dark">{{ index + 1 }}.</span>
           {{ announcement.heading }}
         </div>
-        <div class="collapse-content">
+        <div class="collapse-content font-body md:text-lg">
           <p>{{ announcement.body }}</p>
         </div>
         <!-- <div class="collapse-content">

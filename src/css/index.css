@@ -142,3 +142,7 @@
 .signin-view {
   @apply grid min-h-screen grid-flow-row grid-cols-1 grid-rows-3 place-content-center gap-2 bg-gradient-to-tr from-green-200 to-sky-200 md:grid-cols-7 md:place-items-end;
 }
+
+.announcement-collapse {
+  @apply collapse-plus slow-effect collapse rounded-box mx-3 my-2 border border-base-300 bg-base-100 hover:animate-pulse hover:bg-green-100 focus:animate-none focus:bg-bglight-shade focus:shadow-lg md:mx-24;
+}
