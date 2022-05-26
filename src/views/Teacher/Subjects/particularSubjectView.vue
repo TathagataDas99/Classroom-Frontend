@@ -129,12 +129,12 @@ export default {
       );
       this.announcements = announcementsResponse.data;
       console.log("in created try block");
-      // this.$router.replace({
-      //   name: "announcementTeacher",
-      // });
     } catch (e) {
       console.log(e);
     }
+    this.$router.replace({
+      name: "announcementTeacher",
+    });
     this.loader = false;
   },
   methods: {

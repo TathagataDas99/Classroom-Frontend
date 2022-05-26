@@ -170,10 +170,10 @@ export default {
     }
     this.loader = false;
   },
-  // unmounted() {
-  //   this.$router.replace({ name: "announcementTeacher" });
-  //   console.log("in notes unmounted"  );
-  // },
+  updated() {
+    this.$router.replace({ name: "notesTeacher" });
+    console.log("in notes unmounted"  );
+  },
   methods: {
     async editPatch(note) {
       try {
