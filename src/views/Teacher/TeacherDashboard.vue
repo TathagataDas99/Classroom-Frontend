@@ -2,13 +2,12 @@
   <div
     class="grid min-h-screen grid-flow-row md:grid-flow-col md:grid-cols-5 md:grid-rows-1 lg:grid-cols-8"
   >
-    <div v-if="loader">
-      <LoaderCard />
+    <div v-if="loader" class="teacher-dashboard">
+      <template v-for="i in 4" :key="i">
+        <LoaderCard />
+      </template>
     </div>
-    <main
-      v-else
-      class="mt-2 grid grid-flow-row grid-cols-1 place-content-center place-items-stretch justify-items-center gap-3 md:col-span-3 md:grid-cols-2 md:grid-rows-2 lg:col-span-5"
-    >
+    <main v-else class="teacher-dashboard">
       <!-- {{ userProfile }} -->
       <template
         v-for="classroom in userProfile.classroom_list"
