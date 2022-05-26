@@ -3,54 +3,60 @@
     <div v-if="loader">
       <LoaderView />
     </div>
+    {{ notes }}
     <section class="mt-5">
       <div
         :tabindex="index"
         class="announcement-collapse"
-        v-for="(note, index) in notes"
-        :key="note"
+        v-for="(assignment, index) in notes"
+        :key="assignment"
         :class="{ 'collapse-open': openedNotes === index }"
         @focusin="openedNotes = index"
       >
         <div class="collapse-title font-heading text-xl font-medium">
           <span class="text-primary-dark">{{ index + 1 }} .</span>
-          {{ note.title }}
+          {{ assignment.title }}
         </div>
         <div class="collapse-content grid lg:grid-cols-4 lg:grid-rows-3">
           <div
             class="collapse-content lg:col-span-3 lg:col-start-1 lg:row-span-3 lg:row-start-1"
           >
-            <p class="coloumn-1">{{ note.description }}</p>
+            <p class="coloumn-1">{{ assignment.description }}</p>
           </div>
-          <div class="collapse-content col-span-1 row-span-1">
-            <p>Created By</p>
-            <p class="font-bold">
-              {{ note.posted_by.user.first_name }}
-              {{ note.posted_by.user.last_name }}
-            </p>
+          <div
+            class="collapse-content lg:col-span-3 lg:col-start-1 lg:row-span-3 lg:row-start-1"
+          >
+            <p class="coloumn-1">{{ assignment.alloted_marks }}</p>
+          </div>
+          <div
+            class="collapse-content lg:col-span-3 lg:col-start-1 lg:row-span-3 lg:row-start-1"
+          >
+            <p class="coloumn-1">{{ assignment.due_date }}</p>
+          </div>
+          <div
+            class="collapse-content lg:col-span-3 lg:col-start-1 lg:row-span-3 lg:row-start-1"
+          >
+            <p class="coloumn-1">{{ assignment.due_time }}</p>
           </div>
           <div class="collapse-content col-span-1 row-span-1">
             <p>
               created at :-
-              <span class="font-bold">{{ note.created_at.split("T")[0] }}</span>
+              <span class="font-bold">{{ assignment.created_at.split("T")[0] }}</span>
             </p>
             <p class="font-bold text-primary-light">Download Attached files:</p>
           </div>
           <div
             class="collapse-content col-span-1 row-span-1 flex flex-row flex-wrap items-center justify-end font-body lg:col-start-4 lg:row-start-3"
           >
-            <!-- <span class="font-bold">Attached Files</span> -->
+            <!-- <span class="font-bold">Attached File</span> -->
             <a
               class="slow-effect flex-1 hover:text-primary-light"
-              :href="file.file_path"
-              v-for="(file, index) in note.attached_files"
-              :key="file.title"
+              :href="assignment.attached_pdf"
             >
-              <!-- @focus="isDownloaded" -->
               <DocumentDownloadIcon
                 class="slow-effect h-12 w-10 text-primary-dark hover:scale-110 hover:text-primary-light"
               />
-              <span class="text-sm font-bold">file-{{ index + 1 }}</span>
+              <span class="text-sm font-bold">file-1</span>
             </a>
           </div>
         </div>
@@ -92,7 +98,7 @@ export default {
     }
     try {
       const notesResponse = await axios.get(
-        `/classroom-app/classroom/${this.userProfile.classroom.slug}/semester/${this.id}/subject/${this.subject_slug}/notes/`
+        `/classroom-app/classroom/${this.userProfile.classroom.slug}/semester/${this.id}/subject/${this.subject_slug}/assignment/`
       );
       this.notes = notesResponse.data;
       // console.log(notesResponse);
