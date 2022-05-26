@@ -4,46 +4,62 @@
     <!-- <h1>{{attached_files}}</h1> -->
     <!-- notes add form -->
     <aside class="absolute bottom-7 right-2 z-50 md:right-10">
-      <button class="add-subject" @click="this.isFormOpen = !this.isFormOpen">
+      <button
+        class="add-subject"
+        @click="this.isFormOpen = !this.isFormOpen"
+        v-show="!this.isFormOpen"
+      >
         <PlusCircleIcon class="my-auto inline-block w-7" />
         Notes
       </button>
       <form
         v-if="isFormOpen"
-        class="form accent-primary-dark"
+        class="form z-30 border-2 border-primary-dark accent-primary-dark"
         @submit.prevent="addAnnouncement"
         enctype="multipart/form-data"
       >
         <div class="form-section">
-          <label class="label">Notes Title</label>
-          <input
-            class="input-box"
-            type="text"
-            v-model.trim.lazy="formValues.title"
-            required
-          />
+          <label class="label">Title</label>
+          <section class="input-section">
+            <input
+              class="input-box"
+              type="text"
+              v-model.trim.lazy="formValues.title"
+              required
+            />
+          </section>
         </div>
         <div class="form-section">
-          <label class="label">Notes Description</label>
-          <input
-            class="input-box"
-            type="text"
-            v-model.trim.lazy="formValues.description"
-            required
-          />
+          <label class="label">Description</label>
+          <section class="input-section">
+            <input
+              class="input-box"
+              type="text"
+              v-model.trim.lazy="formValues.description"
+              required
+            />
+          </section>
         </div>
         <div class="form-section">
-          <label class="label">Add notes</label>
-          <input
-            ref="file"
-            @change="handleFileUpload"
-            type="file"
-            multiple
-            accept=".xlsx, .pdf, .docs"
-          />
+          <label class="label">Attachments</label>
+          <section class="input-section-file">
+            <input
+              class="input-file"
+              ref="file"
+              @change="handleFileUpload"
+              type="file"
+              multiple
+              accept=".xlsx, .pdf, .docs"
+            />
+          </section>
           <!-- multiple -->
         </div>
-        <button class="bttn">Add</button>
+        <section class="flex flex-col justify-evenly md:flex-row">
+          <button class="bttn">Add</button>
+          <button class="bttn-danger" @click="isFormOpen = !isFormOpen">
+            Cancel
+          </button>
+        </section>
       </form>
     </aside>
     <!-- notes add form -->
