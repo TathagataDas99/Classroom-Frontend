@@ -62,7 +62,7 @@
                 class="bttn place-self-end"
                 @click="handelOpen(classroom.slug)"
               >
-                Open
+                <LoginIcon class="inline-block w-6 lg:w-5" /> Enter
               </button>
             </div>
           </div>
@@ -126,6 +126,7 @@ import axios from "axios";
 import { mapGetters } from "vuex";
 import LoaderCard from "../../components/LoaderCard.vue";
 import { PencilIcon, CheckCircleIcon } from "@heroicons/vue/solid";
+import { LoginIcon } from "@heroicons/vue/outline";
 export default {
   name: "TeacherDashboard",
   data() {
@@ -139,6 +140,7 @@ export default {
     LoaderCard,
     PencilIcon,
     CheckCircleIcon,
+    LoginIcon,
   },
   computed: {
     ...mapGetters(["userType", "userProfile"]),
