@@ -41,7 +41,9 @@
           <div class="collapse-content col-span-1 row-span-1">
             <p>
               created at :-
-              <span class="font-bold">{{ assignment.created_at.split("T")[0] }}</span>
+              <span class="font-bold">{{
+                assignment.created_at.split("T")[0]
+              }}</span>
             </p>
             <p class="font-bold text-primary-light">Download Attached files:</p>
           </div>
@@ -120,4 +122,3 @@ export default {
 </script>
 
 <style lang="scss" scoped></style>
-
