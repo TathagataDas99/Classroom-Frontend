@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w-screen">
     <h1>{{ announcements }}</h1>
     <div>
       <button
@@ -34,22 +34,23 @@
         <button class="bttn">Add</button>
       </form>
     </div>
-    <div
-      class="mt-5 grid grid-flow-row grid-cols-1 items-center justify-evenly gap-3 md:grid-cols-2 lg:grid-cols-4 lg:grid-rows-3"
-    >
-      <template v-if="loader">
+    <div class="mt-5">
+      <!-- <template v-if="loader">
         <template v-for="i in 4" :key="i">
           <LoaderCard class="col-span-1 row-span-1 place-self-center" />
         </template>
-      </template>
+      </template> -->
       <section
-        class="card col-span-1 row-span-1 place-self-center"
+        :tabindex="announcement.id"
+        class="announcement-collapse"
         v-for="announcement in announcements"
         :key="announcement.id"
-        :class="{ 'h-full w-full overflow-auto scrollbar-hide': !subjectEdit }"
+        :class="{
+          'collapse-open overflow-auto scrollbar-hide': !subjectEdit,
+        }"
       >
         <!-- #FIXME: Edit card opening all at same time -->
-        <div class="absolute top-5 right-5">
+        <div class="absolute top-5 right-5 flex w-32 flex-row justify-evenly">
           <PencilIcon
             v-if="subjectEdit"
             @click="subjectEdit = !subjectEdit"
@@ -60,19 +61,41 @@
             @click="editPatch(announcement)"
             class="slow-effect h-7 w-5 rounded-lg border-2 border-primary-light text-primary-dark hover:text-primary-light"
           />
-          <div class="tooltip" data-tip="Delete Subject">
-            <TrashIcon
-              @click="deleteAnnouncement(announcement.id)"
-              class="slow-effect h-7 w-5 text-pink-500 hover:text-pink-300"
-            />
+          <div class="tooltip tooltip-left" data-tip="Delete Subject">
+            <a href="#delete-warning">
+              <TrashIcon
+                class="slow-effect h-7 w-5 text-pink-500 hover:text-pink-300"
+                v-show="subjectEdit"
+              />
+              <!-- @click="deleteAnnouncement(announcement.id)" -->
+            </a>
+            <div class="modal" id="delete-warning">
+              <div class="modal-box">
+                <h3 class="text-lg font-bold">
+                  Do you want to delete the announcement
+                </h3>
+                <div class="modal-action">
+                  <section class="button-section">
+                    <a
+                      @click="deleteAnnouncement(announcement.id)"
+                      class="bttn"
+                    >
+                      Yes!
+                    </a>
+                    <a href="" class="bttn-danger">No</a>
+                  </section>
+                  <!-- <a href="#" class="btn">Yes!</a> -->
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <!-- TODO:Dynamic v-model : LINK: https://stackoverflow.com/questions/60703994/how-do-you-conditional-bind-v-model-in-vue -->
         <input
           type="text"
           v-model="announcement.heading"
-          class="w-full bg-slate-50 text-lg text-zinc-700"
-          :class="{ 'input-box': !subjectEdit }"
+          class="collapse-title font-heading text-base font-medium uppercase md:text-lg lg:text-xl"
+          :class="{ 'subject-edit-input': !subjectEdit }"
           :disabled="subjectEdit"
           placeholder="announcement title"
         />
@@ -80,10 +103,10 @@
         <input
           type="text"
           v-model="announcement.body"
-          class="w-full bg-slate-50 text-lg text-zinc-700"
-          :class="{ 'input-box': !subjectEdit }"
+          class="collapse-content font-body md:text-lg"
+          :class="{ 'subject-edit-input': !subjectEdit }"
           :disabled="subjectEdit"
-          placeholder="announcement code"
+          placeholder="announcement body"
         />
       </section>
     </div>
@@ -94,7 +117,7 @@
 import axios from "axios";
 import { mapGetters } from "vuex";
 import { PencilIcon, CheckIcon, TrashIcon } from "@heroicons/vue/solid";
-import LoaderCard from "../../../components/LoaderCard.vue";
+// import LoaderCard from "../../../components/LoaderCard.vue";
 export default {
   props: ["classroom_slug", "no", "subject_slug"],
   data() {
@@ -112,7 +135,7 @@ export default {
     };
   },
   components: {
-    LoaderCard,
+    // LoaderCard,
     PencilIcon,
     CheckIcon,
     TrashIcon,
