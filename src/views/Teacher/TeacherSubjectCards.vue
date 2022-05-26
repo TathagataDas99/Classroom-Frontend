@@ -217,7 +217,9 @@
         </div>
         <section class="flex flex-col justify-evenly md:flex-row">
           <button class="bttn">Add</button>
-          <button class="bttn" @click="isFormOpen = !isFormOpen">Cancel</button>
+          <button class="bttn-danger" @click="isFormOpen = !isFormOpen">
+            Cancel
+          </button>
         </section>
       </form>
     </aside>

@@ -1,39 +1,50 @@
 <template>
   <div class="w-screen">
-    <h1>{{ announcements }}</h1>
-    <div>
+    <!-- <h1>{{ announcements }}</h1> -->
+    <aside class="absolute bottom-7 right-2 md:right-10">
       <button
-        class="btn rounded-full"
+        class="add-subject"
         @click="this.isFormOpen = !this.isFormOpen"
+        v-show="!this.isFormOpen"
       >
-        Add subject
+        <PlusCircleIcon class="inline-block w-8" />
+        Announcement
       </button>
       <form
         v-if="isFormOpen"
-        class="form accent-primary-dark"
+        class="form border-2 border-primary-dark accent-primary-dark"
         @submit.prevent="addAnnouncement"
       >
         <div class="form-section">
           <label class="label">Announcement Heading</label>
-          <input
-            class="input-box"
-            type="text"
-            v-model.trim.lazy="formValues.heading"
-            required
-          />
+          <section class="input-section">
+            <input
+              class="input-box"
+              type="text"
+              v-model.trim.lazy="formValues.heading"
+              required
+            />
+          </section>
         </div>
         <div class="form-section">
-          <label class="label">Announcement Body</label>
-          <input
-            class="input-box"
-            type="text"
-            v-model.trim.lazy="formValues.body"
-            required
-          />
+          <label class="label">Description</label>
+          <section class="input-section">
+            <input
+              class="input-box"
+              type="text"
+              v-model.trim.lazy="formValues.body"
+              required
+            />
+          </section>
         </div>
-        <button class="bttn">Add</button>
+        <section class="flex flex-col justify-evenly md:flex-row">
+          <button class="bttn">Add</button>
+          <button class="bttn-danger" @click="isFormOpen = !isFormOpen">
+            Cancel
+          </button>
+        </section>
       </form>
-    </div>
+    </aside>
     <div class="mt-5">
       <!-- <template v-if="loader">
         <template v-for="i in 4" :key="i">
@@ -116,7 +127,12 @@
 <script>
 import axios from "axios";
 import { mapGetters } from "vuex";
-import { PencilIcon, CheckIcon, TrashIcon } from "@heroicons/vue/solid";
+import {
+  PencilIcon,
+  CheckIcon,
+  TrashIcon,
+  PlusCircleIcon,
+} from "@heroicons/vue/solid";
 // import LoaderCard from "../../../components/LoaderCard.vue";
 export default {
   props: ["classroom_slug", "no", "subject_slug"],
@@ -139,6 +155,7 @@ export default {
     PencilIcon,
     CheckIcon,
     TrashIcon,
+    PlusCircleIcon,
   },
   computed: {
     ...mapGetters(["userType", "userProfile", "semCards"]),
