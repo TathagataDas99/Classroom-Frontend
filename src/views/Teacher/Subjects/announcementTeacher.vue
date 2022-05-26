@@ -55,7 +55,7 @@
             <a class="bttn text-center" @click="deleteAnnouncement(delAnnId)">
               Yes
             </a>
-            <a href="" class="bttn-danger text-center">No</a>
+            <a href="#" class="bttn-danger text-center">No</a>
           </section>
         </div>
       </div>

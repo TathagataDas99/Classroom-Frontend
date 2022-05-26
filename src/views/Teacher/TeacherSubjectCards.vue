@@ -16,7 +16,7 @@
             <a class="bttn text-center" @click="deleteSubject(delSubId)">
               Yes
             </a>
-            <a href="" class="bttn-danger text-center">No</a>
+            <a href="#" class="bttn-danger text-center">No</a>
           </section>
         </div>
       </div>

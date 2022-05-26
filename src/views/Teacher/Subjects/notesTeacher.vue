@@ -73,7 +73,7 @@
         <div class="modal-action">
           <section class="button-section">
             <a class="bttn text-center" @click="deleteNote(tempVal)"> Yes </a>
-            <a href="" class="bttn-danger text-center">No</a>
+            <a href="#" class="bttn-danger text-center">No</a>
           </section>
         </div>
       </div>
@@ -91,7 +91,7 @@
         class="announcement-collapse"
         v-for="(note, index) in notes"
         :key="note.slug"
-        :class="{ 'collapse-open': openedNotes === index }"
+        :class="{ 'collapse-open max-h-96': openedNotes === index }"
         @focusin="openedNotes = index"
       >
         <!-- #FIXME: Edit card opening all at same time -->
@@ -108,11 +108,13 @@
           />
           <div class="tooltip" data-tip="Delete Subject">
             <!-- deleteAnnouncement(note.slug) -->
-            <TrashIcon
-              @click="this.tempVal = note.slug"
-              v-show="subjectEdit[index]"
-              class="slow-effect h-7 w-5 text-pink-500 hover:text-pink-300"
-            />
+            <a href="#delete-warning">
+              <TrashIcon
+                @click="tempVal = note.slug"
+                v-show="subjectEdit[index]"
+                class="slow-effect z-10 h-7 w-5 text-pink-500 hover:text-pink-300"
+              />
+            </a>
           </div>
         </div>
         <input
@@ -126,8 +128,8 @@
         <input
           type="text"
           v-model="note.description"
-          class="collapse-content font-heading text-base font-medium uppercase md:text-lg lg:text-xl"
-          :class="{ 'subject-edit-input': !subjectEdit[index] }"
+          class="collapse-content columns-1 font-body text-base font-medium md:col-span-3"
+          :class="{ 'subject-edit-input collapse-title': !subjectEdit[index] }"
           :disabled="subjectEdit[index]"
           placeholder="note description"
         />
@@ -135,18 +137,18 @@
           class="collapse-content col-span-1 row-span-1 flex flex-row flex-wrap items-center justify-start font-body lg:col-start-4 lg:row-start-3"
         > -->
         <div
-          class="collapse-content col-span-2 flex flex-row flex-wrap items-center justify-evenly"
+          class="collapse-content col-span-full row-span-1 flex flex-row flex-wrap items-center justify-evenly md:col-span-2 md:row-start-2"
         >
           <a
             class="slow-effect bottom-5 flex flex-col items-center justify-evenly hover:text-primary-light"
             :href="'http://localhost:8000' + file.file_path"
-            v-for="file in note.attached_files"
+            v-for="(file, index2) in note.attached_files"
             :key="file.title"
           >
             <DocumentDownloadIcon
               class="slow-effect w-10 text-primary-dark hover:scale-110 hover:text-primary-light"
             />
-            <span class="text-sm font-bold">file-{{ index + 1 }}</span>
+            <span class="text-sm font-bold">file-{{ index2 + 1 }}</span>
           </a>
         </div>
         <!-- </section> -->
@@ -189,7 +191,7 @@ export default {
       id: "",
       isActive: 1,
       openedNotes: -1,
-      tempVal: -1,
+      tempVal: null,
       subjectEdit: [],
     };
   },
@@ -222,17 +224,19 @@ export default {
         this.subjectEdit[index] = !this.subjectEdit[index];
         const slug = note.slug;
         const notePatch = { title: note.title, description: note.description };
-        const res = await axios.patch(
+        await axios.patch(
           `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/notes/${slug}/`,
           notePatch
         );
-        console.log(res);
+
+        // console.log(res);
         // this.$router.go();
       } catch (e) {
         console.log(e);
       }
     },
     async deleteNote(slug) {
+      // console.log("inside delete");
       try {
         // this.subjectEdit.pop();
         console.log(slug);
@@ -242,6 +246,7 @@ export default {
         await axios.delete(
           `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/notes/${slug}/`
         );
+        this.tempVal = null;
       } catch (e) {
         console.log(e);
       }
@@ -270,9 +275,14 @@ export default {
               Filename: i.name,
             },
           });
+          //step 2 : fetch again
+          const announcementsResponse = await axios.get(
+            `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/notes/`
+          );
+          this.notes = announcementsResponse.data;
         }
         // this.$router.go();
-        console.log(this.attached_files);
+        // console.log(this.attached_files);
       } catch (e) {
         console.log(e);
       }
