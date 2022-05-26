@@ -1,7 +1,7 @@
 <template>
   <div class="w-screen">
     <!-- <h1>{{ announcements }}</h1> -->
-    <aside class="absolute bottom-7 right-2 md:right-10">
+    <aside class="absolute bottom-7 right-2 z-50 md:right-10">
       <button
         class="add-subject"
         @click="this.isFormOpen = !this.isFormOpen"
@@ -61,37 +61,37 @@
       </div>
     </div>
     <div class="mt-5">
-      <!-- <template v-if="loader">
+      <template v-if="loader">
         <template v-for="i in 4" :key="i">
-          <LoaderCard class="col-span-1 row-span-1 place-self-center" />
+          <LoaderView class="col-span-1 row-span-1 place-self-center" />
         </template>
-      </template> -->
+      </template>
       <section
         :tabindex="announcement.id"
         class="announcement-collapse relative z-10"
-        v-for="announcement in announcements"
+        v-for="(announcement, index) in announcements"
         :key="announcement.id"
         :class="{
-          'collapse-open overflow-auto scrollbar-hide': !subjectEdit,
+          'collapse-open overflow-auto scrollbar-hide': !subjectEditArr[index],
         }"
       >
         <!-- #FIXME: Edit card opening all at same time -->
         <div class="absolute top-5 right-5 flex w-32 flex-row justify-evenly">
           <PencilIcon
-            v-if="subjectEdit"
-            @click="subjectEdit = !subjectEdit"
+            v-if="subjectEditArr[index]"
+            @click="subjectEditArr[index] = !subjectEditArr[index]"
             class="slow-effect h-7 w-5 text-zinc-700 hover:text-zinc-500"
           />
           <CheckIcon
             v-else
-            @click="editPatch(announcement)"
+            @click="editPatch(announcement, index)"
             class="slow-effect h-7 w-5 rounded-lg border-2 border-primary-light text-primary-dark hover:text-primary-light"
           />
           <div class="tooltip tooltip-left" data-tip="Delete Subject">
             <a href="#delete-warning">
               <TrashIcon
                 class="slow-effect h-7 w-5 text-pink-500 hover:text-pink-300"
-                v-show="subjectEdit"
+                v-show="subjectEditArr[index]"
                 @click="delAnnId = announcement.id"
               />
             </a>
@@ -102,8 +102,8 @@
           type="text"
           v-model="announcement.heading"
           class="collapse-title font-heading text-base font-medium uppercase md:text-lg lg:text-xl"
-          :class="{ 'subject-edit-input': !subjectEdit }"
-          :disabled="subjectEdit"
+          :class="{ 'subject-edit-input': !subjectEditArr[index] }"
+          :disabled="subjectEditArr[index]"
           placeholder="announcement title"
         />
         <!-- TODO: @priyesh :- make proper design -->
@@ -111,8 +111,8 @@
           type="text"
           v-model="announcement.body"
           class="collapse-content font-body md:text-lg"
-          :class="{ 'subject-edit-input': !subjectEdit }"
-          :disabled="subjectEdit"
+          :class="{ 'subject-edit-input': !subjectEditArr[index] }"
+          :disabled="subjectEditArr[index]"
           placeholder="announcement body"
         />
       </section>
@@ -129,7 +129,8 @@ import {
   TrashIcon,
   PlusCircleIcon,
 } from "@heroicons/vue/solid";
-// import LoaderCard from "../../../components/LoaderCard.vue";
+import LoaderView from "@/components/LoaderView.vue";
+
 export default {
   props: ["classroom_slug", "no", "subject_slug"],
   data() {
@@ -144,11 +145,12 @@ export default {
       id: "",
       isActive: 1,
       delAnnId: -1,
-      subjectEdit: true,
+      // subjectEdit: true,
+      subjectEditArr: [],
     };
   },
   components: {
-    // LoaderCard,
+    LoaderView,
     PencilIcon,
     CheckIcon,
     TrashIcon,
@@ -169,15 +171,18 @@ export default {
         `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/announcement/`
       );
       this.announcements = announcementsResponse.data;
+      for (let i = 0; i < this.announcements.length; i++) {
+        this.subjectEditArr.push(true);
+      }
     } catch (e) {
       console.log(e);
     }
     this.loader = false;
   },
   methods: {
-    async editPatch(announcement) {
+    async editPatch(announcement, index) {
       try {
-        this.subjectEdit = !this.subjectEdit;
+        this.subjectEditArr[index] = !this.subjectEditArr[index];
         const id = announcement.id;
         delete announcement.id;
         delete announcement.created_at;
@@ -216,6 +221,7 @@ export default {
         );
         console.log(res);
         this.announcements.push(res.data);
+        this.subjectEditArr.push(true);
       } catch (e) {
         console.log(e);
       }
