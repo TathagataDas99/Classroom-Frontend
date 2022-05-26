@@ -45,6 +45,21 @@
         </section>
       </form>
     </aside>
+    <div class="modal z-50" id="delete-warning" v-show="delAnnId > -1">
+      <div class="modal-box">
+        <h3 class="text-center text-lg font-bold">
+          Do you want to delete the announcement ?
+        </h3>
+        <div class="modal-action">
+          <section class="button-section">
+            <a class="bttn text-center" @click="deleteAnnouncement(delAnnId)">
+              Yes
+            </a>
+            <a href="" class="bttn-danger text-center">No</a>
+          </section>
+        </div>
+      </div>
+    </div>
     <div class="mt-5">
       <!-- <template v-if="loader">
         <template v-for="i in 4" :key="i">
@@ -53,7 +68,7 @@
       </template> -->
       <section
         :tabindex="announcement.id"
-        class="announcement-collapse"
+        class="announcement-collapse relative z-10"
         v-for="announcement in announcements"
         :key="announcement.id"
         :class="{
@@ -77,28 +92,9 @@
               <TrashIcon
                 class="slow-effect h-7 w-5 text-pink-500 hover:text-pink-300"
                 v-show="subjectEdit"
+                @click="delAnnId = announcement.id"
               />
-              <!-- @click="deleteAnnouncement(announcement.id)" -->
             </a>
-            <div class="modal" id="delete-warning">
-              <div class="modal-box">
-                <h3 class="text-lg font-bold">
-                  Do you want to delete the announcement
-                </h3>
-                <div class="modal-action">
-                  <section class="button-section">
-                    <a
-                      @click="deleteAnnouncement(announcement.id)"
-                      class="bttn"
-                    >
-                      Yes!
-                    </a>
-                    <a href="" class="bttn-danger">No</a>
-                  </section>
-                  <!-- <a href="#" class="btn">Yes!</a> -->
-                </div>
-              </div>
-            </div>
           </div>
         </div>
         <!-- TODO:Dynamic v-model : LINK: https://stackoverflow.com/questions/60703994/how-do-you-conditional-bind-v-model-in-vue -->
@@ -147,6 +143,7 @@ export default {
       announcements: "", //#FIXME: this might be an array
       id: "",
       isActive: 1,
+      delAnnId: -1,
       subjectEdit: true,
     };
   },
@@ -205,6 +202,8 @@ export default {
         await axios.delete(
           `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/announcement/${id}/`
         );
+        this.$router.replace({ name: "announcementTeacher" });
+        this.delAnnId = -1;
       } catch (e) {
         console.log(e);
       }
