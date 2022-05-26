@@ -5,6 +5,23 @@
   <!-- {{ classroom_slug }} -->
   <!-- </div> -->
   <main class="relative flex flex-col items-center">
+    <!-- MODAL -->
+    <div class="modal z-50" id="delete-warning" v-show="delSubId !== null">
+      <div class="modal-box">
+        <h3 class="text-center text-lg font-bold">
+          Do you want to delete the Subject ?
+        </h3>
+        <div class="modal-action">
+          <section class="button-section">
+            <a class="bttn text-center" @click="deleteSubject(delSubId)">
+              Yes
+            </a>
+            <a href="" class="bttn-danger text-center">No</a>
+          </section>
+        </div>
+      </div>
+    </div>
+    <!-- MODAL -->
     <div class="page-header-1">
       <p class="place-self-center">Sem No - {{ semester_no }}</p>
       <router-link
@@ -50,10 +67,13 @@
             class="slow-effect h-7 w-5 rounded-lg border-2 border-primary-light text-primary-dark hover:text-primary-light"
           />
           <div class="tooltip" data-tip="Delete Subject">
-            <TrashIcon
-              @click="deleteSubject(subject.slug)"
-              class="slow-effect h-7 w-5 text-pink-500 hover:text-pink-300"
-            />
+            <a href="#delete-warning">
+              <!-- @click="deleteSubject(subject.slug)" -->
+              <TrashIcon
+                @click="delSubId = subject.slug"
+                class="slow-effect h-7 w-5 text-pink-500 hover:text-pink-300"
+              />
+            </a>
           </div>
         </div>
         <!-- TODO:Dynamic v-model : LINK: https://stackoverflow.com/questions/60703994/how-do-you-conditional-bind-v-model-in-vue -->
@@ -254,6 +274,7 @@ export default {
       subjects: null,
       loader: "",
       isFormOpen: false,
+      delSubId: null,
       id: "",
       // subjectEdit: true,
       subjectEditArr: [],
@@ -317,6 +338,7 @@ export default {
         await axios.delete(
           `/classroom-app/teacher/${this.userProfile.teacher_id}/sem/${this.id}/subject/${slug}/`
         );
+        this.delSubId = null;
       } catch (e) {
         console.log(e);
       }
