@@ -147,11 +147,14 @@
   @apply slow-effect collapse-plus collapse rounded-box mx-3 my-2 border border-base-300 bg-base-100 hover:animate-pulse hover:bg-green-100 focus:animate-none focus:bg-bglight-shade focus:shadow-lg md:mx-24;
 }
 .ClassroomCard {
-  @apply slow-effect mx-5 my-5  flex w-60 flex-col rounded-xl border-t-4 hover:border-primary-light bg-bglight-shade shadow-lg backdrop-filter hover:translate-y-1 hover:bg-gradient-to-br hover:from-transparent hover:to-green-200/60 hover:shadow-2xl hover:backdrop-blur-md md:w-60 lg:w-72;
+  @apply slow-effect mx-5 my-5  flex w-60 flex-col rounded-xl border-t-4 bg-bglight-shade shadow-lg backdrop-filter hover:translate-y-1 hover:border-primary-light hover:bg-gradient-to-br hover:from-transparent hover:to-green-200/60 hover:shadow-2xl hover:backdrop-blur-md md:w-60 lg:w-72;
 }
 .class-card-section {
   @apply flex flex-row flex-wrap justify-around py-2;
 }
 .teacher-dashboard {
   @apply mt-2 grid grid-flow-row grid-cols-1 place-content-center place-items-stretch justify-items-center gap-3 md:col-span-3 md:grid-cols-2 md:grid-rows-2 lg:col-span-5;
+}
+.subject-edit-input {
+  @apply rounded-lg border-b-2 border-primary-dark px-3 py-1 capitalize outline-none;
 }
