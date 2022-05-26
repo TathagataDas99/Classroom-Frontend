@@ -28,23 +28,25 @@
       <!-- Priyesh make own card -->
       <section
         class="SubjectCard group col-span-1 row-span-1 place-self-center"
-        v-for="subject in subjects"
+        v-for="(subject, index) in subjects"
         :key="subject.slug"
-        :class="{ 'h-5/6 w-4/6 overflow-auto scrollbar-hide': !subjectEdit }"
+        :class="{
+          'h-5/6 w-4/6 overflow-auto scrollbar-hide': !subjectEditArr[index],
+        }"
       >
         <!-- #FIXME: Edit card opening all at same time -->
         <div
           class="absolute top-5 right-5 z-30 flex flex-col items-center justify-evenly"
-          :class="{ 'rounded-xl bg-bgdark-base p-3': !subjectEdit }"
+          :class="{ 'rounded-xl bg-bgdark-base p-3': !subjectEditArr[index] }"
         >
           <PencilIcon
-            v-if="subjectEdit"
-            @click="subjectEdit = !subjectEdit"
+            v-if="subjectEditArr[index]"
+            @click="subjectEditArr[index] = !subjectEditArr[index]"
             class="slow-effect h-7 w-5 text-zinc-700 hover:text-zinc-500"
           />
           <CheckIcon
             v-else
-            @click="editPatch(subject)"
+            @click="editPatch(subject, index)"
             class="slow-effect h-7 w-5 rounded-lg border-2 border-primary-light text-primary-dark hover:text-primary-light"
           />
           <div class="tooltip" data-tip="Delete Subject">
@@ -59,7 +61,7 @@
           <tr>
             <td
               class="px-1 font-heading font-bold text-primary-dark group-hover:text-warning-light"
-              v-show="subjectEdit"
+              v-show="subjectEditArr[index]"
             >
               Title:
             </td>
@@ -69,9 +71,9 @@
                 v-model="subject.title"
                 class="bg-bglight-shade font-body text-lg"
                 :class="{
-                  'subject-edit-input': !subjectEdit,
+                  'subject-edit-input': !subjectEditArr[index],
                 }"
-                :disabled="subjectEdit"
+                :disabled="subjectEditArr[index]"
                 placeholder="subject title"
               />
             </td>
@@ -79,7 +81,7 @@
           <tr>
             <td
               class="px-1 font-heading font-bold text-primary-dark group-hover:text-warning-light"
-              v-show="subjectEdit"
+              v-show="subjectEditArr[index]"
             >
               Code:
             </td>
@@ -88,8 +90,8 @@
                 type="text"
                 v-model="subject.subject_code"
                 class="bg-bglight-shade font-body text-lg"
-                :class="{ 'subject-edit-input': !subjectEdit }"
-                :disabled="subjectEdit"
+                :class="{ 'subject-edit-input': !subjectEditArr[index] }"
+                :disabled="subjectEditArr[index]"
                 placeholder="subject code"
               />
             </td>
@@ -97,11 +99,14 @@
           <tr>
             <td
               class="px-1 font-heading font-bold text-primary-dark group-hover:text-warning-light"
-              v-show="subjectEdit"
+              v-show="subjectEditArr[index]"
             >
               Type:
             </td>
-            <td class="bg-bglight-shade font-body text-lg" v-if="subjectEdit">
+            <td
+              class="bg-bglight-shade font-body text-lg"
+              v-if="subjectEditArr[index]"
+            >
               {{ subjTypeMap[subject.subject_type] }}
             </td>
             <td v-else>
@@ -109,8 +114,8 @@
                 name="subject_type"
                 id="subject_type"
                 class="w-full bg-bglight-shade font-body text-lg"
-                :class="{ 'subject-edit-input': !subjectEdit }"
-                :disabled="subjectEdit"
+                :class="{ 'subject-edit-input': !subjectEditArr[index] }"
+                :disabled="subjectEditArr[index]"
                 v-model="subject.subject_type"
               >
                 <option class="font-body" value="TH">Theory</option>
@@ -123,7 +128,7 @@
           <tr>
             <td
               class="px-1 font-heading font-bold text-primary-dark group-hover:text-warning-light"
-              v-show="subjectEdit"
+              v-show="subjectEditArr[index]"
             >
               Credit Point:
             </td>
@@ -135,8 +140,8 @@
                 placeholder="between 1 to 15"
                 v-model="subject.credit_points"
                 class="w-full bg-bglight-shade text-lg text-zinc-700 decoration-transparent"
-                :class="{ 'subject-edit-input': !subjectEdit }"
-                :disabled="subjectEdit"
+                :class="{ 'subject-edit-input': !subjectEditArr[index] }"
+                :disabled="subjectEditArr[index]"
               />
             </td>
           </tr>
@@ -144,7 +149,7 @@
         </div>
         <div class="button-section">
           <button
-            v-show="subjectEdit"
+            v-show="subjectEditArr[index]"
             class="bttn group-hover:bg-warning-light"
             @click="handelOpen(classroom_slug, semester_no, subject.slug)"
           >
@@ -250,7 +255,8 @@ export default {
       loader: "",
       isFormOpen: false,
       id: "",
-      subjectEdit: true,
+      // subjectEdit: true,
+      subjectEditArr: [],
       formValues: {
         subject_code: "",
         title: "",
@@ -291,6 +297,9 @@ export default {
         `/classroom-app/teacher/${this.userProfile.teacher_id}/sem/${this.id}/subject/`
       );
       this.subjects = subjectResponse.data;
+      for (let i = 0; i < this.subjects.length; i++) {
+        this.subjectEditArr.push(true);
+      }
       // this.formValues = this.subjects[0]; //TODO:
     } catch (e) {
       console.log(e);
@@ -312,9 +321,9 @@ export default {
         console.log(e);
       }
     },
-    async editPatch(subject) {
+    async editPatch(subject, index) {
       try {
-        this.subjectEdit = !this.subjectEdit;
+        this.subjectEditArr[index] = !this.subjectEditArr[index];
         const slug = subject.slug;
         delete subject.slug;
         delete subject.created_at;
@@ -336,6 +345,7 @@ export default {
           this.formValues
         );
         this.subjects.push(res.data);
+        this.subjectEditArr.push(true);
       } catch (e) {
         console.log(e);
       }
