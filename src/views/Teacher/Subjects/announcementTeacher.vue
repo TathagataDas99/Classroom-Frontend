@@ -202,7 +202,6 @@ export default {
         await axios.delete(
           `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/announcement/${id}/`
         );
-        this.$router.replace({ name: "announcementTeacher" });
         this.delAnnId = -1;
       } catch (e) {
         console.log(e);
