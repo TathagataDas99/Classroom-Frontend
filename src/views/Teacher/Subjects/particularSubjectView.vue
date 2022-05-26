@@ -47,7 +47,7 @@
         <router-link
           class="tab tab-lifted tab-sm lg:tab-lg"
           :to="{
-            name: 'assingmentTeacher',
+            name: 'assignmentTeacher',
             props: {
               classroom_slug,
               semester_no,
@@ -99,7 +99,7 @@ export default {
   data() {
     return {
       loader: false,
-      announcements: "", //#FIXME: this might be an array
+      announcements: [], //#FIXME: this might be an array
       id: "",
       isActive: 1,
     };

@@ -1,14 +1,12 @@
 <template>
-  <div>
+  <main class="w-screen">
     <h1>{{ notes }}</h1>
     <!-- <h1>{{attached_files}}</h1> -->
-    <hr />
-    <div>
-      <button
-        class="btn rounded-full"
-        @click="this.isFormOpen = !this.isFormOpen"
-      >
-        Add subject
+    <!-- notes add form -->
+    <aside class="absolute bottom-7 right-2 z-50 md:right-10">
+      <button class="add-subject" @click="this.isFormOpen = !this.isFormOpen">
+        <PlusCircleIcon class="my-auto inline-block w-7" />
+        Notes
       </button>
       <form
         v-if="isFormOpen"
@@ -47,7 +45,8 @@
         </div>
         <button class="bttn">Add</button>
       </form>
-    </div>
+    </aside>
+    <!-- notes add form -->
     <div
       class="mt-5 grid grid-flow-row grid-cols-1 items-center justify-evenly gap-3 md:grid-cols-2 lg:grid-cols-4 lg:grid-rows-3"
     >
@@ -112,17 +111,30 @@
         </a>
       </section>
     </div>
-  </div>
+  </main>
 </template>
 
 <script>
 import axios from "axios";
 import { mapGetters } from "vuex";
-import { PencilIcon, CheckIcon, TrashIcon } from "@heroicons/vue/solid";
+import {
+  PencilIcon,
+  CheckIcon,
+  TrashIcon,
+  PlusCircleIcon,
+} from "@heroicons/vue/solid";
 import LoaderCard from "../../../components/LoaderCard.vue";
 import { DocumentDownloadIcon } from "@heroicons/vue/solid";
 export default {
   props: ["classroom_slug", "no", "subject_slug"],
+  components: {
+    LoaderCard,
+    PencilIcon,
+    PlusCircleIcon,
+    CheckIcon,
+    TrashIcon,
+    DocumentDownloadIcon,
+  },
   data() {
     return {
       isFormOpen: false,
@@ -137,13 +149,6 @@ export default {
       isActive: 1,
       subjectEdit: true,
     };
-  },
-  components: {
-    LoaderCard,
-    PencilIcon,
-    CheckIcon,
-    TrashIcon,
-    DocumentDownloadIcon,
   },
   computed: {
     ...mapGetters(["userType", "userProfile", "semCards"]),
@@ -165,6 +170,10 @@ export default {
     }
     this.loader = false;
   },
+  // unmounted() {
+  //   this.$router.replace({ name: "announcementTeacher" });
+  //   console.log("in notes unmounted"  );
+  // },
   methods: {
     async editPatch(note) {
       try {
