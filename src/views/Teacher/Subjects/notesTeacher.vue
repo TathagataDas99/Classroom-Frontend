@@ -224,7 +224,7 @@ export default {
             },
           });
         }
-        this.$router.go();
+        // this.$router.go();
         console.log(this.attached_files);
       } catch (e) {
         console.log(e);
