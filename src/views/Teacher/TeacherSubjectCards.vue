@@ -1,212 +1,228 @@
 <template>
-  <div>
-    <!-- {{ semCards }} -->
-    {{ subjects }}
-    <!-- {{ classroom_slug }} -->
-  </div>
-  <div>
-    <button
-      class="btn rounded-full"
-      @click="this.isFormOpen = !this.isFormOpen"
-    >
-      Add subject
-    </button>
-    <form
-      v-if="isFormOpen"
-      class="form accent-primary-dark"
-      @submit.prevent="addSubject"
-    >
-      <div class="form-section">
-        <label class="label">subject_code</label>
-        <input
-          class="subject-edit-input"
-          type="text"
-          v-model.trim.lazy="formValues.subject_code"
-          required
-        />
-      </div>
-      <div class="form-section">
-        <label class="label">title</label>
-        <input
-          class="input-box"
-          type="text"
-          v-model.trim.lazy="formValues.title"
-          required
-        />
-      </div>
-      <div class="form-section">
-        <label class="label" for="subject_type">subject_type</label>
-        <select
-          name="subject_type"
-          id="subject_type"
-          v-model="formValues.subject_type"
-        >
-          <option value="TH">Theory</option>
-          <option value="PRC">Practical</option>
-          <option value="PRJ">Project</option>
-          <option value="ELC">Elective</option>
-        </select>
-      </div>
-      <div class="form-section">
-        <label class="label"
-          >credit_points [{{ formValues.credit_points }}]</label
-        >
-        <input
-          class="range"
-          form="credit_points"
-          type="range"
-          min="1"
-          max="15"
-          v-model="formValues.credit_points"
-          placeholder="between 1-15"
-          required
-        />
-      </div>
-      <button class="bttn">Add</button>
-    </form>
-  </div>
-  <div
-    class="mt-5 grid min-h-screen grid-flow-row grid-cols-1 items-center justify-evenly gap-3 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2"
-  >
-    <template v-if="loader">
-      <template v-for="i in 4" :key="i">
-        <LoaderCard class="col-span-1 row-span-1 place-self-center" />
-      </template>
-    </template>
-    <!-- Priyesh make own card -->
+  <!-- <div> -->
+  <!-- {{ semCards }} -->
+  <!-- {{ subjects }} -->
+  <!-- {{ classroom_slug }} -->
+  <!-- </div> -->
+  <main class="relative">
     <section
-      class="SubjectCard group col-span-1 row-span-1 place-self-center"
-      v-for="subject in subjects"
-      :key="subject.slug"
-      :class="{ 'h-5/6 w-4/6 overflow-auto scrollbar-hide': !subjectEdit }"
+      class="mt-5 grid min-h-screen grid-flow-row grid-cols-1 items-center justify-evenly gap-3 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2"
     >
-      <!-- #FIXME: Edit card opening all at same time -->
-      <div
-        class="absolute top-5 right-5 z-30 flex flex-col items-center justify-evenly"
-        :class="{ 'rounded-xl bg-bgdark-base p-3': !subjectEdit }"
+      <template v-if="loader">
+        <template v-for="i in 3" :key="i">
+          <LoaderCard
+            class="SubjectCard col-span-1 row-span-1 place-self-center"
+          />
+        </template>
+      </template>
+      <!-- Priyesh make own card -->
+      <section
+        class="SubjectCard group col-span-1 row-span-1 place-self-center"
+        v-for="subject in subjects"
+        :key="subject.slug"
+        :class="{ 'h-5/6 w-4/6 overflow-auto scrollbar-hide': !subjectEdit }"
       >
-        <PencilIcon
-          v-if="subjectEdit"
-          @click="subjectEdit = !subjectEdit"
-          class="slow-effect h-7 w-5 text-zinc-700 hover:text-zinc-500"
-        />
-        <CheckIcon
-          v-else
-          @click="editPatch(subject)"
-          class="slow-effect h-7 w-5 rounded-lg border-2 border-primary-light text-primary-dark hover:text-primary-light"
-        />
-        <div class="tooltip" data-tip="Delete Subject">
-          <TrashIcon
-            @click="deleteSubject(subject.slug)"
-            class="slow-effect h-7 w-5 text-pink-500 hover:text-pink-300"
+        <!-- #FIXME: Edit card opening all at same time -->
+        <div
+          class="absolute top-5 right-5 z-30 flex flex-col items-center justify-evenly"
+          :class="{ 'rounded-xl bg-bgdark-base p-3': !subjectEdit }"
+        >
+          <PencilIcon
+            v-if="subjectEdit"
+            @click="subjectEdit = !subjectEdit"
+            class="slow-effect h-7 w-5 text-zinc-700 hover:text-zinc-500"
+          />
+          <CheckIcon
+            v-else
+            @click="editPatch(subject)"
+            class="slow-effect h-7 w-5 rounded-lg border-2 border-primary-light text-primary-dark hover:text-primary-light"
+          />
+          <div class="tooltip" data-tip="Delete Subject">
+            <TrashIcon
+              @click="deleteSubject(subject.slug)"
+              class="slow-effect h-7 w-5 text-pink-500 hover:text-pink-300"
+            />
+          </div>
+        </div>
+        <!-- TODO:Dynamic v-model : LINK: https://stackoverflow.com/questions/60703994/how-do-you-conditional-bind-v-model-in-vue -->
+        <div class="table-auto">
+          <tr>
+            <td
+              class="px-1 font-heading font-bold text-primary-dark group-hover:text-warning-light"
+              v-show="subjectEdit"
+            >
+              Title:
+            </td>
+            <td>
+              <input
+                type="text"
+                v-model="subject.title"
+                class="bg-bglight-shade font-body text-lg"
+                :class="{
+                  'subject-edit-input': !subjectEdit,
+                }"
+                :disabled="subjectEdit"
+                placeholder="subject title"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td
+              class="px-1 font-heading font-bold text-primary-dark group-hover:text-warning-light"
+              v-show="subjectEdit"
+            >
+              Code:
+            </td>
+            <td>
+              <input
+                type="text"
+                v-model="subject.subject_code"
+                class="bg-bglight-shade font-body text-lg"
+                :class="{ 'subject-edit-input': !subjectEdit }"
+                :disabled="subjectEdit"
+                placeholder="subject code"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td
+              class="px-1 font-heading font-bold text-primary-dark group-hover:text-warning-light"
+              v-show="subjectEdit"
+            >
+              Type:
+            </td>
+            <td class="bg-bglight-shade font-body text-lg" v-if="subjectEdit">
+              {{ subjTypeMap[subject.subject_type] }}
+            </td>
+            <td v-else>
+              <select
+                name="subject_type"
+                id="subject_type"
+                class="w-full bg-bglight-shade font-body text-lg"
+                :class="{ 'subject-edit-input': !subjectEdit }"
+                :disabled="subjectEdit"
+                v-model="subject.subject_type"
+              >
+                <option class="font-body" value="TH">Theory</option>
+                <option class="font-body" value="PRC">Practical</option>
+                <option class="font-body" value="PRJ">Project</option>
+                <option class="font-body" value="ELC">Elective</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td
+              class="px-1 font-heading font-bold text-primary-dark group-hover:text-warning-light"
+              v-show="subjectEdit"
+            >
+              Credit Point:
+            </td>
+            <td>
+              <input
+                type="number"
+                min="1"
+                max="15"
+                placeholder="between 1 to 15"
+                v-model="subject.credit_points"
+                class="w-full bg-bglight-shade text-lg text-zinc-700 decoration-transparent"
+                :class="{ 'subject-edit-input': !subjectEdit }"
+                :disabled="subjectEdit"
+              />
+            </td>
+          </tr>
+          <!-- #TODO: @priyesh :- make proper design -->
+        </div>
+        <div class="button-section">
+          <button
+            v-show="subjectEdit"
+            class="bttn group-hover:bg-warning-light"
+            @click="handelOpen(classroom_slug, semester_no, subject.slug)"
+          >
+            Open
+          </button>
+        </div>
+      </section>
+    </section>
+    <aside class="absolute top-2 right-10">
+      <button
+        class="add-subject"
+        v-show="!this.isFormOpen"
+        @click="this.isFormOpen = !this.isFormOpen"
+      >
+        <PlusCircleIcon class="inline-block w-8" />
+        Subject
+      </button>
+      <form
+        v-if="isFormOpen"
+        class="form border-2 border-primary-dark accent-primary-dark"
+        @submit.prevent="addSubject"
+      >
+        <div class="form-section">
+          <label class="label">title</label>
+          <input
+            class="input-box"
+            type="text"
+            v-model.trim.lazy="formValues.title"
+            required
           />
         </div>
-      </div>
-      <!-- TODO:Dynamic v-model : LINK: https://stackoverflow.com/questions/60703994/how-do-you-conditional-bind-v-model-in-vue -->
-      <div class="table-auto">
-        <tr>
-          <td
-            class="px-1 font-heading font-bold text-primary-dark group-hover:text-warning-light"
-            v-show="subjectEdit"
+        <div class="form-section">
+          <label class="label">subject code</label>
+          <input
+            class="input-box"
+            type="text"
+            v-model.trim.lazy="formValues.subject_code"
+            required
+          />
+        </div>
+        <div class="form-section">
+          <label class="label" for="subject_type">subject type</label>
+          <select
+            class="input-box"
+            name="subject_type"
+            id="subject_type"
+            v-model="formValues.subject_type"
           >
-            Title:
-          </td>
-          <td>
-            <input
-              type="text"
-              v-model="subject.title"
-              class="bg-bglight-shade font-body text-lg"
-              :class="{
-                'subject-edit-input': !subjectEdit,
-              }"
-              :disabled="subjectEdit"
-              placeholder="subject title"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td
-            class="px-1 font-heading font-bold text-primary-dark group-hover:text-warning-light"
-            v-show="subjectEdit"
-          >
-            Code:
-          </td>
-          <td>
-            <input
-              type="text"
-              v-model="subject.subject_code"
-              class="bg-bglight-shade font-body text-lg"
-              :class="{ 'subject-edit-input': !subjectEdit }"
-              :disabled="subjectEdit"
-              placeholder="subject code"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td
-            class="px-1 font-heading font-bold text-primary-dark group-hover:text-warning-light"
-            v-show="subjectEdit"
-          >
-            Type:
-          </td>
-          <td class="bg-bglight-shade font-body text-lg" v-if="subjectEdit">
-            {{ subjTypeMap[subject.subject_type] }}
-          </td>
-          <td v-else>
-            <select
-              name="subject_type"
-              id="subject_type"
-              class="w-full bg-bglight-shade font-body text-lg"
-              :class="{ 'subject-edit-input': !subjectEdit }"
-              :disabled="subjectEdit"
-              v-model="subject.subject_type"
-            >
-              <option class="font-body" value="TH">Theory</option>
-              <option class="font-body" value="PRC">Practical</option>
-              <option class="font-body" value="PRJ">Project</option>
-              <option class="font-body" value="ELC">Elective</option>
-            </select>
-          </td>
-        </tr>
-
-        <tr>
-          <td
-            class="px-1 font-heading font-bold text-primary-dark group-hover:text-warning-light"
-            v-show="subjectEdit"
-          >
-            Credit Point:
-          </td>
-          <td>
-            <input
-              type="number"
-              min="1"
-              max="15"
-              placeholder="between 1 to 15"
-              v-model="subject.credit_points"
-              class="w-full bg-bglight-shade text-lg text-zinc-700 decoration-transparent"
-              :class="{ 'subject-edit-input': !subjectEdit }"
-              :disabled="subjectEdit"
-            />
-          </td>
-        </tr>
-        <!-- #TODO: @priyesh :- make proper design -->
-      </div>
-
-      <button
-        v-show="subjectEdit"
-        class="bttn group-hover:bg-warning-light"
-        @click="handelOpen(classroom_slug, semester_no, subject.slug)"
-      >
-        Open
-      </button>
-    </section>
-  </div>
+            <option value="TH">Theory</option>
+            <option value="PRC">Practical</option>
+            <option value="PRJ">Project</option>
+            <option value="ELC">Elective</option>
+          </select>
+        </div>
+        <div class="form-section">
+          <label class="label">
+            credit points
+            <!-- [{{ formValues.credit_points }}] -->
+          </label>
+          <input
+            class="input-box"
+            form="credit_points"
+            type="number"
+            min="1"
+            max="15"
+            v-model="formValues.credit_points"
+            placeholder="between 1-15"
+            required
+          />
+        </div>
+        <section class="flex flex-col justify-evenly md:flex-row">
+          <button class="bttn">Add</button>
+          <button class="bttn" @click="isFormOpen = !isFormOpen">Cancel</button>
+        </section>
+      </form>
+    </aside>
+  </main>
 </template>
 
 <script>
 import axios from "axios";
 import { mapGetters } from "vuex";
-import { PencilIcon, CheckIcon, TrashIcon } from "@heroicons/vue/solid";
+import {
+  PencilIcon,
+  CheckIcon,
+  TrashIcon,
+  PlusCircleIcon,
+} from "@heroicons/vue/solid";
 import LoaderCard from "../../components/LoaderCard.vue";
 export default {
   data() {
@@ -232,6 +248,7 @@ export default {
   },
   components: {
     LoaderCard,
+    PlusCircleIcon,
     PencilIcon,
     CheckIcon,
     TrashIcon,

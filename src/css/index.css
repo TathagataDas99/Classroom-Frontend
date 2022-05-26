@@ -11,6 +11,9 @@
   }
 }
 
+.add-subject {
+  @apply slow-effect rounded-full bg-primary-dark px-5 py-4 font-heading text-lg text-bglight-shade hover:-translate-y-1 hover:scale-105 hover:bg-primary-light hover:shadow-lg lg:text-xl;
+}
 .slow-effect {
   @apply transition duration-200 ease-linear;
 }
@@ -31,6 +34,7 @@
 .button-section {
   @apply mb-4 flex w-full flex-col items-stretch justify-evenly md:flex-row;
 }
+
 .bttn {
   @apply slow-effect mx-5 my-3 flex-1 rounded-lg bg-primary-light py-3 px-4 font-heading text-xl text-bglight-shade shadow-md outline-none delay-75 hover:-translate-y-1 hover:scale-105 hover:bg-primary-dark hover:font-extrabold hover:shadow-xl md:w-3/5 md:flex-initial lg:w-2/5;
 }
