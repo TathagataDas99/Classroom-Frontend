@@ -31,7 +31,10 @@
           Semester-{{ semCard.sem_no }}
         </h1>
         <section class="button-section">
-          <button class="bttn" @click="handelOpen(semCard.sem_no)">Open</button>
+          <button class="bttn" @click="handelOpen(semCard.sem_no)">
+            <SearchIcon class="inline-block w-5 md:w-7" />
+            View
+          </button>
         </section>
       </div>
     </section>
@@ -42,7 +45,7 @@
 import axios from "axios";
 import { mapGetters } from "vuex";
 import LoaderCard from "../../components/LoaderCard.vue";
-import { BadgeCheckIcon, ReplyIcon } from "@heroicons/vue/solid";
+import { BadgeCheckIcon, ReplyIcon, SearchIcon } from "@heroicons/vue/solid";
 export default {
   data() {
     return {
@@ -56,6 +59,7 @@ export default {
     LoaderCard,
     BadgeCheckIcon,
     ReplyIcon,
+    SearchIcon,
   },
   computed: {
     ...mapGetters(["userType", "userProfile"]),
