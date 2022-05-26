@@ -1,13 +1,15 @@
 <template>
-  <div class="h-screen">
+  <div
+    class="flex h-screen flex-col items-center justify-evenly bg-bglight-base"
+  >
     <div v-if="loader">
       <LoaderView />
     </div>
-
+    <!-- {{ semCards }} -->
     <div
-      class="flex flex-col items-stretch justify-between px-3 pt-3 md:flex-row"
+      class="grid w-full flex-shrink grid-rows-2 place-content-center md:grid-cols-5 md:grid-rows-1"
     >
-      <nav class="tabs w-full md:w-1/2">
+      <nav class="tabs col-span-1 place-self-center md:col-span-2">
         <router-link
           :to="{
             name: 'announcementTeacher',
@@ -17,16 +19,16 @@
               subject_slug,
             },
           }"
-          class="tab tab-lifted md:tab-md"
+          class="tab tab-lifted tab-sm lg:tab-lg"
           :class="{
             'tab-active': isActive === 1,
-            'font-semibold text-primary-light': isActive === 1,
+            'tab-active-dynamic': isActive === 1,
           }"
           @click="activeTab(1)"
           >Announcement</router-link
         >
         <router-link
-          class="tab tab-lifted md:tab-md"
+          class="tab tab-lifted tab-sm lg:tab-lg"
           :to="{
             name: 'notesTeacher',
             props: {
@@ -37,15 +39,15 @@
           }"
           :class="{
             'tab-active': isActive === 2,
-            'font-semibold text-primary-light': isActive === 2,
+            'tab-active-dynamic': isActive === 2,
           }"
           @click="activeTab(2)"
           >Notes</router-link
         >
         <router-link
-          class="tab tab-lifted md:tab-md"
+          class="tab tab-lifted tab-sm lg:tab-lg"
           :to="{
-            name: 'assingmentTeacher',
+            name: 'assignmentTeacher',
             props: {
               classroom_slug,
               semester_no,
@@ -54,15 +56,22 @@
           }"
           :class="{
             'tab-active': isActive === 3,
-            'font-semibold text-primary-light': isActive === 3,
+            'tab-active-dynamic': isActive === 3,
           }"
           @click="activeTab(3)"
           >Assignments</router-link
         >
       </nav>
-      <div class="mr-7">
+      <div
+        class="row-start-2 hidden md:col-span-2 md:col-start-3 md:row-start-1 md:block"
+      >
+        <div class="page-header-2">
+          <p>Subject -</p>
+        </div>
+      </div>
+      <div class="col-span-1 row-start-1 place-self-center md:col-start-5">
         <button
-          class="btn"
+          class="link-danger columns-1"
           @click="
             $router.replace({
               name: 'TeacherSubjectCards',
@@ -71,11 +80,12 @@
             })
           "
         >
-          Go Back
+          <ReplyIcon class="inline-block w-6 text-danger-dark" />
+          Subject Page
         </button>
       </div>
     </div>
-    <router-view />
+    <router-view class="flex-1" />
   </div>
 </template>
 
@@ -83,18 +93,21 @@
 import axios from "axios";
 import LoaderView from "../../../components/LoaderView.vue";
 import { mapGetters } from "vuex";
+import { ReplyIcon } from "@heroicons/vue/solid";
 export default {
   props: ["classroom_slug", "no", "subject_slug"],
+  // props: ["subject_slug"],
   data() {
     return {
       loader: false,
-      announcements: "", //#FIXME: this might be an array
+      announcements: [], //#FIXME: this might be an array
       id: "",
       isActive: 1,
     };
   },
   components: {
     LoaderView,
+    ReplyIcon,
   },
   computed: {
     ...mapGetters(["userType", "userProfile", "semCards"]),
@@ -115,10 +128,13 @@ export default {
         `/classroom-app/classroom/${this.userProfile.classroom.slug}/semester/${this.id}/subject/${this.subject_slug}`
       );
       this.announcements = announcementsResponse.data;
-      this.$router.replace({ name: "announcementTeacher" });
+      console.log("in created try block");
     } catch (e) {
       console.log(e);
     }
+    this.$router.replace({
+      name: "announcementTeacher",
+    });
     this.loader = false;
   },
   methods: {
@@ -128,5 +144,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped></style>

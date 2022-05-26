@@ -1,128 +1,183 @@
 <template>
-  <div>
-    <h1>{{ notes }}</h1>
+  <main class="w-screen" @click="openedNotes = -1">
+    <!-- <h1>{{ notes }}</h1> -->
     <!-- <h1>{{attached_files}}</h1> -->
-    <hr />
-    <div>
+    <!-- notes add form -->
+    <aside class="absolute bottom-7 right-2 z-50 md:right-10">
       <button
-        class="btn rounded-full"
+        class="add-subject"
         @click="this.isFormOpen = !this.isFormOpen"
+        v-show="!this.isFormOpen"
       >
-        Add subject
+        <PlusCircleIcon class="my-auto inline-block w-7" />
+        Notes
       </button>
       <form
         v-if="isFormOpen"
-        class="form accent-primary-dark"
+        class="form z-30 border-2 border-primary-dark accent-primary-dark"
         @submit.prevent="addAnnouncement"
         enctype="multipart/form-data"
       >
         <div class="form-section">
-          <label class="label">Notes Title</label>
-          <input
-            class="input-box"
-            type="text"
-            v-model.trim.lazy="formValues.title"
-            required
-          />
+          <label class="label">Title</label>
+          <section class="input-section">
+            <input
+              class="input-box"
+              type="text"
+              v-model.trim.lazy="formValues.title"
+              required
+            />
+          </section>
         </div>
         <div class="form-section">
-          <label class="label">Notes Description</label>
-          <input
-            class="input-box"
-            type="text"
-            v-model.trim.lazy="formValues.description"
-            required
-          />
+          <label class="label">Description</label>
+          <section class="input-section">
+            <input
+              class="input-box"
+              type="text"
+              v-model.trim.lazy="formValues.description"
+              required
+            />
+          </section>
         </div>
         <div class="form-section">
-          <label class="label">Add notes</label>
-          <input
-            ref="file"
-            @change="handleFileUpload"
-            type="file"
-            multiple
-            accept=".xlsx, .pdf, .docs"
-          />
+          <label class="label">Attachments</label>
+          <section class="input-section-file">
+            <input
+              class="input-file"
+              ref="file"
+              @change="handleFileUpload"
+              type="file"
+              multiple
+              accept=".xlsx, .pdf, .docs"
+            />
+          </section>
           <!-- multiple -->
         </div>
-        <button class="bttn">Add</button>
+        <section class="flex flex-col justify-evenly md:flex-row">
+          <button class="bttn">Add</button>
+          <button class="bttn-danger" @click="isFormOpen = !isFormOpen">
+            Cancel
+          </button>
+        </section>
       </form>
+    </aside>
+    <!-- notes add form -->
+
+    <!-- MODAL -->
+    <div class="modal z-50" id="delete-warning" v-show="tempVal !== null">
+      <div class="modal-box">
+        <h3 class="text-center text-lg font-bold">
+          Do you want to delete the announcement ?
+        </h3>
+        <div class="modal-action">
+          <section class="button-section">
+            <a class="bttn text-center" @click="deleteNote(tempVal)"> Yes </a>
+            <a href="#" class="bttn-danger text-center">No</a>
+          </section>
+        </div>
+      </div>
     </div>
-    <div
-      class="mt-5 grid grid-flow-row grid-cols-1 items-center justify-evenly gap-3 md:grid-cols-2 lg:grid-cols-4 lg:grid-rows-3"
-    >
-      <template v-if="loader">
+    <!-- MODAL -->
+
+    <section>
+      <!-- <template v-if="loader">
         <template v-for="i in 4" :key="i">
           <LoaderCard class="col-span-1 row-span-1 place-self-center" />
         </template>
-      </template>
+      </template> -->
       <section
-        class="card col-span-1 row-span-1 place-self-center"
-        v-for="note in notes"
+        :tabindex="index"
+        class="announcement-collapse"
+        v-for="(note, index) in notes"
         :key="note.slug"
-        :class="{ 'h-full w-full overflow-auto scrollbar-hide': !subjectEdit }"
+        :class="{ 'collapse-open max-h-96': openedNotes === index }"
+        @focusin="openedNotes = index"
       >
         <!-- #FIXME: Edit card opening all at same time -->
-        <div class="absolute top-5 right-5">
+        <div class="absolute top-5 right-5 flex w-20 flex-row justify-evenly">
           <PencilIcon
-            v-if="subjectEdit"
-            @click="subjectEdit = !subjectEdit"
+            v-if="subjectEdit[index]"
+            @click="subjectEdit[index] = !subjectEdit[index]"
             class="slow-effect h-7 w-5 text-zinc-700 hover:text-zinc-500"
           />
           <CheckIcon
             v-else
-            @click="editPatch(note)"
+            @click="editPatch(note, index)"
             class="slow-effect h-7 w-5 rounded-lg border-2 border-primary-light text-primary-dark hover:text-primary-light"
           />
           <div class="tooltip" data-tip="Delete Subject">
-            <TrashIcon
-              @click="deleteAnnouncement(note.slug)"
-              class="slow-effect h-7 w-5 text-pink-500 hover:text-pink-300"
-            />
+            <!-- deleteAnnouncement(note.slug) -->
+            <a href="#delete-warning">
+              <TrashIcon
+                @click="tempVal = note.slug"
+                v-show="subjectEdit[index]"
+                class="slow-effect z-10 h-7 w-5 text-pink-500 hover:text-pink-300"
+              />
+            </a>
           </div>
         </div>
-        <!-- TODO:Dynamic v-model : LINK: https://stackoverflow.com/questions/60703994/how-do-you-conditional-bind-v-model-in-vue -->
         <input
           type="text"
           v-model="note.title"
-          class="w-full bg-slate-50 text-lg text-zinc-700"
-          :class="{ 'input-box': !subjectEdit }"
-          :disabled="subjectEdit"
+          class="collapse-title font-heading text-base font-medium uppercase md:text-lg lg:text-xl"
+          :class="{ 'subject-edit-input': !subjectEdit[index] }"
+          :disabled="subjectEdit[index]"
           placeholder="note title"
         />
-        <!-- TODO: @priyesh :- make proper design -->
         <input
           type="text"
           v-model="note.description"
-          class="w-full bg-slate-50 text-lg text-zinc-700"
-          :class="{ 'input-box': !subjectEdit }"
-          :disabled="subjectEdit"
-          placeholder="note code"
+          class="collapse-content columns-1 font-body text-base font-medium md:col-span-3"
+          :class="{ 'subject-edit-input collapse-title': !subjectEdit[index] }"
+          :disabled="subjectEdit[index]"
+          placeholder="note description"
         />
-        <a
-          class="slow-effect bottom-5 flex flex-row hover:text-primary-light"
-          :href="'http://localhost:8000' + file.file_path"
-          v-for="file in note.attached_files"
-          :key="file.title"
+        <!-- <section
+          class="collapse-content col-span-1 row-span-1 flex flex-row flex-wrap items-center justify-start font-body lg:col-start-4 lg:row-start-3"
+        > -->
+        <div
+          class="collapse-content col-span-full row-span-1 flex flex-row flex-wrap items-center justify-evenly md:col-span-2 md:row-start-2"
         >
-          <DocumentDownloadIcon
-            class="slow-effect inline-block h-4 w-4 text-primary-dark hover:scale-110 hover:text-primary-light"
-          />
-          <!-- <span class="text-sm font-bold">file-{{ index + 1 }}</span> -->
-        </a>
+          <a
+            class="slow-effect bottom-5 flex flex-col items-center justify-evenly hover:text-primary-light"
+            :href="'http://localhost:8000' + file.file_path"
+            v-for="(file, index2) in note.attached_files"
+            :key="file.title"
+          >
+            <DocumentDownloadIcon
+              class="slow-effect w-10 text-primary-dark hover:scale-110 hover:text-primary-light"
+            />
+            <span class="text-sm font-bold">file-{{ index2 + 1 }}</span>
+          </a>
+        </div>
+        <!-- </section> -->
       </section>
-    </div>
-  </div>
+    </section>
+  </main>
 </template>
 
 <script>
 import axios from "axios";
 import { mapGetters } from "vuex";
-import { PencilIcon, CheckIcon, TrashIcon } from "@heroicons/vue/solid";
-import LoaderCard from "../../../components/LoaderCard.vue";
+import {
+  PencilIcon,
+  CheckIcon,
+  TrashIcon,
+  PlusCircleIcon,
+} from "@heroicons/vue/solid";
+// import LoaderCard from "../../../components/LoaderCard.vue";
 import { DocumentDownloadIcon } from "@heroicons/vue/solid";
 export default {
   props: ["classroom_slug", "no", "subject_slug"],
+  components: {
+    // LoaderCard,
+    PencilIcon,
+    PlusCircleIcon,
+    CheckIcon,
+    TrashIcon,
+    DocumentDownloadIcon,
+  },
   data() {
     return {
       isFormOpen: false,
@@ -135,15 +190,10 @@ export default {
       notes: "", //#FIXME: this might be an array
       id: "",
       isActive: 1,
-      subjectEdit: true,
+      openedNotes: -1,
+      tempVal: null,
+      subjectEdit: [],
     };
-  },
-  components: {
-    LoaderCard,
-    PencilIcon,
-    CheckIcon,
-    TrashIcon,
-    DocumentDownloadIcon,
   },
   computed: {
     ...mapGetters(["userType", "userProfile", "semCards"]),
@@ -160,30 +210,35 @@ export default {
         `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/notes/`
       );
       this.notes = announcementsResponse.data;
+      for (let i = 0; i < this.notes.length; i++) {
+        this.subjectEdit.push(true);
+      }
     } catch (e) {
       console.log(e);
     }
     this.loader = false;
   },
   methods: {
-    async editPatch(note) {
+    async editPatch(note, index) {
       try {
-        this.subjectEdit = !this.subjectEdit;
+        this.subjectEdit[index] = !this.subjectEdit[index];
         const slug = note.slug;
         const notePatch = { title: note.title, description: note.description };
-        const res = await axios.patch(
+        await axios.patch(
           `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/notes/${slug}/`,
           notePatch
         );
-        console.log(res);
-        this.$router.go();
+
+        // console.log(res);
+        // this.$router.go();
       } catch (e) {
         console.log(e);
       }
     },
-    async deleteAnnouncement(slug) {
+    async deleteNote(slug) {
+      // console.log("inside delete");
       try {
-        // this.subjectEdit = !this.subjectEdit;
+        // this.subjectEdit.pop();
         console.log(slug);
         this.notes = this.notes.filter(function (obj) {
           return obj.slug !== slug;
@@ -191,6 +246,7 @@ export default {
         await axios.delete(
           `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/notes/${slug}/`
         );
+        this.tempVal = null;
       } catch (e) {
         console.log(e);
       }
@@ -202,6 +258,7 @@ export default {
           `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/notes/`,
           this.formValues
         );
+        this.subjectEdit.push(true);
         // console.log(res);
         this.notes.push(res.data);
         for (let i of this.attached_files) {
@@ -218,9 +275,14 @@ export default {
               Filename: i.name,
             },
           });
+          //step 2 : fetch again
+          const announcementsResponse = await axios.get(
+            `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/notes/`
+          );
+          this.notes = announcementsResponse.data;
         }
-        this.$router.go();
-        console.log(this.attached_files);
+        // this.$router.go();
+        // console.log(this.attached_files);
       } catch (e) {
         console.log(e);
       }

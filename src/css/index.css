@@ -11,6 +11,9 @@
   }
 }
 
+.add-subject {
+  @apply slow-effect rounded-full bg-primary-dark px-5 py-4 font-heading text-lg text-bglight-shade hover:-translate-y-1 hover:scale-105 hover:bg-primary-light hover:shadow-lg lg:text-xl;
+}
 .slow-effect {
   @apply transition duration-200 ease-linear;
 }
@@ -31,13 +34,14 @@
 .button-section {
   @apply mb-4 flex w-full flex-col items-stretch justify-evenly md:flex-row;
 }
+
 .bttn {
   @apply slow-effect mx-5 my-3 flex-1 rounded-lg bg-primary-light py-3 px-4 font-heading text-xl text-bglight-shade shadow-md outline-none delay-75 hover:-translate-y-1 hover:scale-105 hover:bg-primary-dark hover:font-extrabold hover:shadow-xl md:w-3/5 md:flex-initial lg:w-2/5;
 }
-
-.bttn-dangr {
-  @apply mx-2 my-1 w-4/5 rounded-md border-2 border-transparent bg-slate-300/70 px-4 py-2 font-semibold backdrop-blur-md backdrop-filter hover:border-danger-dark hover:font-semibold hover:text-danger-dark md:w-1/2 md:py-4 md:text-lg lg:w-1/3 lg:text-xl;
+.bttn-danger {
+  @apply slow-effect mx-5 my-3 flex-1 rounded-lg bg-danger-dark py-3 px-4 font-heading text-xl text-bglight-shade shadow-md outline-none delay-75 hover:-translate-y-1 hover:scale-105 hover:bg-danger-light hover:font-extrabold hover:shadow-xl md:w-3/5 md:flex-initial lg:w-2/5;
 }
+
 .form {
   @apply mx-2 my-4 grid h-auto grid-flow-row grid-cols-1 gap-1 rounded-xl bg-bglight-base py-4  shadow-xl sm:mx-5 md:mx-10  md:w-5/6 md:gap-2 lg:mx-14 lg:gap-3 xl:mx-20;
 }
@@ -144,8 +148,17 @@
 }
 
 .announcement-collapse {
-  @apply collapse-plus slow-effect collapse rounded-box mx-3 my-2 border border-base-300 bg-base-100 hover:animate-pulse hover:bg-green-100 focus:animate-none focus:bg-bglight-shade focus:shadow-lg md:mx-24;
+  @apply slow-effect collapse-plus collapse rounded-box relative mx-3 my-2 border border-base-300 bg-base-100 hover:animate-pulse hover:bg-green-100 focus:animate-none focus:bg-bglight-shade focus:shadow-lg md:mx-24;
 }
 .ClassroomCard {
-  @apply slow-effect mx-5 my-5 w-60 rounded-xl bg-bglight-shade shadow-lg hover:shadow-xl md:w-60 lg:w-72;
+  @apply slow-effect mx-5 my-5  flex w-60 flex-col rounded-xl border-t-4 bg-bglight-shade shadow-lg backdrop-filter hover:translate-y-1 hover:border-primary-light  hover:shadow-2xl hover:backdrop-blur-md md:w-60 lg:w-72;
+}
+.class-card-section {
+  @apply flex flex-row flex-wrap justify-around py-2;
+}
+.teacher-dashboard {
+  @apply mt-2 grid grid-flow-row grid-cols-1 place-content-center place-items-stretch justify-items-center gap-3 md:col-span-3 md:grid-cols-2 md:grid-rows-2 lg:col-span-5;
+}
+.subject-edit-input {
+  @apply my-2 mx-5 rounded-lg border-b-2 border-primary-dark px-3 py-1 capitalize outline-none;
 }

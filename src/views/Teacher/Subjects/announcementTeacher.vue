@@ -1,100 +1,136 @@
 <template>
-  <div>
-    <h1>{{ announcements }}</h1>
-    <div>
+  <main class="w-screen">
+    <!-- <h1>{{ announcements }}</h1> -->
+    <aside class="absolute bottom-7 right-2 z-50 md:right-10">
       <button
-        class="btn rounded-full"
+        class="add-subject"
         @click="this.isFormOpen = !this.isFormOpen"
+        v-show="!this.isFormOpen"
       >
-        Add subject
+        <PlusCircleIcon class="inline-block w-8" />
+        Announcement
       </button>
       <form
         v-if="isFormOpen"
-        class="form accent-primary-dark"
+        class="form border-2 border-primary-dark accent-primary-dark"
         @submit.prevent="addAnnouncement"
       >
         <div class="form-section">
           <label class="label">Announcement Heading</label>
-          <input
-            class="input-box"
-            type="text"
-            v-model.trim.lazy="formValues.heading"
-            required
-          />
+          <section class="input-section">
+            <input
+              class="input-box"
+              type="text"
+              v-model.trim.lazy="formValues.heading"
+              required
+            />
+          </section>
         </div>
         <div class="form-section">
-          <label class="label">Announcement Body</label>
-          <input
-            class="input-box"
-            type="text"
-            v-model.trim.lazy="formValues.body"
-            required
-          />
+          <label class="label">Description</label>
+          <section class="input-section">
+            <input
+              class="input-box"
+              type="text"
+              v-model.trim.lazy="formValues.body"
+              required
+            />
+          </section>
         </div>
-        <button class="bttn">Add</button>
+        <section class="flex flex-col justify-evenly md:flex-row">
+          <button class="bttn">Add</button>
+          <button class="bttn-danger" @click="isFormOpen = !isFormOpen">
+            Cancel
+          </button>
+        </section>
       </form>
+    </aside>
+    <div class="modal z-50" id="delete-warning" v-show="delAnnId > -1">
+      <div class="modal-box">
+        <h3 class="text-center text-lg font-bold">
+          Do you want to delete the announcement ?
+        </h3>
+        <div class="modal-action">
+          <section class="button-section">
+            <a class="bttn text-center" @click="deleteAnnouncement(delAnnId)">
+              Yes
+            </a>
+            <a href="#" class="bttn-danger text-center">No</a>
+          </section>
+        </div>
+      </div>
     </div>
-    <div
-      class="mt-5 grid grid-flow-row grid-cols-1 items-center justify-evenly gap-3 md:grid-cols-2 lg:grid-cols-4 lg:grid-rows-3"
-    >
+    <div class="mt-5">
       <template v-if="loader">
         <template v-for="i in 4" :key="i">
-          <LoaderCard class="col-span-1 row-span-1 place-self-center" />
+          <LoaderView class="col-span-1 row-span-1 place-self-center" />
         </template>
       </template>
       <section
-        class="card col-span-1 row-span-1 place-self-center"
-        v-for="announcement in announcements"
+        :tabindex="announcement.id"
+        class="announcement-collapse relative z-10"
+        v-for="(announcement, index) in announcements"
         :key="announcement.id"
-        :class="{ 'h-full w-full overflow-auto scrollbar-hide': !subjectEdit }"
+        :class="{
+          'collapse-open overflow-auto scrollbar-hide': !subjectEditArr[index],
+        }"
       >
         <!-- #FIXME: Edit card opening all at same time -->
-        <div class="absolute top-5 right-5">
+        <div class="absolute top-5 right-5 flex w-32 flex-row justify-evenly">
           <PencilIcon
-            v-if="subjectEdit"
-            @click="subjectEdit = !subjectEdit"
+            v-if="subjectEditArr[index]"
+            @click="subjectEditArr[index] = !subjectEditArr[index]"
             class="slow-effect h-7 w-5 text-zinc-700 hover:text-zinc-500"
           />
           <CheckIcon
             v-else
-            @click="editPatch(announcement)"
+            @click="editPatch(announcement, index)"
             class="slow-effect h-7 w-5 rounded-lg border-2 border-primary-light text-primary-dark hover:text-primary-light"
           />
-          <div class="tooltip" data-tip="Delete Subject">
-            <TrashIcon
-              @click="deleteAnnouncement(announcement.id)"
-              class="slow-effect h-7 w-5 text-pink-500 hover:text-pink-300"
-            />
+          <div class="tooltip tooltip-left" data-tip="Delete Subject">
+            <a href="#delete-warning">
+              <TrashIcon
+                class="slow-effect h-7 w-5 text-pink-500 hover:text-pink-300"
+                v-show="subjectEditArr[index]"
+                @click="delAnnId = announcement.id"
+              />
+            </a>
           </div>
         </div>
         <!-- TODO:Dynamic v-model : LINK: https://stackoverflow.com/questions/60703994/how-do-you-conditional-bind-v-model-in-vue -->
         <input
           type="text"
           v-model="announcement.heading"
-          class="w-full bg-slate-50 text-lg text-zinc-700"
-          :class="{ 'input-box': !subjectEdit }"
-          :disabled="subjectEdit"
+          class="collapse-title font-heading text-base font-medium uppercase md:text-lg lg:text-xl"
+          :class="{ 'subject-edit-input': !subjectEditArr[index] }"
+          :disabled="subjectEditArr[index]"
           placeholder="announcement title"
         />
         <!-- TODO: @priyesh :- make proper design -->
         <input
           type="text"
           v-model="announcement.body"
-          class="w-full bg-slate-50 text-lg text-zinc-700"
-          :class="{ 'input-box': !subjectEdit }"
-          :disabled="subjectEdit"
-          placeholder="announcement code"
+          class="collapse-content font-body md:text-lg"
+          :class="{ 'subject-edit-input': !subjectEditArr[index] }"
+          :disabled="subjectEditArr[index]"
+          placeholder="announcement body"
         />
       </section>
     </div>
-  </div>
+  </main>
 </template>
 
 <script>
 import axios from "axios";
 import { mapGetters } from "vuex";
-import { PencilIcon, CheckIcon, TrashIcon } from "@heroicons/vue/solid";
-import LoaderCard from "../../../components/LoaderCard.vue";
+import {
+  PencilIcon,
+  CheckIcon,
+  TrashIcon,
+  PlusCircleIcon,
+} from "@heroicons/vue/solid";
+import LoaderView from "@/components/LoaderView.vue";
+
 export default {
   props: ["classroom_slug", "no", "subject_slug"],
   data() {
@@ -108,14 +144,17 @@ export default {
       announcements: "", //#FIXME: this might be an array
       id: "",
       isActive: 1,
-      subjectEdit: true,
+      delAnnId: -1,
+      // subjectEdit: true,
+      subjectEditArr: [],
     };
   },
   components: {
-    LoaderCard,
+    LoaderView,
     PencilIcon,
     CheckIcon,
     TrashIcon,
+    PlusCircleIcon,
   },
   computed: {
     ...mapGetters(["userType", "userProfile", "semCards"]),
@@ -132,15 +171,18 @@ export default {
         `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/announcement/`
       );
       this.announcements = announcementsResponse.data;
+      for (let i = 0; i < this.announcements.length; i++) {
+        this.subjectEditArr.push(true);
+      }
     } catch (e) {
       console.log(e);
     }
     this.loader = false;
   },
   methods: {
-    async editPatch(announcement) {
+    async editPatch(announcement, index) {
       try {
-        this.subjectEdit = !this.subjectEdit;
+        this.subjectEditArr[index] = !this.subjectEditArr[index];
         const id = announcement.id;
         delete announcement.id;
         delete announcement.created_at;
@@ -165,6 +207,7 @@ export default {
         await axios.delete(
           `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/announcement/${id}/`
         );
+        this.delAnnId = -1;
       } catch (e) {
         console.log(e);
       }
@@ -178,6 +221,7 @@ export default {
         );
         console.log(res);
         this.announcements.push(res.data);
+        this.subjectEditArr.push(true);
       } catch (e) {
         console.log(e);
       }
