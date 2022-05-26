@@ -2,9 +2,9 @@
   <div v-if="loader">
     <LoaderCard />
   </div>
-  <section v-else>
-    {{ subjects }}
-    <div
+  <section v-else class="student-dashboard-card-section">
+    <!-- {{ subjects }} -->
+    <!-- <div
       class="card"
       v-for="semCard in subjects.semesters_list"
       :key="semCard.id"
@@ -16,6 +16,21 @@
         Semester-{{ semCard.sem_no }}
       </h1>
       <button class="btn" @click="handelOpen(semCard.sem_no)">Open</button>
+    </div> -->
+    <div
+      class="SemCard"
+      v-for="semCard in subjects.semesters_list"
+      :key="semCard.id"
+    >
+      <button title="This is the on going semester">
+        <BadgeCheckIcon class="sem-badge" v-show="semCard.is_current_sem" />
+      </button>
+      <h1 class="text-center font-heading text-2xl text-zinc-700">
+        Semester-{{ semCard.sem_no }}
+      </h1>
+      <section class="button-section">
+        <button class="bttn" @click="handelOpen(semCard.sem_no)">Open</button>
+      </section>
     </div>
   </section>
 </template>
