@@ -66,7 +66,7 @@
         class="row-start-2 hidden md:col-span-2 md:col-start-3 md:row-start-1 md:block"
       >
         <div class="page-header-2">
-          <p>Subject - {{ subject_slug }} {{ semester_no }}</p>
+          <p>Subject -</p>
         </div>
       </div>
       <div class="col-span-1 row-start-1 place-self-center md:col-start-5">
@@ -96,6 +96,7 @@ import { mapGetters } from "vuex";
 import { ReplyIcon } from "@heroicons/vue/solid";
 export default {
   props: ["classroom_slug", "no", "subject_slug"],
+  // props: ["subject_slug"],
   data() {
     return {
       loader: false,
@@ -127,10 +128,13 @@ export default {
         `/classroom-app/classroom/${this.userProfile.classroom.slug}/semester/${this.id}/subject/${this.subject_slug}`
       );
       this.announcements = announcementsResponse.data;
+      console.log("in created try block");
+      // this.$router.replace({
+      //   name: "announcementTeacher",
+      // });
     } catch (e) {
       console.log(e);
     }
-    this.$router.replace({ name: "announcementTeacher" });
     this.loader = false;
   },
   methods: {
@@ -140,5 +144,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped></style>
