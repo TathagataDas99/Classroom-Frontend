@@ -1,6 +1,6 @@
 <template>
-  <main class="w-screen">
-    <h1>{{ notes }}</h1>
+  <main class="w-screen" @click="openedNotes = -1">
+    <!-- <h1>{{ notes }}</h1> -->
     <!-- <h1>{{attached_files}}</h1> -->
     <!-- notes add form -->
     <aside class="absolute bottom-7 right-2 z-50 md:right-10">
@@ -63,70 +63,95 @@
       </form>
     </aside>
     <!-- notes add form -->
-    <div
-      class="mt-5 grid grid-flow-row grid-cols-1 items-center justify-evenly gap-3 md:grid-cols-2 lg:grid-cols-4 lg:grid-rows-3"
-    >
-      <template v-if="loader">
+
+    <!-- MODAL -->
+    <div class="modal z-50" id="delete-warning" v-show="tempVal !== null">
+      <div class="modal-box">
+        <h3 class="text-center text-lg font-bold">
+          Do you want to delete the announcement ?
+        </h3>
+        <div class="modal-action">
+          <section class="button-section">
+            <a class="bttn text-center" @click="deleteNote(tempVal)"> Yes </a>
+            <a href="" class="bttn-danger text-center">No</a>
+          </section>
+        </div>
+      </div>
+    </div>
+    <!-- MODAL -->
+
+    <section>
+      <!-- <template v-if="loader">
         <template v-for="i in 4" :key="i">
           <LoaderCard class="col-span-1 row-span-1 place-self-center" />
         </template>
-      </template>
+      </template> -->
       <section
-        class="card col-span-1 row-span-1 place-self-center"
-        v-for="note in notes"
+        :tabindex="index"
+        class="announcement-collapse"
+        v-for="(note, index) in notes"
         :key="note.slug"
-        :class="{ 'h-full w-full overflow-auto scrollbar-hide': !subjectEdit }"
+        :class="{ 'collapse-open': openedNotes === index }"
+        @focusin="openedNotes = index"
       >
         <!-- #FIXME: Edit card opening all at same time -->
-        <div class="absolute top-5 right-5">
+        <div class="absolute top-5 right-5 flex w-20 flex-row justify-evenly">
           <PencilIcon
-            v-if="subjectEdit"
-            @click="subjectEdit = !subjectEdit"
+            v-if="subjectEdit[index]"
+            @click="subjectEdit[index] = !subjectEdit[index]"
             class="slow-effect h-7 w-5 text-zinc-700 hover:text-zinc-500"
           />
           <CheckIcon
             v-else
-            @click="editPatch(note)"
+            @click="editPatch(note, index)"
             class="slow-effect h-7 w-5 rounded-lg border-2 border-primary-light text-primary-dark hover:text-primary-light"
           />
           <div class="tooltip" data-tip="Delete Subject">
+            <!-- deleteAnnouncement(note.slug) -->
             <TrashIcon
-              @click="deleteAnnouncement(note.slug)"
+              @click="this.tempVal = note.slug"
+              v-show="subjectEdit[index]"
               class="slow-effect h-7 w-5 text-pink-500 hover:text-pink-300"
             />
           </div>
         </div>
-        <!-- TODO:Dynamic v-model : LINK: https://stackoverflow.com/questions/60703994/how-do-you-conditional-bind-v-model-in-vue -->
         <input
           type="text"
           v-model="note.title"
-          class="w-full bg-slate-50 text-lg text-zinc-700"
-          :class="{ 'input-box': !subjectEdit }"
-          :disabled="subjectEdit"
+          class="collapse-title font-heading text-base font-medium uppercase md:text-lg lg:text-xl"
+          :class="{ 'subject-edit-input': !subjectEdit[index] }"
+          :disabled="subjectEdit[index]"
           placeholder="note title"
         />
-        <!-- TODO: @priyesh :- make proper design -->
         <input
           type="text"
           v-model="note.description"
-          class="w-full bg-slate-50 text-lg text-zinc-700"
-          :class="{ 'input-box': !subjectEdit }"
-          :disabled="subjectEdit"
-          placeholder="note code"
+          class="collapse-content font-heading text-base font-medium uppercase md:text-lg lg:text-xl"
+          :class="{ 'subject-edit-input': !subjectEdit[index] }"
+          :disabled="subjectEdit[index]"
+          placeholder="note description"
         />
-        <a
-          class="slow-effect bottom-5 flex flex-row hover:text-primary-light"
-          :href="'http://localhost:8000' + file.file_path"
-          v-for="file in note.attached_files"
-          :key="file.title"
+        <!-- <section
+          class="collapse-content col-span-1 row-span-1 flex flex-row flex-wrap items-center justify-start font-body lg:col-start-4 lg:row-start-3"
+        > -->
+        <div
+          class="collapse-content col-span-2 flex flex-row flex-wrap items-center justify-evenly"
         >
-          <DocumentDownloadIcon
-            class="slow-effect inline-block h-4 w-4 text-primary-dark hover:scale-110 hover:text-primary-light"
-          />
-          <!-- <span class="text-sm font-bold">file-{{ index + 1 }}</span> -->
-        </a>
+          <a
+            class="slow-effect bottom-5 flex flex-col items-center justify-evenly hover:text-primary-light"
+            :href="'http://localhost:8000' + file.file_path"
+            v-for="file in note.attached_files"
+            :key="file.title"
+          >
+            <DocumentDownloadIcon
+              class="slow-effect w-10 text-primary-dark hover:scale-110 hover:text-primary-light"
+            />
+            <span class="text-sm font-bold">file-{{ index + 1 }}</span>
+          </a>
+        </div>
+        <!-- </section> -->
       </section>
-    </div>
+    </section>
   </main>
 </template>
 
@@ -139,12 +164,12 @@ import {
   TrashIcon,
   PlusCircleIcon,
 } from "@heroicons/vue/solid";
-import LoaderCard from "../../../components/LoaderCard.vue";
+// import LoaderCard from "../../../components/LoaderCard.vue";
 import { DocumentDownloadIcon } from "@heroicons/vue/solid";
 export default {
   props: ["classroom_slug", "no", "subject_slug"],
   components: {
-    LoaderCard,
+    // LoaderCard,
     PencilIcon,
     PlusCircleIcon,
     CheckIcon,
@@ -163,7 +188,9 @@ export default {
       notes: "", //#FIXME: this might be an array
       id: "",
       isActive: 1,
-      subjectEdit: true,
+      openedNotes: -1,
+      tempVal: -1,
+      subjectEdit: [],
     };
   },
   computed: {
@@ -181,15 +208,18 @@ export default {
         `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/notes/`
       );
       this.notes = announcementsResponse.data;
+      for (let i = 0; i < this.notes.length; i++) {
+        this.subjectEdit.push(true);
+      }
     } catch (e) {
       console.log(e);
     }
     this.loader = false;
   },
   methods: {
-    async editPatch(note) {
+    async editPatch(note, index) {
       try {
-        this.subjectEdit = !this.subjectEdit;
+        this.subjectEdit[index] = !this.subjectEdit[index];
         const slug = note.slug;
         const notePatch = { title: note.title, description: note.description };
         const res = await axios.patch(
@@ -197,14 +227,14 @@ export default {
           notePatch
         );
         console.log(res);
-        this.$router.go();
+        // this.$router.go();
       } catch (e) {
         console.log(e);
       }
     },
-    async deleteAnnouncement(slug) {
+    async deleteNote(slug) {
       try {
-        // this.subjectEdit = !this.subjectEdit;
+        // this.subjectEdit.pop();
         console.log(slug);
         this.notes = this.notes.filter(function (obj) {
           return obj.slug !== slug;
@@ -223,6 +253,7 @@ export default {
           `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/notes/`,
           this.formValues
         );
+        this.subjectEdit.push(true);
         // console.log(res);
         this.notes.push(res.data);
         for (let i of this.attached_files) {
