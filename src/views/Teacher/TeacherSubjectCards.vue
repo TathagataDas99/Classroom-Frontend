@@ -4,9 +4,19 @@
   <!-- {{ subjects }} -->
   <!-- {{ classroom_slug }} -->
   <!-- </div> -->
-  <main class="relative">
+  <main class="relative flex flex-col items-center">
+    <div class="page-header-1">
+      <p class="place-self-center">Sem No - {{ semester_no }}</p>
+      <router-link
+        class="link-danger slow-effect text-center font-body font-medium underline shadow-md"
+        :to="{ name: 'ClassroomView' }"
+      >
+        <ReplyIcon class="mr-2 inline-block w-7 font-body text-danger-dark" />
+        Semesters
+      </router-link>
+    </div>
     <section
-      class="mt-5 grid min-h-screen grid-flow-row grid-cols-1 items-center justify-evenly gap-3 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2"
+      class="mt-5 grid min-h-screen w-screen grid-flow-row grid-cols-1 items-center justify-evenly gap-3 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2"
     >
       <template v-if="loader">
         <template v-for="i in 3" :key="i">
@@ -143,7 +153,7 @@
         </div>
       </section>
     </section>
-    <aside class="absolute top-2 right-10">
+    <aside class="absolute top-7 right-10">
       <button
         class="add-subject"
         v-show="!this.isFormOpen"
@@ -222,6 +232,7 @@ import {
   CheckIcon,
   TrashIcon,
   PlusCircleIcon,
+  ReplyIcon,
 } from "@heroicons/vue/solid";
 import LoaderCard from "../../components/LoaderCard.vue";
 export default {
@@ -252,6 +263,7 @@ export default {
     PencilIcon,
     CheckIcon,
     TrashIcon,
+    ReplyIcon,
   },
   computed: {
     ...mapGetters(["userType", "userProfile", "semCards"]),
