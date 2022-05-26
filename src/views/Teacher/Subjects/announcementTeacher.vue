@@ -1,5 +1,5 @@
 <template>
-  <div class="w-screen">
+  <main class="w-screen">
     <!-- <h1>{{ announcements }}</h1> -->
     <aside class="absolute bottom-7 right-2 z-50 md:right-10">
       <button
@@ -117,7 +117,7 @@
         />
       </section>
     </div>
-  </div>
+  </main>
 </template>
 
 <script>
