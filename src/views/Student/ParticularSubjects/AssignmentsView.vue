@@ -3,12 +3,12 @@
     <div v-if="loader">
       <LoaderView />
     </div>
-    {{ notes }}
+    {{ assignments }}
     <section class="mt-5">
       <div
         :tabindex="index"
         class="announcement-collapse"
-        v-for="(assignment, index) in notes"
+        v-for="(assignment, index) in assignments"
         :key="assignment"
         :class="{ 'collapse-open': openedNotes === index }"
         @focusin="openedNotes = index"
@@ -75,7 +75,7 @@ export default {
   data() {
     return {
       loader: false,
-      notes: [],
+      assignments: [],
       id: "",
       isActive: 1,
       // isDownload: true,
@@ -97,11 +97,11 @@ export default {
       }
     }
     try {
-      const notesResponse = await axios.get(
+      const assignmentsResponse = await axios.get(
         `/classroom-app/classroom/${this.userProfile.classroom.slug}/semester/${this.id}/subject/${this.subject_slug}/assignment/`
       );
-      this.notes = notesResponse.data;
-      // console.log(notesResponse);
+      this.assignments = assignmentsResponse.data;
+      // console.log(assignmentsResponse);
       // console.log(this.subject_slug, this.id, this.userProfile.classroom.slug);
     } catch (e) {
       console.log(e);
