@@ -153,7 +153,7 @@
         </div>
       </section>
     </section>
-    <aside class="absolute top-7 right-10">
+    <aside class="absolute top-7 right-2 md:right-10">
       <button
         class="add-subject"
         v-show="!this.isFormOpen"
