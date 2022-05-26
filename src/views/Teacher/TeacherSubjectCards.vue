@@ -37,7 +37,7 @@
     >
       <template v-if="loader">
         <template v-for="i in 3" :key="i">
-          <LoaderCard
+          <LoaderView
             class="SubjectCard col-span-1 row-span-1 place-self-center"
           />
         </template>
@@ -261,7 +261,7 @@ import {
   PlusCircleIcon,
   ReplyIcon,
 } from "@heroicons/vue/solid";
-import LoaderCard from "../../components/LoaderCard.vue";
+import LoaderView from "../../components/LoaderView.vue";
 export default {
   data() {
     return {
@@ -287,7 +287,7 @@ export default {
     };
   },
   components: {
-    LoaderCard,
+    LoaderView,
     PlusCircleIcon,
     PencilIcon,
     CheckIcon,
@@ -345,6 +345,7 @@ export default {
     },
     async editPatch(subject, index) {
       try {
+        this.loader = true;
         this.subjectEditArr[index] = !this.subjectEditArr[index];
         const slug = subject.slug;
         delete subject.slug;
@@ -354,7 +355,12 @@ export default {
           `/classroom-app/teacher/${this.userProfile.teacher_id}/sem/${this.id}/subject/${slug}/`,
           subject
         );
-        this.$router.go();
+        const subjectResponse = await axios.get(
+          `/classroom-app/teacher/${this.userProfile.teacher_id}/sem/${this.id}/subject/`
+        );
+        this.subjects = subjectResponse.data;
+        // this.$router.go();
+        this.loader = false;
       } catch (e) {
         console.log(e);
       }
