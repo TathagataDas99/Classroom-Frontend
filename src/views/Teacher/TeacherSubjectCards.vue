@@ -345,7 +345,7 @@ export default {
     },
     async editPatch(subject, index) {
       try {
-        this.loader = true;
+        // this.loader = true;
         this.subjectEditArr[index] = !this.subjectEditArr[index];
         const slug = subject.slug;
         delete subject.slug;
@@ -360,7 +360,7 @@ export default {
         );
         this.subjects = subjectResponse.data;
         // this.$router.go();
-        this.loader = false;
+        // this.loader = false;
       } catch (e) {
         console.log(e);
       }
