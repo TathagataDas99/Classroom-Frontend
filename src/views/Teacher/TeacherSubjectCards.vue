@@ -194,51 +194,59 @@
       >
         <div class="form-section">
           <label class="label">title</label>
-          <input
-            class="input-box"
-            type="text"
-            v-model.trim.lazy="formValues.title"
-            required
-          />
+          <section class="input-section">
+            <input
+              class="input-box"
+              type="text"
+              v-model.trim.lazy="formValues.title"
+              required
+            />
+          </section>
         </div>
         <div class="form-section">
           <label class="label">subject code</label>
-          <input
-            class="input-box"
-            type="text"
-            v-model.trim.lazy="formValues.subject_code"
-            required
-          />
+          <section class="input-section">
+            <input
+              class="input-box"
+              type="text"
+              v-model.trim.lazy="formValues.subject_code"
+              required
+            />
+          </section>
         </div>
         <div class="form-section">
           <label class="label" for="subject_type">subject type</label>
-          <select
-            class="input-box"
-            name="subject_type"
-            id="subject_type"
-            v-model="formValues.subject_type"
-          >
-            <option value="TH">Theory</option>
-            <option value="PRC">Practical</option>
-            <option value="PRJ">Project</option>
-            <option value="ELC">Elective</option>
-          </select>
+          <section class="input-section">
+            <select
+              class="input-box"
+              name="subject_type"
+              id="subject_type"
+              v-model="formValues.subject_type"
+            >
+              <option value="TH">Theory</option>
+              <option value="PRC">Practical</option>
+              <option value="PRJ">Project</option>
+              <option value="ELC">Elective</option>
+            </select>
+          </section>
         </div>
         <div class="form-section">
           <label class="label">
             credit points
             <!-- [{{ formValues.credit_points }}] -->
           </label>
-          <input
-            class="input-box"
-            form="credit_points"
-            type="number"
-            min="1"
-            max="15"
-            v-model="formValues.credit_points"
-            placeholder="between 1-15"
-            required
-          />
+          <section class="input-section">
+            <input
+              class="input-box"
+              form="credit_points"
+              type="number"
+              min="1"
+              max="15"
+              v-model="formValues.credit_points"
+              placeholder="between 1-15"
+              required
+            />
+          </section>
         </div>
         <section class="flex flex-col justify-evenly md:flex-row">
           <button class="bttn">Add</button>
