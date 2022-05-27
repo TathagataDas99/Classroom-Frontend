@@ -81,8 +81,8 @@
               ref="file"
               @change="handleFileUpload"
               type="file"
-              accept=".pdf"
             />
+            <!-- accept="application/pdf" -->
           </section>
           <!-- multiple -->
         </div>
@@ -307,7 +307,13 @@ export default {
       this.isFormOpen = !this.isFormOpen;
       //TODO: Convert to FormData
       try {
-        const FormValues = new FormData(JSON.stringify(this.formValues));
+        const FormValues = new FormData();
+        FormValues.append("title", this.formValues.title);
+        FormValues.append("description", this.formValues.description);
+        FormValues.append("alloted_marks", this.formValues.alloted_marks);
+        FormValues.append("due_date", this.formValues.due_date);
+        FormValues.append("due_time", this.formValues.due_time);
+        FormValues.append("attached_pdf", this.formValues.attached_pdf);
         const res = await axios.post(
           `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/`,
           FormValues,
@@ -316,7 +322,7 @@ export default {
               "Content-Type": "multipart/form-data",
               Accept: "*/*",
               "Content-Disposition": this.formValues.attached_pdf,
-              // boundary: "file_path",
+              boundary: "attached_pdf",
               Filename: this.formValues.attached_pdf.name,
             },
           }
@@ -346,13 +352,13 @@ export default {
         console.log(e);
       }
       const announcementsResponse = await axios.get(
-        `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/notes/`
+        `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/`
       );
       this.assignment = announcementsResponse.data;
     },
     async handleFileUpload(event) {
-      this.attached_files = event.target.files;
-      console.log(this.attached_files);
+      this.formValues.attached_pdf = event.target.files[0];
+      console.log(this.formValues.attached_pdf);
     },
   },
 };
