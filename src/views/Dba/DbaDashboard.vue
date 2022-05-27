@@ -197,7 +197,7 @@
         class="btn rounded-full"
         @click="this.isAddingTeacherFormOpen = !this.isAddingTeacherFormOpen"
       >
-        Add Teacher
+        Add Teacher To Classroom
       </button>
       <form
         v-if="isAddingTeacherFormOpen"
@@ -231,6 +231,36 @@
         </section>
       </form>
     </div>
+    <!-- add teacher to the college -->
+    <div v-if="userProfile.is_owner">
+      <button
+        class="btn rounded-full"
+        @click="this.isAddingTeacherFormOpenCollege = !this.isAddingTeacherFormOpenCollege"
+      >
+        Add Teacher To College
+      </button>
+      <form
+        v-if="isAddingTeacherFormOpenCollege"
+        class="form place-content-center accent-primary-dark lg:col-span-2"
+        @submit.prevent="addTeacherCollege"
+      >
+        <section class="form-section">
+          <label class="label">Email Id</label>
+          <section class="input-section">
+            <input
+              class="input-box"
+              type="email"
+              placeholder="Email Id"
+              v-model.trim.lazy="addTeacherForm.email"
+              required
+            />
+          </section>
+        </section>
+        <section class="button-section">
+          <button class="bttn">Add</button>
+        </section>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -243,6 +273,7 @@ export default {
     return {
       isCreateClassRoomFormOpen: false,
       isAddingTeacherFormOpen: false,
+      isAddingTeacherFormOpenCollege: false,
       isFormOpen: false,
       sections: ["A", "B", "C", "D", "E", "F"],
       classroomList: [],
@@ -401,6 +432,16 @@ export default {
       try {
         await axios.post(
           `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${this.clasroomSlug}/manage-teacher/`, this.addTeacherForm
+        );
+        this.addTeacherForm = "";
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async addTeacherCollege() {
+      try {
+        await axios.post(
+          `/classroom-app/college-dba/${this.userProfile.college.slug}/manage-teacher-college/`, this.addTeacherForm
         );
       } catch (e) {
         console.log(e);
