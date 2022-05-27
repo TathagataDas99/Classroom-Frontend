@@ -15,7 +15,7 @@
       <form
         v-if="isFormOpen"
         class="form z-30 border-2 border-primary-dark accent-primary-dark"
-        @submit.prevent="addAnnouncement"
+        @submit.prevent="addNote"
         enctype="multipart/form-data"
       >
         <div class="form-section">
@@ -251,7 +251,7 @@ export default {
         console.log(e);
       }
     },
-    async addAnnouncement() {
+    async addNote() {
       this.isFormOpen = !this.isFormOpen;
       try {
         const res = await axios.post(
