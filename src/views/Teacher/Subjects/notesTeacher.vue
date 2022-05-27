@@ -15,7 +15,7 @@
       <form
         v-if="isFormOpen"
         class="form z-30 border-2 border-primary-dark accent-primary-dark"
-        @submit.prevent="addAnnouncement"
+        @submit.prevent="addNote"
         enctype="multipart/form-data"
       >
         <div class="form-section">
@@ -96,17 +96,23 @@
       >
         <!-- #FIXME: Edit card opening all at same time -->
         <div class="absolute top-5 right-5 flex w-20 flex-row justify-evenly">
-          <PencilIcon
+          <div
+            class="tooltip tooltip-left"
+            data-tip="Edit Subject"
             v-if="subjectEdit[index]"
-            @click="subjectEdit[index] = !subjectEdit[index]"
-            class="slow-effect h-7 w-5 text-zinc-700 hover:text-zinc-500"
-          />
-          <CheckIcon
-            v-else
-            @click="editPatch(note, index)"
-            class="slow-effect h-7 w-5 rounded-lg border-2 border-primary-light text-primary-dark hover:text-primary-light"
-          />
-          <div class="tooltip" data-tip="Delete Subject">
+          >
+            <PencilIcon
+              @click="subjectEdit[index] = !subjectEdit[index]"
+              class="slow-effect h-7 w-5 text-zinc-700 hover:text-zinc-500"
+            />
+          </div>
+          <div class="tooltip tooltip-left" data-tip="Save Edit" v-else>
+            <CheckIcon
+              @click="editPatch(note, index)"
+              class="slow-effect h-7 w-5 rounded-lg border-2 border-primary-light text-primary-dark hover:text-primary-light"
+            />
+          </div>
+          <div class="tooltip tooltip-left" data-tip="Delete Subject">
             <!-- deleteAnnouncement(note.slug) -->
             <a href="#delete-warning">
               <TrashIcon
@@ -251,7 +257,7 @@ export default {
         console.log(e);
       }
     },
-    async addAnnouncement() {
+    async addNote() {
       this.isFormOpen = !this.isFormOpen;
       try {
         const res = await axios.post(

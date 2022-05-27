@@ -7,7 +7,7 @@
     @apply absolute top-20 z-50 flex animate-pulse flex-row items-center justify-evenly rounded-2xl bg-info-dark px-5 py-3 font-body text-lg font-semibold text-bglight-shade  duration-500 md:text-xl;
   }
   .label {
-    @apply col-span-1 col-start-1 row-start-1 ml-5 font-heading text-base capitalize text-bgdark-base md:text-lg lg:text-xl xl:text-2xl;
+    @apply col-span-2 col-start-1 row-start-1 ml-5 font-heading text-base capitalize text-bgdark-base md:text-lg lg:text-xl xl:text-2xl;
   }
 }
 
