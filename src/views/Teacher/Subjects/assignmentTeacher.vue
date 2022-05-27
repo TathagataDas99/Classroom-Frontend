@@ -1,6 +1,6 @@
 <template>
+  <!-- <h1>{{ assignments }}</h1> -->
   <main class="w-screen" @click="openedNotes = -1">
-    <h1>{{ assignment }}</h1>
     <!-- <h1>{{attached_files}}</h1> -->
     <!-- notes add form -->
     <aside class="absolute bottom-7 right-2 z-50 md:right-10">
@@ -118,11 +118,12 @@
           <LoaderCard class="col-span-1 row-span-1 place-self-center" />
         </template>
       </template> -->
+
       <section
         :tabindex="index"
         class="announcement-collapse"
-        v-for="(note, index) in notes"
-        :key="note.slug"
+        v-for="(assignment, index) in assignments"
+        :key="assignment.id"
         :class="{ 'collapse-open max-h-96': openedNotes === index }"
         @focusin="openedNotes = index"
       >
@@ -135,14 +136,14 @@
           />
           <CheckIcon
             v-else
-            @click="editPatch(note, index)"
+            @click="editPatch(assignment, index)"
             class="slow-effect h-7 w-5 rounded-lg border-2 border-primary-light text-primary-dark hover:text-primary-light"
           />
           <div class="tooltip tooltip-left" data-tip="Delete Subject">
-            <!-- deleteAnnouncement(note.slug) -->
+            <!-- deleteAnnouncement(assignment.slug) -->
             <a href="#delete-warning">
               <TrashIcon
-                @click="tempVal = note.slug"
+                @click="tempVal = assignment.id"
                 v-show="subjectEdit[index]"
                 class="slow-effect z-10 h-7 w-5 text-pink-500 hover:text-pink-300"
               />
@@ -151,19 +152,43 @@
         </div>
         <input
           type="text"
-          v-model="note.title"
+          v-model="assignment.title"
           class="collapse-title font-heading text-base font-medium uppercase md:text-lg lg:text-xl"
           :class="{ 'subject-edit-input': !subjectEdit[index] }"
           :disabled="subjectEdit[index]"
-          placeholder="note title"
+          placeholder="assignment title"
         />
         <input
           type="text"
-          v-model="note.description"
+          v-model="assignment.description"
           class="collapse-content columns-1 font-body text-base font-medium md:col-span-3"
           :class="{ 'subject-edit-input collapse-title': !subjectEdit[index] }"
           :disabled="subjectEdit[index]"
-          placeholder="note description"
+          placeholder="assignment description"
+        />
+        <input
+          type="number"
+          v-model="assignment.alloted_marks"
+          class="collapse-content columns-1 font-body text-base font-medium md:col-span-3"
+          :class="{ 'subject-edit-input collapse-title': !subjectEdit[index] }"
+          :disabled="subjectEdit[index]"
+          placeholder="assignment description"
+        />
+        <input
+          type="date"
+          v-model="assignment.due_date"
+          class="collapse-content columns-1 font-body text-base font-medium md:col-span-3"
+          :class="{ 'subject-edit-input collapse-title': !subjectEdit[index] }"
+          :disabled="subjectEdit[index]"
+          placeholder="assignment description"
+        />
+        <input
+          type="time"
+          v-model="assignment.due_time"
+          class="collapse-content columns-1 font-body text-base font-medium md:col-span-3"
+          :class="{ 'subject-edit-input collapse-title': !subjectEdit[index] }"
+          :disabled="subjectEdit[index]"
+          placeholder="assignment description"
         />
         <!-- <section
           class="collapse-content col-span-1 row-span-1 flex flex-row flex-wrap items-center justify-start font-body lg:col-start-4 lg:row-start-3"
@@ -173,14 +198,12 @@
         >
           <a
             class="slow-effect bottom-5 flex flex-col items-center justify-evenly hover:text-primary-light"
-            :href="'http://localhost:8000' + file.file_path"
-            v-for="(file, index2) in note.attached_files"
-            :key="file.title"
+            :href="'http://localhost:8000' + assignment.attached_files"
           >
             <DocumentDownloadIcon
               class="slow-effect w-10 text-primary-dark hover:scale-110 hover:text-primary-light"
             />
-            <span class="text-sm font-bold">file-{{ index2 + 1 }}</span>
+            <span class="text-sm font-bold">attached file</span>
           </a>
         </div>
         <!-- </section> -->
@@ -215,11 +238,11 @@ export default {
     return {
       isFormOpen: false,
       min_due_date:
-        new Date().getDate() +
+        new Date().getFullYear() +
         "-" +
-        parseInt(new Date().getMonth()) +
+        parseInt(new Date().getMonth() + 1) +
         "-" +
-        new Date().getFullYear(),
+        new Date().getDate(),
       formValues: {
         title: "",
         description: "",
@@ -230,7 +253,7 @@ export default {
       },
       attached_files: [],
       loader: false,
-      assignment: "", //#FIXME: this might be an array
+      assignments: [], //#FIXME: this might be an array
       id: "",
       isActive: 1,
       openedNotes: -1,
@@ -253,14 +276,17 @@ export default {
       const assignmentResponse = await axios.get(
         `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/`
       );
-      this.assignment = assignmentResponse.data;
-      for (let i = 0; i < this.assignment.length; i++) {
+      this.assignments = assignmentResponse.data;
+      for (let i = 0; i < this.assignments.length; i++) {
         this.subjectEdit.push(true);
       }
+      // var dateControl = document.querySelector('input[type="date"]');
+      // dateControl.value = this.min_due_date;
+      this.formValues.due_date = this.min_due_date;
     } catch (e) {
       console.log(e);
     }
-    this.formValues.due_date = new Date().getUTCDate();
+    // this.formValues.due_date = new Date().getUTCDate();
     this.loader = false;
   },
   methods: {
@@ -268,17 +294,23 @@ export default {
       try {
         this.subjectEdit[index] = !this.subjectEdit[index];
         const id = assignment.id;
-        const assignmentPatch = {
-          title: assignment.title,
-          description: assignment.description,
-          alloted_marks: assignment.alloted_marks,
-          due_date: assignment.due_date,
-          due_time: assignment.due_time,
-        };
+        // const assignmentPatch = {
+        //   title: assignment.title,
+        //   description: assignment.description,
+        //   alloted_marks: assignment.alloted_marks,
+        //   due_date: assignment.due_date,
+        //   due_time: assignment.due_time,
+        // };
+        const FormValues = new FormData();
+        FormValues.append("title", this.formValues.title);
+        FormValues.append("description", this.formValues.description);
+        FormValues.append("alloted_marks", this.formValues.alloted_marks);
+        FormValues.append("due_date", this.formValues.due_date);
+        FormValues.append("due_time", this.formValues.due_time);
         // TODO:FormDAta
         await axios.patch(
           `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${id}/`,
-          assignmentPatch
+          FormValues
         );
 
         // console.log(res);
@@ -290,15 +322,24 @@ export default {
     async deleteNote(id) {
       // console.log("inside delete");
       try {
-        this.subjectEdit.pop(); //FIXME:This may cause error
-        console.log(id);
-        this.assignment = this.assignment.filter(function (obj) {
+        // this.subjectEdit.pop(); //FIXME:This may cause error
+        // console.log(id);
+        this.assignment = this.assignments.filter(function (obj) {
           return obj.id !== id;
         });
         await axios.delete(
           `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${id}/`
         );
         this.tempVal = null;
+        // delete below code later
+        const assignmentResponse = await axios.get(
+          `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/`
+        );
+        this.assignments = assignmentResponse.data;
+        for (let i = 0; i < this.assignments.length; i++) {
+          this.subjectEdit.push(true);
+        }
+        // this.$router.replace({ name: "assignmentTeacher" });
       } catch (e) {
         console.log(e);
       }
@@ -327,34 +368,15 @@ export default {
             },
           }
         );
+        const assignmentResponse = await axios.get(
+          `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/`
+        );
+        this.assignments = assignmentResponse.data;
         this.subjectEdit.push(true);
         console.log(res);
-        // this.assignment.push(res.data); //TODO: Open if needed
-        // for (let i of this.attached_files) {
-        //   let fd = new FormData();
-        //   fd.append("file_path", i);
-        //   console.log(fd);
-        //   const link = `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${res.data.slug}/assignment-files/`;
-        //   await axios.post(link, fd, {
-        //     headers: {
-        //       "Content-Type": "multipart/form-data",
-        //       Accept: "*/*",
-        //       "Content-Disposition": i,
-        //       boundary: "file_path",
-        //       Filename: i.name,
-        //     },
-        //   });
-        //step 2 : fetch again
-        // }
-        // this.$router.go();
-        // console.log(this.attached_files);
       } catch (e) {
         console.log(e);
       }
-      const announcementsResponse = await axios.get(
-        `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/`
-      );
-      this.assignment = announcementsResponse.data;
     },
     async handleFileUpload(event) {
       this.formValues.attached_pdf = event.target.files[0];
