@@ -181,6 +181,8 @@
         </section>
       </form>
     </section>
+    <!-- Showing classroom -->
+    <section></section>
   </div>
 </template>
 
@@ -275,13 +277,14 @@ export default {
       console.log(this.createCollegeFormValues.allowed_student_list);
     },
     async createCollege() {
+      this.isCreateClassRoomFormOpen = !this.isCreateClassRoomFormOpen;
       this.loader = true;
       const endYear =
         parseInt(this.createCollegeFormValues.start_year) +
         parseInt(this.duration);
       try {
         let formData = new FormData();
-        formData.append("name", this.createCollegeFormValues.title);
+        formData.append("title", this.createCollegeFormValues.title);
         formData.append("level", this.createCollegeFormValues.level);
         formData.append("stream", this.createCollegeFormValues.stream);
         formData.append("start_year", this.createCollegeFormValues.start_year);
