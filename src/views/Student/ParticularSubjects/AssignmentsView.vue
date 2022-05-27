@@ -18,61 +18,61 @@
           {{ assignment.title }}
         </div>
         <section class="collapse-content grid grid-rows-4 lg:grid-cols-4">
-        <div
-          class="collapse-content row-start-1 flex flex-row flex-wrap lg:col-span-3 lg:col-start-1 lg:row-span-1"
-        >
-          <h1 class="font-heading">Description :</h1>
-          <p class="coloumn-1 row-start-1">{{ assignment.description }}</p>
-        </div>
-        <div
-          class="collapse-content col-span-3 col-start-1 row-start-2 flex flex-row flex-wrap lg:col-span-3 lg:row-span-1"
-        >
-          <h1 class="font-heading">Marks :</h1>
-          <p class="coloumn-1 px-5 text-lg font-bold text-primary-dark">
-            {{ assignment.alloted_marks }}
-          </p>
-        </div>
-        <div
-          class="collapse-content row-start-3 flex flex-row flex-wrap lg:col-span-3 lg:col-start-1 lg:row-span-1"
-        >
-          <h1 class="font-heading">Due Date :</h1>
-          <p class="coloumn-1 px-5 text-xl font-bold text-danger-dark">
-            {{ assignment.due_date }}
-          </p>
-        </div>
-        <div
-          class="collapse-content row-start-4 flex flex-row flex-wrap lg:col-span-3 lg:col-start-1 lg:row-span-1"
-        >
-          <h1 class="font-heading">Due Time :</h1>
-          <p class="coloumn-1 px-5 text-xl font-bold text-danger-dark">
-            {{ assignment.due_time }}
-          </p>
-        </div>
-        <div
-          class="collapse-content col-span-1 row-span-1 row-start-2 md:col-start-4"
-        >
-          <p>
-            created at :-
-            <span class="font-bold">{{
-              assignment.created_at.split("T")[0]
-            }}</span>
-          </p>
-          <p class="font-bold text-primary-light">Download Attached files:</p>
-        </div>
-        <div
-          class="collapse-content col-span-1 row-span-3 flex flex-row flex-wrap items-center justify-end font-body lg:col-start-4 lg:row-start-3"
-        >
-          <!-- <span class="font-bold">Attached File</span> -->
-          <a
-            class="slow-effect flex-1 hover:text-primary-light"
-            :href="assignment.attached_pdf"
+          <div
+            class="collapse-content row-start-1 flex flex-row flex-wrap lg:col-span-3 lg:col-start-1 lg:row-span-1"
           >
-            <DocumentDownloadIcon
-              class="slow-effect h-12 w-10 text-primary-dark hover:scale-110 hover:text-primary-light"
-            />
-            <span class="text-sm font-bold">file-1</span>
-          </a>
-        </div>
+            <h1 class="font-heading">Description :</h1>
+            <p class="coloumn-1 row-start-1">{{ assignment.description }}</p>
+          </div>
+          <div
+            class="collapse-content col-span-3 col-start-1 row-start-2 flex flex-row flex-wrap lg:col-span-3 lg:row-span-1"
+          >
+            <h1 class="font-heading">Marks :</h1>
+            <p class="coloumn-1 px-5 text-lg font-bold text-primary-dark">
+              {{ assignment.alloted_marks }}
+            </p>
+          </div>
+          <div
+            class="collapse-content row-start-3 flex flex-row flex-wrap lg:col-span-3 lg:col-start-1 lg:row-span-1"
+          >
+            <h1 class="font-heading">Due Date :</h1>
+            <p class="coloumn-1 px-5 text-xl font-bold text-danger-dark">
+              {{ assignment.due_date }}
+            </p>
+          </div>
+          <div
+            class="collapse-content row-start-4 flex flex-row flex-wrap lg:col-span-3 lg:col-start-1 lg:row-span-1"
+          >
+            <h1 class="font-heading">Due Time :</h1>
+            <p class="coloumn-1 px-5 text-xl font-bold text-danger-dark">
+              {{ assignment.due_time }}
+            </p>
+          </div>
+          <div
+            class="collapse-content col-span-1 row-span-1 row-start-2 md:col-start-4"
+          >
+            <p>
+              created at :-
+              <span class="font-bold">{{
+                assignment.created_at.split("T")[0]
+              }}</span>
+            </p>
+            <p class="font-bold text-primary-light">Download Attached files:</p>
+          </div>
+          <div
+            class="collapse-content col-span-1 row-span-3 flex flex-row flex-wrap items-center justify-end font-body lg:col-start-4 lg:row-start-3"
+          >
+            <!-- <span class="font-bold">Attached File</span> -->
+            <a
+              class="slow-effect flex-1 hover:text-primary-light"
+              :href="assignment.attached_pdf"
+            >
+              <DocumentDownloadIcon
+                class="slow-effect h-12 w-10 text-primary-dark hover:scale-110 hover:text-primary-light"
+              />
+              <span class="text-sm font-bold">file-1</span>
+            </a>
+          </div>
         </section>
       </div>
     </section>
