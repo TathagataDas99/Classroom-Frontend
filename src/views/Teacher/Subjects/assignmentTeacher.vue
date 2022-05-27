@@ -62,6 +62,7 @@
               type="date"
               :min="min_due_date"
               v-model.trim.lazy="formValues.due_date"
+              pattern="\d{4}-\d{2}-\d{2}"
               required
             />
             <input
@@ -180,6 +181,7 @@
           class="collapse-content columns-1 font-body text-base font-medium md:col-span-3"
           :class="{ 'subject-edit-input collapse-title': !subjectEdit[index] }"
           :disabled="subjectEdit[index]"
+          pattern="\d{4}-\d{2}-\d{2}"
           placeholder="assignment description"
         />
         <input
@@ -188,6 +190,7 @@
           class="collapse-content columns-1 font-body text-base font-medium md:col-span-3"
           :class="{ 'subject-edit-input collapse-title': !subjectEdit[index] }"
           :disabled="subjectEdit[index]"
+          pattern="\d{2}:\d{2}:\d{2}"
           placeholder="assignment description"
         />
         <!-- <section
