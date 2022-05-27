@@ -46,7 +46,16 @@
     </template>
     <!-- creating class room -->
     <section>
+      <button
+        class="btn rounded-full"
+        @click="
+          this.isCreateClassRoomFormOpen = !this.isCreateClassRoomFormOpen
+        "
+      >
+        Add Classroom
+      </button>
       <form
+        v-if="isCreateClassRoomFormOpen"
         class="form place-content-center accent-primary-dark lg:col-span-2"
         enctype="multipart/form-data"
         @submit.prevent="createCollege"
@@ -182,6 +191,7 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
+      isCreateClassRoomFormOpen: true,
       isFormOpen: true,
       sections: ["A", "B", "C", "D", "E", "F"],
       formValues: {
@@ -266,17 +276,16 @@ export default {
     },
     async createCollege() {
       this.loader = true;
-      const endYear =parseInt(this.createCollegeFormValues.start_year) + parseInt(this.duration);
+      const endYear =
+        parseInt(this.createCollegeFormValues.start_year) +
+        parseInt(this.duration);
       try {
         let formData = new FormData();
         formData.append("name", this.createCollegeFormValues.title);
         formData.append("level", this.createCollegeFormValues.level);
         formData.append("stream", this.createCollegeFormValues.stream);
         formData.append("start_year", this.createCollegeFormValues.start_year);
-        formData.append(
-          "end_year",
-          endYear
-        );
+        formData.append("end_year", endYear);
         formData.append("section", this.createCollegeFormValues.section);
         formData.append(
           "no_of_semesters",
