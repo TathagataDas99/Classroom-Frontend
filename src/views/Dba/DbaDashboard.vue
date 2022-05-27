@@ -1,5 +1,5 @@
 <template>
-  <h1>{{ teacherList }}</h1>
+  <h1>{{ classroomTeacherList }}</h1>
   <div>
     <!-- <h1 v-if="userProfile.is_owner">{{ dbaList }}</h1>  -->
     <!-- add dbas -->
@@ -207,7 +207,7 @@
       >
         <div class="form-section">
           <label class="label" for="classroom">Class Room</label>
-          <select name="classroom" id="classroom" v-model="clasroomSlug">
+          <select name="classroom" id="classroom" v-model="classroomSlug">
             <template v-for="classroom in classroomList" :key="classroom.id">
               <option :value="classroom.slug">
                 {{ classroom.title }}
@@ -301,6 +301,53 @@
       </form>
     </div>
     <!-- delete teacher from particular classroom -->
+    <div>
+      <button
+        class="btn rounded-full"
+        @click="
+          this.isDeleteTeacherClassroomFormOpen =
+            !this.isDeleteTeacherClassroomFormOpen
+        "
+      >
+        Delete Teacher From Classroom
+      </button>
+      <form
+        v-if="isDeleteTeacherClassroomFormOpen"
+        class="form place-content-center accent-primary-dark lg:col-span-2"
+        @submit.prevent
+      >
+        <div class="form-section">
+          <label class="label" for="classroom">Select Classroom</label>
+          <select name="classroom" id="classroom" v-model="classroomSlug">
+            <template v-for="classroom in classroomList" :key="classroom.slug">
+              <option :value="classroom.slug">
+                {{ classroom.title }}
+              </option>
+            </template>
+          </select>
+        </div>
+        <button class="bttn" @click="getTeachersInClassroom(classroomSlug)">
+          Get Teachers
+        </button>
+        <div class="form-section" v-if="classroomTeacherList">
+          <label class="label" for="teacher">Select Teacher</label>
+          <select
+            name="teacher"
+            id="teacher"
+            v-model="deleteTeacherClassroomFormData.id"
+          >
+            <template v-for="teacher in classroomTeacherList" :key="teacher.id">
+              <option :value="teacher.id">
+                {{ teacher.email }}
+              </option>
+            </template>
+          </select>
+        </div>
+        <section class="button-section">
+          <button class="bttn" @click="deleteTeacherClassroom">Delete</button>
+        </section>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -315,10 +362,12 @@ export default {
       isAddingTeacherFormOpen: false,
       isAddingTeacherFormOpenCollege: false,
       isDeleteTeacherCollegeFormOpen: false,
+      isDeleteTeacherClassroomFormOpen: false,
       isFormOpen: false,
       sections: ["A", "B", "C", "D", "E", "F"],
       classroomList: [],
       teacherList: [],
+      classroomTeacherList: [],
       formValues: {
         dba: "",
         title: "",
@@ -337,15 +386,25 @@ export default {
         allowed_student_list: null,
         allowed_teacher_list: null,
       },
-      clasroomSlug: "",
+      classroomSlug: "",
       addTeacherForm: {
         email: "",
       },
       deleteTeacherFormData: {
         id: 1,
       },
+      deleteTeacherClassroomFormData: {
+        id: 1,
+      },
     };
   },
+  // watch: {
+  //   classroomSlug(newValue) {
+  //     if (newValue) {
+  //       this.getTeachersInClassroom(newValue);
+  //     }
+  //   },
+  // },
   async created() {
     this.loader = true;
     try {
@@ -486,7 +545,7 @@ export default {
     async addTeacher() {
       try {
         await axios.post(
-          `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${this.clasroomSlug}/manage-teacher/`,
+          `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${this.classroomSlug}/manage-teacher/`,
           this.addTeacherForm
         );
         this.addTeacherForm = "";
@@ -510,6 +569,23 @@ export default {
       try {
         await axios.delete(
           `/classroom-app/college-dba/${this.userProfile.college.slug}/manage-teacher-college/${this.deleteTeacherFormData.id}`
+        );
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async getTeachersInClassroom(slug) {
+      console.log(slug);
+      const classroomTeacherListResp = await axios.get(
+        `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${slug}/manage-teacher/`
+      );
+      this.classroomTeacherList = classroomTeacherListResp.data;
+      console.log(classroomTeacherListResp.data);
+    },
+    async deleteTeacherClassroom() {
+      try {
+        await axios.delete(
+          `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${this.classroomSlug}/manage-teacher/${this.deleteTeacherClassroomFormData.id}/`
         );
       } catch (e) {
         console.log(e);
