@@ -235,7 +235,10 @@
     <div v-if="userProfile.is_owner">
       <button
         class="btn rounded-full"
-        @click="this.isAddingTeacherFormOpenCollege = !this.isAddingTeacherFormOpenCollege"
+        @click="
+          this.isAddingTeacherFormOpenCollege =
+            !this.isAddingTeacherFormOpenCollege
+        "
       >
         Add Teacher To College
       </button>
@@ -295,7 +298,7 @@ export default {
         allowed_student_list: null,
         allowed_teacher_list: null,
       },
-      clasroomSlug : "",
+      clasroomSlug: "",
       addTeacherForm: {
         email: "",
       },
@@ -431,7 +434,8 @@ export default {
     async addTeacher() {
       try {
         await axios.post(
-          `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${this.clasroomSlug}/manage-teacher/`, this.addTeacherForm
+          `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${this.clasroomSlug}/manage-teacher/`,
+          this.addTeacherForm
         );
         this.addTeacherForm = "";
       } catch (e) {
@@ -441,7 +445,8 @@ export default {
     async addTeacherCollege() {
       try {
         await axios.post(
-          `/classroom-app/college-dba/${this.userProfile.college.slug}/manage-teacher-college/`, this.addTeacherForm
+          `/classroom-app/college-dba/${this.userProfile.college.slug}/manage-teacher-college/`,
+          this.addTeacherForm
         );
       } catch (e) {
         console.log(e);
