@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>{{ userProfile }}</h1>
     <!-- <h1 v-if="userProfile.is_owner">{{ dbaList }}</h1>  -->
     <template v-if="userProfile.is_owner">
       <button
@@ -182,7 +181,15 @@
       </form>
     </section>
     <!-- Showing classroom -->
-    <section></section>
+    <div class="flex flex-row flex-wrap justify-evenly">
+      <section
+        class="card"
+        v-for="classroom in classroomList"
+        :key="classroom.id"
+      >
+        <h1 class="card-title">{{ classroom.title }}</h1>
+      </section>
+    </div>
   </div>
 </template>
 
@@ -193,9 +200,10 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      isCreateClassRoomFormOpen: true,
-      isFormOpen: true,
+      isCreateClassRoomFormOpen: false,
+      isFormOpen: false,
       sections: ["A", "B", "C", "D", "E", "F"],
+      classroomList: [],
       formValues: {
         dba: "",
         title: "",
@@ -243,6 +251,16 @@ export default {
         `/classroom-app/college-create/${this.userProfile.college.slug}/dbas/`
       );
       this.dbaList = dbaListRes.data;
+
+      const classroomListResp = await axios.get(
+        `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/`,
+        {
+          headers: {
+            Authorization: "JWT " + sessionStorage.getItem("token"),
+          },
+        }
+      );
+      this.classroomList = classroomListResp.data;
     } catch (e) {
       console.log(e);
     }
