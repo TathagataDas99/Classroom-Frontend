@@ -1,5 +1,5 @@
 <template>
-  <h1>{{teacherList}}</h1>
+  <h1>{{ teacherList }}</h1>
   <div>
     <!-- <h1 v-if="userProfile.is_owner">{{ dbaList }}</h1>  -->
     <!-- add dbas -->
@@ -281,20 +281,22 @@
         class="form place-content-center accent-primary-dark lg:col-span-2"
         @submit.prevent="deleteTeacherCollege"
       >
-        <section class="form-section">
-          <label class="label">Email Id</label>
-          <section class="input-section">
-            <input
-              class="input-box"
-              type="email"
-              placeholder="Email Id"
-              v-model.trim.lazy="addTeacherForm.email"
-              required
-            />
-          </section>
-        </section>
+        <div class="form-section">
+          <label class="label" for="teacher">Select Teacher</label>
+          <select
+            name="teacher"
+            id="teacher"
+            v-model="deleteTeacherFormData.id"
+          >
+            <template v-for="teacher in teacherList" :key="teacher.id">
+              <option :value="teacher.id">
+                {{ teacher.email }}
+              </option>
+            </template>
+          </select>
+        </div>
         <section class="button-section">
-          <button class="bttn">Add</button>
+          <button class="bttn">Delete</button>
         </section>
       </form>
     </div>
@@ -337,6 +339,9 @@ export default {
       clasroomSlug: "",
       addTeacherForm: {
         email: "",
+      },
+      deleteTeacherFormData: {
+        id: 1,
       },
     };
   },
@@ -493,6 +498,17 @@ export default {
         await axios.post(
           `/classroom-app/college-dba/${this.userProfile.college.slug}/manage-teacher-college/`,
           this.addTeacherForm
+        );
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async deleteTeacherCollege() {
+      this.isDeleteTeacherCollegeFormOpen =
+        !this.isDeleteTeacherCollegeFormOpen;
+      try {
+        await axios.delete(
+          `/classroom-app/college-dba/${this.userProfile.college.slug}/manage-teacher-college/${this.deleteTeacherFormData.id}`
         );
       } catch (e) {
         console.log(e);
