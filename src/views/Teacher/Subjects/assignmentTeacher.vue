@@ -210,6 +210,24 @@
           </a>
         </div>
         <!-- </section> -->
+        <div>
+          <button
+            class="bttn"
+            @click="
+              $router.push({
+                name: 'assignmentSubmission',
+                params: {
+                  id: assignment.id,
+                  classroom_slug: classroom_slug,
+                  semester_no: no,
+                  subject_slug: subject_slug,
+                },
+              })
+            "
+          >
+            Show
+          </button>
+        </div>
       </section>
     </section>
   </main>
@@ -384,6 +402,17 @@ export default {
     async handleFileUpload(event) {
       this.formValues.attached_pdf = event.target.files[0];
       console.log(this.formValues.attached_pdf);
+    },
+    showSubmissions(id) {
+      this.$router.push({
+        name: "assignmentSubmission",
+        props: {
+          number: id,
+          subject_slug: this.subject_slug,
+          semester_no: this.no,
+          classroom_slug: this.classroom_slug,
+        },
+      });
     },
   },
 };

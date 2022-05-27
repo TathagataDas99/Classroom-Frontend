@@ -6,6 +6,7 @@ import particularSubjectView from "../views/Teacher/Subjects/particularSubjectVi
 import announcementTeacher from "../views/Teacher/Subjects/announcementTeacher.vue";
 import notesTeacher from "../views/Teacher/Subjects/notesTeacher.vue";
 import assignmentTeacher from "../views/Teacher/Subjects/assignmentTeacher.vue";
+import assignmentSubmission from "../views/Teacher/Subjects/AssignmentSubmission.vue";
 
 const isAuth = (to, from, next) => {
   console.log("isAuth : " + store.state.isAuth); //TODO: have to remove this console log
@@ -65,6 +66,15 @@ export default [
         component: assignmentTeacher,
         props: true,
         beforeEnter: isAuth,
+        children: [
+          {
+            path: "assignment-:id",
+            name: "assignmentSubmission",
+            component: assignmentSubmission,
+            props: true,
+            beforeEnter: isAuth,
+          },
+        ],
       },
     ],
   },
