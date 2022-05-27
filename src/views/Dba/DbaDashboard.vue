@@ -1,6 +1,7 @@
 <template>
   <div>
     <!-- <h1 v-if="userProfile.is_owner">{{ dbaList }}</h1>  -->
+    <!-- add dbas -->
     <template v-if="userProfile.is_owner">
       <button
         class="btn rounded-full"
@@ -190,6 +191,46 @@
         <h1 class="card-title">{{ classroom.title }}</h1>
       </section>
     </div>
+    <!-- adding teachers to classroom -->
+    <div>
+      <button
+        class="btn rounded-full"
+        @click="this.isAddingTeacherFormOpen = !this.isAddingTeacherFormOpen"
+      >
+        Add Teacher
+      </button>
+      <form
+        v-if="isAddingTeacherFormOpen"
+        class="form place-content-center accent-primary-dark lg:col-span-2"
+        @submit.prevent="addTeacher"
+      >
+        <div class="form-section">
+          <label class="label" for="classroom">Class Room</label>
+          <select name="classroom" id="classroom" v-model="clasroomSlug">
+            <template v-for="classroom in classroomList" :key="classroom.id">
+              <option :value="classroom.slug">
+                {{ classroom.title }}
+              </option>
+            </template>
+          </select>
+        </div>
+        <section class="form-section">
+          <label class="label">Email Id</label>
+          <section class="input-section">
+            <input
+              class="input-box"
+              type="email"
+              placeholder="Email Id"
+              v-model.trim.lazy="addTeacherForm.email"
+              required
+            />
+          </section>
+        </section>
+        <section class="button-section">
+          <button class="bttn">Add</button>
+        </section>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -201,6 +242,7 @@ export default {
   data() {
     return {
       isCreateClassRoomFormOpen: false,
+      isAddingTeacherFormOpen: false,
       isFormOpen: false,
       sections: ["A", "B", "C", "D", "E", "F"],
       classroomList: [],
@@ -221,6 +263,10 @@ export default {
         current_sem: 1,
         allowed_student_list: null,
         allowed_teacher_list: null,
+      },
+      clasroomSlug : "",
+      addTeacherForm: {
+        email: "",
       },
     };
   },
@@ -350,6 +396,15 @@ export default {
         console.log(e);
       }
       this.loader = false;
+    },
+    async addTeacher() {
+      try {
+        await axios.post(
+          `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${this.clasroomSlug}/manage-teacher/`, this.addTeacherForm
+        );
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 };
