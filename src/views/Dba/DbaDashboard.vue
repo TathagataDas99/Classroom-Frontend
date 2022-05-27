@@ -1,4 +1,5 @@
 <template>
+  <h1>{{teacherList}}</h1>
   <div>
     <!-- <h1 v-if="userProfile.is_owner">{{ dbaList }}</h1>  -->
     <!-- add dbas -->
@@ -264,6 +265,39 @@
         </section>
       </form>
     </div>
+    <!-- delete teacher from college by owner -->
+    <div v-if="userProfile.is_owner">
+      <button
+        class="btn rounded-full"
+        @click="
+          this.isDeleteTeacherCollegeFormOpen =
+            !this.isDeleteTeacherCollegeFormOpen
+        "
+      >
+        Delete Teacher From College
+      </button>
+      <form
+        v-if="isDeleteTeacherCollegeFormOpen"
+        class="form place-content-center accent-primary-dark lg:col-span-2"
+        @submit.prevent="deleteTeacherCollege"
+      >
+        <section class="form-section">
+          <label class="label">Email Id</label>
+          <section class="input-section">
+            <input
+              class="input-box"
+              type="email"
+              placeholder="Email Id"
+              v-model.trim.lazy="addTeacherForm.email"
+              required
+            />
+          </section>
+        </section>
+        <section class="button-section">
+          <button class="bttn">Add</button>
+        </section>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -277,9 +311,11 @@ export default {
       isCreateClassRoomFormOpen: false,
       isAddingTeacherFormOpen: false,
       isAddingTeacherFormOpenCollege: false,
+      isDeleteTeacherCollegeFormOpen: false,
       isFormOpen: false,
       sections: ["A", "B", "C", "D", "E", "F"],
       classroomList: [],
+      teacherList: [],
       formValues: {
         dba: "",
         title: "",
@@ -341,6 +377,16 @@ export default {
         }
       );
       this.classroomList = classroomListResp.data;
+
+      const teacherListResp = await axios.get(
+        `/classroom-app/college-dba/${this.userProfile.college.slug}/manage-teacher-college/`,
+        {
+          headers: {
+            Authorization: "JWT " + sessionStorage.getItem("token"),
+          },
+        }
+      );
+      this.teacherList = teacherListResp.data;
     } catch (e) {
       console.log(e);
     }
