@@ -300,6 +300,7 @@
         </section>
       </form>
     </div>
+    <!-- delete teacher from particular classroom -->
   </div>
 </template>
 
