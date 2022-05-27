@@ -1,6 +1,6 @@
 <template>
   <main class="w-screen" @click="openedNotes = -1">
-    <!-- <h1>{{ notes }}</h1> -->
+    <h1>{{ assignment }}</h1>
     <!-- <h1>{{attached_files}}</h1> -->
     <!-- notes add form -->
     <aside class="absolute bottom-7 right-2 z-50 md:right-10">
@@ -307,38 +307,48 @@ export default {
       this.isFormOpen = !this.isFormOpen;
       //TODO: Convert to FormData
       try {
+        const FormValues = new FormData(JSON.stringify(this.formValues));
         const res = await axios.post(
           `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/`,
-          this.formValues
-        );
-        this.subjectEdit.push(true);
-        // console.log(res);
-        this.assignment.push(res.data);
-        for (let i of this.attached_files) {
-          let fd = new FormData();
-          fd.append("file_path", i);
-          console.log(fd);
-          const link = `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${res.data.slug}/assignment-files/`;
-          await axios.post(link, fd, {
+          FormValues,
+          {
             headers: {
               "Content-Type": "multipart/form-data",
               Accept: "*/*",
-              "Content-Disposition": i,
-              boundary: "file_path",
-              Filename: i.name,
+              "Content-Disposition": this.formValues.attached_pdf,
+              // boundary: "file_path",
+              Filename: this.formValues.attached_pdf.name,
             },
-          });
-          //step 2 : fetch again
-          const announcementsResponse = await axios.get(
-            `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/notes/`
-          );
-          this.notes = announcementsResponse.data;
-        }
+          }
+        );
+        this.subjectEdit.push(true);
+        console.log(res);
+        // this.assignment.push(res.data); //TODO: Open if needed
+        // for (let i of this.attached_files) {
+        //   let fd = new FormData();
+        //   fd.append("file_path", i);
+        //   console.log(fd);
+        //   const link = `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${res.data.slug}/assignment-files/`;
+        //   await axios.post(link, fd, {
+        //     headers: {
+        //       "Content-Type": "multipart/form-data",
+        //       Accept: "*/*",
+        //       "Content-Disposition": i,
+        //       boundary: "file_path",
+        //       Filename: i.name,
+        //     },
+        //   });
+        //step 2 : fetch again
+        // }
         // this.$router.go();
         // console.log(this.attached_files);
       } catch (e) {
         console.log(e);
       }
+      const announcementsResponse = await axios.get(
+        `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/notes/`
+      );
+      this.assignment = announcementsResponse.data;
     },
     async handleFileUpload(event) {
       this.attached_files = event.target.files;
