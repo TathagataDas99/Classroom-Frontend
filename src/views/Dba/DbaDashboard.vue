@@ -1,7 +1,5 @@
 <template>
-  <h1>{{ classroomTeacherList }}</h1>
   <div>
-    <!-- <h1 v-if="userProfile.is_owner">{{ dbaList }}</h1>  -->
     <!-- add dbas -->
     <template v-if="userProfile.is_owner">
       <button
@@ -348,6 +346,58 @@
         </section>
       </form>
     </div>
+    <!-- add student to the classroom -->
+    <div>
+      <button
+        class="btn rounded-full"
+        @click="this.isStudentAddFormOpen = !this.isStudentAddFormOpen"
+      >
+        Add Student To Classroom
+      </button>
+      <form
+        v-if="isStudentAddFormOpen"
+        class="form place-content-center accent-primary-dark lg:col-span-2"
+        @submit.prevent="addStudent"
+      >
+        <div class="form-section">
+          <label class="label" for="classroom">Class Room</label>
+          <select name="classroom" id="classroom" v-model="classroomSlug">
+            <template v-for="classroom in classroomList" :key="classroom.id">
+              <option :value="classroom.slug">
+                {{ classroom.title }}
+              </option>
+            </template>
+          </select>
+        </div>
+        <section class="form-section">
+          <label class="label">Email Id</label>
+          <section class="input-section">
+            <input
+              class="input-box"
+              type="email"
+              placeholder="Email Id"
+              v-model.trim.lazy="addStudentForm.email"
+              required
+            />
+          </section>
+        </section>
+        <section class="form-section">
+          <label class="label">University Roll</label>
+          <section class="input-section">
+            <input
+              class="input-box"
+              type="number"
+              placeholder="University Roll"
+              v-model.trim.lazy="addStudentForm.university_roll"
+              required
+            />
+          </section>
+        </section>
+        <section class="button-section">
+          <button class="bttn">Add</button>
+        </section>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -363,6 +413,7 @@ export default {
       isAddingTeacherFormOpenCollege: false,
       isDeleteTeacherCollegeFormOpen: false,
       isDeleteTeacherClassroomFormOpen: false,
+      isStudentAddFormOpen: false,
       isFormOpen: false,
       sections: ["A", "B", "C", "D", "E", "F"],
       classroomList: [],
@@ -396,6 +447,10 @@ export default {
       deleteTeacherClassroomFormData: {
         id: 1,
       },
+      addStudentForm: {
+        email: "",
+        university_roll: 1,
+      }
     };
   },
   // watch: {
@@ -583,6 +638,8 @@ export default {
       console.log(classroomTeacherListResp.data);
     },
     async deleteTeacherClassroom() {
+      this.isDeleteTeacherClassroomFormOpen =
+            !this.isDeleteTeacherClassroomFormOpen
       try {
         await axios.delete(
           `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${this.classroomSlug}/manage-teacher/${this.deleteTeacherClassroomFormData.id}/`
@@ -591,6 +648,17 @@ export default {
         console.log(e);
       }
     },
+    async addStudent(){
+      this.isStudentAddFormOpen = !this.isStudentAddFormOpen;
+      try {
+        await axios.post(
+          `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${this.classroomSlug}/manage-student/`,
+          this.addStudentForm
+        );
+      } catch (e) {
+        console.log(e);
+      }
+    }
   },
 };
 </script>
