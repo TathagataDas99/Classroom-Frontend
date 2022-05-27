@@ -10,12 +10,12 @@
         v-show="!this.isFormOpen"
       >
         <PlusCircleIcon class="my-auto inline-block w-7" />
-        Notes
+        Assignment
       </button>
       <form
         v-if="isFormOpen"
         class="form z-30 border-2 border-primary-dark accent-primary-dark"
-        @submit.prevent="addNote"
+        @submit.prevent="addAssignment"
         enctype="multipart/form-data"
       >
         <div class="form-section">
@@ -36,20 +36,52 @@
               class="input-box"
               type="text"
               v-model.trim.lazy="formValues.description"
+            />
+          </section>
+        </div>
+        <div class="form-section">
+          <label class="label">Marks</label>
+          <section class="input-section">
+            <input
+              class="input-box"
+              type="number"
+              min="0"
+              max="100"
+              v-model.trim.lazy="formValues.alloted_marks"
               required
             />
           </section>
         </div>
         <div class="form-section">
-          <label class="label">Attachments</label>
+          <label class="label">Due Date & Time</label>
+          <section
+            class="col-span-2 grid grid-flow-col place-content-stretch gap-3"
+          >
+            <input
+              class="input-box"
+              type="date"
+              :min="min_due_date"
+              v-model.trim.lazy="formValues.due_date"
+              required
+            />
+            <input
+              class="input-box"
+              type="time"
+              v-model.trim.lazy="formValues.due_time"
+              required
+            />
+          </section>
+        </div>
+        <div class="form-section">
+          <label class="label">Attachment (1 PDF only, Max Size: 5 MB)</label>
           <section class="input-section-file">
             <input
+              title="1 PDF only, Max Size: 5 MB"
               class="input-file"
               ref="file"
               @change="handleFileUpload"
               type="file"
-              multiple
-              accept=".xlsx, .pdf, .docs"
+              accept=".pdf"
             />
           </section>
           <!-- multiple -->
@@ -182,9 +214,19 @@ export default {
   data() {
     return {
       isFormOpen: false,
+      min_due_date:
+        new Date().getDate() +
+        "-" +
+        parseInt(new Date().getMonth()) +
+        "-" +
+        new Date().getFullYear(),
       formValues: {
         title: "",
         description: "",
+        alloted_marks: 100,
+        attached_pdf: null,
+        due_date: null,
+        due_time: null,
       },
       attached_files: [],
       loader: false,
@@ -201,6 +243,7 @@ export default {
   },
   async created() {
     this.loader = true;
+    console.log(this.min_due_date);
     for (let semCard of this.semCards) {
       if (`${semCard.sem_no}` === this.no) {
         this.id = semCard.id;
@@ -217,13 +260,14 @@ export default {
     } catch (e) {
       console.log(e);
     }
+    this.formValues.due_date = new Date().getUTCDate();
     this.loader = false;
   },
   methods: {
     async editPatch(assignment, index) {
       try {
         this.subjectEdit[index] = !this.subjectEdit[index];
-        const slug = assignment.slug;
+        const id = assignment.id;
         const assignmentPatch = {
           title: assignment.title,
           description: assignment.description,
@@ -231,8 +275,9 @@ export default {
           due_date: assignment.due_date,
           due_time: assignment.due_time,
         };
+        // TODO:FormDAta
         await axios.patch(
-          `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${slug}/`,
+          `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${id}/`,
           assignmentPatch
         );
 
@@ -242,24 +287,25 @@ export default {
         console.log(e);
       }
     },
-    async deleteNote(slug) {
+    async deleteNote(id) {
       // console.log("inside delete");
       try {
-        // this.subjectEdit.pop();
-        console.log(slug);
+        this.subjectEdit.pop(); //FIXME:This may cause error
+        console.log(id);
         this.assignment = this.assignment.filter(function (obj) {
-          return obj.slug !== slug;
+          return obj.id !== id;
         });
         await axios.delete(
-          `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${slug}/`
+          `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${id}/`
         );
         this.tempVal = null;
       } catch (e) {
         console.log(e);
       }
     },
-    async addNote() {
+    async addAssignment() {
       this.isFormOpen = !this.isFormOpen;
+      //TODO: Convert to FormData
       try {
         const res = await axios.post(
           `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/`,
