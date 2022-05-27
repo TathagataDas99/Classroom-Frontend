@@ -398,6 +398,54 @@
         </section>
       </form>
     </div>
+    <!-- delete student from particular classroom -->
+    <div>
+      <button
+        class="btn rounded-full"
+        @click="
+          this.isDeleteStudentClassroomFormOpen =
+            !this.isDeleteStudentClassroomFormOpen
+        "
+      >
+        Delete Student From Classroom
+      </button>
+      <form
+        v-if="isDeleteStudentClassroomFormOpen"
+        class="form place-content-center accent-primary-dark lg:col-span-2"
+        @submit.prevent
+      >
+        <div class="form-section">
+          <label class="label" for="classroom">Select Classroom</label>
+          <select name="classroom" id="classroom" v-model="classroomSlug">
+            <template v-for="classroom in classroomList" :key="classroom.slug">
+              <option :value="classroom.slug">
+                {{ classroom.title }}
+              </option>
+            </template>
+          </select>
+        </div>
+        <button class="bttn" @click="getStudentsInClassroom(classroomSlug)">
+          Get Students
+        </button>
+        <div class="form-section" v-if="classroomStudentList">
+          <label class="label" for="teacher">Select Student</label>
+          <select
+            name="teacher"
+            id="teacher"
+            v-model="deleteStudentClassroomFormData.id"
+          >
+            <template v-for="student in classroomStudentList" :key="student.id">
+              <option :value="student.id">
+                {{ student.email }}
+              </option>
+            </template>
+          </select>
+        </div>
+        <section class="button-section">
+          <button class="bttn" @click="deleteStudentClassroom">Delete</button>
+        </section>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -413,12 +461,14 @@ export default {
       isAddingTeacherFormOpenCollege: false,
       isDeleteTeacherCollegeFormOpen: false,
       isDeleteTeacherClassroomFormOpen: false,
+      isDeleteStudentClassroomFormOpen: false,
       isStudentAddFormOpen: false,
       isFormOpen: false,
       sections: ["A", "B", "C", "D", "E", "F"],
       classroomList: [],
       teacherList: [],
       classroomTeacherList: [],
+      classroomStudentList: [],
       formValues: {
         dba: "",
         title: "",
@@ -447,10 +497,13 @@ export default {
       deleteTeacherClassroomFormData: {
         id: 1,
       },
+      deleteStudentClassroomFormData: {
+        id: 1,
+      },
       addStudentForm: {
         email: "",
         university_roll: 1,
-      }
+      },
     };
   },
   // watch: {
@@ -639,7 +692,7 @@ export default {
     },
     async deleteTeacherClassroom() {
       this.isDeleteTeacherClassroomFormOpen =
-            !this.isDeleteTeacherClassroomFormOpen
+        !this.isDeleteTeacherClassroomFormOpen;
       try {
         await axios.delete(
           `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${this.classroomSlug}/manage-teacher/${this.deleteTeacherClassroomFormData.id}/`
@@ -648,7 +701,7 @@ export default {
         console.log(e);
       }
     },
-    async addStudent(){
+    async addStudent() {
       this.isStudentAddFormOpen = !this.isStudentAddFormOpen;
       try {
         await axios.post(
@@ -658,7 +711,27 @@ export default {
       } catch (e) {
         console.log(e);
       }
-    }
+    },
+    async getStudentsInClassroom(slug) {
+      console.log(slug);
+      const classroomStudentListResp = await axios.get(
+        `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${slug}/manage-student/`
+      );
+      this.classroomStudentList = classroomStudentListResp.data;
+      console.log(classroomStudentListResp.data);
+    },
+    async deleteStudentClassroom() {
+      this.isDeleteStudentClassroomFormOpen =
+        !this.isDeleteStudentClassroomFormOpen;
+      console.log(this.deleteStudentClassroomFormData.id);
+      try {
+        await axios.delete(
+          `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${this.classroomSlug}/manage-student/${this.deleteStudentClassroomFormData.id}/`
+        );
+      } catch (e) {
+        console.log(e);
+      }
+    },
   },
 };
 </script>
