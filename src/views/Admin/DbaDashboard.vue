@@ -1,6 +1,10 @@
 <template>
+  <div
+    v-if="anyFormOpen"
+    class="absolute top-0 z-10 h-screen w-screen bg-slate-700/50 backdrop-blur-md backdrop-filter"
+  ></div>
   <main
-    class="grid min-h-screen w-screen grid-flow-row grid-cols-1 lg:grid-cols-7 lg:grid-rows-1"
+    class="mx-4 grid min-h-screen w-screen grid-flow-row grid-cols-1 lg:grid-cols-7 lg:grid-rows-1"
   >
     <!-- Showing classroom -->
     <aside
@@ -8,6 +12,13 @@
       class="col-span-2 col-start-6 flex flex-col flex-wrap items-center justify-evenly"
     >
       <div
+        class="mx-2 rounded-xl bg-sky-200 px-5 py-2 text-center text-bgdark-base shadow-md"
+        v-if="classroomList.length === 0"
+      >
+        No Classrooms Yet, Please Create One
+      </div>
+      <div
+        v-else
         class="ClassroomCard"
         v-for="classroom in classroomList"
         :key="classroom.id"
@@ -87,70 +98,131 @@
       id="1"
       class="col-span-5 col-start-1 row-start-1 grid grid-flow-row grid-cols-1"
     >
+      <!-- owner-group -->
       <section
-        id="sub-1"
+        v-if="userProfile.is_owner"
+        id="owner-group"
         class="my-4 flex flex-col justify-evenly rounded-lg px-4 shadow-md"
       >
-        <!-- add dbas -->
-        <template v-if="userProfile.is_owner">
-          <button
-            class="admin-btn mx-10 xl:mx-36"
-            @click="this.isFormOpen = !this.isFormOpen"
-          >
-            Add dba to the stream
-          </button>
-          <form
-            v-if="isFormOpen"
-            class="form accent-primary-dark"
-            @submit.prevent="addDbaToTheStream"
-          >
-            <div class="form-section">
-              <label class="label" for="stream">stream</label>
-              <div>
-                <select name="stream" id="stream" v-model="formValues.title">
-                  <option
-                    :value="stream.title"
-                    v-for="stream in userProfile.streams"
-                    :key="stream.stream_id"
-                  >
-                    {{ stream.title }}
-                  </option>
+        <section
+          class="relative flex flex-row flex-wrap items-center justify-evenly rounded-l-xl border-l-[7px] border-black py-1 shadow-md shadow-gray-300/40"
+        >
+          <!-- add dbas to stream -->
+          <template v-if="userProfile.is_owner">
+            <!-- Add dba to the stream -->
+            <label for="stream" class="admin-label">Stream Management : </label>
+            <button
+              class="admin-btn"
+              @click="this.isFormOpen = !this.isFormOpen"
+            >
+              <UserAddIcon class="admin-btn-icon" /> Add Admin
+            </button>
+            <!-- Add dba to the stream Form -->
+            <form
+              v-if="isFormOpen"
+              class="form absolute top-10 z-20 border-2 border-primary-light bg-gray-600/50 accent-primary-dark backdrop-blur-md backdrop-filter"
+              @submit.prevent="addDbaToTheStream"
+            >
+              <div class="form-section">
+                <label class="label" for="stream">stream</label>
+                <div>
+                  <select name="stream" id="stream" v-model="formValues.title">
+                    <option
+                      :value="stream.title"
+                      v-for="stream in userProfile.streams"
+                      :key="stream.stream_id"
+                    >
+                      {{ stream.title }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-section">
+                <label class="label" for="dba">DBA</label>
+                <select name="dba" id="dba" v-model="formValues.dba">
+                  <template v-for="dba in dbaList" :key="dba.dba_id">
+                    <option
+                      v-if="dba.dba_id != userProfile.dba_id"
+                      :value="dba.dba_id"
+                    >
+                      {{ dba.user.first_name + " " + dba.user.last_name }}
+                    </option>
+                  </template>
                 </select>
               </div>
-            </div>
-            <div class="form-section">
-              <label class="label" for="dba">DBA</label>
-              <select name="dba" id="dba" v-model="formValues.dba">
-                <template v-for="dba in dbaList" :key="dba.dba_id">
-                  <option
-                    v-if="dba.dba_id != userProfile.dba_id"
-                    :value="dba.dba_id"
-                  >
-                    {{ dba.user.first_name + " " + dba.user.last_name }}
-                  </option>
-                </template>
-              </select>
-            </div>
-            <button class="bttn">Add</button>
-          </form>
-        </template>
+              <button class="bttn">Add</button>
+            </form>
+          </template>
+          <!-- remove dbas from stream -->
+          <template v-if="userProfile.is_owner">
+            <!-- Add dba to the stream -->
+            <button
+              class="admin-btn-danger"
+              @click="this.isFormOpenARFS = !this.isFormOpenARFS"
+            >
+              <UserRemoveIcon class="admin-btn-icon" />
+              remove admin
+            </button>
+            <!-- Remove dba to the stream Form -->
+            <form
+              v-if="isFormOpenARFS"
+              class="form sticky top-10 accent-primary-dark"
+              @submit.prevent="addDbaToTheStream"
+            >
+              <div class="form-section">
+                <label class="label" for="stream">stream</label>
+                <div>
+                  <select name="stream" id="stream" v-model="formValues.title">
+                    <option
+                      :value="stream.title"
+                      v-for="stream in userProfile.streams"
+                      :key="stream.stream_id"
+                    >
+                      {{ stream.title }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-section">
+                <label class="label" for="dba">DBA</label>
+                <select name="dba" id="dba" v-model="formValues.dba">
+                  <template v-for="dba in dbaList" :key="dba.dba_id">
+                    <option
+                      v-if="dba.dba_id != userProfile.dba_id"
+                      :value="dba.dba_id"
+                    >
+                      {{ dba.user.first_name + " " + dba.user.last_name }}
+                    </option>
+                  </template>
+                </select>
+              </div>
+              <button class="bttn">Add</button>
+            </form>
+          </template>
+        </section>
+        <!-- college level teacher related operations -->
         <section
-          class="flex w-full flex-row flex-wrap items-center justify-evenly"
+          class="relative flex flex-row flex-wrap items-center justify-evenly rounded-l-xl border-l-[7px] border-black py-1 shadow-md shadow-gray-300/40"
         >
+          <label for="stream" class="admin-label"
+            >College Teacher Management :
+          </label>
           <!-- add teacher to the college -->
           <div v-if="userProfile.is_owner">
             <button
+              v-if="!isAddingTeacherFormOpenCollege"
               class="admin-btn"
               @click="
                 this.isAddingTeacherFormOpenCollege =
                   !this.isAddingTeacherFormOpenCollege
               "
             >
-              Add Teacher To College
+              <UserAddIcon class="admin-btn-icon" />
+              Add Teacher
             </button>
             <form
               v-if="isAddingTeacherFormOpenCollege"
-              class="form place-content-center accent-primary-dark lg:col-span-2"
+              class="form sticky top-20 z-30 place-content-center accent-primary-dark lg:col-span-2"
               @submit.prevent="addTeacherCollege"
             >
               <section class="form-section">
@@ -167,6 +239,15 @@
               </section>
               <section class="button-section">
                 <button class="bttn">Add</button>
+                <button
+                  @click="
+                    isAddingTeacherFormOpenCollege =
+                      !isAddingTeacherFormOpenCollege
+                  "
+                  class="bttn-danger"
+                >
+                  Cancel
+                </button>
               </section>
             </form>
           </div>
@@ -179,7 +260,8 @@
                   !this.isDeleteTeacherCollegeFormOpen
               "
             >
-              Delete Teacher From College
+              <UserRemoveIcon class="admin-btn-icon" />
+              Remove Teacher
             </button>
             <form
               v-if="isDeleteTeacherCollegeFormOpen"
@@ -552,11 +634,14 @@
 import axios from "axios";
 import { mapGetters } from "vuex";
 import { TrashIcon, PencilAltIcon } from "@heroicons/vue/outline";
+import { UserRemoveIcon, UserAddIcon } from "@heroicons/vue/solid";
 
 export default {
   components: {
     PencilAltIcon,
     TrashIcon,
+    UserRemoveIcon,
+    UserAddIcon,
   },
   data() {
     return {
@@ -568,6 +653,7 @@ export default {
       isDeleteStudentClassroomFormOpen: false,
       isStudentAddFormOpen: false,
       isFormOpen: false,
+      isFormOpenARFS: false,
       sections: ["A", "B", "C", "D", "E", "F"],
       classroomList: [],
       teacherList: [],
@@ -679,6 +765,19 @@ export default {
     //   this.createCollegeFormValues.end_year = newValue;
     // },
     // },
+    anyFormOpen() {
+      // `this` points to the component instance
+      return (
+        this.isFormOpen ||
+        this.isFormOpenARFS ||
+        this.isAddingTeacherFormOpen ||
+        this.isAddingTeacherFormOpenCollege ||
+        this.isCreateClassRoomFormOpen ||
+        this.isDeleteTeacherClassroomFormOpen ||
+        this.isDeleteTeacherCollegeFormOpen ||
+        this.isStudentAddFormOpen
+      );
+    },
   },
   methods: {
     async addDbaToTheStream() {

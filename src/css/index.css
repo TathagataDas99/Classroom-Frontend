@@ -15,11 +15,19 @@
 }
 
 .admin-btn-danger {
-  @apply slow-effect rounded-lg bg-danger-light px-5 py-4 font-heading text-xl text-bglight-shade shadow-lg hover:-translate-y-1 hover:bg-danger-dark hover:shadow-xl;
+  @apply slow-effect rounded-lg bg-danger-light px-5 py-4 font-heading text-xl capitalize  text-bglight-shade shadow-lg hover:-translate-y-1 hover:bg-danger-dark hover:shadow-xl;
 }
 .admin-btn {
-  @apply slow-effect rounded-lg bg-info-light px-5 py-4 font-heading text-xl text-bglight-shade shadow-lg hover:-translate-y-1 hover:bg-info-dark hover:shadow-xl;
+  @apply slow-effect rounded-lg bg-info-light px-5 py-4 font-heading text-xl capitalize text-bglight-shade shadow-lg hover:-translate-y-1 hover:bg-info-dark  hover:shadow-xl;
 }
+
+.admin-btn-icon {
+  @apply mx-2 inline-block w-7;
+}
+.admin-label {
+  @apply font-heading text-lg font-bold md:text-xl;
+}
+
 .add-subject {
   @apply slow-effect rounded-full bg-primary-dark px-5 py-4 font-heading text-lg text-bglight-shade hover:-translate-y-1 hover:scale-105 hover:bg-primary-light hover:shadow-lg lg:text-xl;
 }
