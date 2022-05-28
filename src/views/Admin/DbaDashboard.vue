@@ -7,13 +7,6 @@
       id="2"
       class="col-span-2 col-start-6 flex flex-col flex-wrap items-center justify-evenly"
     >
-      <!-- <section
-        class="card"
-        v-for="classroom in classroomList"
-        :key="classroom.id"
-      >
-        <h1 class="card-title">{{ classroom.title }}</h1>
-      </section> -->
       <div
         class="ClassroomCard"
         v-for="classroom in classroomList"
@@ -74,7 +67,7 @@
             class="bttn place-self-end"
             @click="handelOpen(classroom.slug)"
           >
-          <!-- TODO:WRITE EDIT FUNCTION OF CLASSROOM -->
+            <!-- TODO:WRITE EDIT FUNCTION OF CLASSROOM -->
             <div class="tooltip" data-tip="Edit Sem &amp; Title">
               <PencilAltIcon class="inline-block w-6 lg:w-5" />
             </div>
