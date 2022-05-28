@@ -10,12 +10,18 @@
     @apply col-span-2 col-start-1 row-start-1 ml-5 font-heading text-base capitalize text-bgdark-base md:text-lg lg:text-xl xl:text-2xl;
   }
 }
-
-.add-subject {
-  @apply slow-effect rounded-full bg-primary-dark px-5 py-4 font-heading text-lg text-bglight-shade hover:-translate-y-1 hover:scale-105 hover:bg-primary-light hover:shadow-lg lg:text-xl;
-}
 .slow-effect {
   @apply transition duration-200 ease-linear;
+}
+
+.admin-btn-danger {
+  @apply slow-effect rounded-lg bg-danger-light px-5 py-4 font-heading text-xl text-bglight-shade shadow-lg hover:-translate-y-1 hover:bg-danger-dark hover:shadow-xl;
+}
+.admin-btn {
+  @apply slow-effect rounded-lg bg-info-light px-5 py-4 font-heading text-xl text-bglight-shade shadow-lg hover:-translate-y-1 hover:bg-info-dark hover:shadow-xl;
+}
+.add-subject {
+  @apply slow-effect rounded-full bg-primary-dark px-5 py-4 font-heading text-lg text-bglight-shade hover:-translate-y-1 hover:scale-105 hover:bg-primary-light hover:shadow-lg lg:text-xl;
 }
 
 .tab-active-dynamic {
@@ -148,7 +154,7 @@
 }
 
 .announcement-collapse {
-  @apply slow-effect collapse-plus collapse rounded-box relative mx-3 my-2 border border-base-300 bg-base-100 hover:animate-pulse hover:bg-green-100 focus:animate-none focus:bg-bglight-shade focus:shadow-lg md:mx-24;
+  @apply slow-effect collapse collapse-plus rounded-box relative mx-3 my-2 border border-base-300 bg-base-100 hover:animate-pulse hover:bg-green-100 focus:animate-none focus:bg-bglight-shade focus:shadow-lg md:mx-24;
 }
 .ClassroomCard {
   @apply slow-effect mx-5 my-5  flex w-60 flex-col rounded-xl border-t-4 bg-bglight-shade shadow-lg backdrop-filter hover:translate-y-1 hover:border-primary-light  hover:shadow-2xl hover:backdrop-blur-md md:w-60 lg:w-72;

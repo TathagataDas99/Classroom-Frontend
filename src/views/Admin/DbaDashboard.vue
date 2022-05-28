@@ -87,50 +87,127 @@
       id="1"
       class="col-span-5 col-start-1 row-start-1 grid grid-flow-row grid-cols-1"
     >
-      <!-- add dbas -->
-      <template v-if="userProfile.is_owner">
-        <button
-          class="btn rounded-full"
-          @click="this.isFormOpen = !this.isFormOpen"
-        >
-          Add dba to the stream
-        </button>
-        <form
-          v-if="isFormOpen"
-          class="form accent-primary-dark"
-          @submit.prevent="addDbaToTheStream"
-        >
-          <div class="form-section">
-            <label class="label" for="stream">stream</label>
-            <div>
-              <select name="stream" id="stream" v-model="formValues.title">
-                <option
-                  :value="stream.title"
-                  v-for="stream in userProfile.streams"
-                  :key="stream.stream_id"
-                >
-                  {{ stream.title }}
-                </option>
+      <section
+        id="sub-1"
+        class="my-4 flex flex-col justify-evenly rounded-lg px-4 shadow-md"
+      >
+        <!-- add dbas -->
+        <template v-if="userProfile.is_owner">
+          <button
+            class="admin-btn mx-10 xl:mx-36"
+            @click="this.isFormOpen = !this.isFormOpen"
+          >
+            Add dba to the stream
+          </button>
+          <form
+            v-if="isFormOpen"
+            class="form accent-primary-dark"
+            @submit.prevent="addDbaToTheStream"
+          >
+            <div class="form-section">
+              <label class="label" for="stream">stream</label>
+              <div>
+                <select name="stream" id="stream" v-model="formValues.title">
+                  <option
+                    :value="stream.title"
+                    v-for="stream in userProfile.streams"
+                    :key="stream.stream_id"
+                  >
+                    {{ stream.title }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="form-section">
+              <label class="label" for="dba">DBA</label>
+              <select name="dba" id="dba" v-model="formValues.dba">
+                <template v-for="dba in dbaList" :key="dba.dba_id">
+                  <option
+                    v-if="dba.dba_id != userProfile.dba_id"
+                    :value="dba.dba_id"
+                  >
+                    {{ dba.user.first_name + " " + dba.user.last_name }}
+                  </option>
+                </template>
               </select>
             </div>
+            <button class="bttn">Add</button>
+          </form>
+        </template>
+        <section
+          class="flex w-full flex-row flex-wrap items-center justify-evenly"
+        >
+          <!-- add teacher to the college -->
+          <div v-if="userProfile.is_owner">
+            <button
+              class="admin-btn"
+              @click="
+                this.isAddingTeacherFormOpenCollege =
+                  !this.isAddingTeacherFormOpenCollege
+              "
+            >
+              Add Teacher To College
+            </button>
+            <form
+              v-if="isAddingTeacherFormOpenCollege"
+              class="form place-content-center accent-primary-dark lg:col-span-2"
+              @submit.prevent="addTeacherCollege"
+            >
+              <section class="form-section">
+                <label class="label">Email Id</label>
+                <section class="input-section">
+                  <input
+                    class="input-box"
+                    type="email"
+                    placeholder="Email Id"
+                    v-model.trim.lazy="addTeacherForm.email"
+                    required
+                  />
+                </section>
+              </section>
+              <section class="button-section">
+                <button class="bttn">Add</button>
+              </section>
+            </form>
           </div>
-          <div class="form-section">
-            <label class="label" for="dba">DBA</label>
-            <select name="dba" id="dba" v-model="formValues.dba">
-              <template v-for="dba in dbaList" :key="dba.dba_id">
-                <option
-                  v-if="dba.dba_id != userProfile.dba_id"
-                  :value="dba.dba_id"
+          <!-- delete teacher from college by owner -->
+          <div v-if="userProfile.is_owner">
+            <button
+              class="admin-btn-danger"
+              @click="
+                this.isDeleteTeacherCollegeFormOpen =
+                  !this.isDeleteTeacherCollegeFormOpen
+              "
+            >
+              Delete Teacher From College
+            </button>
+            <form
+              v-if="isDeleteTeacherCollegeFormOpen"
+              class="form place-content-center accent-primary-dark lg:col-span-2"
+              @submit.prevent="deleteTeacherCollege"
+            >
+              <div class="form-section">
+                <label class="label" for="teacher">Select Teacher</label>
+                <select
+                  name="teacher"
+                  id="teacher"
+                  v-model="deleteTeacherFormData.id"
                 >
-                  {{ dba.user.first_name + " " + dba.user.last_name }}
-                </option>
-              </template>
-            </select>
+                  <template v-for="teacher in teacherList" :key="teacher.id">
+                    <option :value="teacher.id">
+                      {{ teacher.email }}
+                    </option>
+                  </template>
+                </select>
+              </div>
+              <section class="button-section">
+                <button class="bttn">Delete</button>
+              </section>
+            </form>
           </div>
-          <button class="bttn">Add</button>
-        </form>
-      </template>
-      <!-- creating class room -->
+        </section>
+      </section>
+      <!-- creating classroom -->
       <section>
         <button
           class="btn rounded-full"
@@ -306,74 +383,7 @@
           </section>
         </form>
       </div>
-      <!-- add teacher to the college -->
-      <div v-if="userProfile.is_owner">
-        <button
-          class="btn rounded-full"
-          @click="
-            this.isAddingTeacherFormOpenCollege =
-              !this.isAddingTeacherFormOpenCollege
-          "
-        >
-          Add Teacher To College
-        </button>
-        <form
-          v-if="isAddingTeacherFormOpenCollege"
-          class="form place-content-center accent-primary-dark lg:col-span-2"
-          @submit.prevent="addTeacherCollege"
-        >
-          <section class="form-section">
-            <label class="label">Email Id</label>
-            <section class="input-section">
-              <input
-                class="input-box"
-                type="email"
-                placeholder="Email Id"
-                v-model.trim.lazy="addTeacherForm.email"
-                required
-              />
-            </section>
-          </section>
-          <section class="button-section">
-            <button class="bttn">Add</button>
-          </section>
-        </form>
-      </div>
-      <!-- delete teacher from college by owner -->
-      <div v-if="userProfile.is_owner">
-        <button
-          class="btn rounded-full"
-          @click="
-            this.isDeleteTeacherCollegeFormOpen =
-              !this.isDeleteTeacherCollegeFormOpen
-          "
-        >
-          Delete Teacher From College
-        </button>
-        <form
-          v-if="isDeleteTeacherCollegeFormOpen"
-          class="form place-content-center accent-primary-dark lg:col-span-2"
-          @submit.prevent="deleteTeacherCollege"
-        >
-          <div class="form-section">
-            <label class="label" for="teacher">Select Teacher</label>
-            <select
-              name="teacher"
-              id="teacher"
-              v-model="deleteTeacherFormData.id"
-            >
-              <template v-for="teacher in teacherList" :key="teacher.id">
-                <option :value="teacher.id">
-                  {{ teacher.email }}
-                </option>
-              </template>
-            </select>
-          </div>
-          <section class="button-section">
-            <button class="bttn">Delete</button>
-          </section>
-        </form>
-      </div>
+
       <!-- delete teacher from particular classroom -->
       <div>
         <button
