@@ -290,17 +290,15 @@
                 <section class="form-section">
                   <label class="label">Level</label>
                   <section class="input-section">
-                    <section class="input-section">
-                      <select
-                        class="input-box"
-                        name="level"
-                        id="level"
-                        v-model="createClassroomFormValues.level"
-                      >
-                        <option value="Bachelors">Bachelors</option>
-                        <option value="Masters">Masters</option>
-                      </select>
-                    </section>
+                    <select
+                      class="input-box"
+                      name="level"
+                      id="level"
+                      v-model="createClassroomFormValues.level"
+                    >
+                      <option value="Bachelors">Bachelors</option>
+                      <option value="Masters">Masters</option>
+                    </select>
                   </section>
                 </section>
                 <section class="form-section">
