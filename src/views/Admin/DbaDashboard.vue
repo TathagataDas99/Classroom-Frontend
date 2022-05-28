@@ -464,32 +464,36 @@
               </button>
               <form
                 v-if="isDeleteTeacherClassroomFormOpen"
-                class="form place-content-center accent-primary-dark lg:col-span-2"
+                class="form form-admin"
                 @submit.prevent
               >
                 <div class="form-section">
                   <label class="label" for="classroom">Select Classroom</label>
-                  <select
-                    name="classroom"
-                    id="classroom"
-                    v-model="classroomSlug"
-                  >
-                    <template
-                      v-for="classroom in classroomList"
-                      :key="classroom.slug"
+                  <section class="input-section">
+                    <select
+                      class="input-box"
+                      name="classroom"
+                      id="classroom"
+                      v-model="classroomSlug"
+                      @change="getTeachersInClassroom(classroomSlug)"
                     >
-                      <option :value="classroom.slug">
-                        {{ classroom.title }}
-                      </option>
-                    </template>
-                  </select>
+                      <template
+                        v-for="classroom in classroomList"
+                        :key="classroom.slug"
+                      >
+                        <option :value="classroom.slug">
+                          {{ classroom.title }}
+                        </option>
+                      </template>
+                    </select>
+                  </section>
                 </div>
-                <button
+                <!-- <button
                   class="bttn"
                   @click="getTeachersInClassroom(classroomSlug)"
                 >
                   Get Teachers
-                </button>
+                </button> -->
                 <div class="form-section" v-if="classroomTeacherList">
                   <label class="label" for="teacher">Select Teacher</label>
                   <select
