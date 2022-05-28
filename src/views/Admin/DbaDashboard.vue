@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="anyFormOpen"
-    class="absolute top-0 z-10 h-screen w-screen bg-slate-700/50 backdrop-blur-md backdrop-filter"
+    class="absolute top-0 z-10 min-h-screen w-screen bg-slate-700/50 backdrop-blur-md backdrop-filter"
   ></div>
   <main
     class="mx-4 grid min-h-screen w-screen grid-flow-row grid-cols-1 lg:grid-cols-7 lg:grid-rows-1"
@@ -113,6 +113,7 @@
             <label for="stream" class="admin-label">Stream Management : </label>
             <button
               class="admin-btn"
+              v-if="!isFormOpen"
               @click="this.isFormOpen = !this.isFormOpen"
             >
               <UserAddIcon class="admin-btn-icon" /> Add Admin
@@ -120,13 +121,18 @@
             <!-- Add dba to the stream Form -->
             <form
               v-if="isFormOpen"
-              class="form absolute top-10 z-20 border-2 border-primary-light bg-gray-600/50 accent-primary-dark backdrop-blur-md backdrop-filter"
+              class="form sticky top-20 z-30 border-2 border-primary-light bg-gray-600/50 accent-primary-dark backdrop-blur-md backdrop-filter"
               @submit.prevent="addDbaToTheStream"
             >
               <div class="form-section">
                 <label class="label" for="stream">stream</label>
-                <div>
-                  <select name="stream" id="stream" v-model="formValues.title">
+                <div class="input-section">
+                  <select
+                    name="stream"
+                    id="stream"
+                    v-model="formValues.title"
+                    class="input-box"
+                  >
                     <option
                       :value="stream.title"
                       v-for="stream in userProfile.streams"
@@ -138,19 +144,31 @@
                 </div>
               </div>
               <div class="form-section">
-                <label class="label" for="dba">DBA</label>
-                <select name="dba" id="dba" v-model="formValues.dba">
-                  <template v-for="dba in dbaList" :key="dba.dba_id">
-                    <option
-                      v-if="dba.dba_id != userProfile.dba_id"
-                      :value="dba.dba_id"
-                    >
-                      {{ dba.user.first_name + " " + dba.user.last_name }}
-                    </option>
-                  </template>
-                </select>
+                <label class="label" for="dba">Managed By Admin</label>
+                <div class="input-section">
+                  <select
+                    name="dba"
+                    id="dba"
+                    class="input-box"
+                    v-model="formValues.dba"
+                  >
+                    <template v-for="dba in dbaList" :key="dba.dba_id">
+                      <option
+                        v-if="dba.dba_id != userProfile.dba_id"
+                        :value="dba.dba_id"
+                      >
+                        {{ dba.user.first_name + " " + dba.user.last_name }}
+                      </option>
+                    </template>
+                  </select>
+                </div>
               </div>
-              <button class="bttn">Add</button>
+              <div class="button-section">
+                <button class="bttn">Add</button>
+                <button @click="isFormOpen = !isFormOpen" class="bttn-danger">
+                  Cancel
+                </button>
+              </div>
             </form>
           </template>
           <!-- remove dbas from stream -->
