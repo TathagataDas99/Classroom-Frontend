@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="anyFormOpen"
-    class="absolute top-0 z-10 min-h-screen w-screen bg-slate-700/50 backdrop-blur-sm backdrop-filter"
+    class="h-screen-2xl absolute top-0 z-10 w-screen bg-slate-700/50 backdrop-blur-sm backdrop-filter"
   ></div>
   <main class="admin-layout">
     <section
@@ -252,141 +252,172 @@
       <!-- COMMON ADMIN SECTION -->
       <section class="common-admin grid grid-flow-row">
         <!-- creating classroom -->
-        <section>
-          <button
-            class="btn rounded-full"
-            @click="
-              this.isCreateClassRoomFormOpen = !this.isCreateClassRoomFormOpen
-            "
-          >
-            Add Classroom
-          </button>
-          <form
-            v-if="isCreateClassRoomFormOpen"
-            class="form place-content-center accent-primary-dark lg:col-span-2"
-            enctype="multipart/form-data"
-            @submit.prevent="createCollege"
-          >
-            <section class="form-section">
-              <label class="label">Title</label>
-              <section class="input-section">
-                <input
-                  class="input-box"
-                  type="text"
-                  placeholder="classroom name"
-                  v-model.trim.lazy="createCollegeFormValues.title"
-                  required
-                />
-              </section>
-            </section>
-            <section class="form-section">
-              <label class="label">Level</label>
-              <section class="input-section">
-                <select
-                  name="level"
-                  id="level"
-                  v-model="createCollegeFormValues.level"
-                >
-                  <option value="Bachelors">Bachelors</option>
-                  <option value="Masters">Masters</option>
-                </select>
-              </section>
-            </section>
-            <section class="form-section">
-              <label class="label">Stream</label>
-              <section class="input-section">
-                <select
-                  name="stream"
-                  id="stream"
-                  v-model="createCollegeFormValues.stream"
-                >
-                  <option selected disabled>Select Stream</option>
-                  <option
-                    :value="stream.title"
-                    v-for="stream in userProfile.streams"
-                    :key="stream.stream_id"
+        <table>
+          <th colspan="3" class="admin-label border-b-2 border-zinc-500">
+            Classroom Management Area
+          </th>
+          <tr>
+            <td class="admin-label">Classroom :</td>
+            <td colspan="2" class="py-3 px-6 text-center">
+              <button
+                class="admin-btn w-full"
+                @click="
+                  this.isCreateClassRoomFormOpen =
+                    !this.isCreateClassRoomFormOpen
+                "
+              >
+                <PlusIcon class="admin-btn-icon" />
+                Classroom
+              </button>
+              <form
+                v-if="isCreateClassRoomFormOpen"
+                class="form form-admin"
+                enctype="multipart/form-data"
+                @submit.prevent="createCollege"
+              >
+                <section class="form-section">
+                  <label class="label">Title</label>
+                  <section class="input-section">
+                    <input
+                      class="input-box"
+                      type="text"
+                      placeholder="classroom name"
+                      v-model.trim.lazy="createClassroomFormValues.title"
+                      required
+                    />
+                  </section>
+                </section>
+                <section class="form-section">
+                  <label class="label">Level</label>
+                  <section class="input-section">
+                    <section class="input-section">
+                      <select
+                        class="input-box"
+                        name="level"
+                        id="level"
+                        v-model="createClassroomFormValues.level"
+                      >
+                        <option value="Bachelors">Bachelors</option>
+                        <option value="Masters">Masters</option>
+                      </select>
+                    </section>
+                  </section>
+                </section>
+                <section class="form-section">
+                  <label class="label">Stream</label>
+                  <section class="input-section">
+                    <select
+                      class="input-box"
+                      name="stream"
+                      id="stream"
+                      v-model="createClassroomFormValues.stream"
+                    >
+                      <option selected disabled>Select Stream</option>
+                      <option
+                        :value="stream.title"
+                        v-for="stream in userProfile.streams"
+                        :key="stream.stream_id"
+                      >
+                        {{ stream.title }}
+                      </option>
+                    </select>
+                  </section>
+                </section>
+                <section class="form-section">
+                  <label class="label">Start Year</label>
+                  <section class="input-section">
+                    <input
+                      class="input-box"
+                      type="number"
+                      min="2010"
+                      max="2100"
+                      v-model.trim.lazy="createClassroomFormValues.start_year"
+                      required
+                    />
+                  </section>
+                </section>
+                <section class="form-section">
+                  <label class="label">Course Duration</label>
+                  <section class="input-section">
+                    <input
+                      class="input-box"
+                      type="number"
+                      min="2"
+                      v-model.trim.lazy="duration"
+                      @change="listOfCurrentSem"
+                    />
+                  </section>
+                </section>
+                <section class="form-section">
+                  <label class="label">Current Sem</label>
+                  <section class="input-section">
+                    <select
+                      name="current-sem"
+                      id="curr_sem-1"
+                      class="input-box"
+                    >
+                      <template v-for="i in semList" :key="i">
+                        <option value="i">{{ i }}</option>
+                      </template>
+                    </select>
+                  </section>
+                </section>
+                <section class="form-section">
+                  <label class="label">Section</label>
+                  <section class="input-section">
+                    <select
+                      class="input-box"
+                      v-model="createClassroomFormValues.section"
+                    >
+                      <option :value="i" v-for="i in sections" :key="i">
+                        {{ i }}
+                      </option>
+                    </select>
+                  </section>
+                </section>
+                <section class="form-section">
+                  <label class="label col-span-2">Teachers list</label>
+                  <section class="input-section-file">
+                    <input
+                      required
+                      class="input-file"
+                      ref="file_teacher"
+                      @change="handleTeacherFileUpload"
+                      type="file"
+                      title="upload the full teacher list of the college"
+                      accept=".xlsx, .csv"
+                    />
+                  </section>
+                </section>
+                <section class="form-section">
+                  <label class="label">Student list</label>
+                  <section class="input-section-file">
+                    <input
+                      class="input-file"
+                      ref="file_dba"
+                      @change="handleStudentFileUpload"
+                      type="file"
+                      title="upload the full dba list of the college"
+                      accept=".xlsx, .csv"
+                    />
+                  </section>
+                </section>
+                <section class="button-section">
+                  <button class="bttn">Create</button>
+                  <button
+                    class="bttn-danger"
+                    @click="
+                      this.isCreateClassRoomFormOpen =
+                        !this.isCreateClassRoomFormOpen
+                    "
                   >
-                    {{ stream.title }}
-                  </option>
-                </select>
-              </section>
-            </section>
-            <section class="form-section">
-              <label class="label">Start Year</label>
-              <section class="input-section">
-                <input
-                  class="input-box"
-                  type="number"
-                  v-model.trim.lazy="createCollegeFormValues.start_year"
-                  required
-                />
-              </section>
-            </section>
-            <section class="form-section">
-              <label class="label">Course Duration</label>
-              <section class="input-section">
-                <input
-                  class="input-box"
-                  type="number"
-                  min="2"
-                  v-model.trim.lazy="duration"
-                />
-              </section>
-            </section>
-            <section class="form-section">
-              <label class="label">Current Sem</label>
-              <section class="input-section">
-                <input
-                  class="input-box"
-                  type="number"
-                  min="1"
-                  v-model.trim.lazy="this.createCollegeFormValues.current_sem"
-                  required
-                />
-              </section>
-            </section>
-            <section class="form-section">
-              <label class="label">Section</label>
-              <section class="input-section">
-                <select v-model="createCollegeFormValues.section">
-                  <option :value="i" v-for="i in sections" :key="i">
-                    {{ i }}
-                  </option>
-                </select>
-              </section>
-            </section>
-            <section class="form-section">
-              <label class="label col-span-2">Teachers list</label>
-              <section class="input-section-file">
-                <input
-                  required
-                  class="input-file"
-                  ref="file_teacher"
-                  @change="handleTeacherFileUpload"
-                  type="file"
-                  title="upload the full teacher list of the college"
-                  accept=".xlsx, .csv"
-                />
-              </section>
-            </section>
-            <section class="form-section">
-              <label class="label">Student list</label>
-              <section class="input-section-file">
-                <input
-                  class="input-file"
-                  ref="file_dba"
-                  @change="handleStudentFileUpload"
-                  type="file"
-                  title="upload the full dba list of the college"
-                  accept=".xlsx, .csv"
-                />
-              </section>
-            </section>
-            <section class="button-section">
-              <button class="bttn">Create</button>
-            </section>
-          </form>
-        </section>
+                    Cancel
+                  </button>
+                </section>
+              </form>
+            </td>
+          </tr>
+        </table>
         <table class="table-auto">
           <!-- adding teachers to classroom -->
           <th colspan="3" class="admin-label border-b-2 border-zinc-500">
@@ -772,7 +803,7 @@
 <script>
 import axios from "axios";
 import { mapGetters } from "vuex";
-import { TrashIcon, PencilAltIcon } from "@heroicons/vue/outline";
+import { TrashIcon, PencilAltIcon, PlusIcon } from "@heroicons/vue/outline";
 import { UserRemoveIcon, UserAddIcon } from "@heroicons/vue/solid";
 
 export default {
@@ -781,6 +812,7 @@ export default {
     TrashIcon,
     UserRemoveIcon,
     UserAddIcon,
+    PlusIcon,
   },
   data() {
     return {
@@ -804,7 +836,8 @@ export default {
       },
       dbaList: [],
       duration: 2,
-      createCollegeFormValues: {
+      semList: [1, 2, 3, 4],
+      createClassroomFormValues: {
         title: "",
         level: "Bachelors",
         stream: "",
@@ -898,10 +931,10 @@ export default {
     ...mapGetters(["userType", "userProfile"]),
     // calculateEndYear: {
     //   get() {
-    //     return this.createCollegeFormValues.start_year + this.duration;
+    //     return this.createClassroomFormValues.start_year + this.duration;
     //   },
     // set(newValue) {
-    //   this.createCollegeFormValues.end_year = newValue;
+    //   this.createClassroomFormValues.end_year = newValue;
     // },
     // },
     anyFormOpen() {
@@ -920,6 +953,12 @@ export default {
     },
   },
   methods: {
+    listOfCurrentSem() {
+      this.semList = [];
+      for (let i = 1; i <= this.duration * 2; i++) {
+        this.semList.push(i);
+      }
+    },
     async addDbaToTheStream() {
       this.isFormOpen = !this.isFormOpen;
       const res = await axios.post(
@@ -929,42 +968,47 @@ export default {
       console.log(res);
     },
     handleTeacherFileUpload(event) {
-      this.createCollegeFormValues.allowed_teacher_list = event.target.files[0];
-      console.log(this.createCollegeFormValues.allowed_teacher_list);
+      this.createClassroomFormValues.allowed_teacher_list =
+        event.target.files[0];
+      console.log(this.createClassroomFormValues.allowed_teacher_list);
     },
     handleStudentFileUpload(event) {
-      this.createCollegeFormValues.allowed_student_list = event.target.files[0];
-      console.log(this.createCollegeFormValues.allowed_student_list);
+      this.createClassroomFormValues.allowed_student_list =
+        event.target.files[0];
+      console.log(this.createClassroomFormValues.allowed_student_list);
     },
     async createCollege() {
       this.isCreateClassRoomFormOpen = !this.isCreateClassRoomFormOpen;
       this.loader = true;
       const endYear =
-        parseInt(this.createCollegeFormValues.start_year) +
+        parseInt(this.createClassroomFormValues.start_year) +
         parseInt(this.duration);
       try {
         let formData = new FormData();
-        formData.append("title", this.createCollegeFormValues.title);
-        formData.append("level", this.createCollegeFormValues.level);
-        formData.append("stream", this.createCollegeFormValues.stream);
-        formData.append("start_year", this.createCollegeFormValues.start_year);
+        formData.append("title", this.createClassroomFormValues.title);
+        formData.append("level", this.createClassroomFormValues.level);
+        formData.append("stream", this.createClassroomFormValues.stream);
+        formData.append(
+          "start_year",
+          this.createClassroomFormValues.start_year
+        );
         formData.append("end_year", endYear);
-        formData.append("section", this.createCollegeFormValues.section);
+        formData.append("section", this.createClassroomFormValues.section);
         formData.append(
           "no_of_semesters",
-          this.createCollegeFormValues.no_of_semesters
+          this.createClassroomFormValues.no_of_semesters
         );
         formData.append(
           "current_sem",
-          this.createCollegeFormValues.current_sem
+          this.createClassroomFormValues.current_sem
         );
         formData.append(
           "allowed_teacher_list",
-          this.createCollegeFormValues.allowed_teacher_list
+          this.createClassroomFormValues.allowed_teacher_list
         );
         formData.append(
           "allowed_student_list",
-          this.createCollegeFormValues.allowed_student_list
+          this.createClassroomFormValues.allowed_student_list
         );
         const res = await axios.post(
           `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/`,
@@ -975,13 +1019,13 @@ export default {
               "Content-Type": "multipart/form-data",
               Accept: "*/*",
               "Content-Disposition": [
-                this.createCollegeFormValues.allowed_teacher_list,
-                this.createCollegeFormValues.allowed_student_list,
+                this.createClassroomFormValues.allowed_teacher_list,
+                this.createClassroomFormValues.allowed_student_list,
               ],
               // boundary: "allowed_teacher_list",
               Filename: [
-                this.createCollegeFormValues.allowed_teacher_list.name,
-                this.createCollegeFormValues.allowed_student_list.name,
+                this.createClassroomFormValues.allowed_teacher_list.name,
+                this.createClassroomFormValues.allowed_student_list.name,
               ],
             },
           }
