@@ -250,7 +250,7 @@
         </section>
       </section>
       <!-- COMMON ADMIN SECTION -->
-      <section class="common-admin">
+      <section class="common-admin grid grid-flow-row">
         <!-- creating classroom -->
         <section>
           <button
@@ -387,218 +387,270 @@
             </section>
           </form>
         </section>
-        <!-- adding teachers to classroom -->
-        <div>
-          <button
-            class="btn rounded-full"
-            @click="
-              this.isAddingTeacherFormOpen = !this.isAddingTeacherFormOpen
-            "
-          >
-            Add Teacher To Classroom
-          </button>
-          <form
-            v-if="isAddingTeacherFormOpen"
-            class="form place-content-center accent-primary-dark lg:col-span-2"
-            @submit.prevent="addTeacher"
-          >
-            <div class="form-section">
-              <label class="label" for="classroom">Class Room</label>
-              <select name="classroom" id="classroom" v-model="classroomSlug">
-                <template
-                  v-for="classroom in classroomList"
-                  :key="classroom.id"
-                >
-                  <option :value="classroom.slug">
-                    {{ classroom.title }}
-                  </option>
-                </template>
-              </select>
-            </div>
-            <section class="form-section">
-              <label class="label">Email Id</label>
-              <section class="input-section">
-                <input
-                  class="input-box"
-                  type="email"
-                  placeholder="Email Id"
-                  v-model.trim.lazy="addTeacherForm.email"
-                  required
-                />
-              </section>
-            </section>
-            <section class="button-section">
-              <button class="bttn">Add</button>
-            </section>
-          </form>
-        </div>
-        <!-- delete teacher from particular classroom -->
-        <div>
-          <button
-            class="btn rounded-full"
-            @click="
-              this.isDeleteTeacherClassroomFormOpen =
-                !this.isDeleteTeacherClassroomFormOpen
-            "
-          >
-            Delete Teacher From Classroom
-          </button>
-          <form
-            v-if="isDeleteTeacherClassroomFormOpen"
-            class="form place-content-center accent-primary-dark lg:col-span-2"
-            @submit.prevent
-          >
-            <div class="form-section">
-              <label class="label" for="classroom">Select Classroom</label>
-              <select name="classroom" id="classroom" v-model="classroomSlug">
-                <template
-                  v-for="classroom in classroomList"
-                  :key="classroom.slug"
-                >
-                  <option :value="classroom.slug">
-                    {{ classroom.title }}
-                  </option>
-                </template>
-              </select>
-            </div>
-            <button class="bttn" @click="getTeachersInClassroom(classroomSlug)">
-              Get Teachers
-            </button>
-            <div class="form-section" v-if="classroomTeacherList">
-              <label class="label" for="teacher">Select Teacher</label>
-              <select
-                name="teacher"
-                id="teacher"
-                v-model="deleteTeacherClassroomFormData.id"
+        <table class="col-span-1 table-auto">
+          <!-- adding teachers to classroom -->
+          <th colspan="3" class="admin-label border-b-2 border-zinc-500">
+            Classroom Level
+          </th>
+          <tr>
+            <td class="admin-label">Teacher Management</td>
+            <td class="py-3 px-6">
+              <button
+                class="admin-btn"
+                @click="
+                  this.isAddingTeacherFormOpen = !this.isAddingTeacherFormOpen
+                "
               >
-                <template
-                  v-for="teacher in classroomTeacherList"
-                  :key="teacher.id"
-                >
-                  <option :value="teacher.id">
-                    {{ teacher.email }}
-                  </option>
-                </template>
-              </select>
-            </div>
-            <section class="button-section">
-              <button class="bttn" @click="deleteTeacherClassroom">
-                Delete
+                Add Teacher To Classroom
               </button>
-            </section>
-          </form>
-        </div>
-        <!-- add student to the classroom -->
-        <div>
-          <button
-            class="btn rounded-full"
-            @click="this.isStudentAddFormOpen = !this.isStudentAddFormOpen"
-          >
-            Add Student To Classroom
-          </button>
-          <form
-            v-if="isStudentAddFormOpen"
-            class="form place-content-center accent-primary-dark lg:col-span-2"
-            @submit.prevent="addStudent"
-          >
-            <div class="form-section">
-              <label class="label" for="classroom">Class Room</label>
-              <select name="classroom" id="classroom" v-model="classroomSlug">
-                <template
-                  v-for="classroom in classroomList"
-                  :key="classroom.id"
+              <form
+                v-if="isAddingTeacherFormOpen"
+                class="form form-admin"
+                @submit.prevent="addTeacher"
+              >
+                <div class="form-section">
+                  <label class="label" for="classroom">Classroom</label>
+                  <section class="input-section">
+                    <select
+                      class="input-box"
+                      name="classroom"
+                      id="classroom"
+                      v-model="classroomSlug"
+                    >
+                      <template
+                        v-for="classroom in classroomList"
+                        :key="classroom.id"
+                      >
+                        <option :value="classroom.slug">
+                          {{ classroom.title }}
+                        </option>
+                      </template>
+                    </select>
+                  </section>
+                </div>
+                <section class="form-section">
+                  <label class="label">Email Id</label>
+                  <section class="input-section">
+                    <input
+                      class="input-box"
+                      type="email"
+                      placeholder="Email Id"
+                      v-model.trim.lazy="addTeacherForm.email"
+                      required
+                    />
+                  </section>
+                </section>
+                <section class="button-section">
+                  <button class="bttn">Add</button>
+                  <button
+                    class="bttn-danger"
+                    @click="isAddingTeacherFormOpen = !isAddingTeacherFormOpen"
+                  >
+                    Cancel
+                  </button>
+                </section>
+              </form>
+            </td>
+
+            <td class="py-3 px-6">
+              <button
+                class="admin-btn-danger mx-2 my-1"
+                @click="
+                  this.isDeleteTeacherClassroomFormOpen =
+                    !this.isDeleteTeacherClassroomFormOpen
+                "
+              >
+                Delete Teacher From Classroom
+              </button>
+              <form
+                v-if="isDeleteTeacherClassroomFormOpen"
+                class="form place-content-center accent-primary-dark lg:col-span-2"
+                @submit.prevent
+              >
+                <div class="form-section">
+                  <label class="label" for="classroom">Select Classroom</label>
+                  <select
+                    name="classroom"
+                    id="classroom"
+                    v-model="classroomSlug"
+                  >
+                    <template
+                      v-for="classroom in classroomList"
+                      :key="classroom.slug"
+                    >
+                      <option :value="classroom.slug">
+                        {{ classroom.title }}
+                      </option>
+                    </template>
+                  </select>
+                </div>
+                <button
+                  class="bttn"
+                  @click="getTeachersInClassroom(classroomSlug)"
                 >
-                  <option :value="classroom.slug">
-                    {{ classroom.title }}
-                  </option>
-                </template>
-              </select>
-            </div>
-            <section class="form-section">
-              <label class="label">Email Id</label>
-              <section class="input-section">
-                <input
-                  class="input-box"
-                  type="email"
-                  placeholder="Email Id"
-                  v-model.trim.lazy="addStudentForm.email"
-                  required
-                />
-              </section>
-            </section>
-            <section class="form-section">
-              <label class="label">University Roll</label>
-              <section class="input-section">
-                <input
-                  class="input-box"
-                  type="number"
-                  placeholder="University Roll"
-                  v-model.trim.lazy="addStudentForm.university_roll"
-                  required
-                />
-              </section>
-            </section>
-            <section class="button-section">
-              <button class="bttn">Add</button>
-            </section>
-          </form>
-        </div>
+                  Get Teachers
+                </button>
+                <div class="form-section" v-if="classroomTeacherList">
+                  <label class="label" for="teacher">Select Teacher</label>
+                  <select
+                    name="teacher"
+                    id="teacher"
+                    v-model="deleteTeacherClassroomFormData.id"
+                  >
+                    <template
+                      v-for="teacher in classroomTeacherList"
+                      :key="teacher.id"
+                    >
+                      <option :value="teacher.id">
+                        {{ teacher.email }}
+                      </option>
+                    </template>
+                  </select>
+                </div>
+                <section class="button-section">
+                  <button class="bttn" @click="deleteTeacherClassroom">
+                    Delete
+                  </button>
+                </section>
+              </form>
+            </td>
+          </tr>
+          <tr>
+            <td class="admin-label">Student Management</td>
+            <!-- add student to the classroom -->
+            <td class="py-3 px-6">
+              <button
+                class="admin-btn"
+                @click="this.isStudentAddFormOpen = !this.isStudentAddFormOpen"
+              >
+                Add Student To Classroom
+              </button>
+              <form
+                v-if="isStudentAddFormOpen"
+                class="form form-admin"
+                @submit.prevent="addStudent"
+              >
+                <div class="form-section">
+                  <label class="label" for="classroom">Class Room</label>
+                  <section class="input-section">
+                    <select
+                      class="input-box"
+                      name="classroom"
+                      id="classroom"
+                      v-model="classroomSlug"
+                    >
+                      <template
+                        v-for="classroom in classroomList"
+                        :key="classroom.id"
+                      >
+                        <option :value="classroom.slug">
+                          {{ classroom.title }}
+                        </option>
+                      </template>
+                    </select>
+                  </section>
+                </div>
+                <section class="form-section">
+                  <label class="label">Email Id</label>
+                  <section class="input-section">
+                    <input
+                      class="input-box"
+                      type="email"
+                      placeholder="Email Id"
+                      v-model.trim.lazy="addStudentForm.email"
+                      required
+                    />
+                  </section>
+                </section>
+                <section class="form-section">
+                  <label class="label">University Roll</label>
+                  <section class="input-section">
+                    <input
+                      class="input-box"
+                      type="number"
+                      placeholder="University Roll"
+                      v-model.trim.lazy="addStudentForm.university_roll"
+                      required
+                    />
+                  </section>
+                </section>
+                <section class="button-section">
+                  <button class="bttn">Add</button>
+                  <button
+                    class="bttn-danger"
+                    @click="isStudentAddFormOpen = !isStudentAddFormOpen"
+                  >
+                    Cancel
+                  </button>
+                </section>
+              </form>
+            </td>
+            <td class="py-3 px-6">
+              <button
+                class="admin-btn-danger"
+                @click="
+                  this.isDeleteStudentClassroomFormOpen =
+                    !this.isDeleteStudentClassroomFormOpen
+                "
+              >
+                Delete Student From Classroom
+              </button>
+              <form
+                v-if="isDeleteStudentClassroomFormOpen"
+                class="form form-admin"
+                @submit.prevent
+              >
+                <div class="form-section">
+                  <label class="label" for="classroom">Select Classroom</label>
+                  <select
+                    name="classroom"
+                    id="classroom"
+                    v-model="classroomSlug"
+                  >
+                    <template
+                      v-for="classroom in classroomList"
+                      :key="classroom.slug"
+                    >
+                      <option :value="classroom.slug">
+                        {{ classroom.title }}
+                      </option>
+                    </template>
+                  </select>
+                </div>
+                <button
+                  class="bttn"
+                  @click="getStudentsInClassroom(classroomSlug)"
+                >
+                  Get Students
+                </button>
+                <div class="form-section" v-if="classroomStudentList">
+                  <label class="label" for="teacher">Select Student</label>
+                  <select
+                    name="teacher"
+                    id="teacher"
+                    v-model="deleteStudentClassroomFormData.id"
+                  >
+                    <template
+                      v-for="student in classroomStudentList"
+                      :key="student.id"
+                    >
+                      <option :value="student.id">
+                        {{ student.email }}
+                      </option>
+                    </template>
+                  </select>
+                </div>
+                <section class="button-section">
+                  <button class="bttn" @click="deleteStudentClassroom">
+                    Delete
+                  </button>
+                </section>
+              </form>
+            </td>
+          </tr>
+        </table>
+
         <!-- delete student from particular classroom -->
-        <div>
-          <button
-            class="btn rounded-full"
-            @click="
-              this.isDeleteStudentClassroomFormOpen =
-                !this.isDeleteStudentClassroomFormOpen
-            "
-          >
-            Delete Student From Classroom
-          </button>
-          <form
-            v-if="isDeleteStudentClassroomFormOpen"
-            class="form place-content-center accent-primary-dark lg:col-span-2"
-            @submit.prevent
-          >
-            <div class="form-section">
-              <label class="label" for="classroom">Select Classroom</label>
-              <select name="classroom" id="classroom" v-model="classroomSlug">
-                <template
-                  v-for="classroom in classroomList"
-                  :key="classroom.slug"
-                >
-                  <option :value="classroom.slug">
-                    {{ classroom.title }}
-                  </option>
-                </template>
-              </select>
-            </div>
-            <button class="bttn" @click="getStudentsInClassroom(classroomSlug)">
-              Get Students
-            </button>
-            <div class="form-section" v-if="classroomStudentList">
-              <label class="label" for="teacher">Select Student</label>
-              <select
-                name="teacher"
-                id="teacher"
-                v-model="deleteStudentClassroomFormData.id"
-              >
-                <template
-                  v-for="student in classroomStudentList"
-                  :key="student.id"
-                >
-                  <option :value="student.id">
-                    {{ student.email }}
-                  </option>
-                </template>
-              </select>
-            </div>
-            <section class="button-section">
-              <button class="bttn" @click="deleteStudentClassroom">
-                Delete
-              </button>
-            </section>
-          </form>
-        </div>
       </section>
     </section>
     <!-- Showing classroom -->

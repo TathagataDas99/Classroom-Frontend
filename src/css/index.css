@@ -28,8 +28,12 @@
   @apply relative flex flex-row flex-wrap items-center justify-evenly rounded-l-xl border-l-[7px] border-black py-1 shadow-md shadow-gray-300/40;
 }
 
+.common-admin {
+  @apply place-content-evenly gap-3 py-2 px-3 shadow-md hover:shadow-xl;
+}
+
 .form-admin {
-  @apply absolute left-56 top-20 z-30 border-2 border-primary-light bg-gray-600/50 accent-primary-dark backdrop-blur-md backdrop-filter;
+  @apply absolute left-32 top-20 z-30 border-2 border-primary-light bg-gray-600/50 accent-primary-dark backdrop-blur-md backdrop-filter;
 }
 .admin-btn-icon {
   @apply mx-2 inline-block w-7;
