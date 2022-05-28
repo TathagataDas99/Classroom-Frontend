@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="anyFormOpen"
-    class="absolute top-0 z-10 min-h-screen w-screen bg-slate-700/50 backdrop-blur-md backdrop-filter"
+    class="absolute top-0 z-10 min-h-screen w-screen bg-slate-700/50 backdrop-blur-sm backdrop-filter"
   ></div>
   <main
     class="mx-4 grid min-h-screen w-screen grid-flow-row grid-cols-1 lg:grid-cols-7 lg:grid-rows-1"
@@ -121,7 +121,7 @@
             <!-- Add dba to the stream Form -->
             <form
               v-if="isFormOpen"
-              class="form sticky top-20 z-30 border-2 border-primary-light bg-gray-600/50 accent-primary-dark backdrop-blur-md backdrop-filter"
+              class="form form-admin"
               @submit.prevent="addDbaToTheStream"
             >
               <div class="form-section">
@@ -173,8 +173,10 @@
           </template>
           <!-- remove dbas from stream -->
           <template v-if="userProfile.is_owner">
-            <!-- Add dba to the stream -->
+            <!-- TODO: -->
+            <!-- remove dba to the stream -->
             <button
+              v-if="!isFormOpenARFS"
               class="admin-btn-danger"
               @click="this.isFormOpenARFS = !this.isFormOpenARFS"
             >
@@ -184,7 +186,7 @@
             <!-- Remove dba to the stream Form -->
             <form
               v-if="isFormOpenARFS"
-              class="form sticky top-10 accent-primary-dark"
+              class="form form-admin"
               @submit.prevent="addDbaToTheStream"
             >
               <div class="form-section">
@@ -214,7 +216,15 @@
                   </template>
                 </select>
               </div>
-              <button class="bttn">Add</button>
+              <div class="button-section">
+                <button class="bttn">Add</button>
+                <button
+                  class="bttn-danger"
+                  @click="isFormOpenARFS = !isFormOpenARFS"
+                >
+                  Cancel
+                </button>
+              </div>
             </form>
           </template>
         </section>
