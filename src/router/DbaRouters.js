@@ -1,5 +1,5 @@
 import store from "../store";
-import DbaDashboard from "../views/Dba/DbaDashboard.vue";
+import DbaDashboard from "../views/Admin/DbaDashboard.vue";
 
 const isAuth = (to, from, next) => {
   console.log("isAuth : " + store.state.isAuth); //TODO: have to remove this console log
