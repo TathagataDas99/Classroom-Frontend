@@ -387,21 +387,22 @@
             </section>
           </form>
         </section>
-        <table class="col-span-1 table-auto">
+        <table class="table-auto">
           <!-- adding teachers to classroom -->
           <th colspan="3" class="admin-label border-b-2 border-zinc-500">
             Classroom Level
           </th>
           <tr>
             <td class="admin-label">Teacher Management</td>
-            <td class="py-3 px-6">
+            <td class="py-3 px-6 text-center">
               <button
                 class="admin-btn"
                 @click="
                   this.isAddingTeacherFormOpen = !this.isAddingTeacherFormOpen
                 "
               >
-                Add Teacher To Classroom
+                <UserAddIcon class="admin-btn-icon" />
+                Add Teacher
               </button>
               <form
                 v-if="isAddingTeacherFormOpen"
@@ -452,7 +453,7 @@
               </form>
             </td>
 
-            <td class="py-3 px-6">
+            <td class="py-3 px-6 text-center">
               <button
                 class="admin-btn-danger mx-2 my-1"
                 @click="
@@ -460,7 +461,8 @@
                     !this.isDeleteTeacherClassroomFormOpen
                 "
               >
-                Delete Teacher From Classroom
+                <UserRemoveIcon class="admin-btn-icon" />
+                Remove Teacher
               </button>
               <form
                 v-if="isDeleteTeacherClassroomFormOpen"
@@ -528,12 +530,13 @@
           <tr>
             <td class="admin-label">Student Management</td>
             <!-- add student to the classroom -->
-            <td class="py-3 px-6">
+            <td class="py-3 px-6 text-center">
               <button
                 class="admin-btn"
                 @click="this.isStudentAddFormOpen = !this.isStudentAddFormOpen"
               >
-                Add Student To Classroom
+                <UserAddIcon class="admin-btn-icon" />
+                Add Student
               </button>
               <form
                 v-if="isStudentAddFormOpen"
@@ -595,7 +598,8 @@
                 </section>
               </form>
             </td>
-            <td class="py-3 px-6">
+            <!-- delete student from particular classroom -->
+            <td class="py-3 px-6 text-center">
               <button
                 class="admin-btn-danger"
                 @click="
@@ -603,7 +607,8 @@
                     !this.isDeleteStudentClassroomFormOpen
                 "
               >
-                Delete Student From Classroom
+                <UserRemoveIcon class="admin-btn-icon" />
+                Delete Student
               </button>
               <form
                 v-if="isDeleteStudentClassroomFormOpen"
@@ -612,55 +617,63 @@
               >
                 <div class="form-section">
                   <label class="label" for="classroom">Select Classroom</label>
-                  <select
-                    name="classroom"
-                    id="classroom"
-                    v-model="classroomSlug"
-                  >
-                    <template
-                      v-for="classroom in classroomList"
-                      :key="classroom.slug"
+                  <section class="input-section">
+                    <select
+                      name="classroom"
+                      id="classroom"
+                      class="input-box"
+                      v-model="classroomSlug"
+                      @change="getStudentsInClassroom(classroomSlug)"
                     >
-                      <option :value="classroom.slug">
-                        {{ classroom.title }}
-                      </option>
-                    </template>
-                  </select>
+                      <template
+                        v-for="classroom in classroomList"
+                        :key="classroom.slug"
+                      >
+                        <option :value="classroom.slug">
+                          {{ classroom.title }}
+                        </option>
+                      </template>
+                    </select>
+                  </section>
                 </div>
-                <button
-                  class="bttn"
-                  @click="getStudentsInClassroom(classroomSlug)"
-                >
-                  Get Students
-                </button>
                 <div class="form-section" v-if="classroomStudentList">
                   <label class="label" for="teacher">Select Student</label>
-                  <select
-                    name="teacher"
-                    id="teacher"
-                    v-model="deleteStudentClassroomFormData.id"
-                  >
-                    <template
-                      v-for="student in classroomStudentList"
-                      :key="student.id"
+                  <section class="input-section">
+                    <select
+                      class="input-box"
+                      name="teacher"
+                      id="teacher"
+                      v-model="deleteStudentClassroomFormData.id"
                     >
-                      <option :value="student.id">
-                        {{ student.email }}
-                      </option>
-                    </template>
-                  </select>
+                      <template
+                        v-for="student in classroomStudentList"
+                        :key="student.id"
+                      >
+                        <option :value="student.id">
+                          {{ student.email }}
+                        </option>
+                      </template>
+                    </select>
+                  </section>
                 </div>
                 <section class="button-section">
-                  <button class="bttn" @click="deleteStudentClassroom">
+                  <button class="bttn-danger" @click="deleteStudentClassroom">
                     Delete
+                  </button>
+                  <button
+                    class="bttn"
+                    @click="
+                      isDeleteStudentClassroomFormOpen =
+                        !isDeleteStudentClassroomFormOpen
+                    "
+                  >
+                    Cancel
                   </button>
                 </section>
               </form>
             </td>
           </tr>
         </table>
-
-        <!-- delete student from particular classroom -->
       </section>
     </section>
     <!-- Showing classroom -->
@@ -901,7 +914,8 @@ export default {
         this.isCreateClassRoomFormOpen ||
         this.isDeleteTeacherClassroomFormOpen ||
         this.isDeleteTeacherCollegeFormOpen ||
-        this.isStudentAddFormOpen
+        this.isStudentAddFormOpen ||
+        this.isDeleteStudentClassroomFormOpen
       );
     },
   },
