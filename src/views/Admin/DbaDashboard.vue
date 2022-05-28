@@ -191,8 +191,13 @@
             >
               <div class="form-section">
                 <label class="label" for="stream">stream</label>
-                <div>
-                  <select name="stream" id="stream" v-model="formValues.title">
+                <div class="input-section">
+                  <select
+                    name="stream"
+                    id="stream"
+                    class="input-box"
+                    v-model="formValues.title"
+                  >
                     <option
                       :value="stream.title"
                       v-for="stream in userProfile.streams"
@@ -205,16 +210,23 @@
               </div>
               <div class="form-section">
                 <label class="label" for="dba">DBA</label>
-                <select name="dba" id="dba" v-model="formValues.dba">
-                  <template v-for="dba in dbaList" :key="dba.dba_id">
-                    <option
-                      v-if="dba.dba_id != userProfile.dba_id"
-                      :value="dba.dba_id"
-                    >
-                      {{ dba.user.first_name + " " + dba.user.last_name }}
-                    </option>
-                  </template>
-                </select>
+                <section class="input-section">
+                  <select
+                    name="dba"
+                    id="dba"
+                    v-model="formValues.dba"
+                    class="input-box"
+                  >
+                    <template v-for="dba in dbaList" :key="dba.dba_id">
+                      <option
+                        v-if="dba.dba_id != userProfile.dba_id"
+                        :value="dba.dba_id"
+                      >
+                        {{ dba.user.first_name + " " + dba.user.last_name }}
+                      </option>
+                    </template>
+                  </select>
+                </section>
               </div>
               <div class="button-section">
                 <button class="bttn">Add</button>
