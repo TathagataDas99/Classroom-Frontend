@@ -14,6 +14,9 @@
   @apply transition duration-200 ease-linear;
 }
 
+.admin-layout {
+  @apply mx-2 grid h-screen w-screen grid-flow-row grid-cols-1 gap-3 lg:grid-cols-7 lg:grid-rows-1;
+}
 .admin-btn-danger {
   @apply slow-effect rounded-lg bg-danger-light px-5 py-4 font-heading text-xl capitalize  text-bglight-shade shadow-lg hover:-translate-y-1 hover:bg-danger-dark hover:shadow-xl;
 }

@@ -3,12 +3,10 @@
     v-if="anyFormOpen"
     class="absolute top-0 z-10 min-h-screen w-screen bg-slate-700/50 backdrop-blur-sm backdrop-filter"
   ></div>
-  <main
-    class="mx-2 grid h-screen w-screen grid-flow-row grid-cols-1 gap-3 lg:grid-cols-7 lg:grid-rows-1"
-  >
+  <main class="admin-layout">
     <section
       id="1"
-      class="col-span-5 col-start-1 row-start-1 grid grid-flow-row grid-cols-1"
+      class="col-span-5 col-start-1 row-start-1 grid grid-flow-row grid-cols-1 place-self-stretch justify-self-stretch"
     >
       <!-- owner-group -->
       <section
