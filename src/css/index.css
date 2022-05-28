@@ -20,6 +20,11 @@
 .admin-btn {
   @apply slow-effect rounded-lg bg-info-light px-5 py-4 font-heading text-xl capitalize text-bglight-shade shadow-lg hover:-translate-y-1 hover:bg-info-dark  hover:shadow-xl;
 }
+
+.admin-btn-group {
+  @apply relative flex flex-row flex-wrap items-center justify-evenly rounded-l-xl border-l-[7px] border-black py-1 shadow-md shadow-gray-300/40;
+}
+
 .form-admin {
   @apply absolute left-56 top-20 z-30 border-2 border-primary-light bg-gray-600/50 accent-primary-dark backdrop-blur-md backdrop-filter;
 }

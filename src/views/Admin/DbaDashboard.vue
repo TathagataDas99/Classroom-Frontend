@@ -241,11 +241,9 @@
           </template>
         </section>
         <!-- college level teacher related operations -->
-        <section
-          class="relative flex flex-row flex-wrap items-center justify-evenly rounded-l-xl border-l-[7px] border-black py-1 shadow-md shadow-gray-300/40"
-        >
-          <label for="stream" class="admin-label"
-            >College Teacher Management :
+        <section class="admin-btn-group">
+          <label for="stream" class="admin-label">
+            Teacher Management [College Level] :
           </label>
           <!-- add teacher to the college -->
           <div v-if="userProfile.is_owner">
@@ -262,7 +260,7 @@
             </button>
             <form
               v-if="isAddingTeacherFormOpenCollege"
-              class="form sticky top-20 z-30 place-content-center accent-primary-dark lg:col-span-2"
+              class="form form-admin"
               @submit.prevent="addTeacherCollege"
             >
               <section class="form-section">
@@ -272,7 +270,7 @@
                     class="input-box"
                     type="email"
                     placeholder="Email Id"
-                    v-model.trim.lazy="addTeacherForm.email"
+                    v-model.trim="addTeacherForm.email"
                     required
                   />
                 </section>
@@ -294,10 +292,10 @@
           <!-- delete teacher from college by owner -->
           <div v-if="userProfile.is_owner">
             <button
+              v-if="!isDeleteTeacherCollegeFormOpen"
               class="admin-btn-danger"
               @click="
-                this.isDeleteTeacherCollegeFormOpen =
-                  !this.isDeleteTeacherCollegeFormOpen
+                isDeleteTeacherCollegeFormOpen = !isDeleteTeacherCollegeFormOpen
               "
             >
               <UserRemoveIcon class="admin-btn-icon" />
@@ -305,25 +303,37 @@
             </button>
             <form
               v-if="isDeleteTeacherCollegeFormOpen"
-              class="form place-content-center accent-primary-dark lg:col-span-2"
+              class="form form-admin"
               @submit.prevent="deleteTeacherCollege"
             >
               <div class="form-section">
                 <label class="label" for="teacher">Select Teacher</label>
-                <select
-                  name="teacher"
-                  id="teacher"
-                  v-model="deleteTeacherFormData.id"
-                >
-                  <template v-for="teacher in teacherList" :key="teacher.id">
-                    <option :value="teacher.id">
-                      {{ teacher.email }}
-                    </option>
-                  </template>
-                </select>
+                <section class="input-section">
+                  <select
+                    class="input-box"
+                    name="teacher"
+                    id="teacher"
+                    v-model="deleteTeacherFormData.id"
+                  >
+                    <template v-for="teacher in teacherList" :key="teacher.id">
+                      <option :value="teacher.id">
+                        {{ teacher.email }}
+                      </option>
+                    </template>
+                  </select>
+                </section>
               </div>
               <section class="button-section">
-                <button class="bttn">Delete</button>
+                <button class="bttn-danger">Delete</button>
+                <button
+                  class="bttn"
+                  @click="
+                    isDeleteTeacherCollegeFormOpen =
+                      !isDeleteTeacherCollegeFormOpen
+                  "
+                >
+                  Cancel
+                </button>
               </section>
             </form>
           </div>
