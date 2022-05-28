@@ -465,7 +465,7 @@
               <form
                 v-if="isDeleteTeacherClassroomFormOpen"
                 class="form form-admin"
-                @submit.prevent
+                @submit.prevent="deleteTeacherClassroom"
               >
                 <div class="form-section">
                   <label class="label" for="classroom">Select Classroom</label>
@@ -488,32 +488,38 @@
                     </select>
                   </section>
                 </div>
-                <!-- <button
-                  class="bttn"
-                  @click="getTeachersInClassroom(classroomSlug)"
-                >
-                  Get Teachers
-                </button> -->
                 <div class="form-section" v-if="classroomTeacherList">
                   <label class="label" for="teacher">Select Teacher</label>
-                  <select
-                    name="teacher"
-                    id="teacher"
-                    v-model="deleteTeacherClassroomFormData.id"
-                  >
-                    <template
-                      v-for="teacher in classroomTeacherList"
-                      :key="teacher.id"
+                  <section class="input-section">
+                    <select
+                      class="input-box"
+                      name="teacher"
+                      id="teacher"
+                      v-model="deleteTeacherClassroomFormData.id"
                     >
-                      <option :value="teacher.id">
-                        {{ teacher.email }}
-                      </option>
-                    </template>
-                  </select>
+                      <template
+                        v-for="teacher in classroomTeacherList"
+                        :key="teacher.id"
+                      >
+                        <option :value="teacher.id">
+                          {{ teacher.email }}
+                        </option>
+                      </template>
+                    </select>
+                  </section>
                 </div>
                 <section class="button-section">
-                  <button class="bttn" @click="deleteTeacherClassroom">
+                  <button class="bttn-danger" @click="deleteTeacherClassroom">
                     Delete
+                  </button>
+                  <button
+                    class="bttn"
+                    @click="
+                      isDeleteTeacherClassroomFormOpen =
+                        !isDeleteTeacherClassroomFormOpen
+                    "
+                  >
+                    Cancel
                   </button>
                 </section>
               </form>
