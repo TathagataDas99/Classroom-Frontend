@@ -56,6 +56,14 @@
                   {{ classroom.level }}
                 </td>
               </tr>
+              <tr>
+                <td class="font-heading text-xl font-bold text-primary-dark">
+                  Sem:
+                </td>
+                <td class="font-body text-lg font-semibold">
+                  {{ classroom.current_sem }}
+                </td>
+              </tr>
             </table>
             <div class="button-section">
               <button
