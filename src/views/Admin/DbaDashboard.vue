@@ -1127,7 +1127,7 @@ export default {
           `/classroom-app/college-streams/${this.userProfile.college.slug}/stream/`,
           this.formValues
         );
-        this.$router.replace({ name: "DbaDashboard" });
+        this.$router.go();
         console.log("New Stream Added Successfully");
         console.log(resp);
       } catch (e) {
