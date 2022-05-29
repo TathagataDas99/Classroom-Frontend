@@ -140,11 +140,7 @@
                 <UserAddIcon class="admin-btn-icon" /> Admin
               </button>
               <!-- Add dba to the stream Form -->
-              <form
-                v-if="isAddAdminForm"
-                class="form form-admin"
-                @submit.prevent="addDbaToTheStream"
-              >
+              <form v-if="isAddAdminForm" class="form form-admin">
                 <!-- TODO:Change The DBA Add Function -->
                 <div class="form-section">
                   <label class="label" for="dba">Admin Email</label>
@@ -152,13 +148,13 @@
                     <input
                       type="email"
                       required
-                      v-model="formValues.dba"
+                      v-model="addTeacherForm.email"
                       class="input-box"
                     />
                   </div>
                 </div>
                 <div class="button-section">
-                  <button class="bttn">Add</button>
+                  <button class="bttn" @click="addNewAdmin">Add</button>
                   <button
                     @click="isAddAdminForm = !isAddAdminForm"
                     class="bttn-danger"
@@ -180,33 +176,32 @@
                 admin
               </button>
               <!-- Remove dba  Form -->
-              <form
-                v-if="isRemoveDBAFormOpen"
-                class="form form-admin"
-                @submit.prevent="addDbaToTheStream"
-              >
+              <form v-if="isRemoveDBAFormOpen" class="form form-admin">
                 <div class="form-section">
                   <label class="label" for="dba">Admin</label>
+                  <!-- {{allowedAdminList}} -->
                   <section class="input-section">
                     <select
                       name="dba"
                       id="dba"
-                      v-model="formValues.dba"
+                      v-model="deleteTeacherFormData.id"
                       class="input-box"
                     >
-                      <template v-for="dba in dbaList" :key="dba.dba_id">
+                      <template v-for="dba in allowedAdminList" :key="dba.id">
                         <option
-                          v-if="dba.dba_id != userProfile.dba_id"
-                          :value="dba.dba_id"
+                          v-if="dba.email != userProfile.user.email"
+                          :value="dba.id"
                         >
-                          {{ dba.user.first_name + " " + dba.user.last_name }}
+                          {{ dba.email }}
                         </option>
                       </template>
                     </select>
                   </section>
                 </div>
                 <div class="button-section">
-                  <button class="bttn-danger">Remove</button>
+                  <button class="bttn-danger" @click="removeAdminFromCollege">
+                    Delete
+                  </button>
                   <button
                     class="bttn"
                     @click="isRemoveDBAFormOpen = !isRemoveDBAFormOpen"
@@ -983,6 +978,7 @@ export default {
       isFormOpen: false,
       isFormOpenARFS: false,
       sections: ["A", "B", "C", "D", "E", "F"],
+      allowedAdminList: [],
       classroomList: [],
       teacherList: [],
       classroomTeacherList: [],
@@ -1059,6 +1055,10 @@ export default {
         `/classroom-app/college-create/${this.userProfile.college.slug}/dbas/`
       );
       this.dbaList = dbaListRes.data;
+      const dbaListRes2 = await axios.get(
+        `/classroom-app/college-dba/${this.userProfile.college.slug}/manage-dba/`
+      );
+      this.allowedAdminList = dbaListRes2.data;
 
       const classroomListResp = await axios.get(
         `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/`,
@@ -1212,6 +1212,30 @@ export default {
         console.log(e);
       }
       this.loader = false;
+    },
+    async addNewAdmin() {
+      // this.isAddAdminForm = !this.isAddAdminForm;
+      try {
+        const resp = await axios.post(
+          `/classroom-app/college-dba/${this.userProfile.college.slug}/manage-dba/`,
+          this.addTeacherForm
+        );
+        console.log(resp);
+        console.log("successfully added new dba");
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async removeAdminFromCollege() {
+      try {
+        const resp = await axios.delete(
+          `/classroom-app/college-dba/${this.userProfile.college.slug}/manage-dba/${this.deleteTeacherFormData.id}`
+        );
+        console.log(resp);
+        console.log("successfully delete dba");
+      } catch (e) {
+        console.log(e);
+      }
     },
     async addTeacher() {
       try {
