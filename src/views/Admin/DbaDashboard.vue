@@ -218,11 +218,10 @@
             <!-- add teacher to the college -->
             <td class="py-3 px-6 text-center">
               <button
-                v-if="!isAddingTeacherFormOpenCollege"
                 class="admin-btn"
                 @click="
-                  this.isAddingTeacherFormOpenCollege =
-                    !this.isAddingTeacherFormOpenCollege
+                  isAddingTeacherFormOpenCollege =
+                    !isAddingTeacherFormOpenCollege
                 "
               >
                 <UserAddIcon class="admin-btn-icon" />
@@ -231,7 +230,6 @@
               <form
                 v-if="isAddingTeacherFormOpenCollege"
                 class="form form-admin"
-                @submit.prevent="addTeacherCollege"
               >
                 <section class="form-section">
                   <label class="label">Email Id</label>
@@ -246,7 +244,7 @@
                   </section>
                 </section>
                 <section class="button-section">
-                  <button class="bttn">Add</button>
+                  <button class="bttn" @click="addTeacherCollege">Add</button>
                   <button
                     @click="
                       isAddingTeacherFormOpenCollege =
@@ -1238,12 +1236,15 @@ export default {
       }
     },
     async addTeacher() {
+      this.isAddingTeacherFormOpenCollege =
+        !this.isAddingTeacherFormOpenCollege;
       try {
         await axios.post(
           `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${this.classroomSlug}/manage-teacher/`,
           this.addTeacherForm
         );
         this.addTeacherForm = "";
+        caches.log("teacher added successfully");
       } catch (e) {
         console.log(e);
       }
