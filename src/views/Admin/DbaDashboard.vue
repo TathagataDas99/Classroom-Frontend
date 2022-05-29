@@ -497,11 +497,8 @@
                 <UserAddIcon class="admin-btn-icon" />
                 Add Teacher
               </button>
-              <form
-                v-if="isAddingTeacherFormOpen"
-                class="form form-admin"
-                @submit.prevent="addTeacher"
-              >
+              <form v-if="isAddingTeacherFormOpen" class="form form-admin">
+                <!-- @submit.prevent="addTeacher" -->
                 <div class="form-section">
                   <label class="label" for="classroom">Classroom</label>
                   <section class="input-section">
@@ -525,17 +522,31 @@
                 <section class="form-section">
                   <label class="label">Email Id</label>
                   <section class="input-section">
-                    <input
+                    <select
+                      name="tchr-emails"
+                      class="input-box"
+                      v-model.trim.lazy="addTeacherForm.email"
+                    >
+                      <template
+                        v-for="email in allTeachersList"
+                        :key="email.id"
+                      >
+                        <option :value="email.email">
+                          {{ email.email }}
+                        </option>
+                      </template>
+                    </select>
+                    <!-- <input
                       class="input-box"
                       type="email"
                       placeholder="Email Id"
                       v-model.trim.lazy="addTeacherForm.email"
                       required
-                    />
+                    /> -->
                   </section>
                 </section>
                 <section class="button-section">
-                  <button class="bttn">Add</button>
+                  <button class="bttn" @click="addTeacher">Add</button>
                   <button
                     class="bttn-danger"
                     @click="isAddingTeacherFormOpen = !isAddingTeacherFormOpen"
@@ -560,7 +571,6 @@
               <form
                 v-if="isDeleteTeacherClassroomFormOpen"
                 class="form form-admin"
-                @submit.prevent="deleteTeacherClassroom"
               >
                 <div class="form-section">
                   <label class="label" for="classroom">Select Classroom</label>
@@ -603,6 +613,7 @@
                     </select>
                   </section>
                 </div>
+                <!-- @submit.prevent="deleteTeacherClassroom" -->
                 <section class="button-section">
                   <button class="bttn-danger" @click="deleteTeacherClassroom">
                     Delete
@@ -637,7 +648,7 @@
                 @submit.prevent="addStudent"
               >
                 <div class="form-section">
-                  <label class="label" for="classroom">Class Room</label>
+                  <label class="label" for="classroom">Classroom</label>
                   <section class="input-section">
                     <select
                       class="input-box"
@@ -984,6 +995,7 @@ export default {
       allowedAdminList: [],
       classroomList: [],
       teacherList: [],
+      allTeachersList: [],
       classroomTeacherList: [],
       classroomStudentList: [],
       formValues: {
@@ -1082,6 +1094,7 @@ export default {
         }
       );
       this.teacherList = teacherListResp.data;
+      this.allTeachersList = teacherListResp.data;
     } catch (e) {
       console.log(e);
     }
@@ -1248,7 +1261,7 @@ export default {
           `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${this.classroomSlug}/manage-teacher/`,
           this.addTeacherForm
         );
-        this.addTeacherForm = "";
+        // this.addTeacherForm = "";
         caches.log("teacher added successfully");
       } catch (e) {
         console.log(e);
