@@ -1,256 +1,255 @@
 <template>
-  <div
-    v-if="anyFormOpen"
-    class="h-screen-2xl absolute top-0 z-10 w-screen bg-slate-700/50 backdrop-blur-sm backdrop-filter"
-  ></div>
+  <div v-if="anyFormOpen" class="h-screen-2xl bg-overlay"></div>
   <main class="admin-layout">
-    <section
-      id="1"
-      class="col-span-5 col-start-1 row-start-1 grid grid-flow-row grid-cols-1 place-self-stretch justify-self-stretch"
-    >
+    <section id="1" class="admin-action-area">
       <!-- owner-group -->
-      <section
-        v-if="userProfile.is_owner"
-        id="owner-group"
-        class="my-4 flex flex-col justify-evenly rounded-lg px-4 shadow-md"
-      >
-        <section
-          class="relative flex flex-row flex-wrap items-center justify-evenly rounded-l-xl border-l-[7px] border-black py-1 shadow-md shadow-gray-300/40"
-        >
-          <!-- add dbas to stream -->
-          <template v-if="userProfile.is_owner">
-            <!-- Add dba to the stream -->
-            <label for="stream" class="admin-label">Stream Management : </label>
-            <button
-              class="admin-btn"
-              v-if="!isFormOpen"
-              @click="this.isFormOpen = !this.isFormOpen"
-            >
-              <UserAddIcon class="admin-btn-icon" /> Add Admin
-            </button>
-            <!-- Add dba to the stream Form -->
-            <form
-              v-if="isFormOpen"
-              class="form form-admin"
-              @submit.prevent="addDbaToTheStream"
-            >
-              <div class="form-section">
-                <label class="label" for="stream">stream</label>
-                <div class="input-section">
-                  <select
-                    name="stream"
-                    id="stream"
-                    v-model="formValues.title"
-                    class="input-box"
-                  >
-                    <option
-                      :value="stream.title"
-                      v-for="stream in userProfile.streams"
-                      :key="stream.stream_id"
+      <section class="common-admin" v-if="userProfile.is_owner">
+        <table id="owner-group" class="table-auto">
+          <th colspan="3" class="admin-label border-b-2 border-zinc-500">
+            College Level Management [Owner Only]
+          </th>
+          <!-- Stream Related -->
+          <tr class="">
+            <td class="admin-label border-l-2 border-zinc-500 px-2 text-center">
+              Stream Management :
+            </td>
+            <td class="py-3 px-6 text-center">
+              <!-- Add dba to the stream -->
+              <button
+                class="admin-btn"
+                v-if="!isFormOpen"
+                @click="this.isFormOpen = !this.isFormOpen"
+              >
+                <UserAddIcon class="admin-btn-icon" /> Add Admin
+              </button>
+              <!-- Add dba to the stream Form -->
+              <form
+                v-if="isFormOpen"
+                class="form form-admin"
+                @submit.prevent="addDbaToTheStream"
+              >
+                <div class="form-section">
+                  <label class="label" for="stream">stream</label>
+                  <div class="input-section">
+                    <select
+                      name="stream"
+                      id="stream"
+                      v-model="formValues.title"
+                      class="input-box"
                     >
-                      {{ stream.title }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-section">
-                <label class="label" for="dba">Managed By Admin</label>
-                <div class="input-section">
-                  <select
-                    name="dba"
-                    id="dba"
-                    class="input-box"
-                    v-model="formValues.dba"
-                  >
-                    <template v-for="dba in dbaList" :key="dba.dba_id">
                       <option
-                        v-if="dba.dba_id != userProfile.dba_id"
-                        :value="dba.dba_id"
+                        :value="stream.title"
+                        v-for="stream in userProfile.streams"
+                        :key="stream.stream_id"
                       >
-                        {{ dba.user.first_name + " " + dba.user.last_name }}
+                        {{ stream.title }}
                       </option>
-                    </template>
-                  </select>
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <div class="button-section">
-                <button class="bttn">Add</button>
-                <button @click="isFormOpen = !isFormOpen" class="bttn-danger">
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </template>
-          <!-- remove dbas from stream -->
-          <template v-if="userProfile.is_owner">
-            <!-- TODO: -->
-            <!-- remove dba to the stream -->
-            <button
-              v-if="!isFormOpenARFS"
-              class="admin-btn-danger"
-              @click="this.isFormOpenARFS = !this.isFormOpenARFS"
-            >
-              <UserRemoveIcon class="admin-btn-icon" />
-              remove admin
-            </button>
-            <!-- Remove dba to the stream Form -->
-            <form
-              v-if="isFormOpenARFS"
-              class="form form-admin"
-              @submit.prevent="addDbaToTheStream"
-            >
-              <div class="form-section">
-                <label class="label" for="stream">stream</label>
-                <div class="input-section">
-                  <select
-                    name="stream"
-                    id="stream"
-                    class="input-box"
-                    v-model="formValues.title"
-                  >
-                    <option
-                      :value="stream.title"
-                      v-for="stream in userProfile.streams"
-                      :key="stream.stream_id"
+                <div class="form-section">
+                  <label class="label" for="dba">Managed By Admin</label>
+                  <div class="input-section">
+                    <select
+                      name="dba"
+                      id="dba"
+                      class="input-box"
+                      v-model="formValues.dba"
                     >
-                      {{ stream.title }}
-                    </option>
-                  </select>
+                      <template v-for="dba in dbaList" :key="dba.dba_id">
+                        <option
+                          v-if="dba.dba_id != userProfile.dba_id"
+                          :value="dba.dba_id"
+                        >
+                          {{ dba.user.first_name + " " + dba.user.last_name }}
+                        </option>
+                      </template>
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <div class="form-section">
-                <label class="label" for="dba">DBA</label>
-                <section class="input-section">
-                  <select
-                    name="dba"
-                    id="dba"
-                    v-model="formValues.dba"
-                    class="input-box"
-                  >
-                    <template v-for="dba in dbaList" :key="dba.dba_id">
+                <div class="button-section">
+                  <button class="bttn">Add</button>
+                  <button @click="isFormOpen = !isFormOpen" class="bttn-danger">
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </td>
+            <!-- remove dbas from stream -->
+            <td colspan="2">
+              <!-- TODO: -->
+              <!-- remove dba to the stream -->
+              <button
+                v-if="!isFormOpenARFS"
+                class="admin-btn-danger"
+                @click="this.isFormOpenARFS = !this.isFormOpenARFS"
+              >
+                <UserRemoveIcon class="admin-btn-icon" />
+                remove admin
+              </button>
+              <!-- Remove dba to the stream Form -->
+              <form
+                v-if="isFormOpenARFS"
+                class="form form-admin"
+                @submit.prevent="addDbaToTheStream"
+              >
+                <div class="form-section">
+                  <label class="label" for="stream">stream</label>
+                  <div class="input-section">
+                    <select
+                      name="stream"
+                      id="stream"
+                      class="input-box"
+                      v-model="formValues.title"
+                    >
                       <option
-                        v-if="dba.dba_id != userProfile.dba_id"
-                        :value="dba.dba_id"
+                        :value="stream.title"
+                        v-for="stream in userProfile.streams"
+                        :key="stream.stream_id"
                       >
-                        {{ dba.user.first_name + " " + dba.user.last_name }}
+                        {{ stream.title }}
                       </option>
-                    </template>
-                  </select>
-                </section>
-              </div>
-              <div class="button-section">
-                <button class="bttn">Add</button>
-                <button
-                  class="bttn-danger"
-                  @click="isFormOpenARFS = !isFormOpenARFS"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </template>
-        </section>
-        <!-- college level teacher related operations -->
-        <section class="admin-btn-group">
-          <label for="stream" class="admin-label">
-            Teacher Management [College Level] :
-          </label>
-          <!-- add teacher to the college -->
-          <div v-if="userProfile.is_owner">
-            <button
-              v-if="!isAddingTeacherFormOpenCollege"
-              class="admin-btn"
-              @click="
-                this.isAddingTeacherFormOpenCollege =
-                  !this.isAddingTeacherFormOpenCollege
-              "
-            >
-              <UserAddIcon class="admin-btn-icon" />
-              Add Teacher
-            </button>
-            <form
-              v-if="isAddingTeacherFormOpenCollege"
-              class="form form-admin"
-              @submit.prevent="addTeacherCollege"
-            >
-              <section class="form-section">
-                <label class="label">Email Id</label>
-                <section class="input-section">
-                  <input
-                    class="input-box"
-                    type="email"
-                    placeholder="Email Id"
-                    v-model.trim="addTeacherForm.email"
-                    required
-                  />
-                </section>
-              </section>
-              <section class="button-section">
-                <button class="bttn">Add</button>
-                <button
-                  @click="
-                    isAddingTeacherFormOpenCollege =
-                      !isAddingTeacherFormOpenCollege
-                  "
-                  class="bttn-danger"
-                >
-                  Cancel
-                </button>
-              </section>
-            </form>
-          </div>
-          <!-- delete teacher from college by owner -->
-          <div v-if="userProfile.is_owner">
-            <button
-              v-if="!isDeleteTeacherCollegeFormOpen"
-              class="admin-btn-danger"
-              @click="
-                isDeleteTeacherCollegeFormOpen = !isDeleteTeacherCollegeFormOpen
-              "
-            >
-              <UserRemoveIcon class="admin-btn-icon" />
-              Remove Teacher
-            </button>
-            <form
-              v-if="isDeleteTeacherCollegeFormOpen"
-              class="form form-admin"
-              @submit.prevent="deleteTeacherCollege"
-            >
-              <div class="form-section">
-                <label class="label" for="teacher">Select Teacher</label>
-                <section class="input-section">
-                  <select
-                    class="input-box"
-                    name="teacher"
-                    id="teacher"
-                    v-model="deleteTeacherFormData.id"
+                    </select>
+                  </div>
+                </div>
+                <div class="form-section">
+                  <label class="label" for="dba">DBA</label>
+                  <section class="input-section">
+                    <select
+                      name="dba"
+                      id="dba"
+                      v-model="formValues.dba"
+                      class="input-box"
+                    >
+                      <template v-for="dba in dbaList" :key="dba.dba_id">
+                        <option
+                          v-if="dba.dba_id != userProfile.dba_id"
+                          :value="dba.dba_id"
+                        >
+                          {{ dba.user.first_name + " " + dba.user.last_name }}
+                        </option>
+                      </template>
+                    </select>
+                  </section>
+                </div>
+                <div class="button-section">
+                  <button class="bttn">Add</button>
+                  <button
+                    class="bttn-danger"
+                    @click="isFormOpenARFS = !isFormOpenARFS"
                   >
-                    <template v-for="teacher in teacherList" :key="teacher.id">
-                      <option :value="teacher.id">
-                        {{ teacher.email }}
-                      </option>
-                    </template>
-                  </select>
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </td>
+          </tr>
+          <!-- college level teacher related operations -->
+          <tr class="">
+            <td class="admin-label border-l-2 border-zinc-500 px-2 text-center">
+              Teacher Management:
+            </td>
+            <!-- add teacher to the college -->
+            <td>
+              <button
+                v-if="!isAddingTeacherFormOpenCollege"
+                class="admin-btn"
+                @click="
+                  this.isAddingTeacherFormOpenCollege =
+                    !this.isAddingTeacherFormOpenCollege
+                "
+              >
+                <UserAddIcon class="admin-btn-icon" />
+                Add Teacher
+              </button>
+              <form
+                v-if="isAddingTeacherFormOpenCollege"
+                class="form form-admin"
+                @submit.prevent="addTeacherCollege"
+              >
+                <section class="form-section">
+                  <label class="label">Email Id</label>
+                  <section class="input-section">
+                    <input
+                      class="input-box"
+                      type="email"
+                      placeholder="Email Id"
+                      v-model.trim="addTeacherForm.email"
+                      required
+                    />
+                  </section>
                 </section>
-              </div>
-              <section class="button-section">
-                <button class="bttn-danger">Delete</button>
-                <button
-                  class="bttn"
-                  @click="
-                    isDeleteTeacherCollegeFormOpen =
-                      !isDeleteTeacherCollegeFormOpen
-                  "
-                >
-                  Cancel
-                </button>
-              </section>
-            </form>
-          </div>
-        </section>
+                <section class="button-section">
+                  <button class="bttn">Add</button>
+                  <button
+                    @click="
+                      isAddingTeacherFormOpenCollege =
+                        !isAddingTeacherFormOpenCollege
+                    "
+                    class="bttn-danger"
+                  >
+                    Cancel
+                  </button>
+                </section>
+              </form>
+            </td>
+            <!-- delete teacher from college by owner -->
+            <td class="">
+              <button
+                v-if="!isDeleteTeacherCollegeFormOpen"
+                class="admin-btn-danger"
+                @click="
+                  isDeleteTeacherCollegeFormOpen =
+                    !isDeleteTeacherCollegeFormOpen
+                "
+              >
+                <UserRemoveIcon class="admin-btn-icon" />
+                Remove Teacher
+              </button>
+              <form
+                v-if="isDeleteTeacherCollegeFormOpen"
+                class="form form-admin"
+                @submit.prevent="deleteTeacherCollege"
+              >
+                <div class="form-section">
+                  <label class="label" for="teacher">Select Teacher</label>
+                  <section class="input-section">
+                    <select
+                      class="input-box"
+                      name="teacher"
+                      id="teacher"
+                      v-model="deleteTeacherFormData.id"
+                    >
+                      <template
+                        v-for="teacher in teacherList"
+                        :key="teacher.id"
+                      >
+                        <option :value="teacher.id">
+                          {{ teacher.email }}
+                        </option>
+                      </template>
+                    </select>
+                  </section>
+                </div>
+                <section class="button-section">
+                  <button class="bttn-danger">Delete</button>
+                  <button
+                    class="bttn"
+                    @click="
+                      isDeleteTeacherCollegeFormOpen =
+                        !isDeleteTeacherCollegeFormOpen
+                    "
+                  >
+                    Cancel
+                  </button>
+                </section>
+              </form>
+            </td>
+          </tr>
+        </table>
       </section>
       <!-- COMMON ADMIN SECTION -->
-      <section class="common-admin grid grid-flow-row">
+      <section class="common-admin">
         <!-- creating classroom -->
         <table>
           <th colspan="3" class="admin-label border-b-2 border-zinc-500">
@@ -1121,4 +1120,15 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>
