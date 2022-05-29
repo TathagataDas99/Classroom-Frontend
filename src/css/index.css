@@ -15,11 +15,11 @@
 }
 
 .admin-layout {
-  @apply mx-2 grid   w-screen grid-flow-row grid-cols-1 gap-3 lg:grid-cols-7 lg:grid-rows-2;
+  @apply mx-2 grid  w-screen grid-flow-row grid-cols-1 gap-5 lg:grid-cols-7 lg:grid-rows-2;
 }
 
 .admin-action-area {
-  @apply slow-effect col-span-5 col-start-1 row-start-1 my-1 mx-3 grid grid-flow-row grid-cols-1 gap-3 place-self-stretch justify-self-stretch py-2;
+  @apply slow-effect col-span-5 col-start-1 row-start-1 my-1 mx-3 grid grid-flow-row grid-cols-1 gap-6 place-self-stretch justify-self-stretch py-2;
 }
 
 .admin-btn-danger {
