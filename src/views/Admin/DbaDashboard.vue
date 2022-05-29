@@ -503,6 +503,7 @@
                   <label class="label" for="classroom">Classroom</label>
                   <section class="input-section">
                     <select
+                      required
                       class="input-box"
                       name="classroom"
                       id="classroom"
@@ -523,6 +524,7 @@
                   <label class="label">Email Id</label>
                   <section class="input-section">
                     <select
+                      required
                       name="tchr-emails"
                       class="input-box"
                       v-model.trim.lazy="addTeacherForm.email"
@@ -571,11 +573,13 @@
               <form
                 v-if="isDeleteTeacherClassroomFormOpen"
                 class="form form-admin"
+                @submit.prevent
               >
                 <div class="form-section">
                   <label class="label" for="classroom">Select Classroom</label>
                   <section class="input-section">
                     <select
+                      required
                       class="input-box"
                       name="classroom"
                       id="classroom"
@@ -600,6 +604,7 @@
                       class="input-box"
                       name="teacher"
                       id="teacher"
+                      required
                       v-model="deleteTeacherClassroomFormData.id"
                     >
                       <template
@@ -647,6 +652,7 @@
                   <label class="label" for="classroom">Classroom</label>
                   <section class="input-section">
                     <select
+                      required
                       class="input-box"
                       name="classroom"
                       id="classroom"
