@@ -413,12 +413,13 @@
                   <label class="label">Current Sem</label>
                   <section class="input-section">
                     <select
+                      v-model="createClassroomFormValues.current_sem"
                       name="current-sem"
                       id="curr_sem-1"
                       class="input-box"
                     >
                       <template v-for="i in semList" :key="i">
-                        <option value="i">{{ i }}</option>
+                        <option :value="i">{{ i }}</option>
                       </template>
                     </select>
                   </section>
@@ -847,12 +848,16 @@
         class="grid snap-x snap-mandatory grid-flow-col grid-rows-1 items-center justify-evenly"
       >
         <div
-          class="ClassroomCard hidden opacity-0 lg:block"
-          v-if="classroomList.length >= 4"
+          class="ClassroomCard hidden opacity-0 md:block"
+          v-if="classroomList.length >= 3"
         ></div>
         <div
-          class="ClassroomCard hidden opacity-0 lg:block"
-          v-if="classroomList.length >= 4"
+          class="ClassroomCard hidden opacity-0 md:block"
+          v-if="classroomList.length >= 3"
+        ></div>
+        <div
+          class="ClassroomCard hidden opacity-0 md:block"
+          v-if="classroomList.length >= 3"
         ></div>
         <div
           class="mx-2 rounded-xl bg-sky-200 px-5 py-2 text-center text-bgdark-base shadow-md"
