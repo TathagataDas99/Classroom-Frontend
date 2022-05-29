@@ -13,7 +13,7 @@
           <tr class="">
             <td class="admin-label px-2 text-left">Stream :</td>
             <!-- TODO: ADD stream -->
-            <td colspan="2" class="py-3 px-6 text-center">
+            <td colspan="1" class="py-3 px-6 text-center">
               <button
                 class="admin-btn w-full"
                 @click="isStreamAddFormOpen = !isStreamAddFormOpen"
@@ -45,14 +45,13 @@
                       class="input-box"
                       v-model="formValues.dba"
                     >
-                      <template v-for="dba in dbaList" :key="dba.dba_id">
-                        <option
-                          v-if="dba.dba_id != userProfile.dba_id"
-                          :value="dba.dba_id"
-                        >
-                          {{ dba.user.first_name + " " + dba.user.last_name }}
-                        </option>
-                      </template>
+                      <option :value="userProfile.dba_id" selected>
+                        {{
+                          userProfile.user.first_name +
+                          " " +
+                          userProfile.user.last_name
+                        }}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -67,18 +66,14 @@
                 </div>
               </form>
             </td>
-          </tr>
-          <!--DBA MAP to Stream Related -->
-          <tr class="border-b-2 border-zinc-500">
-            <td class="admin-label px-2 text-center">Map Admin to Stream :</td>
-            <td class="py-3 px-6 text-center">
+            <td colspan="1" class="py-3 px-6 text-center">
               <!-- Add dba to the stream -->
               <button
                 class="admin-btn w-full"
                 v-if="!isFormOpen"
                 @click="this.isFormOpen = !this.isFormOpen"
               >
-                <UserAddIcon class="admin-btn-icon" /> Add Admin
+                <UserAddIcon class="admin-btn-icon" /> Map Admin
               </button>
               <!-- Add dba to the stream Form -->
               <form
@@ -133,43 +128,64 @@
                 </div>
               </form>
             </td>
-            <!-- remove dbas from stream -->
-            <td colspan="2" class="py-3 px-6 text-center">
-              <!-- TODO: -->
-              <!-- remove dba to the stream -->
+          </tr>
+          <!--DBA Add/Remove -->
+          <tr class="border-b-2 border-zinc-500">
+            <td class="admin-label px-2">Manage Admin</td>
+            <td colspan="1" class="py-3 px-6 text-center">
+              <!-- Add dba TODO: -->
               <button
-                v-if="!isFormOpenARFS"
-                class="admin-btn-danger"
-                @click="this.isFormOpenARFS = !this.isFormOpenARFS"
+                class="admin-btn w-full"
+                @click="isAddAdminForm = !isAddAdminForm"
               >
-                <UserRemoveIcon class="admin-btn-icon" />
-                remove admin
+                <UserAddIcon class="admin-btn-icon" /> Admin
               </button>
-              <!-- Remove dba to the stream Form -->
+              <!-- Add dba to the stream Form -->
               <form
-                v-if="isFormOpenARFS"
+                v-if="isAddAdminForm"
                 class="form form-admin"
                 @submit.prevent="addDbaToTheStream"
               >
+                <!-- TODO:Change The DBA Add Function -->
                 <div class="form-section">
-                  <label class="label" for="stream">stream</label>
+                  <label class="label" for="dba">Admin Email</label>
                   <div class="input-section">
-                    <select
-                      name="stream"
-                      id="stream"
+                    <input
+                      type="email"
+                      required
+                      v-model="formValues.dba"
                       class="input-box"
-                      v-model="formValues.title"
-                    >
-                      <option
-                        :value="stream.title"
-                        v-for="stream in userProfile.streams"
-                        :key="stream.stream_id"
-                      >
-                        {{ stream.title }}
-                      </option>
-                    </select>
+                    />
                   </div>
                 </div>
+                <div class="button-section">
+                  <button class="bttn">Add</button>
+                  <button
+                    @click="isAddAdminForm = !isAddAdminForm"
+                    class="bttn-danger"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </td>
+            <!-- remove dbas from stream -->
+            <td colspan="1" class="py-3 px-6 text-center">
+              <!-- TODO: -->
+              <!-- remove dba  -->
+              <button
+                class="admin-btn-danger w-full"
+                @click="isRemoveDBAFormOpen = !isRemoveDBAFormOpen"
+              >
+                <UserRemoveIcon class="admin-btn-icon" />
+                admin
+              </button>
+              <!-- Remove dba  Form -->
+              <form
+                v-if="isRemoveDBAFormOpen"
+                class="form form-admin"
+                @submit.prevent="addDbaToTheStream"
+              >
                 <div class="form-section">
                   <label class="label" for="dba">DBA</label>
                   <section class="input-section">
@@ -194,7 +210,7 @@
                   <button class="bttn">Add</button>
                   <button
                     class="bttn-danger"
-                    @click="isFormOpenARFS = !isFormOpenARFS"
+                    @click="isRemoveDBAFormOpen = !isRemoveDBAFormOpen"
                   >
                     Cancel
                   </button>
@@ -869,6 +885,8 @@ export default {
   },
   data() {
     return {
+      isRemoveDBAFormOpen:false,
+      isAddAdminForm: false,
       isStreamAddFormOpen: false,
       isCreateClassRoomFormOpen: false,
       isAddingTeacherFormOpen: false,
@@ -1003,7 +1021,9 @@ export default {
         this.isDeleteTeacherCollegeFormOpen ||
         this.isStudentAddFormOpen ||
         this.isDeleteStudentClassroomFormOpen ||
-        this.isStreamAddFormOpen
+        this.isStreamAddFormOpen ||
+        this.isRemoveDBAFormOpen ||
+        this.isAddAdminForm
       );
     },
   },
