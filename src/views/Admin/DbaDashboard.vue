@@ -187,7 +187,7 @@
                 @submit.prevent="addDbaToTheStream"
               >
                 <div class="form-section">
-                  <label class="label" for="dba">DBA</label>
+                  <label class="label" for="dba">Admin</label>
                   <section class="input-section">
                     <select
                       name="dba"
@@ -207,9 +207,9 @@
                   </section>
                 </div>
                 <div class="button-section">
-                  <button class="bttn">Add</button>
+                  <button class="bttn-danger">Remove</button>
                   <button
-                    class="bttn-danger"
+                    class="bttn"
                     @click="isRemoveDBAFormOpen = !isRemoveDBAFormOpen"
                   >
                     Cancel
@@ -885,7 +885,7 @@ export default {
   },
   data() {
     return {
-      isRemoveDBAFormOpen:false,
+      isRemoveDBAFormOpen: false,
       isAddAdminForm: false,
       isStreamAddFormOpen: false,
       isCreateClassRoomFormOpen: false,
