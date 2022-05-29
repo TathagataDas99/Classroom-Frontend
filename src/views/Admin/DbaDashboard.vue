@@ -6,13 +6,14 @@
       <section class="common-admin" v-if="userProfile.is_owner">
         <table id="owner-group" class="table-auto">
           <th colspan="3" class="admin-label border-b-2 border-zinc-500 pb-2">
-            College Level Management [Owner Only]
+            College Level Management
+            <span class="text-danger-light">[Owner Only]</span>
           </th>
           <!-- TODO: Stream Add/Edit/Remove -->
           <tr class="">
-            <td class="admin-label px-2 text-center">Stream Management</td>
-            <td class="py-3 px-6 text-center">
-              <!-- Add dba to the stream -->
+            <td class="admin-label px-2 text-left">Stream :</td>
+            <!-- TODO: ADD stream -->
+            <td colspan="2" class="py-3 px-6 text-center">
               <button
                 class="admin-btn w-full"
                 @click="isStreamAddFormOpen = !isStreamAddFormOpen"
@@ -66,82 +67,14 @@
                 </div>
               </form>
             </td>
-            <!-- remove dbas from stream -->
-            <td colspan="2" class="py-3 px-6 text-center">
-              <!-- TODO: -->
-              <!-- remove dba to the stream -->
-              <button
-                v-if="!isFormOpenARFS"
-                class="admin-btn-danger"
-                @click="this.isFormOpenARFS = !this.isFormOpenARFS"
-              >
-                <UserRemoveIcon class="admin-btn-icon" />
-                remove admin
-              </button>
-              <!-- Remove dba to the stream Form -->
-              <form
-                v-if="isFormOpenARFS"
-                class="form form-admin"
-                @submit.prevent="addDbaToTheStream"
-              >
-                <div class="form-section">
-                  <label class="label" for="stream">stream</label>
-                  <div class="input-section">
-                    <select
-                      name="stream"
-                      id="stream"
-                      class="input-box"
-                      v-model="formValues.title"
-                    >
-                      <option
-                        :value="stream.title"
-                        v-for="stream in userProfile.streams"
-                        :key="stream.stream_id"
-                      >
-                        {{ stream.title }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-section">
-                  <label class="label" for="dba">DBA</label>
-                  <section class="input-section">
-                    <select
-                      name="dba"
-                      id="dba"
-                      v-model="formValues.dba"
-                      class="input-box"
-                    >
-                      <template v-for="dba in dbaList" :key="dba.dba_id">
-                        <option
-                          v-if="dba.dba_id != userProfile.dba_id"
-                          :value="dba.dba_id"
-                        >
-                          {{ dba.user.first_name + " " + dba.user.last_name }}
-                        </option>
-                      </template>
-                    </select>
-                  </section>
-                </div>
-                <div class="button-section">
-                  <button class="bttn">Add</button>
-                  <button
-                    class="bttn-danger"
-                    @click="isFormOpenARFS = !isFormOpenARFS"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
-            </td>
           </tr>
           <!--DBA MAP to Stream Related -->
-          <tr class="">
-            <td class="admin-label px-2 text-center">Map Admin to Stream:</td>
+          <tr class="border-b-2 border-zinc-500">
+            <td class="admin-label px-2 text-center">Map Admin to Stream :</td>
             <td class="py-3 px-6 text-center">
               <!-- Add dba to the stream -->
               <button
-                class="admin-btn"
+                class="admin-btn w-full"
                 v-if="!isFormOpen"
                 @click="this.isFormOpen = !this.isFormOpen"
               >
@@ -547,7 +480,7 @@
             <td class="admin-label">Teacher Management</td>
             <td class="py-3 px-6 text-center">
               <button
-                class="admin-btn"
+                class="admin-btn w-full"
                 @click="
                   this.isAddingTeacherFormOpen = !this.isAddingTeacherFormOpen
                 "
@@ -606,7 +539,7 @@
 
             <td class="py-3 px-6 text-center">
               <button
-                class="admin-btn-danger mx-2 my-1"
+                class="admin-btn-danger w-full"
                 @click="
                   this.isDeleteTeacherClassroomFormOpen =
                     !this.isDeleteTeacherClassroomFormOpen
@@ -683,7 +616,7 @@
             <!-- add student to the classroom -->
             <td class="py-3 px-6 text-center">
               <button
-                class="admin-btn"
+                class="admin-btn w-full"
                 @click="this.isStudentAddFormOpen = !this.isStudentAddFormOpen"
               >
                 <UserAddIcon class="admin-btn-icon" />
@@ -752,7 +685,7 @@
             <!-- delete student from particular classroom -->
             <td class="py-3 px-6 text-center">
               <button
-                class="admin-btn-danger"
+                class="admin-btn-danger w-full"
                 @click="
                   this.isDeleteStudentClassroomFormOpen =
                     !this.isDeleteStudentClassroomFormOpen
