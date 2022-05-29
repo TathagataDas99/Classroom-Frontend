@@ -1,6 +1,9 @@
 <template>
   <div v-if="anyFormOpen" class="h-screen-2xl bg-overlay"></div>
-  <main class="admin-layout">
+  <div v-if="loader">
+    <LoaderView />
+  </div>
+  <main class="admin-layout" v-else>
     <section id="1" class="admin-action-area">
       <!-- owner-group -->
       <section class="common-admin" v-if="userProfile.is_owner">
@@ -880,7 +883,7 @@
         <div class="ClassroomCard opacity-0"></div>
         <div class="ClassroomCard opacity-0"></div>
         <div
-          class="mx-2 rounded-xl bg-sky-200 px-5 py-2 text-center text-bgdark-base shadow-md"
+          class="col-span-full mx-2 place-self-center rounded-xl bg-sky-200 px-5 py-2 text-center text-bgdark-base shadow-md"
           v-if="classroomList.length === 0"
         >
           No Classrooms Yet, Please Create One
@@ -969,6 +972,7 @@
 </template>
 
 <script>
+import LoaderView from "../../components/LoaderView.vue";
 import axios from "axios";
 import { mapGetters } from "vuex";
 import { TrashIcon, PencilAltIcon, PlusIcon } from "@heroicons/vue/outline";
@@ -981,6 +985,7 @@ import {
 
 export default {
   components: {
+    LoaderView,
     PencilAltIcon,
     TrashIcon,
     UserRemoveIcon,
@@ -991,6 +996,7 @@ export default {
   },
   data() {
     return {
+      loader: true,
       tempVal: null,
       contactEdit: true,
       isRemoveDBAFormOpen: false,
