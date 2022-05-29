@@ -642,11 +642,7 @@
                 <UserAddIcon class="admin-btn-icon" />
                 Add Student
               </button>
-              <form
-                v-if="isStudentAddFormOpen"
-                class="form form-admin"
-                @submit.prevent="addStudent"
-              >
+              <form v-if="isStudentAddFormOpen" class="form form-admin">
                 <div class="form-section">
                   <label class="label" for="classroom">Classroom</label>
                   <section class="input-section">
@@ -692,7 +688,7 @@
                   </section>
                 </section>
                 <section class="button-section">
-                  <button class="bttn">Add</button>
+                  <button class="bttn" @click="addStudent">Add</button>
                   <button
                     class="bttn-danger"
                     @click="isStudentAddFormOpen = !isStudentAddFormOpen"
@@ -717,7 +713,6 @@
               <form
                 v-if="isDeleteStudentClassroomFormOpen"
                 class="form form-admin"
-                @submit.prevent
               >
                 <div class="form-section">
                   <label class="label" for="classroom">Select Classroom</label>
