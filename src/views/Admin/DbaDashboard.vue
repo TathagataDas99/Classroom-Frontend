@@ -859,18 +859,9 @@
       <section
         class="grid snap-x snap-mandatory grid-flow-col grid-rows-1 items-center justify-evenly"
       >
-        <div
-          class="ClassroomCard hidden opacity-0 md:block"
-          v-if="classroomList.length >= 3"
-        ></div>
-        <div
-          class="ClassroomCard hidden opacity-0 md:block"
-          v-if="classroomList.length >= 3"
-        ></div>
-        <div
-          class="ClassroomCard hidden opacity-0 md:block"
-          v-if="classroomList.length >= 3"
-        ></div>
+        <div class="ClassroomCard opacity-0"></div>
+        <div class="ClassroomCard opacity-0"></div>
+        <div class="ClassroomCard opacity-0"></div>
         <div
           class="mx-2 rounded-xl bg-sky-200 px-5 py-2 text-center text-bgdark-base shadow-md"
           v-if="classroomList.length === 0"
