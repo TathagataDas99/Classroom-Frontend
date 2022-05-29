@@ -1359,7 +1359,7 @@ export default {
         .join(" ");
     },
     async deleteClassroom(slug) {
-      console.log("inside delete -> " + slug);
+      // console.log("inside delete -> " + slug);
       this.tempVal = null;
       try {
         // this.subjectEdit.pop();
