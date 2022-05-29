@@ -776,12 +776,92 @@
         </table>
       </section>
     </section>
-    <!-- Showing classroom -->
+    <!-- SHOW DBA & College Details -->
     <aside
-      id="2"
-      class="col-span-1 row-span-1 snap-y snap-proximity overflow-y-scroll scrollbar-hide lg:col-span-2"
+      class="col-span-1 row-start-3 my-2 mx-2 grid grid-cols-1 grid-rows-3 gap-2 lg:col-span-2 lg:col-start-6 lg:row-start-auto"
     >
-      <section class="flex flex-col flex-wrap items-center justify-evenly">
+      <section
+        tabindex="0"
+        :class="{ 'collapse-open': !contactEdit }"
+        class="collapse"
+      >
+        <div class="collapse-title-addition collapse-title">
+          <span class="font-semibold text-danger-dark">Welcome</span>
+          {{ userProfile.user.first_name }} {{ userProfile.user.last_name }}
+        </div>
+        <div class="collapse-content-layout collapse-content">
+          <span class="collapse-content-label">Email : </span>
+          <p class="col-span-3">
+            {{ userProfile.user.email }}
+          </p>
+          <span class="collapse-content-label">Contact </span>
+          <p class="col-span-2">
+            <input
+              minlength="10"
+              maxlength="10"
+              v-if="userProfile.user.contact_no || !contactEdit"
+              class="w-full bg-bglight-shade px-4 outline-none focus:invalid:text-danger-dark"
+              :class="{
+                'mr-4 border-b-2 border-primary-light focus:invalid:border-danger-dark':
+                  !contactEdit,
+              }"
+              type="tel"
+              :disabled="contactEdit"
+              v-model="userProfile.user.contact_no"
+            />
+            <template v-else>
+              <span class="col-span-3">Not Available</span>
+            </template>
+          </p>
+          <PencilIcon
+            class="collapse-content-icon"
+            @click="contactEdit = !contactEdit"
+            v-if="contactEdit"
+          />
+          <CheckCircleIcon
+            class="collapse-content-icon text-primary-light"
+            v-if="!contactEdit"
+            @click="editContact"
+          />
+        </div>
+      </section>
+      <section tabindex="2" class="collapse">
+        <div class="collapse-title-addition collapse-title">
+          <span class="font-semibold text-danger-dark">College : </span>
+          {{ userProfile.college.name }}
+        </div>
+        <div class="collapse-content-layout collapse-content">
+          <span class="collapse-content-label">City : </span>
+          <p class="col-span-3">
+            {{ userProfile.college.city }}
+          </p>
+          <span class="collapse-content-label">State : </span>
+          <p class="col-span-3">
+            {{ userProfile.college.state }}
+          </p>
+          <span class="collapse-content-label">Address : </span>
+          <p class="col-span-3">
+            {{ userProfile.college.address }}
+          </p>
+        </div>
+      </section>
+    </aside>
+    <!-- Showing classroom -->
+    <footer
+      id="2"
+      class="overflow-x-scroll rounded-xl scrollbar-hide lg:col-span-5 lg:col-start-2 lg:row-start-2"
+    >
+      <section
+        class="grid snap-x snap-mandatory grid-flow-col grid-rows-1 items-center justify-evenly"
+      >
+        <div
+          class="ClassroomCard hidden opacity-0 lg:block"
+          v-if="classroomList.length >= 4"
+        ></div>
+        <div
+          class="ClassroomCard hidden opacity-0 lg:block"
+          v-if="classroomList.length >= 4"
+        ></div>
         <div
           class="mx-2 rounded-xl bg-sky-200 px-5 py-2 text-center text-bgdark-base shadow-md"
           v-if="classroomList.length === 0"
@@ -790,7 +870,7 @@
         </div>
         <div
           v-else
-          class="ClassroomCard"
+          class="ClassroomCard snap-center"
           v-for="classroom in classroomList"
           :key="classroom.id"
         >
@@ -865,7 +945,7 @@
           </div>
         </div>
       </section>
-    </aside>
+    </footer>
   </main>
 </template>
 
@@ -873,7 +953,12 @@
 import axios from "axios";
 import { mapGetters } from "vuex";
 import { TrashIcon, PencilAltIcon, PlusIcon } from "@heroicons/vue/outline";
-import { UserRemoveIcon, UserAddIcon } from "@heroicons/vue/solid";
+import {
+  UserRemoveIcon,
+  UserAddIcon,
+  CheckCircleIcon,
+  PencilIcon,
+} from "@heroicons/vue/solid";
 
 export default {
   components: {
@@ -882,9 +967,12 @@ export default {
     UserRemoveIcon,
     UserAddIcon,
     PlusIcon,
+    CheckCircleIcon,
+    PencilIcon,
   },
   data() {
     return {
+      contactEdit: true,
       isRemoveDBAFormOpen: false,
       isAddAdminForm: false,
       isStreamAddFormOpen: false,

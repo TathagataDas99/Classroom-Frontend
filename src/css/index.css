@@ -15,7 +15,7 @@
 }
 
 .admin-layout {
-  @apply mx-2 grid h-screen w-screen grid-flow-row grid-cols-1 gap-3 lg:grid-cols-7 lg:grid-rows-1;
+  @apply mx-2 grid   w-screen grid-flow-row grid-cols-1 gap-3 lg:grid-cols-7 lg:grid-rows-2;
 }
 
 .admin-action-area {
@@ -189,7 +189,7 @@
 }
 
 .announcement-collapse {
-  @apply slow-effect collapse collapse-plus rounded-box relative mx-3 my-2 border border-base-300 bg-base-100 hover:animate-pulse hover:bg-green-100 focus:animate-none focus:bg-bglight-shade focus:shadow-lg md:mx-24;
+  @apply slow-effect collapse-plus collapse rounded-box relative mx-3 my-2 border border-base-300 bg-base-100 hover:animate-pulse hover:bg-green-100 focus:animate-none focus:bg-bglight-shade focus:shadow-lg md:mx-24;
 }
 .ClassroomCard {
   @apply slow-effect mx-5 my-5  flex w-60 snap-center flex-col rounded-xl border-t-4 bg-bglight-shade shadow-lg backdrop-filter hover:translate-y-1  hover:border-primary-light hover:shadow-2xl hover:backdrop-blur-md md:w-60 lg:w-72;
