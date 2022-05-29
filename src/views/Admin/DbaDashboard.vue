@@ -8,7 +8,7 @@
           <th colspan="3" class="admin-label border-b-2 border-zinc-500 pb-2">
             College Level Management [Owner Only]
           </th>
-          <!-- Stream Add/Edit/Remove -->
+          <!-- TODO: Stream Add/Edit/Remove -->
           <tr class="">
             <td class="admin-label px-2 text-center">Stream Management</td>
             <td class="py-3 px-6 text-center">
