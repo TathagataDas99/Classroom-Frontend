@@ -9,7 +9,7 @@
             College Level Management
             <span class="text-danger-light">[Owner Only]</span>
           </th>
-          <!-- TODO: Stream Add/Edit/Remove -->
+          <!-- TODO: Stream Add -->
           <tr class="">
             <td class="admin-label px-2 text-left">Stream :</td>
             <!-- TODO: ADD stream -->
@@ -21,15 +21,13 @@
                 <PlusIcon class="admin-btn-icon" /> Stream
               </button>
               <!-- Add stream Form -->
-              <form
-                v-if="isStreamAddFormOpen"
-                class="form form-admin"
-                @submit.prevent="addDbaToTheStream"
-              >
+              <form v-if="isStreamAddFormOpen" class="form form-admin">
+                <!-- @submit.prevent="addNewStream" -->
                 <div class="form-section">
-                  <label class="label" for="stream">stream</label>
+                  <label class="label" for="stream">Stream Title</label>
                   <div class="input-section">
                     <input
+                      required
                       type="text"
                       v-model="formValues.title"
                       class="input-box"
@@ -37,9 +35,10 @@
                   </div>
                 </div>
                 <div class="form-section">
-                  <label class="label" for="dba">Managed By Admin</label>
+                  <label class="label" for="dba">Default Admin - Owner</label>
                   <div class="input-section">
                     <select
+                      required
                       name="dba"
                       id="dba"
                       class="input-box"
@@ -56,7 +55,7 @@
                   </div>
                 </div>
                 <div class="button-section">
-                  <button class="bttn">Add</button>
+                  <button class="bttn" @click="addNewStream">Add</button>
                   <button
                     @click="isStreamAddFormOpen = !isStreamAddFormOpen"
                     class="bttn-danger"
@@ -934,10 +933,8 @@
                 <PencilAltIcon class="inline-block w-6 lg:w-5" />
               </div>
             </button>
-            <button
-              class="bttn-danger place-self-end"
-              @click="handelOpen(classroom.slug)"
-            >
+            <button class="bttn-danger place-self-end">
+              <!-- @click="handelOpen(classroom.slug)" -->
               <div class="tooltip" data-tip="Delete Classroom">
                 <TrashIcon class="inline-block w-4 lg:w-5" />
               </div>
@@ -1122,6 +1119,22 @@ export default {
         this.semList.push(i);
       }
     },
+    async addNewStream() {
+      this.isStreamAddFormOpen = !this.isStreamAddFormOpen;
+      try {
+        this.formValues.title = this.titleCase(this.formValues.title);
+        const resp = await axios.post(
+          `/classroom-app/college-streams/${this.userProfile.college.slug}/stream/`,
+          this.formValues
+        );
+        this.$router.replace({ name: "DbaDashboard" });
+        console.log("New Stream Added Successfully");
+        console.log(resp);
+      } catch (e) {
+        console.log("In AddNewStream Function");
+        console.log(e);
+      }
+    },
     async addDbaToTheStream() {
       this.isFormOpen = !this.isFormOpen;
       const res = await axios.post(
@@ -1281,6 +1294,12 @@ export default {
       } catch (e) {
         console.log(e);
       }
+    },
+    titleCase(str) {
+      return str
+        .split(" ")
+        .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
+        .join(" ");
     },
   },
 };
