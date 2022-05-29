@@ -856,6 +856,23 @@
       id="2"
       class="overflow-x-scroll rounded-xl scrollbar-hide lg:col-span-5 lg:col-start-2 lg:row-start-2"
     >
+      <!-- MODAL -->
+      <div class="modal z-50" id="delete-warning" v-show="tempVal !== null">
+        <div class="modal-box">
+          <h3 class="text-center text-lg font-bold">
+            Do you want to delete the Classroom ?
+          </h3>
+          <div class="modal-action">
+            <section class="button-section">
+              <a class="bttn text-center" @click="deleteClassroom(tempVal)">
+                Yes
+              </a>
+              <a href="#" class="bttn-danger text-center">No</a>
+            </section>
+          </div>
+        </div>
+      </div>
+      <!-- MODAL -->
       <section
         class="grid snap-x snap-mandatory grid-flow-col grid-rows-1 items-center justify-evenly"
       >
@@ -872,7 +889,7 @@
           v-else
           class="ClassroomCard snap-center"
           v-for="classroom in classroomList"
-          :key="classroom.id"
+          :key="classroom.slug"
         >
           <table class="mx-3 mt-4 table-auto px-2">
             <tr>
@@ -934,12 +951,16 @@
                 <PencilAltIcon class="inline-block w-6 lg:w-5" />
               </div>
             </button>
-            <button class="bttn-danger place-self-end">
+            <a
+              href="#delete-warning"
+              class="bttn-danger place-self-center text-center"
+              @click="tempVal = classroom.slug"
+            >
               <!-- @click="handelOpen(classroom.slug)" -->
               <div class="tooltip" data-tip="Delete Classroom">
                 <TrashIcon class="inline-block w-4 lg:w-5" />
               </div>
-            </button>
+            </a>
           </div>
         </div>
       </section>
@@ -970,6 +991,7 @@ export default {
   },
   data() {
     return {
+      tempVal: null,
       contactEdit: true,
       isRemoveDBAFormOpen: false,
       isAddAdminForm: false,
@@ -1335,6 +1357,23 @@ export default {
         .split(" ")
         .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
         .join(" ");
+    },
+    async deleteClassroom(slug) {
+      console.log("inside delete -> " + slug);
+      this.tempVal = null;
+      try {
+        // this.subjectEdit.pop();
+        console.log(slug);
+        this.classroomList = this.classroomList.filter(function (obj) {
+          return obj.slug !== slug;
+        });
+        await axios.delete(
+          `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${slug}/`
+        );
+        this.tempVal = null;
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 };
