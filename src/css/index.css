@@ -19,7 +19,7 @@
 }
 
 .admin-action-area {
-  @apply col-span-5 col-start-1 row-start-1 grid grid-flow-row grid-cols-1 place-self-stretch justify-self-stretch;
+  @apply col-span-5 col-start-1 row-start-1 my-1 mx-3 grid grid-flow-row grid-cols-1 gap-3 place-self-stretch justify-self-stretch py-2;
 }
 
 .admin-btn-danger {
@@ -38,7 +38,7 @@
 }
 
 .common-admin {
-  @apply grid grid-flow-row place-content-evenly gap-3 py-2 px-3 shadow-md hover:shadow-xl;
+  @apply grid grid-flow-row place-content-evenly gap-4 rounded-xl bg-bglight-shade py-2 px-3 shadow-md hover:shadow-xl;
 }
 
 .form-admin {

@@ -5,14 +5,14 @@
       <!-- owner-group -->
       <section class="common-admin" v-if="userProfile.is_owner">
         <table id="owner-group" class="table-auto">
-          <th colspan="3" class="admin-label border-b-2 border-zinc-500">
+          <th colspan="3" class="admin-label border-b-2 border-zinc-500 pb-2">
             College Level Management [Owner Only]
           </th>
-          <!-- Stream Related -->
+          <!-- Stream Add/Edit/Remove -->
+          
+          <!--DBA MAP to Stream Related -->
           <tr class="">
-            <td class="admin-label border-l-2 border-zinc-500 px-2 text-center">
-              Stream Management :
-            </td>
+            <td class="admin-label px-2 text-center">Map Admin to Stream:</td>
             <td class="py-3 px-6 text-center">
               <!-- Add dba to the stream -->
               <button
@@ -76,7 +76,7 @@
               </form>
             </td>
             <!-- remove dbas from stream -->
-            <td colspan="2">
+            <td colspan="2" class="py-3 px-6 text-center">
               <!-- TODO: -->
               <!-- remove dba to the stream -->
               <button
@@ -145,12 +145,10 @@
             </td>
           </tr>
           <!-- college level teacher related operations -->
-          <tr class="">
-            <td class="admin-label border-l-2 border-zinc-500 px-2 text-center">
-              Teacher Management:
-            </td>
+          <tr class="border-b-2 border-zinc-500">
+            <td class="admin-label px-2 text-center">Teacher Management:</td>
             <!-- add teacher to the college -->
-            <td>
+            <td class="py-3 px-6 text-center">
               <button
                 v-if="!isAddingTeacherFormOpenCollege"
                 class="admin-btn"
@@ -194,7 +192,7 @@
               </form>
             </td>
             <!-- delete teacher from college by owner -->
-            <td class="">
+            <td class="py-3 px-6 text-center">
               <button
                 v-if="!isDeleteTeacherCollegeFormOpen"
                 class="admin-btn-danger"
@@ -251,7 +249,7 @@
       <!-- COMMON ADMIN SECTION -->
       <section class="common-admin">
         <!-- creating classroom -->
-        <table>
+        <table class="table-auto">
           <th colspan="3" class="admin-label border-b-2 border-zinc-500">
             Classroom Management Area
           </th>
