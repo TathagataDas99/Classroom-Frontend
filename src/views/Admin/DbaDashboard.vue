@@ -966,6 +966,9 @@
             </a>
           </div>
         </div>
+        <div class="ClassroomCard opacity-0"></div>
+        <div class="ClassroomCard opacity-0"></div>
+        <div class="ClassroomCard opacity-0"></div>
       </section>
     </footer>
   </main>
@@ -1375,7 +1378,12 @@ export default {
           return obj.slug !== slug;
         });
         await axios.delete(
-          `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${slug}/`
+          `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${slug}/`,
+          {
+            headers: {
+              Authorization: "JWT " + sessionStorage.getItem("token"),
+            },
+          }
         );
         this.tempVal = null;
       } catch (e) {
