@@ -9,7 +9,7 @@
         :tabindex="index"
         class="announcement-collapse"
         v-for="(assignment, index) in assignments"
-        :key="assignment"
+        :key="assignment.id"
         :class="{ 'collapse-open': openedNotes === index }"
         @focusin="openedNotes = index"
       >
@@ -77,9 +77,15 @@
             <tr>
               <td class="label">submit your assignment</td>
               <td>
-                <form class="form">
+                <form class="form" @submit.prevent="addAssignment(assignment.id)">
                   <section class="input-section-file">
-                    <input type="file" class="input-file" />
+                    <input
+                      title="1 PDF only, Max Size: 5 MB"
+                      class="input-file"
+                      ref="file"
+                      @change="handleFileUpload"
+                      type="file"
+                    />
                   </section>
                   <button-section
                     ><button class="bttn col-span-2">
@@ -111,6 +117,9 @@ export default {
       isActive: 1,
       // isDownload: true,
       openedNotes: -1,
+      formValues: {
+        attached_pdf: null,
+      },
     };
   },
   components: {
@@ -143,9 +152,40 @@ export default {
     activeTab(no) {
       this.isActive = no;
     },
-    // isDownloaded() {
-    //   this.isDownload = !this.isDownload;
-    // },
+    async handleFileUpload(event) {
+      this.formValues.attached_pdf = event.target.files[0];
+      console.log(this.formValues.attached_pdf);
+    },
+    async addAssignment(id) {
+      //TODO: Convert to FormData
+      try {
+        const FormValues = new FormData();
+        FormValues.append("attached_pdf", this.formValues.attached_pdf);
+        FormValues.append("is_submitted", true);
+        FormValues.append("answer_section", "");
+        const res = await axios.post(
+          `/classroom-app/classroom/${this.userProfile.classroom.slug}/semester/${this.id}/subject/${this.subject_slug}/assignment/${id}/submission/`,
+          FormValues,
+          {
+            headers: {
+              Authorization: "JWT " + sessionStorage.getItem("token"),
+              "Content-Type": "multipart/form-data",
+              Accept: "*/*",
+              "Content-Disposition": this.formValues.attached_pdf,
+              boundary: "attached_pdf",
+              Filename: this.formValues.attached_pdf.name,
+            },
+          }
+        );
+        // const assignmentResponse = await axios.get(
+        //   `/classroom-app/classroom/${this.userProfile.classroom.slug}/semester/${this.id}/subject/${this.subject_slug}/assignment/${id}/submission/`
+        // );
+        // this.assignments = assignmentResponse.data;
+        console.log(res);
+      } catch (e) {
+        console.log(e);
+      }
+    },
   },
 };
 </script>
