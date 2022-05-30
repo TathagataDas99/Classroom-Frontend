@@ -9,7 +9,7 @@
           <th>University roll</th>
           <th>Email Id</th>
           <th>Answer Section</th>
-          <th>Submited File</th>
+          <th>Submitted File</th>
           <th>Score Given</th>
           <th>Remarks</th>
         </tr>
@@ -27,14 +27,38 @@
           <td><a :href="submission.submitted_file">Download</a></td>
           <td>
             <input
-              class="input-box"
+              class="w-full bg-bglight-shade text-lg text-zinc-700 decoration-transparent"
+              :class="{ 'subject-edit-input': !subjectEditArr[index] }"
+              :disabled="subjectEditArr[index]"
               type="number"
               min="0"
               max="100"
               v-model="formValue.score"
             />
           </td>
-          <td><textarea v-model="formValue.remarks"></textarea></td>
+          <td>
+            <textarea
+              v-model="formValue.remarks"
+              class="w-full bg-bglight-shade text-lg text-zinc-700 decoration-transparent"
+              :class="{ 'subject-edit-input': !subjectEditArr[index] }"
+              :disabled="subjectEditArr[index]"
+            ></textarea>
+          </td>
+          <td
+            class="absolute top-5 right-5 z-30 flex flex-col items-center justify-evenly"
+            :class="{ 'rounded-xl bg-bgdark-base p-3': !subjectEditArr[index] }"
+          >
+            <PencilIcon
+              v-if="subjectEditArr[index]"
+              @click="subjectEditArr[index] = !subjectEditArr[index]"
+              class="slow-effect h-7 w-5 text-zinc-700 hover:text-zinc-500"
+            />
+            <CheckIcon
+              v-else
+              @click="editPatch(submission, index)"
+              class="slow-effect h-7 w-5 rounded-lg border-2 border-primary-light text-primary-dark hover:text-primary-light"
+            />
+          </td>
         </tr>
       </table>
     </section>
@@ -44,9 +68,20 @@
 <script>
 import axios from "axios";
 import { mapGetters } from "vuex";
+import {
+  PencilIcon,
+  CheckIcon,
+  // TrashIcon,
+  // ReplyIcon,
+} from "@heroicons/vue/solid";
 export default {
+  components: {
+    PencilIcon,
+    CheckIcon,
+  },
   data() {
     return {
+      subjectEditArr: [],
       submissions: [],
       formValue: {
         has_scored: true,
@@ -64,6 +99,9 @@ export default {
       `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${this.id}/submission/`
     );
     this.submissions = submissionsResp.data;
+    for (let i = 0; i < this.submissions.length; i++) {
+      this.subjectEditArr.push(true);
+    }
   },
 };
 </script>
