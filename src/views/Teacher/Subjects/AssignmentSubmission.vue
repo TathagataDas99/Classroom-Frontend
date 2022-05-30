@@ -13,7 +13,7 @@
           <th>Score Given</th>
           <th>Remarks</th>
         </tr>
-        <tr v-for="submission in submissions" :key="submission.id">
+        <tr v-for="(submission, index) in submissions" :key="submission.id">
           <td>
             {{
               submission.submitted_by.user.first_name +
@@ -33,19 +33,19 @@
               type="number"
               min="0"
               max="100"
-              v-model="formValue.score"
+              v-model="formValueList[index].score"
             />
           </td>
           <td>
             <textarea
-              v-model="formValue.remarks"
-              class="w-full bg-bglight-shade text-lg text-zinc-700 decoration-transparent"
+              v-model="formValueList[index].remarks"
+              class="bg-bglight-shade text-lg text-zinc-700 decoration-transparent"
               :class="{ 'subject-edit-input': !subjectEditArr[index] }"
               :disabled="subjectEditArr[index]"
             ></textarea>
           </td>
           <td
-            class="absolute top-5 right-5 z-30 flex flex-col items-center justify-evenly"
+            class="z-30 flex flex-col items-center justify-evenly"
             :class="{ 'rounded-xl bg-bgdark-base p-3': !subjectEditArr[index] }"
           >
             <PencilIcon
@@ -83,11 +83,7 @@ export default {
     return {
       subjectEditArr: [],
       submissions: [],
-      formValue: {
-        has_scored: true,
-        score: 0,
-        remarks: "",
-      },
+      formValueList: [],
     };
   },
   props: ["classroom_slug", "semester_no", "subject_slug", "id"],
@@ -99,9 +95,39 @@ export default {
       `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${this.id}/submission/`
     );
     this.submissions = submissionsResp.data;
-    for (let i = 0; i < this.submissions.length; i++) {
+    for (let i of this.submissions) {
       this.subjectEditArr.push(true);
+      this.formValueList.push({
+        has_scored: true,
+        score: i.score,
+        remarks: i.remarks,
+      });
     }
+  },
+  methods: {
+    async editPatch(submission, index) {
+      try {
+        await axios.patch(
+          `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${this.id}/submission/${submission.id}/`,
+          this.formValueList[index]
+        );
+        this.subjectEditArr[index] = !this.subjectEditArr[index];
+        const submissionsResp = await axios.get(
+          `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${this.id}/submission/`
+        );
+        this.submissions = submissionsResp.data;
+        for (let i of this.submissions) {
+          this.subjectEditArr.push(true);
+          this.formValueList.push({
+            has_scored: true,
+            score: i.score,
+            remarks: i.remarks,
+          });
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
   },
 };
 </script>
