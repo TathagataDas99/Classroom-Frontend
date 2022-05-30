@@ -276,7 +276,7 @@
               <form
                 v-if="isDeleteTeacherCollegeFormOpen"
                 class="form form-admin"
-                @submit.prevent="deleteTeacherCollege"
+                @submit="deleteTeacherCollege"
               >
                 <div class="form-section">
                   <label class="label" for="teacher">Select Teacher</label>
