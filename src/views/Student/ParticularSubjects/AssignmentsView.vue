@@ -86,9 +86,10 @@
                     <input
                       title="1 PDF only, Max Size: 5 MB"
                       class="input-file"
-                      ref="file"
+                      ref="attached_pdf"
                       @change="handleFileUpload"
                       type="file"
+                      accept="application/pdf"
                     />
                   </section>
                   <section class="button-section">
