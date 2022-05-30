@@ -77,7 +77,10 @@
             <tr>
               <td class="label">submit your assignment</td>
               <td>
-                <form class="form" @submit.prevent="addAssignment(assignment.id)">
+                <form
+                  class="form"
+                  @submit.prevent="addAssignment(assignment.id)"
+                >
                   <section class="input-section-file">
                     <input
                       title="1 PDF only, Max Size: 5 MB"
