@@ -79,6 +79,7 @@
               <td>
                 <form
                   class="form"
+                  enctype="multipart/form-data"
                   @submit.prevent="addAssignment(assignment.id)"
                 >
                   <section class="input-section-file">
@@ -90,11 +91,9 @@
                       type="file"
                     />
                   </section>
-                  <button-section
-                    ><button class="bttn col-span-2">
-                      upload
-                    </button></button-section
-                  >
+                  <section class="button-section">
+                    <button class="bttn col-span-2">upload</button>
+                  </section>
                 </form>
               </td>
             </tr>
