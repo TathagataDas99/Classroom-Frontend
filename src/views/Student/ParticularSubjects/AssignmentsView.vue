@@ -173,7 +173,7 @@ export default {
             headers: {
               Authorization: "JWT " + sessionStorage.getItem("token"),
               "Content-Type": "multipart/form-data",
-              Accept: "*/*",
+              Accept: "application/pdf",
               "Content-Disposition": this.formValues.attached_pdf,
               boundary: "attached_pdf",
               Filename: this.formValues.attached_pdf.name,
