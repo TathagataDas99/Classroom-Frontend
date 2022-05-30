@@ -17,7 +17,7 @@
           <span class="text-primary-dark">{{ index + 1 }} .</span>
           {{ assignment.title }}
         </div>
-        <section class="collapse-content grid grid-rows-4 lg:grid-cols-4">
+        <section class="collapse-content grid grid-rows-5 lg:grid-cols-4">
           <div
             class="collapse-content row-start-1 flex flex-row flex-wrap lg:col-span-3 lg:col-start-1 lg:row-span-1"
           >
@@ -73,6 +73,23 @@
               <span class="text-sm font-bold">file-1</span>
             </a>
           </div>
+          <table class="col-span-full row-span-1 table-auto">
+            <tr>
+              <td class="label">submit your assignment</td>
+              <td>
+                <form class="form">
+                  <section class="input-section-file">
+                    <input type="file" class="input-file" />
+                  </section>
+                  <button-section
+                    ><button class="bttn col-span-2">
+                      upload
+                    </button></button-section
+                  >
+                </form>
+              </td>
+            </tr>
+          </table>
         </section>
       </div>
     </section>
