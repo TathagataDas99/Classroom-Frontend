@@ -1304,6 +1304,7 @@ export default {
         await axios.delete(
           `/classroom-app/college-dba/${this.userProfile.college.slug}/manage-teacher-college/${this.deleteTeacherFormData.id}`
         );
+        this.$router.go();
       } catch (e) {
         console.log(e);
       }
