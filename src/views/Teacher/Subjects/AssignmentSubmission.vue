@@ -19,8 +19,8 @@
           <td>{{submission.submitted_by.user.email}}</td>
           <td>{{submission.answer_section}}</td>
           <td><a :href="submission.submitted_file">Download</a></td>
-          <td><input class="input-box" type="number" min="0" max="100"/></td>
-          <td><textarea></textarea></td>
+          <td><input class="input-box" type="number" min="0" max="100" v-model="formValue.score"/></td>
+          <td><textarea v-model="formValue.remarks"></textarea></td>
         </tr>
       </table>
     </section>
@@ -34,6 +34,11 @@ export default {
   data() {
     return {
       submissions: [],
+      formValue: {
+        has_scored : true,
+        score : 0,
+        remarks: ""
+      }
     };
   },
   props: ["classroom_slug", "semester_no", "subject_slug", "id"],
