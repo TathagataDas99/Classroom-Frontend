@@ -211,25 +211,13 @@
         </div>
         <!-- </section> -->
         <div>
-          <button
-            class="bttn"
-            @click="
-              $router.push({
-                name: 'assignmentSubmission',
-                params: {
-                  id: assignment.id,
-                  classroom_slug: classroom_slug,
-                  semester_no: no,
-                  subject_slug: subject_slug,
-                },
-              })
-            "
-          >
+          <button class="bttn" @click="showSubmissions(assignment.id)">
             Show
           </button>
         </div>
       </section>
     </section>
+    <router-view />
   </main>
 </template>
 
@@ -246,7 +234,7 @@ import {
 import { DocumentDownloadIcon } from "@heroicons/vue/solid";
 export default {
   name: "assignmentTeacher",
-  props: ["classroom_slug", "no", "subject_slug"],
+  props: ["classroom_slug", "semester_no", "subject_slug"],
   components: {
     // LoaderCard,
     PencilIcon,
@@ -406,10 +394,10 @@ export default {
     showSubmissions(id) {
       this.$router.push({
         name: "assignmentSubmission",
-        props: {
-          number: id,
+        params: {
+          id: id,
           subject_slug: this.subject_slug,
-          semester_no: this.no,
+          semester_no: this.semester_no,
           classroom_slug: this.classroom_slug,
         },
       });

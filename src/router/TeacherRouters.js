@@ -61,14 +61,14 @@ export default [
         beforeEnter: isAuth,
       },
       {
-        path: "assignments",
+        path: "assignments/",
         name: "assignmentTeacher",
         component: assignmentTeacher,
         props: true,
         beforeEnter: isAuth,
         children: [
           {
-            path: "assignment-:id",
+            path: ":id",
             name: "assignmentSubmission",
             component: assignmentSubmission,
             props: true,
@@ -78,4 +78,11 @@ export default [
       },
     ],
   },
+  /* {
+    path: "/teacher-dashboard/:classroom_slug/semester-:semester_no/:subject_slug/assignments/:id",
+    name: "assignmentSubmission",
+    component: assignmentSubmission,
+    props: true,
+    beforeEnter: isAuth,
+  }, */
 ];

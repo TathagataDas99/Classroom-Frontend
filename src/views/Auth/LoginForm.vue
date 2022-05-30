@@ -117,7 +117,7 @@ export default {
           "/login/jwt/create/",
           this.formValues
         );
-        // console.log(response);
+        console.log(response);
         sessionStorage.setItem("token", response.data.access);
         sessionStorage.setItem("Auth", true);
         this.$store.state.isAuth = true;
