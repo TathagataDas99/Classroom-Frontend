@@ -966,14 +966,19 @@
             <button
               class="bttn place-self-end"
               v-else
-              @click="updateSemester(classroom.slug, classroom.current_sem, index)"
+              @click="
+                updateSemester(
+                  classroom.slug,
+                  classroom.current_sem,
+                  classroom.stream,
+                  index
+                )
+              "
             >
               <!-- TODO:WRITE EDIT FUNCTION OF CLASSROOM -->
               <div class="tooltip" data-tip="Edit Current Semester">
-                <CheckCircleIcon
-                  @change="updateSemester(index)"
-                  class="inline-block w-6 lg:w-5"
-                />
+                <CheckCircleIcon class="inline-block w-6 lg:w-5" />
+                <!-- @change="updateSemester(index)" -->
               </div>
             </button>
             <a
@@ -1420,15 +1425,45 @@ export default {
         console.log(e);
       }
     },
-    async updateSemester(slug, newCurrent_sem, index) {
+    async updateSemester(slug, newCurrent_sem, stream, index) {
       this.semEditArr[index] = !this.semEditArr[index];
       this.newCurrentSem = newCurrent_sem;
-      console.log(this.oldCurrentSem);
-      console.log(this.newCurrentSem);
+      // console.log(slug);
+      // console.log(this.oldCurrentSem);
+      // console.log(this.newCurrentSem);
       // TODO: Fetch all sem details for current classroom selected
-      const sems = await axios.get(`/classroom-app/classroom/${slug}/semester/`).data;
-      console.log(sems);
-      // TODO: filter sem by old and new value to send 2 patch req.
+      const semResp = await axios.get(
+        `/classroom-app/classroom/${slug}/semester/`
+      );
+      const semList = semResp.data;
+      // console.log(semResp);
+      // console.log(semList);
+      console.log(semList[parseInt(this.newCurrentSem) - 1].is_current_sem);
+      //TODO: Update New Sem as current
+      await axios.patch(
+        `/classroom-app/classroom/${slug}/semester/${
+          semList[parseInt(this.newCurrentSem) - 1].id
+        }/`,
+        { is_current_sem: true }
+      );
+      //TODO: Update Old Sem as not current
+      await axios.patch(
+        `/classroom-app/classroom/${slug}/semester/${
+          semList[parseInt(this.oldCurrentSem) - 1].id
+        }/`,
+        { is_current_sem: true }
+      );
+      console.log(semList[parseInt(this.oldCurrentSem) - 1].is_current_sem);
+
+      // TODO: update the current classroom selected
+      let FData = new FormData();
+      FData.append("stream", stream);
+      FData.append("current_sem", newCurrent_sem);
+      await axios.patch(
+        `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${slug}/`,
+        FData
+      );
+      this.$router.go();
     },
     editOldSemValue(current_sem, index) {
       this.semEditArr[index] = !this.semEditArr[index];
