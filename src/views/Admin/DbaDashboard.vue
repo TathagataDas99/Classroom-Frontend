@@ -1451,11 +1451,11 @@ export default {
         `/classroom-app/classroom/${slug}/semester/${
           semList[parseInt(this.oldCurrentSem) - 1].id
         }/`,
-         {
-            headers: {
-              Authorization: "JWT " + sessionStorage.getItem("token"),
-            },
+        {
+          headers: {
+            Authorization: "JWT " + sessionStorage.getItem("token"),
           },
+        },
         { is_current_sem: false }
       );
       console.log(semList[parseInt(this.oldCurrentSem) - 1].is_current_sem);
@@ -1466,14 +1466,14 @@ export default {
       FData.append("current_sem", newCurrent_sem);
       await axios.patch(
         `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${slug}/`,
-          FData,
+        FData,
         {
-            headers: {
-              "Content-Type": "multipart/form-data",
+          headers: {
+            "Content-Type": "multipart/form-data",
             Accept: "*/*",
-              Authorization: "JWT " + sessionStorage.getItem("token"),
-            },
-          }
+            Authorization: "JWT " + sessionStorage.getItem("token"),
+          },
+        }
       );
       this.$router.go();
     },
