@@ -172,7 +172,7 @@
             <input
               type="text"
               v-model="assignment.description"
-              class="w-full font-body text-xl"
+              class="w-full columns-2 font-body text-xl"
               :class="{
                 'subject-edit-input collapse-title': !subjectEdit[index],
               }"
@@ -228,7 +228,9 @@
           <div
             class="col-span-1 row-span-1 flex flex-row flex-wrap items-center justify-start space-x-2 rounded-lg bg-sky-100 shadow-md"
           >
-            <label for="" class="label">Download Assignment</label>
+            <label for="" class="ml-14 font-heading text-lg font-bold"
+              >Assignment</label
+            >
             <a
               class="slow-effect group bottom-5 flex flex-col items-center justify-evenly hover:scale-105 hover:animate-pulse hover:text-danger-light"
               :href="'http://localhost:8000' + assignment.attached_files"
@@ -242,9 +244,7 @@
               >
             </a>
           </div>
-          <div
-            class="col-span-1 row-span-1 place-self-stretch justify-self-stretch"
-          >
+          <div class="col-span-1 row-span-1 w-full">
             <button class="bttn w-full" @click="showSubmissions(assignment.id)">
               Show Submitted Assignments
             </button>
