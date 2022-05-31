@@ -1451,11 +1451,6 @@ export default {
         `/classroom-app/classroom/${slug}/semester/${
           semList[parseInt(this.oldCurrentSem) - 1].id
         }/`,
-        {
-          headers: {
-            Authorization: "JWT " + sessionStorage.getItem("token"),
-          },
-        },
         { is_current_sem: false }
       );
       console.log(semList[parseInt(this.oldCurrentSem) - 1].is_current_sem);
