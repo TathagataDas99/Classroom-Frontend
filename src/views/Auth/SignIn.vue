@@ -1,7 +1,7 @@
 <template>
   <div v-if="error && showError">
     <template v-for="e in error" :key="e">
-      <notificationView :error="e"/>
+      <notificationView :error="e" />
     </template>
   </div>
   <div class="signin-view">

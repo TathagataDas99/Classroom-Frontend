@@ -1187,6 +1187,24 @@ export default {
     },
   },
   methods: {
+    async editContact() {
+      try {
+        this.contactEdit = !this.contactEdit;
+        console.log(this.userProfile.user.contact_no);
+        await axios.patch(
+          `/auth/users/me/`,
+          { contact_no: this.userProfile.user.contact_no },
+          {
+            headers: {
+              Authorization: "JWT " + sessionStorage.getItem("token"),
+            },
+          }
+        );
+        this.$router.go();
+      } catch (e) {
+        console.log(e);
+      }
+    },
     listOfCurrentSem() {
       this.semList = [];
       for (let i = 1; i <= this.duration * 2; i++) {
