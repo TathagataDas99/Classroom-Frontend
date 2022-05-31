@@ -959,7 +959,7 @@
               @click="semEditArr[index] = !semEditArr[index]"
             >
               <!-- TODO:WRITE EDIT FUNCTION OF CLASSROOM -->
-              <div class="tooltip" data-tip="Edit Sem &amp; Title">
+              <div class="tooltip" data-tip="Edit Current Semester">
                 <PencilAltIcon
                   v-if="semEditArr[index]"
                   class="inline-block w-6 lg:w-5"
