@@ -1,17 +1,9 @@
 <template>
-  <Transition>
-    <div class="flex flex-row justify-evenly" v-if="error && showError">
-      <div class="notification bg-danger-light">
-        <p class="mx-1">
-          {{ error[0] }}
-        </p>
-        <XCircleIcon
-          @click="closeNotification"
-          class="inline-block h-10 w-10 font-bold text-bglight-shade md:h-6 md:w-6"
-        />
-      </div>
-    </div>
-  </Transition>
+  <div v-if="error && showError">
+    <template v-for="e in error" :key="e">
+      <notificationView :error="e"/>
+    </template>
+  </div>
   <div class="signin-view">
     <div v-if="loader">
       <LoaderView />
@@ -125,12 +117,12 @@
 <script>
 import axios from "axios";
 import LoaderView from "../../components/LoaderView.vue";
+import notificationView from "../../components/notificationView.vue";
 import {
   UserIcon,
   LockClosedIcon,
   LockOpenIcon,
   MailIcon,
-  XCircleIcon,
 } from "@heroicons/vue/solid";
 export default {
   name: "SignIn",
@@ -140,7 +132,7 @@ export default {
     LockClosedIcon,
     MailIcon,
     LockOpenIcon,
-    XCircleIcon,
+    notificationView,
   },
   data() {
     return {
