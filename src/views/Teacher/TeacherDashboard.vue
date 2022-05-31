@@ -182,14 +182,22 @@ export default {
     this.loader = false;
   },
   methods: {
-    editContact() {
-      this.contactEdit = !this.contactEdit;
-      // TODO: implement this function
-      // try{
-      //   const response = await axios.patch('')
-      // } catch(error){
-      //   console.log(error)
-      // }
+    async editContact() {
+      try {
+        this.contactEdit = !this.contactEdit;
+        await axios.patch(
+          `/auth/users/me/`,
+          { contact_no: this.userProfile.user.contact_no },
+          {
+            headers: {
+              Authorization: "JWT " + sessionStorage.getItem("token"),
+            },
+          }
+        );
+        this.$router.go();
+      } catch (e) {
+        console.log(e);
+      }
     },
     handelOpen(slug) {
       this.$router.push({
