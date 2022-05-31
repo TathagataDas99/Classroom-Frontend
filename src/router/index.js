@@ -4,6 +4,7 @@ import authRouters from "./AuthRouters";
 import teacherRouters from "./TeacherRouters";
 import welcomeRouters from "./WelcomeRouters";
 import DbaRouters from "./DbaRouters";
+import notFound from "../views/NotFount.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,6 +14,11 @@ const router = createRouter({
     ...teacherRouters,
     ...welcomeRouters,
     ...DbaRouters,
+    {
+      path: "/:catchAll(.*)",
+      name: notFound,
+      component: notFound,
+    },
   ],
 });
 
