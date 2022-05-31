@@ -122,7 +122,7 @@
 
       <section
         :tabindex="index"
-        class="announcement-collapse"
+        class="collapse mx-10 md:mx-20"
         v-for="(assignment, index) in assignments"
         :key="assignment.id"
         :class="{ 'collapse-open max-h-96': openedNotes === index }"
@@ -130,16 +130,16 @@
       >
         <!-- #FIXME: Edit card opening all at same time -->
         <div class="absolute top-5 right-5 flex w-20 flex-row justify-evenly">
-          <PencilIcon
+          <!-- <PencilIcon
             v-if="subjectEdit[index]"
             @click="subjectEdit[index] = !subjectEdit[index]"
             class="slow-effect h-7 w-5 text-zinc-700 hover:text-zinc-500"
-          />
-          <CheckIcon
+          /> -->
+          <!-- <CheckIcon
             v-else
             @click="editPatch(assignment, index)"
             class="slow-effect h-7 w-5 rounded-lg border-2 border-primary-light text-primary-dark hover:text-primary-light"
-          />
+          /> -->
           <div class="tooltip tooltip-left" data-tip="Delete Subject">
             <!-- deleteAnnouncement(assignment.slug) -->
             <a href="#delete-warning">
@@ -159,62 +159,90 @@
           :disabled="subjectEdit[index]"
           placeholder="assignment title"
         />
-        <input
-          type="text"
-          v-model="assignment.description"
-          class="collapse-content columns-1 font-body text-base font-medium md:col-span-3"
-          :class="{ 'subject-edit-input collapse-title': !subjectEdit[index] }"
-          :disabled="subjectEdit[index]"
-          placeholder="assignment description"
-        />
-        <input
-          type="number"
-          v-model="assignment.alloted_marks"
-          class="collapse-content columns-1 font-body text-base font-medium md:col-span-3"
-          :class="{ 'subject-edit-input collapse-title': !subjectEdit[index] }"
-          :disabled="subjectEdit[index]"
-          placeholder="assignment description"
-        />
-        <input
-          type="date"
-          v-model="assignment.due_date"
-          class="collapse-content columns-1 font-body text-base font-medium md:col-span-3"
-          :class="{ 'subject-edit-input collapse-title': !subjectEdit[index] }"
-          :disabled="subjectEdit[index]"
-          pattern="\d{4}-\d{2}-\d{2}"
-          placeholder="assignment description"
-        />
-        <input
-          type="time"
-          v-model="assignment.due_time"
-          class="collapse-content columns-1 font-body text-base font-medium md:col-span-3"
-          :class="{ 'subject-edit-input collapse-title': !subjectEdit[index] }"
-          :disabled="subjectEdit[index]"
-          pattern="\d{2}:\d{2}:\d{2}"
-          placeholder="assignment description"
-        />
-        <!-- <section
-          class="collapse-content col-span-1 row-span-1 flex flex-row flex-wrap items-center justify-start font-body lg:col-start-4 lg:row-start-3"
-        > -->
-        <div
-          class="collapse-content col-span-full row-span-1 flex flex-row flex-wrap items-center justify-evenly md:col-span-2 md:row-start-2"
+        <section
+          class="collapse-content grid grid-flow-col grid-cols-2 grid-rows-2"
         >
-          <a
-            class="slow-effect bottom-5 flex flex-col items-center justify-evenly hover:text-primary-light"
-            :href="'http://localhost:8000' + assignment.attached_files"
-          >
-            <DocumentDownloadIcon
-              class="slow-effect w-10 text-primary-dark hover:scale-110 hover:text-primary-light"
+          <div class="col-span-1 row-span-1">
+            <p for="px-2 inline-block text-2xl font-heading">Description :</p>
+            <input
+              type="text"
+              v-model="assignment.description"
+              class="font-body text-xl"
+              :class="{
+                'subject-edit-input collapse-title': !subjectEdit[index],
+              }"
+              :disabled="subjectEdit[index]"
+              placeholder="assignment description"
             />
-            <span class="text-sm font-bold">attached file</span>
-          </a>
-        </div>
-        <!-- </section> -->
-        <div>
-          <button class="bttn" @click="showSubmissions(assignment.id)">
-            Show
-          </button>
-        </div>
+          </div>
+          <div class="col-span-1 row-span-1 flex flex-col justify-evenly">
+            <section class="flex flex-row flex-wrap items-center justify-start">
+              <label class="label" for="marks">Marks</label>
+              <input
+                type="number"
+                v-model="assignment.alloted_marks"
+                class="collapse-content columns-1 font-body text-xl font-bold text-danger-dark"
+                :class="{
+                  'subject-edit-input collapse-title': !subjectEdit[index],
+                }"
+                :disabled="subjectEdit[index]"
+                placeholder="assignment description"
+              />
+            </section>
+            <section class="flex flex-row flex-wrap items-center justify-start">
+              <label class="label" for="marks">Due Date</label>
+              <input
+                type="date"
+                v-model="assignment.due_date"
+                class="collapse-content columns-1 font-body text-xl font-bold text-danger-dark"
+                :class="{
+                  'subject-edit-input collapse-title': !subjectEdit[index],
+                }"
+                :disabled="subjectEdit[index]"
+                pattern="\d{4}-\d{2}-\d{2}"
+                placeholder="assignment description"
+              />
+            </section>
+            <section class="flex flex-row flex-wrap items-center justify-start">
+              <label class="label" for="marks">Due Time</label>
+              <input
+                type="time"
+                v-model="assignment.due_time"
+                class="collapse-content columns-1 font-body text-xl font-bold text-danger-dark"
+                :class="{
+                  'subject-edit-input collapse-title': !subjectEdit[index],
+                }"
+                :disabled="subjectEdit[index]"
+                pattern="\d{2}:\d{2}:\d{2}"
+                placeholder="assignment description"
+              />
+            </section>
+          </div>
+          <div
+            class="col-span-1 row-span-1 flex flex-row flex-wrap items-center justify-start space-x-2 rounded-lg bg-sky-100 shadow-md"
+          >
+            <label for="" class="label">Download Assignment</label>
+            <a
+              class="slow-effect group bottom-5 flex flex-col items-center justify-evenly hover:text-danger-light"
+              :href="'http://localhost:8000' + assignment.attached_files"
+            >
+              <DocumentDownloadIcon
+                class="slow-effect slow-effect w-14 text-info-dark hover:scale-110 group-hover:text-danger-light"
+              />
+              <span
+                class="slow-effect text-sm font-bold text-info-dark group-hover:text-danger-light"
+                >attached file</span
+              >
+            </a>
+          </div>
+          <div
+            class="col-span-1 row-span-1 place-self-stretch justify-self-stretch"
+          >
+            <button class="bttn w-full" @click="showSubmissions(assignment.id)">
+              Show Submitted Assignments
+            </button>
+          </div>
+        </section>
       </section>
     </section>
     <router-view />
@@ -225,8 +253,8 @@
 import axios from "axios";
 import { mapGetters } from "vuex";
 import {
-  PencilIcon,
-  CheckIcon,
+  // PencilIcon,
+  // CheckIcon,
   TrashIcon,
   PlusCircleIcon,
 } from "@heroicons/vue/solid";
@@ -237,9 +265,9 @@ export default {
   props: ["classroom_slug", "semester_no", "subject_slug"],
   components: {
     // LoaderCard,
-    PencilIcon,
+    // PencilIcon,
     PlusCircleIcon,
-    CheckIcon,
+    // CheckIcon,
     TrashIcon,
     DocumentDownloadIcon,
   },
