@@ -113,7 +113,7 @@
     </div>
     <!-- MODAL -->
 
-    <section>
+    <section class="mt-4">
       <template v-if="loader">
         <template v-for="i in 4" :key="i">
           <LoaderView class="col-span-1 row-span-1 place-self-center" />
