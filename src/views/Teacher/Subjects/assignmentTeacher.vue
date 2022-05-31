@@ -122,10 +122,10 @@
 
       <section
         :tabindex="index"
-        class="collapse mx-10 md:mx-20"
+        class="slow-effect collapse mx-10 shadow-md md:mx-20"
         v-for="(assignment, index) in assignments"
         :key="assignment.id"
-        :class="{ 'collapse-open max-h-96': openedNotes === index }"
+        :class="{ 'collapse-open max-h-96 shadow-xl': openedNotes === index }"
         @focusin="openedNotes = index"
       >
         <!-- #FIXME: Edit card opening all at same time -->
