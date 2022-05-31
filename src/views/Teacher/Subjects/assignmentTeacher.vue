@@ -114,13 +114,14 @@
     <!-- MODAL -->
 
     <section>
-      <!-- <template v-if="loader">
+      <template v-if="loader">
         <template v-for="i in 4" :key="i">
-          <LoaderCard class="col-span-1 row-span-1 place-self-center" />
+          <LoaderView class="col-span-1 row-span-1 place-self-center" />
         </template>
-      </template> -->
+      </template>
 
       <section
+        v-else
         :tabindex="index"
         class="slow-effect collapse mx-10 shadow-md md:mx-20"
         v-for="(assignment, index) in assignments"
@@ -258,13 +259,13 @@ import {
   TrashIcon,
   PlusCircleIcon,
 } from "@heroicons/vue/solid";
-// import LoaderCard from "../../../components/LoaderCard.vue";
+import LoaderView from "../../../components/LoaderView.vue";
 import { DocumentDownloadIcon } from "@heroicons/vue/solid";
 export default {
   name: "assignmentTeacher",
   props: ["classroom_slug", "semester_no", "subject_slug"],
   components: {
-    // LoaderCard,
+    LoaderView,
     // PencilIcon,
     PlusCircleIcon,
     // CheckIcon,
@@ -289,7 +290,7 @@ export default {
         due_time: null,
       },
       attached_files: [],
-      loader: false,
+      loader: true,
       assignments: [], //#FIXME: this might be an array
       id: "",
       isActive: 1,
