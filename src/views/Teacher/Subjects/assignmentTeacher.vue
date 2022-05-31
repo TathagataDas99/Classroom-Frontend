@@ -1,6 +1,9 @@
 <template>
   <!-- <h1>{{ assignments }}</h1> -->
-  <main class="w-screen" @click="openedNotes = -1">
+  <main
+    class="mx-2 grid w-screen grid-flow-col grid-cols-12 gap-2"
+    @click="openedNotes = -1"
+  >
     <!-- <h1>{{attached_files}}</h1> -->
     <!-- notes add form -->
     <aside class="absolute bottom-7 right-2 z-50 md:right-10">
@@ -112,8 +115,8 @@
       </div>
     </div>
     <!-- MODAL -->
-
-    <section class="mt-4">
+    <!-- Assignment Cards -->
+    <section class="col-span-7 mt-4">
       <template v-if="loader">
         <template v-for="i in 4" :key="i">
           <LoaderView class="col-span-1 row-span-1 place-self-center" />
@@ -162,14 +165,14 @@
           placeholder="assignment title"
         />
         <section
-          class="collapse-content grid grid-flow-col grid-cols-2 grid-rows-2"
+          class="collapse-content z-40 grid grid-flow-col grid-cols-2 grid-rows-2"
         >
-          <div class="col-span-1 row-span-1">
+          <div class="col-span-1 row-span-1 w-full">
             <p for="px-2 inline-block text-2xl font-heading">Description :</p>
             <input
               type="text"
               v-model="assignment.description"
-              class="font-body text-xl"
+              class="w-full font-body text-xl"
               :class="{
                 'subject-edit-input collapse-title': !subjectEdit[index],
               }"
@@ -249,7 +252,13 @@
         </section>
       </section>
     </section>
-    <router-view />
+    <!-- Assignment Cards -->
+
+    <!-- Assignment Submissions Cards -->
+    <Transition>
+      <router-view class="col-span-5 mt-5" />
+    </Transition>
+    <!--EOF --- Assignment Submissions Cards End-->
   </main>
 </template>
 
@@ -437,3 +446,16 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>

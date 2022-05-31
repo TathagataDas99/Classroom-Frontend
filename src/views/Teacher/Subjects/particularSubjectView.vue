@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex h-screen flex-col items-center justify-evenly bg-bglight-base"
+    class="mt-10 flex h-screen flex-col items-center justify-evenly bg-bglight-base"
   >
     <div v-if="loader">
       <LoaderView />
