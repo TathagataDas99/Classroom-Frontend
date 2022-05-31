@@ -130,6 +130,7 @@
         @focusin="openedNotes = index"
       >
         <!-- #FIXME: Edit card opening all at same time -->
+        <!-- #FIXME: Edit Buttons for patch -->
         <div class="absolute top-5 right-5 flex w-20 flex-row justify-evenly">
           <!-- <PencilIcon
             v-if="subjectEdit[index]"
@@ -224,7 +225,7 @@
           >
             <label for="" class="label">Download Assignment</label>
             <a
-              class="slow-effect group bottom-5 flex flex-col items-center justify-evenly hover:text-danger-light"
+              class="slow-effect group bottom-5 flex flex-col items-center justify-evenly hover:scale-105 hover:animate-pulse hover:text-danger-light"
               :href="'http://localhost:8000' + assignment.attached_files"
             >
               <DocumentDownloadIcon
