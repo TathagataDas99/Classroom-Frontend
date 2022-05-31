@@ -891,7 +891,7 @@
         <div
           v-else
           class="ClassroomCard snap-center"
-          v-for="classroom in classroomList"
+          v-for="(classroom, index) in classroomList"
           :key="classroom.slug"
         >
           <table class="mx-3 mt-4 table-auto px-2">
@@ -940,21 +940,39 @@
                 Sem:
               </td>
               <td class="font-body text-lg font-semibold">
-                {{ classroom.current_sem }}
+                <input
+                  type="number"
+                  min="1"
+                  :max="2 * (classroom.end_year - classroom.start_year)"
+                  class="w-full bg-bglight-shade text-lg text-zinc-700 decoration-transparent"
+                  :class="{ 'input-box mx-2': !semEditArr[index] }"
+                  :disabled="semEditArr[index]"
+                  v-model="classroom.current_sem"
+                />
+                <!-- {{ classroom.current_sem }} -->
               </td>
             </tr>
           </table>
           <div class="button-section">
             <button
               class="bttn place-self-end"
-              @click="handelOpen(classroom.slug)"
+              @click="semEditArr[index] = !semEditArr[index]"
             >
               <!-- TODO:WRITE EDIT FUNCTION OF CLASSROOM -->
               <div class="tooltip" data-tip="Edit Sem &amp; Title">
-                <PencilAltIcon  class="inline-block w-6 lg:w-5" />
+                <PencilAltIcon
+                  v-if="semEditArr[index]"
+                  class="inline-block w-6 lg:w-5"
+                />
+                <CheckCircleIcon
+                  @change="updateSemester(index)"
+                  v-else
+                  class="inline-block w-6 lg:w-5"
+                />
               </div>
             </button>
             <a
+              v-show="semEditArr[index]"
               href="#delete-warning"
               class="bttn-danger place-self-center text-center"
               @click="tempVal = classroom.slug"
@@ -1394,6 +1412,9 @@ export default {
       } catch (e) {
         console.log(e);
       }
+    },
+    updateSemester(index) {
+      this.semEditArr[index] = !this.semEditArr[index];
     },
   },
 };
