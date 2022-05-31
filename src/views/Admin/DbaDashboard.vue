@@ -956,17 +956,22 @@
           <div class="button-section">
             <button
               class="bttn place-self-end"
+              v-if="semEditArr[index]"
               @click="editOldSemValue(classroom.current_sem, index)"
+            >
+              <div class="tooltip" data-tip="Edit Current Semester">
+                <PencilAltIcon class="inline-block w-6 lg:w-5" />
+              </div>
+            </button>
+            <button
+              class="bttn place-self-end"
+              v-else
+              @click="updateSemester(classroom.current_sem, index)"
             >
               <!-- TODO:WRITE EDIT FUNCTION OF CLASSROOM -->
               <div class="tooltip" data-tip="Edit Current Semester">
-                <PencilAltIcon
-                  v-if="semEditArr[index]"
-                  class="inline-block w-6 lg:w-5"
-                />
                 <CheckCircleIcon
                   @change="updateSemester(index)"
-                  v-else
                   class="inline-block w-6 lg:w-5"
                 />
               </div>
@@ -1047,8 +1052,8 @@ export default {
       dbaList: [],
       duration: 2,
       semList: [1, 2, 3, 4],
-      oldCurrentSem : null,
-      newCurrentSem : null,
+      oldCurrentSem: null,
+      newCurrentSem: null,
       createClassroomFormValues: {
         title: "",
         level: "Bachelors",
@@ -1417,11 +1422,16 @@ export default {
     },
     updateSemester(newCurrent_sem, index) {
       this.semEditArr[index] = !this.semEditArr[index];
+      this.newCurrentSem = newCurrent_sem;
+      console.log(this.oldCurrentSem);
+      console.log(this.newCurrentSem);
+      // TODO: Fetch all sem details for current classroom selected
+      // TODO: filter sem by old and new value to send 2 patch req.
     },
-    editOldSemValue(current_sem, index){
+    editOldSemValue(current_sem, index) {
       this.semEditArr[index] = !this.semEditArr[index];
       this.oldCurrentSem = current_sem;
-    }
+    },
   },
 };
 </script>
