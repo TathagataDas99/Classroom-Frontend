@@ -68,9 +68,11 @@
               :href="assignment.attached_pdf"
             >
               <DocumentDownloadIcon
-                class="slow-effect h-12 w-10 text-primary-dark hover:scale-110 hover:text-primary-light"
+                class="slow-effect w-16 text-primary-dark hover:scale-110 hover:text-primary-light"
               />
-              <span class="text-sm font-bold">file-1</span>
+              <span class="py-2 px-3 text-center text-sm font-bold"
+                >file-1</span
+              >
             </a>
           </div>
           <table class="col-span-full row-span-1 table-auto">
@@ -80,13 +82,13 @@
                 <form
                   class="form"
                   enctype="multipart/form-data"
-                  @submit.prevent="addAssignment(assignment.id)"
+                  @submit.prevent="addAssignment(assignment.id, index)"
                 >
                   <section class="input-section-file">
                     <input
                       title="1 PDF only, Max Size: 5 MB"
                       class="input-file"
-                      ref="attached_pdf"
+                      ref="file"
                       @change="handleFileUpload"
                       type="file"
                       accept="application/pdf"
@@ -120,8 +122,9 @@ export default {
       isActive: 1,
       // isDownload: true,
       openedNotes: -1,
+      // formValues: [],
       formValues: {
-        attached_pdf: null,
+        submitted_file: null,
       },
     };
   },
@@ -144,6 +147,11 @@ export default {
         `/classroom-app/classroom/${this.userProfile.classroom.slug}/semester/${this.id}/subject/${this.subject_slug}/assignment/`
       );
       this.assignments = assignmentsResponse.data;
+      // for (let i of this.assignments) {
+      //   this.formValues.push({
+      //     submitted_file: i.submitted_file,
+      //   });
+      // }
       // console.log(assignmentsResponse);
       // console.log(this.subject_slug, this.id, this.userProfile.classroom.slug);
     } catch (e) {
@@ -156,27 +164,29 @@ export default {
       this.isActive = no;
     },
     async handleFileUpload(event) {
-      this.formValues.attached_pdf = event.target.files[0];
-      console.log(this.formValues.attached_pdf);
+      this.formValues.submitted_file = event.target.files[0];
     },
     async addAssignment(id) {
       //TODO: Convert to FormData
       try {
-        const FormValues = new FormData();
-        FormValues.append("attached_pdf", this.formValues.attached_pdf);
-        FormValues.append("is_submitted", true);
-        FormValues.append("answer_section", "");
+        console.log("the uploaded file -> ");
+        console.log(this.formValues.submitted_file);
+        console.log("------------ uploaded file ------------- ");
+        const FormDataValues = new FormData();
+        FormDataValues.append("submitted_file", this.formValues.submitted_file);
+        FormDataValues.append("is_submitted", true);
+        FormDataValues.append("answer_section", "");
         const res = await axios.post(
           `/classroom-app/classroom/${this.userProfile.classroom.slug}/semester/${this.id}/subject/${this.subject_slug}/assignment/${id}/submission/`,
-          FormValues,
+          FormDataValues,
           {
             headers: {
               Authorization: "JWT " + sessionStorage.getItem("token"),
               "Content-Type": "multipart/form-data",
-              Accept: "application/pdf",
-              "Content-Disposition": this.formValues.attached_pdf,
-              boundary: "attached_pdf",
-              Filename: this.formValues.attached_pdf.name,
+              Accept: "*/*",
+              "Content-Disposition": this.formValues.submitted_file,
+              boundary: "submitted_file",
+              Filename: this.formValues.submitted_file.name,
             },
           }
         );
