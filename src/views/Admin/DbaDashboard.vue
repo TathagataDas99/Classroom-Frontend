@@ -966,7 +966,7 @@
             <button
               class="bttn place-self-end"
               v-else
-              @click="updateSemester(classroom.current_sem, index)"
+              @click="updateSemester(classroom.slug, classroom.current_sem, index)"
             >
               <!-- TODO:WRITE EDIT FUNCTION OF CLASSROOM -->
               <div class="tooltip" data-tip="Edit Current Semester">
@@ -1420,12 +1420,14 @@ export default {
         console.log(e);
       }
     },
-    updateSemester(newCurrent_sem, index) {
+    async updateSemester(slug, newCurrent_sem, index) {
       this.semEditArr[index] = !this.semEditArr[index];
       this.newCurrentSem = newCurrent_sem;
       console.log(this.oldCurrentSem);
       console.log(this.newCurrentSem);
       // TODO: Fetch all sem details for current classroom selected
+      const sems = await axios.get(`/classroom-app/classroom/${slug}/semester/`).data;
+      console.log(sems);
       // TODO: filter sem by old and new value to send 2 patch req.
     },
     editOldSemValue(current_sem, index) {
