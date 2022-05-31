@@ -178,12 +178,14 @@
             />
           </div>
           <div class="col-span-1 row-span-1 flex flex-col justify-evenly">
-            <section class="flex flex-row flex-wrap items-center justify-start">
+            <section
+              class="flex flex-row flex-wrap items-center justify-start text-center align-middle"
+            >
               <label class="label" for="marks">Marks</label>
               <input
                 type="number"
                 v-model="assignment.alloted_marks"
-                class="collapse-content columns-1 font-body text-xl font-bold text-danger-dark"
+                class="columns-1 px-3 font-body text-xl font-bold text-danger-dark"
                 :class="{
                   'subject-edit-input collapse-title': !subjectEdit[index],
                 }"
@@ -196,7 +198,7 @@
               <input
                 type="date"
                 v-model="assignment.due_date"
-                class="collapse-content columns-1 font-body text-xl font-bold text-danger-dark"
+                class="columns-1 px-3 font-body text-xl font-bold text-danger-dark"
                 :class="{
                   'subject-edit-input collapse-title': !subjectEdit[index],
                 }"
@@ -210,7 +212,7 @@
               <input
                 type="time"
                 v-model="assignment.due_time"
-                class="collapse-content columns-1 font-body text-xl font-bold text-danger-dark"
+                class="columns-1 px-3 font-body text-xl font-bold text-danger-dark"
                 :class="{
                   'subject-edit-input collapse-title': !subjectEdit[index],
                 }"
