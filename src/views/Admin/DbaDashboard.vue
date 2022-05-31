@@ -956,7 +956,7 @@
           <div class="button-section">
             <button
               class="bttn place-self-end"
-              @click="semEditArr[index] = !semEditArr[index]"
+              @click="editOldSemValue(classroom.current_sem, index)"
             >
               <!-- TODO:WRITE EDIT FUNCTION OF CLASSROOM -->
               <div class="tooltip" data-tip="Edit Current Semester">
@@ -1047,6 +1047,8 @@ export default {
       dbaList: [],
       duration: 2,
       semList: [1, 2, 3, 4],
+      oldCurrentSem : null,
+      newCurrentSem : null,
       createClassroomFormValues: {
         title: "",
         level: "Bachelors",
@@ -1079,10 +1081,10 @@ export default {
     };
   },
   // watch: {
-  //   classroomSlug(newValue) {
-  //     if (newValue) {
-  //       this.getTeachersInClassroom(newValue);
-  //     }
+  //   updateSemester(newValue, oldValue, index) {
+  //     this.semEditArr[index] = !this.semEditArr[index];
+  //     console.log(newValue);
+  //     console.log(oldValue);
   //   },
   // },
   async created() {
@@ -1413,9 +1415,13 @@ export default {
         console.log(e);
       }
     },
-    updateSemester(index) {
+    updateSemester(newCurrent_sem, index) {
       this.semEditArr[index] = !this.semEditArr[index];
     },
+    editOldSemValue(current_sem, index){
+      this.semEditArr[index] = !this.semEditArr[index];
+      this.oldCurrentSem = current_sem;
+    }
   },
 };
 </script>
