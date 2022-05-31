@@ -951,7 +951,7 @@
             >
               <!-- TODO:WRITE EDIT FUNCTION OF CLASSROOM -->
               <div class="tooltip" data-tip="Edit Sem &amp; Title">
-                <PencilAltIcon class="inline-block w-6 lg:w-5" />
+                <PencilAltIcon  class="inline-block w-6 lg:w-5" />
               </div>
             </button>
             <a
@@ -1021,6 +1021,7 @@ export default {
       allTeachersList: [],
       classroomTeacherList: [],
       classroomStudentList: [],
+      semEditArr: [],
       formValues: {
         dba: "",
         title: "",
@@ -1107,6 +1108,10 @@ export default {
         }
       );
       this.classroomList = classroomListResp.data;
+
+      for (let i = 0; i < this.classroomList.length; i++) {
+        this.semEditArr.push(true);
+      }
 
       const teacherListResp = await axios.get(
         `/classroom-app/college-dba/${this.userProfile.college.slug}/manage-teacher-college/`,
