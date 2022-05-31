@@ -45,7 +45,7 @@
             :max="50"
             v-model="formValueList[index].score"
           />
-          //TODO: Upper Limit check add
+          <!-- //TODO: Upper Limit check add -->
         </td>
         <td class="odd:bg-sky-100">
           <input
