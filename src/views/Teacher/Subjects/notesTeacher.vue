@@ -32,12 +32,12 @@
         <div class="form-section">
           <label class="label">Description</label>
           <section class="input-section">
-            <input
-              class="input-box"
+            <textarea
+              class="textarea w-full"
               type="text"
               v-model.trim.lazy="formValues.description"
               required
-            />
+            ></textarea>
           </section>
         </div>
         <div class="form-section">
@@ -88,7 +88,7 @@
       </template> -->
       <section
         :tabindex="index"
-        class="announcement-collapse"
+        class="collapse mx-10 md:mx-20 lg:mx-24"
         v-for="(note, index) in notes"
         :key="note.slug"
         :class="{ 'collapse-open max-h-96': openedNotes === index }"
@@ -126,37 +126,39 @@
         <input
           type="text"
           v-model="note.title"
-          class="collapse-title font-heading text-base font-medium uppercase md:text-lg lg:text-xl"
+          class="collapse-title font-heading text-base font-medium uppercase md:text-lg lg:text-xl w-full"
           :class="{ 'subject-edit-input': !subjectEdit[index] }"
           :disabled="subjectEdit[index]"
           placeholder="note title"
         />
-        <input
-          type="text"
-          v-model="note.description"
-          class="collapse-content columns-1 font-body text-base font-medium md:col-span-3"
-          :class="{ 'subject-edit-input collapse-title': !subjectEdit[index] }"
-          :disabled="subjectEdit[index]"
-          placeholder="note description"
-        />
-        <!-- <section
-          class="collapse-content col-span-1 row-span-1 flex flex-row flex-wrap items-center justify-start font-body lg:col-start-4 lg:row-start-3"
-        > -->
-        <div
-          class="collapse-content col-span-full row-span-1 flex flex-row flex-wrap items-center justify-evenly md:col-span-2 md:row-start-2"
-        >
-          <a
-            class="slow-effect bottom-5 flex flex-col items-center justify-evenly hover:text-primary-light"
-            :href="'http://localhost:8000' + file.file_path"
-            v-for="(file, index2) in note.attached_files"
-            :key="file.title"
+        <section class="collapse-content flex flex-col justify-evenly">
+          <textarea
+            type="text"
+            v-model="note.description"
+            class="textarea w-full"
+            :class="{ 'subject-edit-input  collapse-title': !subjectEdit[index] }"
+            :disabled="subjectEdit[index]"
+            placeholder="note description"
+          ></textarea>
+          <!-- <section
+            class="collapse-content col-span-1 row-span-1 flex flex-row flex-wrap items-center justify-start font-body lg:col-start-4 lg:row-start-3"
+          > -->
+          <div
+            class="collapse-content  flex flex-row flex-wrap items-center space-x-4 justify-start "
           >
-            <DocumentDownloadIcon
-              class="slow-effect w-10 text-primary-dark hover:scale-110 hover:text-primary-light"
-            />
-            <span class="text-sm font-bold">file-{{ index2 + 1 }}</span>
-          </a>
-        </div>
+            <a
+              class="slow-effect bottom-5 flex flex-col items-center justify-evenly hover:text-primary-light"
+              :href="'http://localhost:8000' + file.file_path"
+              v-for="(file, index2) in note.attached_files"
+              :key="file.title"
+            >
+              <DocumentDownloadIcon
+                class="slow-effect w-10 text-primary-dark hover:scale-110 hover:text-primary-light"
+              />
+              <span class="text-sm font-bold">file-{{ index2 + 1 }}</span>
+            </a>
+          </div>
+        </section>
         <!-- </section> -->
       </section>
     </section>
