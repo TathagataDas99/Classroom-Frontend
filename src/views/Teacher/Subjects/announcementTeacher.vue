@@ -29,12 +29,12 @@
         <div class="form-section">
           <label class="label">Description</label>
           <section class="input-section">
-            <input
-              class="input-box"
+            <textarea
+              class="textarea w-full"
               type="text"
               v-model.trim.lazy="formValues.body"
               required
-            />
+            ></textarea>
           </section>
         </div>
         <section class="flex flex-col justify-evenly md:flex-row">
@@ -107,14 +107,14 @@
           placeholder="announcement title"
         />
         <!-- TODO: @priyesh :- make proper design -->
-        <input
+        <textarea
           type="text"
           v-model="announcement.body"
-          class="collapse-content font-body md:text-lg"
-          :class="{ 'subject-edit-input': !subjectEditArr[index] }"
+          class="collapse-content font-body md:text-lg textarea h-auto"
+          :class="{ 'textarea w-full': !subjectEditArr[index] }"
           :disabled="subjectEditArr[index]"
           placeholder="announcement body"
-        />
+        ></textarea>
       </section>
     </div>
   </main>
