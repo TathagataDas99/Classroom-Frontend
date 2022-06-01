@@ -135,7 +135,7 @@
           <textarea
             type="text"
             v-model="note.description"
-            class="textarea w-full"
+            class="textarea w-full text-lg font-body"
             :class="{ 'subject-edit-input  collapse-title': !subjectEdit[index] }"
             :disabled="subjectEdit[index]"
             placeholder="note description"
