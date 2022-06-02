@@ -1049,7 +1049,8 @@ export default {
       showError: false,
       successMsg: [],
       showSuccessMsg: false,
-      notificationInterval: 1000,
+      notificationInterval: 1500,
+      errorInterval: 2500,
       loader: true,
       tempVal: null,
       contactEdit: true,
@@ -1211,9 +1212,11 @@ export default {
   },
   methods: {
     async editContact() {
+      this.error=[]
+      this.successMsg=[]
       try {
         this.contactEdit = !this.contactEdit;
-        console.log(this.userProfile.user.contact_no);
+        //console.log(this.userProfile.user.contact_no);
         await axios.patch(
           `/auth/users/me/`,
           { contact_no: this.userProfile.user.contact_no },
@@ -1224,9 +1227,19 @@ export default {
           }
         );
         //TODO: Show Success Msg for 1 sec
+        this.successMsg.push("Contact updated successfully.");
+        this.showSuccessMsg=true;
+        setTimeout(() => {
+          this.showSuccessMsg = false;
+        }, this.notificationInterval);
         this.$router.go();
       } catch (e) {
-        console.log(e);
+        this.error = Object.values(e.response.data);
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, this.errorInterval);
+        //console.log(e);
       }
     },
     listOfCurrentSem() {
@@ -1351,7 +1364,7 @@ export default {
         this.showError = true;
         setTimeout(() => {
           this.showError = false;
-        }, this.notificationInterval);
+        }, this.errorInterval);
       }
       // this.loader = false;
     },
