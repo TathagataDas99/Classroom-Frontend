@@ -193,7 +193,11 @@
                 admin
               </button>
               <!-- Remove dba  Form -->
-              <form v-if="isRemoveDBAFormOpen" class="form form-admin"  @submit.prevent="removeAdminFromCollege">
+              <form
+                v-if="isRemoveDBAFormOpen"
+                class="form form-admin"
+                @submit.prevent="removeAdminFromCollege"
+              >
                 <div class="form-section">
                   <label class="label" for="dba">Admin</label>
                   <!-- {{allowedAdminList}} -->
@@ -216,9 +220,7 @@
                   </section>
                 </div>
                 <div class="button-section">
-                  <button class="bttn-danger">
-                    Delete
-                  </button>
+                  <button class="bttn-danger">Delete</button>
                   <button
                     class="bttn"
                     @click="isRemoveDBAFormOpen = !isRemoveDBAFormOpen"
@@ -514,7 +516,11 @@
                 <UserAddIcon class="admin-btn-icon" />
                 Add Teacher
               </button>
-              <form v-if="isAddingTeacherFormOpen" class="form form-admin" @submit.prevent="addTeacher">
+              <form
+                v-if="isAddingTeacherFormOpen"
+                class="form form-admin"
+                @submit.prevent="addTeacher"
+              >
                 <!-- @submit.prevent="addTeacher" -->
                 <div class="form-section">
                   <label class="label" for="classroom">Classroom</label>
@@ -565,7 +571,7 @@
                   </section>
                 </section>
                 <section class="button-section">
-                  <button class="bttn" >Add</button>
+                  <button class="bttn">Add</button>
                   <button
                     class="bttn-danger"
                     @click="isAddingTeacherFormOpen = !isAddingTeacherFormOpen"
@@ -637,9 +643,7 @@
                 </div>
                 <!-- @submit.prevent="deleteTeacherClassroom" -->
                 <section class="button-section">
-                  <button class="bttn-danger" >
-                    Delete
-                  </button>
+                  <button class="bttn-danger">Delete</button>
                   <button
                     class="bttn"
                     @click="
@@ -1212,8 +1216,8 @@ export default {
   },
   methods: {
     async editContact() {
-      this.error=[]
-      this.successMsg=[]
+      this.error = [];
+      this.successMsg = [];
       try {
         this.contactEdit = !this.contactEdit;
         //console.log(this.userProfile.user.contact_no);
@@ -1228,7 +1232,7 @@ export default {
         );
         //TODO: Show Success Msg for 1 sec
         this.successMsg.push("Contact updated successfully.");
-        this.showSuccessMsg=true;
+        this.showSuccessMsg = true;
         setTimeout(() => {
           this.showSuccessMsg = false;
         }, this.notificationInterval);
@@ -1257,7 +1261,7 @@ export default {
           this.formValues
         );
         this.successMsg.push("New Stream Added Successfully.");
-        this.showSuccessMsg=true;
+        this.showSuccessMsg = true;
         setTimeout(() => {
           this.showSuccessMsg = false;
         }, this.notificationInterval);
@@ -1270,33 +1274,33 @@ export default {
         setTimeout(() => {
           this.showError = false;
         }, this.errorInterval);
-       // console.log("In AddNewStream Function");
-       // console.log(e);
+        // console.log("In AddNewStream Function");
+        // console.log(e);
       }
     },
     async addDbaToTheStream() {
-      this.error=[];
-      this.successMsg=[];
+      this.error = [];
+      this.successMsg = [];
       this.isFormOpen = !this.isFormOpen;
-      try{
+      try {
         await axios.post(
-        `/classroom-app/college-streams/${this.userProfile.college.slug}/stream/`,
-        this.formValues
-      );
-      this.successMsg.push("DBA Mapped successfully.");
-        this.showSuccessMsg=true;
+          `/classroom-app/college-streams/${this.userProfile.college.slug}/stream/`,
+          this.formValues
+        );
+        this.successMsg.push("DBA Mapped successfully.");
+        this.showSuccessMsg = true;
         setTimeout(() => {
           this.showSuccessMsg = false;
         }, this.notificationInterval);
-      }catch(e){
+      } catch (e) {
         this.error = Object.values(e.response.data);
         this.showError = true;
         setTimeout(() => {
           this.showError = false;
         }, this.errorInterval);
-        }
+      }
       //console.log(res);
-        this.$router.go();
+      this.$router.go();
     },
     handleTeacherFileUpload(event) {
       this.createClassroomFormValues.allowed_teacher_list =
@@ -1309,8 +1313,8 @@ export default {
       //console.log(this.createClassroomFormValues.allowed_student_list);
     },
     async createClassroom() {
-      this.error=[];
-      this.successMsg=[];
+      this.error = [];
+      this.successMsg = [];
       this.isCreateClassRoomFormOpen = !this.isCreateClassRoomFormOpen;
       this.loader = false;
       const endYear =
@@ -1364,14 +1368,14 @@ export default {
           }
         );
         this.successMsg.push("Classroom Created Successfully.");
-        this.showSuccessMsg=true;
+        this.showSuccessMsg = true;
         setTimeout(() => {
           this.showSuccessMsg = false;
         }, this.notificationInterval);
-          this.$router.go();
+        this.$router.go();
         //console.log(res);
-         }catch (e) {
-           this.error = Object.values(e.response.data);
+      } catch (e) {
+        this.error = Object.values(e.response.data);
         this.showError = true;
         setTimeout(() => {
           this.showError = false;
@@ -1413,7 +1417,7 @@ export default {
           `/classroom-app/college-dba/${this.userProfile.college.slug}/manage-dba/${this.deleteTeacherFormData.id}`
         );
         this.successMsg.push("DBA Deleted Successfully.");
-        this.showSuccessMsg=true;
+        this.showSuccessMsg = true;
         setTimeout(() => {
           this.showSuccessMsg = false;
         }, this.notificationInterval);
@@ -1428,11 +1432,10 @@ export default {
         }, this.errorInterval);
         //console.log(e);
       }
-
     },
     async addTeacher() {
-      this.error=[];
-      this.successMsg=[];
+      this.error = [];
+      this.successMsg = [];
       this.isAddingTeacherFormOpenCollege =
         !this.isAddingTeacherFormOpenCollege;
       try {
@@ -1441,11 +1444,11 @@ export default {
           this.addTeacherForm
         );
         this.successMsg.push("Teacher Added to Classroom Successfully.");
-        this.showSuccessMsg=true;
+        this.showSuccessMsg = true;
         setTimeout(() => {
           this.showSuccessMsg = false;
         }, this.notificationInterval);
-          this.$router.go();
+        this.$router.go();
         // this.addTeacherForm = "";
         //caches.log("teacher added successfully");
       } catch (e) {
@@ -1458,19 +1461,19 @@ export default {
       }
     },
     async addTeacherCollege() {
-      this.error=[];
-      this.successMsg=[];
+      this.error = [];
+      this.successMsg = [];
       try {
         await axios.post(
           `/classroom-app/college-dba/${this.userProfile.college.slug}/manage-teacher-college/`,
           this.addTeacherForm
         );
         this.successMsg.push("Teacher Added to College Successfully.");
-        this.showSuccessMsg=true;
+        this.showSuccessMsg = true;
         setTimeout(() => {
           this.showSuccessMsg = false;
         }, this.notificationInterval);
-          this.$router.go();
+        this.$router.go();
       } catch (e) {
         this.error = Object.values(e.response.data);
         this.showError = true;
@@ -1481,8 +1484,8 @@ export default {
       }
     },
     async deleteTeacherCollege() {
-      this.error=[];
-      this.successMsg=[];
+      this.error = [];
+      this.successMsg = [];
       this.isDeleteTeacherCollegeFormOpen =
         !this.isDeleteTeacherCollegeFormOpen;
       try {
@@ -1490,7 +1493,7 @@ export default {
           `/classroom-app/college-dba/${this.userProfile.college.slug}/manage-teacher-college/${this.deleteTeacherFormData.id}`
         );
         this.successMsg.push("Teacher Removed from College Successfully.");
-        this.showSuccessMsg=true;
+        this.showSuccessMsg = true;
         setTimeout(() => {
           this.showSuccessMsg = false;
         }, this.notificationInterval);
@@ -1513,8 +1516,8 @@ export default {
       console.log(classroomTeacherListResp.data);
     },
     async deleteTeacherClassroom() {
-      this.error=[];
-      this.successMsg=[];
+      this.error = [];
+      this.successMsg = [];
       this.isDeleteTeacherClassroomFormOpen =
         !this.isDeleteTeacherClassroomFormOpen;
       try {
@@ -1522,11 +1525,11 @@ export default {
           `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${this.classroomSlug}/manage-teacher/${this.deleteTeacherClassroomFormData.id}/`
         );
         this.successMsg.push("Teacher Deleted from Classroom Successfully.");
-        this.showSuccessMsg=true;
+        this.showSuccessMsg = true;
         setTimeout(() => {
           this.showSuccessMsg = false;
         }, this.notificationInterval);
-              this.$router.go();
+        this.$router.go();
       } catch (e) {
         this.error = Object.values(e.response.data);
         this.showError = true;
@@ -1537,8 +1540,8 @@ export default {
       }
     },
     async addStudent() {
-      this.error=[];
-      this.successMsg=[];
+      this.error = [];
+      this.successMsg = [];
       this.isStudentAddFormOpen = !this.isStudentAddFormOpen;
       try {
         await axios.post(
@@ -1546,11 +1549,11 @@ export default {
           this.addStudentForm
         );
         this.successMsg.push("DBA Mapped successfully.");
-        this.showSuccessMsg=true;
+        this.showSuccessMsg = true;
         setTimeout(() => {
           this.showSuccessMsg = false;
         }, this.notificationInterval);
-          this.$router.go();
+        this.$router.go();
       } catch (e) {
         this.error = Object.values(e.response.data);
         this.showError = true;
@@ -1569,8 +1572,8 @@ export default {
       console.log(classroomStudentListResp.data);
     },
     async deleteStudentClassroom() {
-      this.error=[];
-      this.successMsg=[];
+      this.error = [];
+      this.successMsg = [];
       this.isDeleteStudentClassroomFormOpen =
         !this.isDeleteStudentClassroomFormOpen;
       console.log(this.deleteStudentClassroomFormData.id);
@@ -1579,11 +1582,11 @@ export default {
           `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${this.classroomSlug}/manage-student/${this.deleteStudentClassroomFormData.id}/`
         );
         this.successMsg.push("Student Deleted from Classroom Successfully.");
-        this.showSuccessMsg=true;
+        this.showSuccessMsg = true;
         setTimeout(() => {
           this.showSuccessMsg = false;
         }, this.notificationInterval);
-          this.$router.go();
+        this.$router.go();
       } catch (e) {
         this.error = Object.values(e.response.data);
         this.showError = true;
@@ -1624,49 +1627,65 @@ export default {
     async updateSemester(slug, newCurrent_sem, stream, index) {
       this.semEditArr[index] = !this.semEditArr[index];
       this.newCurrentSem = newCurrent_sem;
-      // console.log(slug);
-      // console.log(this.oldCurrentSem);
-      // console.log(this.newCurrentSem);
-      // TODO: Fetch all sem details for current classroom selected
-      const semResp = await axios.get(
-        `/classroom-app/classroom/${slug}/semester/`
-      );
-      const semList = semResp.data;
-      // console.log(semResp);
-      // console.log(semList);
-      console.log(semList[parseInt(this.newCurrentSem) - 1].is_current_sem);
-      //TODO: Update New Sem as current
-      await axios.patch(
-        `/classroom-app/classroom/${slug}/semester/${
-          semList[parseInt(this.newCurrentSem) - 1].id
-        }/`,
-        { is_current_sem: true }
-      );
-      //TODO: Update Old Sem as not current
-      await axios.patch(
-        `/classroom-app/classroom/${slug}/semester/${
-          semList[parseInt(this.oldCurrentSem) - 1].id
-        }/`,
-        { is_current_sem: false }
-      );
-      console.log(semList[parseInt(this.oldCurrentSem) - 1].is_current_sem);
+      this.error = [];
+      this.successMsg = [];
+      try {
+        // console.log(slug);
+        // console.log(this.oldCurrentSem);
+        // console.log(this.newCurrentSem);
+        // TODO: Fetch all sem details for current classroom selected
+        const semResp = await axios.get(
+          `/classroom-app/classroom/${slug}/semester/`
+        );
+        const semList = semResp.data;
+        // console.log(semResp);
+        // console.log(semList);
+        console.log(semList[parseInt(this.newCurrentSem) - 1].is_current_sem);
+        //TODO: Update New Sem as current
+        await axios.patch(
+          `/classroom-app/classroom/${slug}/semester/${
+            semList[parseInt(this.newCurrentSem) - 1].id
+          }/`,
+          { is_current_sem: true }
+        );
+        //TODO: Update Old Sem as not current
+        await axios.patch(
+          `/classroom-app/classroom/${slug}/semester/${
+            semList[parseInt(this.oldCurrentSem) - 1].id
+          }/`,
+          { is_current_sem: false }
+        );
+        console.log(semList[parseInt(this.oldCurrentSem) - 1].is_current_sem);
 
-      // TODO: update the current classroom selected
-      let FData = new FormData();
-      FData.append("stream", stream);
-      FData.append("current_sem", newCurrent_sem);
-      await axios.patch(
-        `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${slug}/`,
-        FData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Accept: "*/*",
-            Authorization: "JWT " + sessionStorage.getItem("token"),
-          },
-        }
-      );
-      this.$router.go();
+        // TODO: update the current classroom selected
+        let FData = new FormData();
+        FData.append("stream", stream);
+        FData.append("current_sem", newCurrent_sem);
+        await axios.patch(
+          `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${slug}/`,
+          FData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Accept: "*/*",
+              Authorization: "JWT " + sessionStorage.getItem("token"),
+            },
+          }
+        );
+        this.successMsg.push("Student Deleted from Classroom Successfully.");
+        this.showSuccessMsg = true;
+        setTimeout(() => {
+          this.showSuccessMsg = false;
+        }, this.notificationInterval);
+        this.$router.go();
+      } catch (e) {
+        this.error = Object.values(e.response.data);
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, this.errorInterval);
+      }
+      // this.$router.go();
     },
     editOldSemValue(current_sem, index) {
       this.semEditArr[index] = !this.semEditArr[index];
