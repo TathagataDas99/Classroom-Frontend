@@ -193,7 +193,7 @@
                 admin
               </button>
               <!-- Remove dba  Form -->
-              <form v-if="isRemoveDBAFormOpen" class="form form-admin">
+              <form v-if="isRemoveDBAFormOpen" class="form form-admin"  @submit.prevent="removeAdminFromCollege">
                 <div class="form-section">
                   <label class="label" for="dba">Admin</label>
                   <!-- {{allowedAdminList}} -->
@@ -216,7 +216,7 @@
                   </section>
                 </div>
                 <div class="button-section">
-                  <button class="bttn-danger" @click="removeAdminFromCollege">
+                  <button class="bttn-danger">
                     Delete
                   </button>
                   <button
@@ -1049,8 +1049,8 @@ export default {
       showError: false,
       successMsg: [],
       showSuccessMsg: false,
-      notificationInterval: 1500,
-      errorInterval: 3500,
+      notificationInterval: 2500,
+      errorInterval: 5000,
       loader: true,
       tempVal: null,
       contactEdit: true,
@@ -1275,26 +1275,44 @@ export default {
       }
     },
     async addDbaToTheStream() {
+      this.error=[];
+      this.successMsg=[];
       this.isFormOpen = !this.isFormOpen;
-      const res = await axios.post(
+      try{
+        await axios.post(
         `/classroom-app/college-streams/${this.userProfile.college.slug}/stream/`,
         this.formValues
       );
-      console.log(res);
+      this.successMsg.push("DBA Mapped successfully.");
+        this.showSuccessMsg=true;
+        setTimeout(() => {
+          this.showSuccessMsg = false;
+        }, this.notificationInterval);
+      }catch(e){
+        this.error = Object.values(e.response.data);
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, this.errorInterval);
+        }
+      //console.log(res);
+        this.$router.go();
     },
     handleTeacherFileUpload(event) {
       this.createClassroomFormValues.allowed_teacher_list =
         event.target.files[0];
-      console.log(this.createClassroomFormValues.allowed_teacher_list);
+      //console.log(this.createClassroomFormValues.allowed_teacher_list);
     },
     handleStudentFileUpload(event) {
       this.createClassroomFormValues.allowed_student_list =
         event.target.files[0];
-      console.log(this.createClassroomFormValues.allowed_student_list);
+      //console.log(this.createClassroomFormValues.allowed_student_list);
     },
     async createClassroom() {
+      this.error=[];
+      this.successMsg=[];
       this.isCreateClassRoomFormOpen = !this.isCreateClassRoomFormOpen;
-      this.loader = true;
+      this.loader = false;
       const endYear =
         parseInt(this.createClassroomFormValues.start_year) +
         parseInt(this.duration);
@@ -1325,7 +1343,7 @@ export default {
           "allowed_student_list",
           this.createClassroomFormValues.allowed_student_list
         );
-        const res = await axios.post(
+        await axios.post(
           `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/`,
           formData,
           {
@@ -1345,11 +1363,21 @@ export default {
             },
           }
         );
-        console.log(res);
-        // }
-      } catch (e) {
-        console.log(e);
+        this.successMsg.push("Classroom Created Successfully.");
+        this.showSuccessMsg=true;
+        setTimeout(() => {
+          this.showSuccessMsg = false;
+        }, this.notificationInterval);
+        //console.log(res);
+         }catch (e) {
+           this.error = Object.values(e.response.data);
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, this.errorInterval);
+        //console.log(e);
       }
+      this.$router.go();
       this.loader = false;
     },
     async addNewAdmin() {
@@ -1376,18 +1404,31 @@ export default {
           this.showError = false;
         }, this.errorInterval);
       }
+      this.$router.go();
       // this.loader = false;
     },
     async removeAdminFromCollege() {
       try {
-        const resp = await axios.delete(
+        await axios.delete(
           `/classroom-app/college-dba/${this.userProfile.college.slug}/manage-dba/${this.deleteTeacherFormData.id}`
         );
-        console.log(resp);
-        console.log("successfully delete dba");
+        this.successMsg.push("DBA Deleted Successfully.");
+        this.showSuccessMsg=true;
+        setTimeout(() => {
+          this.showSuccessMsg = false;
+        }, this.notificationInterval);
+        // console.log(resp);
+        // console.log("successfully delete dba");
       } catch (e) {
-        console.log(e);
+        this.error = Object.values(e.response.data);
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, this.errorInterval);
+        //console.log(e);
       }
+      this.$router.go();
+
     },
     async addTeacher() {
       this.isAddingTeacherFormOpenCollege =

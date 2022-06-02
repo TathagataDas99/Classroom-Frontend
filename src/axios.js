@@ -5,3 +5,4 @@ axios.defaults.baseURL = "http://localhost:8000/"; //TODO: Comment in production
 
 // axios.defaults.headers.common["Authorization"] =
 //   "JWT " + sessionStorage.getItem("token");
+axios.defaults.timeout = 10000;
