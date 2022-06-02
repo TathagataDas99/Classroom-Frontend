@@ -958,16 +958,19 @@
                 Sem:
               </td>
               <td class="font-body text-lg font-semibold">
-                <input
-                  type="number"
-                  min="1"
-                  :max="2 * (classroom.end_year - classroom.start_year)"
+                <select
                   class="w-full bg-bglight-shade text-lg text-zinc-700 decoration-transparent"
                   :class="{ 'input-box mx-2': !semEditArr[index] }"
                   :disabled="semEditArr[index]"
                   v-model="classroom.current_sem"
-                />
-                <!-- {{ classroom.current_sem }} -->
+                >
+                  <template
+                    v-for="i in 2 * (classroom.end_year - classroom.start_year)"
+                    :key="i"
+                  >
+                    <option :value="i">{{ i }}</option>
+                  </template>
+                </select>
               </td>
             </tr>
           </table>
@@ -1605,8 +1608,8 @@ export default {
     async deleteClassroom(slug) {
       // console.log("inside delete -> " + slug);
       this.tempVal = null;
-      this.error=[];
-      this.successMsg=[];
+      this.error = [];
+      this.successMsg = [];
       try {
         // this.subjectEdit.pop();
         // console.log(slug);
@@ -1623,11 +1626,11 @@ export default {
         );
         this.tempVal = null;
         this.successMsg.push("Classroom Deleted Successfully.");
-        this.showSuccessMsg=true;
+        this.showSuccessMsg = true;
         setTimeout(() => {
           this.showSuccessMsg = false;
         }, this.notificationInterval);
-          this.$router.go();
+        this.$router.go();
       } catch (e) {
         this.error = Object.values(e.response.data);
         this.showError = true;
@@ -1685,14 +1688,15 @@ export default {
             },
           }
         );
-        this.successMsg.push("Student Deleted from Classroom Successfully.");
+        this.successMsg.push("Semester Updated Successfully.");
         this.showSuccessMsg = true;
         setTimeout(() => {
           this.showSuccessMsg = false;
-        }, this.notificationInterval);
+        }, 1000);
         this.$router.go();
       } catch (e) {
         this.error = Object.values(e.response.data);
+        // this.error.push(e.message);
         this.showError = true;
         setTimeout(() => {
           this.showError = false;
