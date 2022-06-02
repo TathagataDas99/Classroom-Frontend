@@ -126,7 +126,7 @@
         <input
           type="text"
           v-model="note.title"
-          class="collapse-title font-heading text-base font-medium uppercase md:text-lg lg:text-xl w-full"
+          class="collapse-title w-full font-heading text-base font-medium uppercase md:text-lg lg:text-xl"
           :class="{ 'subject-edit-input': !subjectEdit[index] }"
           :disabled="subjectEdit[index]"
           placeholder="note title"
@@ -135,8 +135,10 @@
           <textarea
             type="text"
             v-model="note.description"
-            class="textarea w-full text-lg font-body"
-            :class="{ 'subject-edit-input  collapse-title': !subjectEdit[index] }"
+            class="textarea w-full font-body text-lg"
+            :class="{
+              'subject-edit-input  collapse-title': !subjectEdit[index],
+            }"
             :disabled="subjectEdit[index]"
             placeholder="note description"
           ></textarea>
@@ -144,7 +146,7 @@
             class="collapse-content col-span-1 row-span-1 flex flex-row flex-wrap items-center justify-start font-body lg:col-start-4 lg:row-start-3"
           > -->
           <div
-            class="collapse-content  flex flex-row flex-wrap items-center space-x-4 justify-start "
+            class="collapse-content flex flex-row flex-wrap items-center justify-start space-x-4"
           >
             <a
               class="slow-effect bottom-5 flex flex-col items-center justify-evenly hover:text-primary-light"
