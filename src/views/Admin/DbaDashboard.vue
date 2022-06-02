@@ -514,7 +514,7 @@
                 <UserAddIcon class="admin-btn-icon" />
                 Add Teacher
               </button>
-              <form v-if="isAddingTeacherFormOpen" class="form form-admin">
+              <form v-if="isAddingTeacherFormOpen" class="form form-admin" @submit.prevent="addTeacher">
                 <!-- @submit.prevent="addTeacher" -->
                 <div class="form-section">
                   <label class="label" for="classroom">Classroom</label>
@@ -565,7 +565,7 @@
                   </section>
                 </section>
                 <section class="button-section">
-                  <button class="bttn" @click="addTeacher">Add</button>
+                  <button class="bttn" >Add</button>
                   <button
                     class="bttn-danger"
                     @click="isAddingTeacherFormOpen = !isAddingTeacherFormOpen"
@@ -590,7 +590,7 @@
               <form
                 v-if="isDeleteTeacherClassroomFormOpen"
                 class="form form-admin"
-                @submit.prevent
+                @submit.prevent="deleteTeacherClassroom"
               >
                 <div class="form-section">
                   <label class="label" for="classroom">Select Classroom</label>
@@ -637,7 +637,7 @@
                 </div>
                 <!-- @submit.prevent="deleteTeacherClassroom" -->
                 <section class="button-section">
-                  <button class="bttn-danger" @click="deleteTeacherClassroom">
+                  <button class="bttn-danger" >
                     Delete
                   </button>
                   <button
@@ -1368,6 +1368,7 @@ export default {
         setTimeout(() => {
           this.showSuccessMsg = false;
         }, this.notificationInterval);
+          this.$router.go();
         //console.log(res);
          }catch (e) {
            this.error = Object.values(e.response.data);
@@ -1377,7 +1378,6 @@ export default {
         }, this.errorInterval);
         //console.log(e);
       }
-      this.$router.go();
       this.loader = false;
     },
     async addNewAdmin() {
@@ -1419,6 +1419,7 @@ export default {
         }, this.notificationInterval);
         // console.log(resp);
         // console.log("successfully delete dba");
+        this.$router.go();
       } catch (e) {
         this.error = Object.values(e.response.data);
         this.showError = true;
@@ -1427,10 +1428,11 @@ export default {
         }, this.errorInterval);
         //console.log(e);
       }
-      this.$router.go();
 
     },
     async addTeacher() {
+      this.error=[];
+      this.successMsg=[];
       this.isAddingTeacherFormOpenCollege =
         !this.isAddingTeacherFormOpenCollege;
       try {
@@ -1438,32 +1440,68 @@ export default {
           `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${this.classroomSlug}/manage-teacher/`,
           this.addTeacherForm
         );
+        this.successMsg.push("Teacher Added to Classroom Successfully.");
+        this.showSuccessMsg=true;
+        setTimeout(() => {
+          this.showSuccessMsg = false;
+        }, this.notificationInterval);
+          this.$router.go();
         // this.addTeacherForm = "";
-        caches.log("teacher added successfully");
+        //caches.log("teacher added successfully");
       } catch (e) {
-        console.log(e);
+        this.error = Object.values(e.response.data);
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, this.errorInterval);
+        //console.log(e);
       }
     },
     async addTeacherCollege() {
+      this.error=[];
+      this.successMsg=[];
       try {
         await axios.post(
           `/classroom-app/college-dba/${this.userProfile.college.slug}/manage-teacher-college/`,
           this.addTeacherForm
         );
+        this.successMsg.push("Teacher Added to College Successfully.");
+        this.showSuccessMsg=true;
+        setTimeout(() => {
+          this.showSuccessMsg = false;
+        }, this.notificationInterval);
+          this.$router.go();
       } catch (e) {
-        console.log(e);
+        this.error = Object.values(e.response.data);
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, this.errorInterval);
+        //console.log(e);
       }
     },
     async deleteTeacherCollege() {
+      this.error=[];
+      this.successMsg=[];
       this.isDeleteTeacherCollegeFormOpen =
         !this.isDeleteTeacherCollegeFormOpen;
       try {
         await axios.delete(
           `/classroom-app/college-dba/${this.userProfile.college.slug}/manage-teacher-college/${this.deleteTeacherFormData.id}`
         );
+        this.successMsg.push("Teacher Removed from College Successfully.");
+        this.showSuccessMsg=true;
+        setTimeout(() => {
+          this.showSuccessMsg = false;
+        }, this.notificationInterval);
         this.$router.go();
       } catch (e) {
-        console.log(e);
+        this.error = Object.values(e.response.data);
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, this.errorInterval);
+        //console.log(e);
       }
     },
     async getTeachersInClassroom(slug) {
@@ -1475,25 +1513,51 @@ export default {
       console.log(classroomTeacherListResp.data);
     },
     async deleteTeacherClassroom() {
+      this.error=[];
+      this.successMsg=[];
       this.isDeleteTeacherClassroomFormOpen =
         !this.isDeleteTeacherClassroomFormOpen;
       try {
         await axios.delete(
           `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${this.classroomSlug}/manage-teacher/${this.deleteTeacherClassroomFormData.id}/`
         );
+        this.successMsg.push("Teacher Deleted from Classroom Successfully.");
+        this.showSuccessMsg=true;
+        setTimeout(() => {
+          this.showSuccessMsg = false;
+        }, this.notificationInterval);
+              this.$router.go();
       } catch (e) {
-        console.log(e);
+        this.error = Object.values(e.response.data);
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, this.errorInterval);
+        //console.log(e);
       }
     },
     async addStudent() {
+      this.error=[];
+      this.successMsg=[];
       this.isStudentAddFormOpen = !this.isStudentAddFormOpen;
       try {
         await axios.post(
           `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${this.classroomSlug}/manage-student/`,
           this.addStudentForm
         );
+        this.successMsg.push("DBA Mapped successfully.");
+        this.showSuccessMsg=true;
+        setTimeout(() => {
+          this.showSuccessMsg = false;
+        }, this.notificationInterval);
+          this.$router.go();
       } catch (e) {
-        console.log(e);
+        this.error = Object.values(e.response.data);
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, this.errorInterval);
+        //console.log(e);
       }
     },
     async getStudentsInClassroom(slug) {
@@ -1505,6 +1569,8 @@ export default {
       console.log(classroomStudentListResp.data);
     },
     async deleteStudentClassroom() {
+      this.error=[];
+      this.successMsg=[];
       this.isDeleteStudentClassroomFormOpen =
         !this.isDeleteStudentClassroomFormOpen;
       console.log(this.deleteStudentClassroomFormData.id);
@@ -1512,8 +1578,19 @@ export default {
         await axios.delete(
           `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${this.classroomSlug}/manage-student/${this.deleteStudentClassroomFormData.id}/`
         );
+        this.successMsg.push("Student Deleted from Classroom Successfully.");
+        this.showSuccessMsg=true;
+        setTimeout(() => {
+          this.showSuccessMsg = false;
+        }, this.notificationInterval);
+          this.$router.go();
       } catch (e) {
-        console.log(e);
+        this.error = Object.values(e.response.data);
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, this.errorInterval);
+        //console.log(e);
       }
     },
     titleCase(str) {
