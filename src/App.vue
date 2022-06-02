@@ -1,7 +1,9 @@
 <template>
   <div>
     <NavBar />
-    <router-view />
+    <Transition>
+      <router-view />
+    </Transition>
   </div>
 </template>
 
@@ -15,3 +17,16 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.4s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>

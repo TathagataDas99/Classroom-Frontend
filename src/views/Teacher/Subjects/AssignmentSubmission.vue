@@ -1,5 +1,5 @@
 <template>
-<!-- <h1>{{id}}, {{marks}}</h1> -->
+  <!-- <h1>{{id}}, {{marks}}</h1> -->
   <div
     class="mr-4 h-screen snap-mandatory overflow-y-scroll text-center scrollbar-hide"
   >
@@ -108,7 +108,21 @@ export default {
   computed: {
     ...mapGetters(["userType", "userProfile", "semCards"]),
   },
-  async updated(){
+  async updated() {
+    const submissionsResp = await axios.get(
+      `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${this.id}/submission/`
+    );
+    this.submissions = submissionsResp.data;
+    for (let i of this.submissions) {
+      this.subjectEditArr.push(true);
+      this.formValueList.push({
+        has_scored: true,
+        score: i.score,
+        remarks: i.remarks,
+      });
+    }
+  },
+  async created() {
     const submissionsResp = await axios.get(
       `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${this.id}/submission/`
     );
