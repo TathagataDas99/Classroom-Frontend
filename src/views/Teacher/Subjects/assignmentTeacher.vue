@@ -245,7 +245,10 @@
             </a>
           </div>
           <div class="col-span-1 row-span-1 w-full">
-            <button class="bttn w-full" @click="showSubmissions(assignment.id)">
+            <button
+              class="bttn w-full"
+              @click="showSubmissions(assignment.id, assignment.alloted_marks)"
+            >
               Show Submitted Assignments
             </button>
           </div>
@@ -432,15 +435,17 @@ export default {
       this.formValues.attached_pdf = event.target.files[0];
       console.log(this.formValues.attached_pdf);
     },
-    showSubmissions(id) {
-      this.$router.push({
+    showSubmissions(id, alloted_marks) {
+      console.log(id);
+      console.log(alloted_marks);
+      this.$router.replace({
         name: "assignmentSubmission",
         params: {
           id: id,
           subject_slug: this.subject_slug,
           semester_no: this.semester_no,
           classroom_slug: this.classroom_slug,
-          marks: this.formValues.alloted_marks,
+          marks: alloted_marks,
         },
       });
     },

@@ -1,4 +1,5 @@
 <template>
+<!-- <h1>{{id}}, {{marks}}</h1> -->
   <div
     class="mr-4 h-screen snap-mandatory overflow-y-scroll text-center scrollbar-hide"
   >
@@ -107,7 +108,7 @@ export default {
   computed: {
     ...mapGetters(["userType", "userProfile", "semCards"]),
   },
-  async created() {
+  async updated(){
     const submissionsResp = await axios.get(
       `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${this.id}/submission/`
     );
