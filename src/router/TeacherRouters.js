@@ -10,10 +10,14 @@ import assignmentSubmission from "../views/Teacher/Subjects/AssignmentSubmission
 
 const isAuth = (to, from, next) => {
   console.log("isAuth : " + store.state.isAuth); //TODO: have to remove this console log
-  if (!store.state.isAuth) {
-    next("/log-in");
-  } else {
+  if (store.state.isAuth) {
+    // console.log("to");
+    // console.log(to);
+    // console.log("from");
+    // console.log(from);
     next();
+  } else {
+    next("/log-in");
   }
 };
 
