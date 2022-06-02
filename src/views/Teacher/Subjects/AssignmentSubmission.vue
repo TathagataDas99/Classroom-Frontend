@@ -45,7 +45,7 @@
               :disabled="subjectEditArr[index]"
               type="number"
               min="0"
-              :max="50"
+              :max="marks"
               v-model="formValueList[index].score"
             />
             <!-- //TODO: Upper Limit check add -->
@@ -103,7 +103,7 @@ export default {
       formValueList: [],
     };
   },
-  props: ["classroom_slug", "semester_no", "subject_slug", "id"],
+  props: ["classroom_slug", "semester_no", "subject_slug", "id", "marks"],
   computed: {
     ...mapGetters(["userType", "userProfile", "semCards"]),
   },

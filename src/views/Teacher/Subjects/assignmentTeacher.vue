@@ -440,6 +440,7 @@ export default {
           subject_slug: this.subject_slug,
           semester_no: this.semester_no,
           classroom_slug: this.classroom_slug,
+          marks: this.formValues.alloted_marks,
         },
       });
     },
