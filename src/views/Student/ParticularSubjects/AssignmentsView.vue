@@ -3,7 +3,7 @@
     <div v-if="loader">
       <LoaderView />
     </div>
-    <!-- {{ assignments }} -->
+    {{ assignments }}
     <section class="mt-5">
       <div
         :tabindex="index"
@@ -76,7 +76,7 @@
             </a>
           </div>
           <table class="col-span-full row-span-1 table-auto">
-            <tr>
+            <tr v-if="assignment.submittedValue.length === 0">
               <td class="label">submit your assignment</td>
               <td>
                 <form
@@ -126,6 +126,7 @@ export default {
       formValues: {
         submitted_file: null,
       },
+      submissions: [],
     };
   },
   components: {
@@ -147,11 +148,19 @@ export default {
         `/classroom-app/classroom/${this.userProfile.classroom.slug}/semester/${this.id}/subject/${this.subject_slug}/assignment/`
       );
       this.assignments = assignmentsResponse.data;
-      // for (let i of this.assignments) {
-      //   this.formValues.push({
-      //     submitted_file: i.submitted_file,
-      //   });
-      // }
+      let count = 0;
+      for (let i of this.assignments) {
+        const res = await axios.get(
+          `/classroom-app/classroom/${this.userProfile.classroom.slug}/semester/${this.id}/subject/${this.subject_slug}/assignment/${i.id}/submission/`,
+          {
+            headers: {
+              Authorization: "JWT " + sessionStorage.getItem("token"),
+            },
+          }
+        );
+        this.assignments[count++]["submittedValue"] = res.data;
+        console.log(res);
+      }
       // console.log(assignmentsResponse);
       // console.log(this.subject_slug, this.id, this.userProfile.classroom.slug);
     } catch (e) {
@@ -199,6 +208,9 @@ export default {
         console.log(e);
       }
     },
+    // async assignmentSubmission(id) {
+    //   const res = await axios.get(``);
+    // },
   },
 };
 </script>
