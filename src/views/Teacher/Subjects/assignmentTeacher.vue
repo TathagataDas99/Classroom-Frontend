@@ -126,7 +126,7 @@
       <section
         v-else
         :tabindex="index"
-        class="slow-effect collapse mx-10 shadow-md md:mx-20"
+        class="slow-effect collapse mx-10 my-5 shadow-md md:mx-20"
         v-for="(assignment, index) in assignments"
         :key="assignment.id"
         :class="{ 'collapse-open max-h-96 shadow-xl': openedNotes === index }"
@@ -244,12 +244,12 @@
               >
             </a>
           </div>
-          <div class="col-span-1 row-span-1 w-full">
+          <div class="w-full">
             <button
               class="bttn w-full"
               @click="showSubmissions(assignment.id, assignment.alloted_marks)"
             >
-              Show Submitted Assignments
+              Show Submissions
             </button>
           </div>
         </section>
