@@ -75,7 +75,21 @@
               >
             </a>
           </div>
-          <table class="col-span-full row-span-1 table-auto">
+          <table class="col-span-full row-span-1 table-auto rounded-xl">
+            <tr
+              v-if="assignment.submittedValue.length !== 0"
+              class="text-center"
+            >
+              <td class="label">Submitted File:</td>
+              <td class="slow-effect rounded-lg px-10 py-4 hover:bg-sky-100">
+                <DocumentDownloadIcon
+                  class="slow-effect inline-block w-16 text-info-dark hover:scale-125"
+                />
+                <span class="text-center font-heading text-2xl">
+                  Submitted Solution
+                </span>
+              </td>
+            </tr>
             <tr v-if="assignment.submittedValue.length === 0">
               <td class="label">submit your assignment</td>
               <td>
@@ -98,6 +112,33 @@
                     <button class="bttn col-span-2">upload</button>
                   </section>
                 </form>
+              </td>
+            </tr>
+            <tr
+              v-else
+              class="mb-4 rounded-lg border-2 border-primary-dark py-10 px-2 text-center shadow-lg"
+            >
+              <td class="py-10 font-heading text-xl font-bold">Result :</td>
+              <td
+                v-if="!assignment.submittedValue[0].has_scored"
+                class="py-10 font-heading text-xl font-bold text-danger-dark"
+              >
+                Not Yet Published
+              </td>
+              <td
+                v-if="assignment.submittedValue[0].has_scored"
+                class="slow-effect my-2 rounded-xl py-7 font-heading text-4xl font-bold hover:bg-yellow-100"
+              >
+                Score achieved :
+                <span class="text-primary-dark">{{
+                  assignment.submittedValue[0].score
+                }}</span>
+              </td>
+              <td
+                v-if="assignment.submittedValue[0].has_scored"
+                class="py-10 font-heading text-xl font-bold text-info-dark"
+              >
+                Remarks : {{ assignment.submittedValue[0].remarks }}
               </td>
             </tr>
           </table>
