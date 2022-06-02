@@ -423,6 +423,7 @@
                       class="input-box"
                       type="number"
                       min="2"
+                      max="4"
                       v-model.trim.lazy="duration"
                       @change="listOfCurrentSem"
                     />
@@ -446,14 +447,21 @@
                 <section class="form-section">
                   <label class="label">Section</label>
                   <section class="input-section">
-                    <select
+                    <input
+                      type="text"
+                      v-model="createClassroomFormValues.section"
+                      class="input-box"
+                      minlength="1"
+                      maxlength="5"
+                    />
+                    <!-- <select
                       class="input-box"
                       v-model="createClassroomFormValues.section"
                     >
                       <option :value="i" v-for="i in sections" :key="i">
                         {{ i }}
                       </option>
-                    </select>
+                    </select> -->
                   </section>
                 </section>
                 <section class="form-section">
