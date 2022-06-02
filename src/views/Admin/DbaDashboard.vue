@@ -1050,7 +1050,7 @@ export default {
       successMsg: [],
       showSuccessMsg: false,
       notificationInterval: 1500,
-      errorInterval: 2500,
+      errorInterval: 3500,
       loader: true,
       tempVal: null,
       contactEdit: true,
@@ -1252,16 +1252,26 @@ export default {
       this.isStreamAddFormOpen = !this.isStreamAddFormOpen;
       try {
         this.formValues.title = this.titleCase(this.formValues.title);
-        const resp = await axios.post(
+        await axios.post(
           `/classroom-app/college-streams/${this.userProfile.college.slug}/stream/`,
           this.formValues
         );
+        this.successMsg.push("New Stream Added Successfully.");
+        this.showSuccessMsg=true;
+        setTimeout(() => {
+          this.showSuccessMsg = false;
+        }, this.notificationInterval);
         this.$router.go();
-        console.log("New Stream Added Successfully");
-        console.log(resp);
+        //console.log("New Stream Added Successfully");
+        //console.log(resp);
       } catch (e) {
-        console.log("In AddNewStream Function");
-        console.log(e);
+        this.error = Object.values(e.response.data);
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, this.errorInterval);
+       // console.log("In AddNewStream Function");
+       // console.log(e);
       }
     },
     async addDbaToTheStream() {
