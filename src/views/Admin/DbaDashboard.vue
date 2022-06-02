@@ -3,6 +3,16 @@
   <div v-if="loader">
     <LoaderView />
   </div>
+  <div v-if="error && showError">
+    <template v-for="e in error" :key="e">
+      <notificationView :error="e" />
+    </template>
+  </div>
+  <div v-if="successMsg && showSuccessMsg">
+    <template v-for="m in successMsg" :key="m">
+      <successNotification :error="m" />
+    </template>
+  </div>
   <main class="admin-layout" v-else>
     <section id="1" class="admin-action-area">
       <!-- owner-group -->
@@ -143,7 +153,11 @@
                 <UserAddIcon class="admin-btn-icon" /> Admin
               </button>
               <!-- Add dba to the stream Form -->
-              <form v-if="isAddAdminForm" class="form form-admin">
+              <form
+                v-if="isAddAdminForm"
+                class="form form-admin"
+                @submit.prevent="addNewAdmin"
+              >
                 <!-- TODO:Change The DBA Add Function -->
                 <div class="form-section">
                   <label class="label" for="dba">Admin Email</label>
@@ -157,7 +171,7 @@
                   </div>
                 </div>
                 <div class="button-section">
-                  <button class="bttn" @click="addNewAdmin">Add</button>
+                  <button class="bttn">Add</button>
                   <button
                     @click="isAddAdminForm = !isAddAdminForm"
                     class="bttn-danger"
@@ -339,7 +353,7 @@
                 v-if="isCreateClassRoomFormOpen"
                 class="form form-admin"
                 enctype="multipart/form-data"
-                @submit.prevent="createCollege"
+                @submit.prevent="createClassroom"
               >
                 <section class="form-section">
                   <label class="label">Title</label>
@@ -1007,6 +1021,8 @@ import LoaderView from "../../components/LoaderView.vue";
 import axios from "axios";
 import { mapGetters } from "vuex";
 import { TrashIcon, PencilAltIcon, PlusIcon } from "@heroicons/vue/outline";
+import notificationView from "../../components/notificationView.vue";
+import successNotification from "../../components/successNotification.vue";
 import {
   UserRemoveIcon,
   UserAddIcon,
@@ -1016,6 +1032,8 @@ import {
 
 export default {
   components: {
+    successNotification,
+    notificationView,
     LoaderView,
     PencilAltIcon,
     TrashIcon,
@@ -1027,6 +1045,11 @@ export default {
   },
   data() {
     return {
+      error: [],
+      showError: false,
+      successMsg: [],
+      showSuccessMsg: false,
+      notificationInterval: 1000,
       loader: true,
       tempVal: null,
       contactEdit: true,
@@ -1200,6 +1223,7 @@ export default {
             },
           }
         );
+        //TODO: Show Success Msg for 1 sec
         this.$router.go();
       } catch (e) {
         console.log(e);
@@ -1245,7 +1269,7 @@ export default {
         event.target.files[0];
       console.log(this.createClassroomFormValues.allowed_student_list);
     },
-    async createCollege() {
+    async createClassroom() {
       this.isCreateClassRoomFormOpen = !this.isCreateClassRoomFormOpen;
       this.loader = true;
       const endYear =
@@ -1306,17 +1330,30 @@ export default {
       this.loader = false;
     },
     async addNewAdmin() {
-      // this.isAddAdminForm = !this.isAddAdminForm;
+      this.isAddAdminForm = !this.isAddAdminForm;
+      // this.loader = false;
+      this.successMsg = [];
+      this.error = [];
       try {
-        const resp = await axios.post(
+        await axios.post(
           `/classroom-app/college-dba/${this.userProfile.college.slug}/manage-dba/`,
           this.addTeacherForm
         );
-        console.log(resp);
-        console.log("successfully added new dba");
+        // console.log(resp);
+        this.successMsg.push("successfully added new dba");
+        this.showSuccessMsg = true;
+        setTimeout(() => {
+          this.showSuccessMsg = false;
+        }, this.notificationInterval);
+        // console.log(this.successMsg);
       } catch (e) {
-        console.log(e);
+        this.error = Object.values(e.response.data);
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, this.notificationInterval);
       }
+      // this.loader = false;
     },
     async removeAdminFromCollege() {
       try {
