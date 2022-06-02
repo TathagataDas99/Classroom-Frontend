@@ -3,7 +3,7 @@
     <div v-if="loader">
       <LoaderView />
     </div>
-    {{ assignments }}
+    <!-- {{ assignments }} -->
     <section class="mt-5">
       <div
         :tabindex="index"
