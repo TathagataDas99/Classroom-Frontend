@@ -1605,12 +1605,14 @@ export default {
     async deleteClassroom(slug) {
       // console.log("inside delete -> " + slug);
       this.tempVal = null;
+      this.error=[];
+      this.successMsg=[];
       try {
         // this.subjectEdit.pop();
-        console.log(slug);
-        this.classroomList = this.classroomList.filter(function (obj) {
-          return obj.slug !== slug;
-        });
+        // console.log(slug);
+        // this.classroomList = this.classroomList.filter(function (obj) {
+        //   return obj.slug !== slug;
+        // });
         await axios.delete(
           `/classroom-app/college-dba/${this.userProfile.college.slug}/classroom/${slug}/`,
           {
@@ -1620,8 +1622,19 @@ export default {
           }
         );
         this.tempVal = null;
+        this.successMsg.push("Classroom Deleted Successfully.");
+        this.showSuccessMsg=true;
+        setTimeout(() => {
+          this.showSuccessMsg = false;
+        }, this.notificationInterval);
+          this.$router.go();
       } catch (e) {
-        console.log(e);
+        this.error = Object.values(e.response.data);
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, this.errorInterval);
+        //console.log(e);
       }
     },
     async updateSemester(slug, newCurrent_sem, stream, index) {
