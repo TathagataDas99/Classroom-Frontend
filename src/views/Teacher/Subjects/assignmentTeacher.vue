@@ -73,7 +73,7 @@
               showNowButton
               placeholder="Select Time"
               :minTime="
-                formValues.due_date.getDay() === new Date().getDay()
+                new Date(formValues.due_date).getDay() === new Date().getDay()
                   ? {
                       hours: min_due_time.getHours(),
                       minutes: min_due_time.getMinutes(),
@@ -317,7 +317,7 @@ export default {
         description: "",
         alloted_marks: 100,
         attached_pdf: null,
-        due_date: null,
+        due_date: new Date().getDate(),
         due_time: null,
       },
       attached_files: [],
@@ -332,6 +332,9 @@ export default {
   },
   computed: {
     ...mapGetters(["userType", "userProfile", "semCards"]),
+  },
+  mounted() {
+    this.formValues.due_date = new Date();
   },
   async created() {
     this.loader = true;
