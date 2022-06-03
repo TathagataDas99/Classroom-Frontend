@@ -90,9 +90,11 @@
           <label class="label">Attachment (1 PDF only, Max Size: 5 MB)</label>
           <section class="input-section-file">
             <input
+              required
               title="1 PDF only, Max Size: 5 MB"
               class="input-file"
               ref="file"
+              accept="application/pdf"
               @change="handleFileUpload"
               type="file"
             />
