@@ -60,20 +60,52 @@
           <section
             class="col-span-2 grid grid-flow-col place-content-stretch gap-3"
           >
-            <input
+            <!-- class="input-box" -->
+            <!-- type="date" -->
+            <!-- :min="min_due_date" -->
+            <!-- pattern="\d{4}-\d{2}-\d{2}" -->
+            <Datepicker
+              date
+              :minDate="new Date()"
+              showNowButton
+              v-model="formValues.due_date"
+              :enableTimePicker="false"
+              required
+            />
+            <!-- class="input-box"
+              type="time" -->
+            <!-- :is24="true" -->
+            <!-- @select="selectDate" -->
+            <Datepicker
+              timePicker
+              showNowButton
+              placeholder="Select Time"
+              :minTime="
+                formValues.due_date.getDay() === new Date().getDay()
+                  ? {
+                      hours: min_due_time.getHours(),
+                      minutes: min_due_time.getMinutes(),
+                      seconds: min_due_time.getSeconds(),
+                    }
+                  : null
+              "
+              v-model="formValues.due_time"
+              required
+            />
+            <!-- <input
               class="input-box"
               type="date"
               :min="min_due_date"
               v-model.trim.lazy="formValues.due_date"
               pattern="\d{4}-\d{2}-\d{2}"
               required
-            />
-            <input
+            /> -->
+            <!-- <input
               class="input-box"
               type="time"
               v-model.trim.lazy="formValues.due_time"
               required
-            />
+            /> -->
           </section>
         </div>
         <div class="form-section">
@@ -266,6 +298,8 @@
 </template>
 
 <script>
+// import Datepicker from "@vuepic/vue-datepicker";
+// import "@vuepic/vue-datepicker/dist/main.css";
 import axios from "axios";
 import { mapGetters } from "vuex";
 import {
@@ -281,6 +315,7 @@ export default {
   props: ["classroom_slug", "semester_no", "subject_slug"],
   components: {
     LoaderView,
+    // Datepicker,
     // PencilIcon,
     PlusCircleIcon,
     // CheckIcon,
@@ -290,6 +325,7 @@ export default {
   data() {
     return {
       isFormOpen: false,
+      min_due_time: new Date(),
       min_due_date:
         new Date().getFullYear() +
         "-" +
@@ -343,6 +379,10 @@ export default {
     this.loader = false;
   },
   methods: {
+    selectDate() {
+      console.log(this.formValues.due_date);
+      console.log(this.formValues.due_time);
+    },
     async editPatch(assignment, index) {
       try {
         this.subjectEdit[index] = !this.subjectEdit[index];
