@@ -88,7 +88,7 @@
       </template> -->
       <section
         :tabindex="index"
-        class="collapse mx-10 md:mx-20 lg:mx-24"
+        class="collapse mx-10 my-3 md:mx-20 lg:mx-24"
         v-for="(note, index) in notes"
         :key="note.slug"
         :class="{ 'collapse-open max-h-96': openedNotes === index }"
