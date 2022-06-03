@@ -66,12 +66,11 @@
               showNowButton
               v-model="formValues.due_date"
               :enableTimePicker="false"
+              :format="'yyyy-MM-dd'"
               required
             />
             <Datepicker
-              timePicker
-              showNowButton
-              placeholder="Select Time"
+              :format="'HH:mm'"
               :minTime="
                 new Date(formValues.due_date).getDay() === new Date().getDay()
                   ? {
@@ -81,6 +80,10 @@
                     }
                   : null
               "
+              is24="true"
+              timePicker
+              showNowButton
+              placeholder="Select Time"
               v-model="formValues.due_time"
               required
             />
@@ -317,7 +320,7 @@ export default {
         description: "",
         alloted_marks: 100,
         attached_pdf: null,
-        due_date: new Date().getDate(),
+        due_date: null,
         due_time: null,
       },
       attached_files: [],
@@ -354,7 +357,7 @@ export default {
       }
       // var dateControl = document.querySelector('input[type="date"]');
       // dateControl.value = this.min_due_date;
-      this.formValues.due_date = this.min_due_date;
+      // this.formValues.due_date = this.min_due_date;
     } catch (e) {
       console.log(e);
     }
@@ -362,10 +365,10 @@ export default {
     this.loader = false;
   },
   methods: {
-    selectDate() {
-      console.log(this.formValues.due_date);
-      console.log(this.formValues.due_time);
-    },
+    // selectDate() {
+    //   console.log(this.formValues.due_date);
+    //   console.log(this.formValues.due_time);
+    // },
     async editPatch(assignment, index) {
       try {
         this.subjectEdit[index] = !this.subjectEdit[index];
@@ -423,13 +426,22 @@ export default {
     async addAssignment() {
       this.isFormOpen = !this.isFormOpen;
       //TODO: Convert to FormData
+      console.log("date");
+      const date = this.formValues.due_date;
+      const form_date = `${date.getFullYear()}-${
+        date.getMonth() + 1
+      }-${date.getDate()}`;
+
+      console.log(form_date);
+      const time = `${this.formValues.due_time.hours}:${this.formValues.due_time.minutes}:00`;
+      // console.log(time);
       try {
         const FormValues = new FormData();
         FormValues.append("title", this.formValues.title);
         FormValues.append("description", this.formValues.description);
         FormValues.append("alloted_marks", this.formValues.alloted_marks);
-        FormValues.append("due_date", this.formValues.due_date);
-        FormValues.append("due_time", this.formValues.due_time);
+        FormValues.append("due_date", form_date);
+        FormValues.append("due_time", time);
         FormValues.append("attached_pdf", this.formValues.attached_pdf);
         const res = await axios.post(
           `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/`,
