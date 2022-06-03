@@ -4,8 +4,11 @@
     class="mr-4 h-screen snap-mandatory overflow-y-scroll text-center scrollbar-hide"
   >
     <!-- <h1 class="text-2xl">{{ submissions }}</h1> -->
-
+    <template v-if="loader">
+      <LoaderView class="col-span-1 row-span-1 place-self-center" />
+    </template>
     <section
+      v-else
       class="overflow-clip rounded-xl border-2 border-gray-200/70 shadow-lg"
     >
       <table class="group w-full table-auto">
@@ -84,6 +87,7 @@
 <script>
 import axios from "axios";
 import { mapGetters } from "vuex";
+import LoaderView from "../../../components/LoaderView.vue";
 import {
   PencilIcon,
   CheckIcon,
@@ -96,9 +100,11 @@ export default {
     PencilIcon,
     CheckIcon,
     DocumentDownloadIcon,
+    LoaderView,
   },
   data() {
     return {
+      loader: false,
       subjectEditArr: [],
       submissions: [],
       formValueList: [],
@@ -108,7 +114,8 @@ export default {
   computed: {
     ...mapGetters(["userType", "userProfile", "semCards"]),
   },
-  async updated() {
+  async beforeUpdate() {
+    // this.loader = true;
     const submissionsResp = await axios.get(
       `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${this.id}/submission/`
     );
@@ -121,8 +128,11 @@ export default {
         remarks: i.remarks,
       });
     }
+    // this.loader = false; //NOT WORKING
   },
+
   async created() {
+    this.loader = true;
     const submissionsResp = await axios.get(
       `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${this.id}/submission/`
     );
@@ -135,6 +145,7 @@ export default {
         remarks: i.remarks,
       });
     }
+    this.loader = false;
   },
   methods: {
     async editPatch(submission, index) {
