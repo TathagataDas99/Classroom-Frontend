@@ -67,20 +67,13 @@
               v-model="formValues.due_date"
               :enableTimePicker="false"
               :format="'yyyy-MM-dd'"
+              @update:modelValue="changeMinTime"
               required
             />
+            <!-- is24="true" -->
             <Datepicker
               :format="'HH:mm'"
-              :minTime="
-                new Date(formValues.due_date).getDay() === new Date().getDay()
-                  ? {
-                      hours: min_due_time.getHours(),
-                      minutes: min_due_time.getMinutes(),
-                      seconds: min_due_time.getSeconds(),
-                    }
-                  : null
-              "
-              is24="true"
+              :minTime="min_time"
               timePicker
               showNowButton
               placeholder="Select Time"
@@ -307,6 +300,7 @@ export default {
   },
   data() {
     return {
+      min_time: null,
       isFormOpen: false,
       min_due_time: new Date(),
       min_due_date:
@@ -369,6 +363,18 @@ export default {
     //   console.log(this.formValues.due_date);
     //   console.log(this.formValues.due_time);
     // },
+    changeMinTime(modelData) {
+      // console.log(modelData);
+      this.min_time =
+        modelData.getDay() === new Date().getDay()
+          ? {
+              hours: this.min_due_time.getHours(),
+              minutes: this.min_due_time.getMinutes(),
+              seconds: this.min_due_time.getSeconds(),
+            }
+          : null;
+      // console.log(this.min_time);
+    },
     async editPatch(assignment, index) {
       try {
         this.subjectEdit[index] = !this.subjectEdit[index];
