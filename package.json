@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@heroicons/vue": "^1.0.6",
+    "@vuepic/vue-datepicker": "^3.2.1",
     "axios": "^0.27.2",
     "daisyui": "^2.14.2",
     "tailwind-scrollbar-hide": "^1.1.7",
