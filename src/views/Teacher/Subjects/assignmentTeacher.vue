@@ -60,10 +60,6 @@
           <section
             class="col-span-2 grid grid-flow-col place-content-stretch gap-3"
           >
-            <!-- class="input-box" -->
-            <!-- type="date" -->
-            <!-- :min="min_due_date" -->
-            <!-- pattern="\d{4}-\d{2}-\d{2}" -->
             <Datepicker
               date
               :minDate="new Date()"
@@ -72,10 +68,6 @@
               :enableTimePicker="false"
               required
             />
-            <!-- class="input-box"
-              type="time" -->
-            <!-- :is24="true" -->
-            <!-- @select="selectDate" -->
             <Datepicker
               timePicker
               showNowButton
@@ -92,20 +84,6 @@
               v-model="formValues.due_time"
               required
             />
-            <!-- <input
-              class="input-box"
-              type="date"
-              :min="min_due_date"
-              v-model.trim.lazy="formValues.due_date"
-              pattern="\d{4}-\d{2}-\d{2}"
-              required
-            /> -->
-            <!-- <input
-              class="input-box"
-              type="time"
-              v-model.trim.lazy="formValues.due_time"
-              required
-            /> -->
           </section>
         </div>
         <div class="form-section">
