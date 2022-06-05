@@ -1,7 +1,7 @@
 <template>
   <!-- <h1>{{ assignments }}</h1> -->
   <main
-    class="mx-2 grid w-screen grid-flow-col grid-cols-12 gap-2"
+    class="mx-2 grid w-screen grid-flow-col gap-2"
     @click="openedNotes = -1"
   >
     <!-- <h1>{{attached_files}}</h1> -->
@@ -124,7 +124,7 @@
     </div>
     <!-- MODAL -->
     <!-- Assignment Cards -->
-    <section class="col-span-7 mt-4">
+    <section class="mt-4">
       <template v-if="loader">
         <template v-for="i in 4" :key="i">
           <LoaderView class="col-span-1 row-span-1 place-self-center" />
@@ -353,7 +353,7 @@
 
     <!-- Assignment Submissions Cards -->
     <Transition>
-      <router-view class="col-span-6 mt-5" />
+      <router-view class="mt-5" />
     </Transition>
     <!--EOF --- Assignment Submissions Cards End-->
   </main>
