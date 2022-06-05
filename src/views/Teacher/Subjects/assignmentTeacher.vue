@@ -1,10 +1,15 @@
 <template>
   <!-- <h1>{{ assignments }}</h1> -->
   <main class="mx-2 grid w-screen grid-flow-row gap-2 md:grid-flow-col">
-    <!-- @click="openedNotes = -1" -->
     <!-- <h1>{{attached_files}}</h1> -->
     <!-- assignment add form -->
-    <aside class="absolute bottom-7 right-2 z-50 md:right-10">
+    <button
+      class="absolute left-0 right-0 z-20 mx-auto my-2 w-48 rounded-md bg-pink-300 py-2 font-body font-bold shadow-md"
+      @click="openedNotes = -1"
+    >
+      Collapse all
+    </button>
+    <aside class="absolute bottom-4 right-2 z-50 md:right-10">
       <button
         class="add-subject"
         @click="this.isFormOpen = !this.isFormOpen"
@@ -122,7 +127,7 @@
     </div>
     <!-- MODAL -->
     <!-- Assignment Cards -->
-    <section class="mt-4">
+    <section class="mt-10">
       <template v-if="loader">
         <template v-for="i in 4" :key="i">
           <LoaderView class="col-span-1 row-span-1 place-self-center" />

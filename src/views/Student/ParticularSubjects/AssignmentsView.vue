@@ -7,7 +7,7 @@
     <section class="mt-5">
       <div
         :tabindex="index"
-        class="announcement-collapse"
+        class="collapse my-3 mx-5 md:mx-20"
         v-for="(assignment, index) in assignments"
         :key="assignment.id"
         :class="{ 'collapse-open': openedNotes === index }"
@@ -17,82 +17,95 @@
           <span class="text-primary-dark">{{ index + 1 }} .</span>
           {{ assignment.title }}
         </div>
-        <section class="collapse-content grid grid-rows-5 lg:grid-cols-4">
-          <div
-            class="collapse-content row-start-1 flex flex-row flex-wrap lg:col-span-3 lg:col-start-1 lg:row-span-1"
-          >
-            <h1 class="font-heading">Description :</h1>
-            <p class="coloumn-1 row-start-1">{{ assignment.description }}</p>
-          </div>
-          <div
-            class="collapse-content col-span-3 col-start-1 row-start-2 flex flex-row flex-wrap lg:col-span-3 lg:row-span-1"
-          >
-            <h1 class="font-heading">Marks :</h1>
-            <p class="coloumn-1 px-5 text-lg font-bold text-primary-dark">
-              {{ assignment.alloted_marks }}
-            </p>
-          </div>
-          <div
-            class="collapse-content row-start-3 flex flex-row flex-wrap lg:col-span-3 lg:col-start-1 lg:row-span-1"
-          >
-            <h1 class="font-heading">Due Date :</h1>
-            <p class="coloumn-1 px-5 text-xl font-bold text-danger-dark">
-              {{ assignment.due_date }}
-            </p>
-          </div>
-          <div
-            class="collapse-content row-start-4 flex flex-row flex-wrap lg:col-span-3 lg:col-start-1 lg:row-span-1"
-          >
-            <h1 class="font-heading">Due Time :</h1>
-            <p class="coloumn-1 px-5 text-xl font-bold text-danger-dark">
-              {{ assignment.due_time }}
-            </p>
-          </div>
-          <div
-            class="collapse-content col-span-1 row-span-1 row-start-2 md:col-start-4"
-          >
-            <p>
-              created at :-
-              <span class="font-bold">{{
-                assignment.created_at.split("T")[0]
-              }}</span>
-            </p>
-            <p class="font-bold text-primary-light">Download Attached files:</p>
-          </div>
-          <div
-            class="collapse-content col-span-1 row-span-3 flex flex-row flex-wrap items-center justify-end font-body lg:col-start-4 lg:row-start-3"
-          >
-            <!-- <span class="font-bold">Attached File</span> -->
-            <a
-              class="slow-effect flex-1 hover:text-primary-light"
-              :href="assignment.attached_pdf"
+        <section class="collapse-content w-full">
+          <table class="my-2 w-full table-auto">
+            <tr class="border-t-2 border-gray-600">
+              <th class="font-heading text-xl font-semibold">Description</th>
+              <th class="font-heading text-xl font-semibold">Marks</th>
+              <th class="font-heading text-xl font-semibold">Due Date</th>
+              <th class="font-heading text-xl font-semibold">Due Time</th>
+            </tr>
+            <tr class="text-center">
+              <td>
+                <p class="coloumn-1">
+                  {{ assignment.description }}
+                </p>
+              </td>
+              <td>
+                <p class="coloumn-1 px-5 text-lg font-bold text-primary-dark">
+                  {{ assignment.alloted_marks }}
+                </p>
+              </td>
+              <td>
+                <p class="coloumn-1 px-5 text-xl font-bold text-danger-dark">
+                  {{ assignment.due_date }}
+                </p>
+              </td>
+              <td>
+                <p class="coloumn-1 px-5 text-xl font-bold text-danger-dark">
+                  {{ assignment.due_time }}
+                </p>
+              </td>
+            </tr>
+          </table>
+          <table class="my-2 w-full table-auto border-t-2 border-gray-600">
+            <tr class="border-t-2 border-gray-600">
+              <th class="font-heading text-xl font-semibold">Assignment PDF</th>
+              <th class="font-heading text-xl font-semibold">Created At</th>
+            </tr>
+            <tr class="text-center">
+              <td class="text-center">
+                <a
+                  class="slow-effect flex-1 items-center justify-evenly hover:text-primary-light"
+                  :href="assignment.attached_pdf"
+                >
+                  <DocumentDownloadIcon
+                    class="slow-effect mx-auto w-16 content-center align-middle text-primary-dark hover:scale-110 hover:text-primary-light"
+                  />
+                  <span class="py-2 px-3 text-center text-sm font-bold"
+                    >PDF</span
+                  >
+                </a>
+              </td>
+              <td>
+                <span class="font-bold">{{
+                  assignment.created_at.split("T")[0]
+                }}</span>
+              </td>
+            </tr>
+          </table>
+
+          <table class="w-full table-auto rounded-xl">
+            <tr
+              class="border-t-2 border-gray-600"
+              v-if="assignment.submittedValue.length === 0"
             >
-              <DocumentDownloadIcon
-                class="slow-effect w-16 text-primary-dark hover:scale-110 hover:text-primary-light"
-              />
-              <span class="py-2 px-3 text-center text-sm font-bold"
-                >file-1</span
-              >
-            </a>
-          </div>
-          <table class="col-span-full row-span-1 table-auto rounded-xl">
+              <th colspan="2" class="font-heading text-xl font-semibold">
+                Submit Assignment
+              </th>
+            </tr>
             <tr
               v-if="assignment.submittedValue.length !== 0"
-              class="text-center"
+              class="rounded-xl bg-yellow-200/80 text-center"
             >
-              <td class="label">Submitted File:</td>
-              <td class="slow-effect rounded-lg px-10 py-4 hover:bg-sky-100">
+              <!-- <td class="label">Submitted File:</td> -->
+              <td class="text-center font-heading text-2xl">
+                Submitted Solution
+              </td>
+              <td
+                class="slow-effect flex flex-col items-center justify-evenly rounded-lg px-10 py-4"
+              >
                 <DocumentDownloadIcon
-                  class="slow-effect inline-block w-16 text-info-dark hover:scale-125"
+                  class="slow-effect group w-16 text-info-dark hover:scale-125"
                 />
-                <span class="text-center font-heading text-2xl">
-                  Submitted Solution
+                <span class="group:hover:scale-125 uppercase text-info-dark">
+                  pdf
                 </span>
               </td>
             </tr>
             <tr v-if="assignment.submittedValue.length === 0">
-              <td class="label">submit your assignment</td>
-              <td>
+              <!-- <td class="label">submit your assignment</td> -->
+              <td colspan="2">
                 <form
                   class="form"
                   enctype="multipart/form-data"
@@ -118,12 +131,13 @@
               v-else
               class="mb-4 rounded-lg border-2 border-primary-dark py-10 px-2 text-center shadow-lg"
             >
-              <td class="py-10 font-heading text-xl font-bold">Result :</td>
+              <!-- <td class="py-10 font-heading text-xl font-bold">Result :</td> -->
               <td
+                colspan="2"
                 v-if="!assignment.submittedValue[0].has_scored"
                 class="py-10 font-heading text-xl font-bold text-danger-dark"
               >
-                Not Yet Published
+                Result Not Yet Published
               </td>
               <td
                 v-if="assignment.submittedValue[0].has_scored"
@@ -248,6 +262,7 @@ export default {
       } catch (e) {
         console.log(e);
       }
+      this.$router.go();
     },
     // async assignmentSubmission(id) {
     //   const res = await axios.get(``);
