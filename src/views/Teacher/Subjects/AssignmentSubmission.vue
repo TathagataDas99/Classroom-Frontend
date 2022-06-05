@@ -170,7 +170,9 @@ export default {
   // },
 
   async mounted() {
-    // this.flag = false;
+    this.flagArr = [];
+    this.formValueList = [];
+    this.subjectEditArr = [];
     this.loader = true;
     console.log("in be4 Mount");
     const submissionsResp = await axios.get(
@@ -192,6 +194,9 @@ export default {
   },
   watch: {
     id: async function (newvalue) {
+      this.flagArr = [];
+      this.formValueList = [];
+      this.subjectEditArr = [];
       this.loader = true;
       console.log("in be4 Mount");
       const submissionsResp = await axios.get(
@@ -227,6 +232,8 @@ export default {
         // console.log(submission.submission_time.split(".")[0]);
         // console.log("Submission_date");
         // console.log(Date.parse(submission.submission_date));
+        // console.log("ass_date");
+        // console.log(Date.parse(assignment.due_date));
 
         // console.log(
         //   new Date(assignment.due_date) >=
@@ -234,8 +241,14 @@ export default {
         //     assignment.due_time >= submission.submission_time.split(".")[0]
         // );
         if (
-          Date.parse(assignment.due_date) >=
-            Date.parse(submission.submission_date) &&
+          new Date(assignment.due_date) > new Date(submission.submission_date)
+          //   &&
+          // assignment.due_time >= submission.submission_time.split(".")[0]
+        ) {
+          this.flagArr[index] = true;
+        } else if (
+          new Date(assignment.due_date) ==
+            new Date(submission.submission_date) &&
           assignment.due_time >= submission.submission_time.split(".")[0]
         ) {
           this.flagArr[index] = true;
