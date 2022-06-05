@@ -1,11 +1,9 @@
 <template>
   <!-- <h1>{{ assignments }}</h1> -->
-  <main
-    class="mx-2 grid w-screen grid-flow-row gap-2 md:grid-flow-col"
-    @click="openedNotes = -1"
-  >
+  <main class="mx-2 grid w-screen grid-flow-row gap-2 md:grid-flow-col">
+    <!-- @click="openedNotes = -1" -->
     <!-- <h1>{{attached_files}}</h1> -->
-    <!-- notes add form -->
+    <!-- assignment add form -->
     <aside class="absolute bottom-7 right-2 z-50 md:right-10">
       <button
         class="add-subject"
@@ -106,7 +104,7 @@
         </section>
       </form>
     </aside>
-    <!-- notes add form -->
+    <!-- assignment add form -->
 
     <!-- MODAL -->
     <div class="modal z-50" id="delete-warning" v-show="tempVal !== null">
@@ -143,16 +141,16 @@
         <!-- #FIXME: Edit card opening all at same time -->
         <!-- #FIXME: Edit Buttons for patch -->
         <div class="absolute top-5 right-5 flex w-20 flex-row justify-evenly">
-          <!-- <PencilIcon
+          <PencilIcon
             v-if="subjectEdit[index]"
             @click="subjectEdit[index] = !subjectEdit[index]"
             class="slow-effect h-7 w-5 text-zinc-700 hover:text-zinc-500"
-          /> -->
-          <!-- <CheckIcon
+          />
+          <CheckIcon
             v-else
             @click="editPatch(assignment, index)"
             class="slow-effect h-7 w-5 rounded-lg border-2 border-primary-light text-primary-dark hover:text-primary-light"
-          /> -->
+          />
           <div class="tooltip tooltip-left" data-tip="Delete Subject">
             <!-- deleteAnnouncement(assignment.slug) -->
             <a href="#delete-warning">
@@ -168,12 +166,12 @@
           type="text"
           v-model="assignment.title"
           class="collapse-title font-heading text-base font-medium uppercase md:text-lg lg:text-xl"
-          :class="{ 'subject-edit-input': !subjectEdit[index] }"
+          :class="{ 'subject-edit-input collapse-title': !subjectEdit[index] }"
           :disabled="subjectEdit[index]"
           placeholder="assignment title"
         />
         <section class="collapse-content w-full">
-          <table class="collapse-content table-auto text-center">
+          <table class="collapse-content w-full table-auto text-center">
             <tr class="border-b-2 border-gray-400">
               <!-- <th>-</th> -->
               <th>Description</th>
@@ -182,8 +180,8 @@
               <th>Due Time</th>
             </tr>
             <tr class="border-b-2 border-gray-400">
-              <td class="w-full columns-1 px-4 py-3 text-center">
-                <input
+              <td class="columns-1 px-4 py-3 text-center">
+                <textarea
                   type="text"
                   v-model="assignment.description"
                   class="w-full columns-2 font-body text-xl"
@@ -192,7 +190,7 @@
                   }"
                   :disabled="subjectEdit[index]"
                   placeholder="assignment description"
-                />
+                ></textarea>
               </td>
               <td>
                 <input
@@ -200,14 +198,31 @@
                   v-model="assignment.alloted_marks"
                   class="columns-1 px-3 text-center font-body text-xl font-bold text-danger-dark"
                   :class="{
-                    'subject-edit-input collapse-title': !subjectEdit[index],
+                    'subject-edit-input collapse-title mx-2':
+                      !subjectEdit[index],
                   }"
                   :disabled="subjectEdit[index]"
                   placeholder="assignment description"
                 />
               </td>
               <td>
-                <input
+                <Datepicker
+                  date
+                  :minDate="new Date()"
+                  showNowButton
+                  :enableTimePicker="false"
+                  :format="'yyyy-MM-dd'"
+                  @update:modelValue="changeMinTime"
+                  required
+                  v-model="assignment.due_date"
+                  class="columns-1 px-3 font-body text-xl font-bold text-danger-dark"
+                  :class="{
+                    'collapse-title mx-2': !subjectEdit[index],
+                  }"
+                  :disabled="subjectEdit[index]"
+                />
+                <!-- v-model="formValues.due_date" -->
+                <!-- <input
                   type="date"
                   v-model="assignment.due_date"
                   class="columns-1 px-3 font-body text-xl font-bold text-danger-dark"
@@ -217,11 +232,47 @@
                   :disabled="subjectEdit[index]"
                   pattern="\d{4}-\d{2}-\d{2}"
                   placeholder="assignment description"
-                />
+                /> -->
               </td>
               <td>
-                <input
+                <span
+                  v-if="
+                    subjectEdit[index] && typeof assignment.due_date == 'string'
+                  "
+                >
+                  {{ assignment.due_time }}
+                </span>
+                <span
+                  v-else-if="
+                    subjectEdit[index] && typeof assignment.due_date == 'object'
+                  "
+                >
+                  {{ assignment.due_date }}:
+                  <!-- {{ assignment.due_date.getHours() }}: -->
+                  <!-- {{ assignment.due_date.getMinutes() }} -->
+                  <!-- {{ assignment.due_date.hours }} -->
+                  <!-- :{{ assignment.due_date.minutes }} -->
+                </span>
+                <Datepicker
+                  v-else
+                  :format="'HH:mm'"
+                  :minTime="min_time"
+                  timePicker
+                  showNowButton
+                  placeholder="Select Time"
+                  required
+                  v-model="assignment.due_time"
+                  class="columns-1 px-3 font-body text-xl font-bold text-danger-dark"
+                  :class="{
+                    'collapse-title mx-2': !subjectEdit[index],
+                  }"
+                  :disabled="subjectEdit[index]"
+                />
+                <!-- v-else -->
+                <!-- v-model="formValues.due_time" -->
+                <!-- <input
                   type="time"
+                  :min="min_time"
                   v-model="assignment.due_time"
                   class="columns-1 px-3 font-body text-xl font-bold text-danger-dark"
                   :class="{
@@ -230,7 +281,7 @@
                   :disabled="subjectEdit[index]"
                   pattern="\d{2}:\d{2}:\d{2}"
                   placeholder="assignment description"
-                />
+                /> -->
               </td>
             </tr>
             <tr class="mx-2 py-2 px-4">
@@ -365,8 +416,8 @@
 import axios from "axios";
 import { mapGetters } from "vuex";
 import {
-  // PencilIcon,
-  // CheckIcon,
+  PencilIcon,
+  CheckIcon,
   TrashIcon,
   PlusCircleIcon,
 } from "@heroicons/vue/solid";
@@ -378,9 +429,9 @@ export default {
   components: {
     LoaderView,
     // Datepicker,
-    // PencilIcon,
+    PencilIcon,
     PlusCircleIcon,
-    // CheckIcon,
+    CheckIcon,
     TrashIcon,
     DocumentDownloadIcon,
   },
@@ -463,25 +514,43 @@ export default {
     },
     async editPatch(assignment, index) {
       try {
+        let dateVar = new Date(assignment.due_date);
+        let timeVar = null;
+        if (typeof assignment.due_time == "string") {
+          let timeObj = { hours: "", minutes: "" };
+          console.log(assignment.due_time);
+          timeObj.hours = assignment.due_time.split(":")[0];
+          timeObj.minutes = assignment.due_time.split(":")[1];
+          timeVar = timeObj;
+        } else {
+          timeVar = assignment.due_time;
+        }
+        console.log(timeVar);
+
+        const date = `${dateVar.getFullYear()}-${
+          dateVar.getMonth() + 1
+        }-${dateVar.getDate()}`;
+        const time = `${timeVar.hours}:${timeVar.minutes}:00.0000`;
+
         this.subjectEdit[index] = !this.subjectEdit[index];
         const id = assignment.id;
-        // const assignmentPatch = {
-        //   title: assignment.title,
-        //   description: assignment.description,
-        //   alloted_marks: assignment.alloted_marks,
-        //   due_date: assignment.due_date,
-        //   due_time: assignment.due_time,
-        // };
+
         const FormValues = new FormData();
-        FormValues.append("title", this.formValues.title);
-        FormValues.append("description", this.formValues.description);
-        FormValues.append("alloted_marks", this.formValues.alloted_marks);
-        FormValues.append("due_date", this.formValues.due_date);
-        FormValues.append("due_time", this.formValues.due_time);
+        FormValues.append("title", assignment.title);
+        FormValues.append("description", assignment.description);
+        FormValues.append("alloted_marks", assignment.alloted_marks);
+        FormValues.append("due_date", date);
+        FormValues.append("due_time", time);
         // TODO:FormDAta
         await axios.patch(
           `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${id}/`,
-          FormValues
+          FormValues,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Accept: "*/*",
+            },
+          }
         );
 
         // console.log(res);
