@@ -110,7 +110,7 @@
         <textarea
           type="text"
           v-model="announcement.body"
-          class="collapse-content textarea h-auto font-body md:text-lg"
+          class="collapse-content h-auto font-body md:text-lg"
           :class="{ 'textarea w-full': !subjectEditArr[index] }"
           :disabled="subjectEditArr[index]"
           placeholder="announcement body"

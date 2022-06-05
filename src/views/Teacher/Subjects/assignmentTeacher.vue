@@ -172,10 +172,96 @@
           :disabled="subjectEdit[index]"
           placeholder="assignment title"
         />
-        <section
-          class="collapse-content z-40 grid grid-flow-col grid-cols-2 grid-rows-2"
-        >
-          <div class="col-span-1 row-span-1 w-full">
+        <section class="collapse-content">
+          <table class="collapse-content w-full table-auto text-center">
+            <tr class="border-b-2 border-gray-400">
+              <!-- <th>-</th> -->
+              <th>Description</th>
+              <th>Marks</th>
+              <th>Due Date</th>
+              <th>Due Time</th>
+            </tr>
+            <tr class="border-b-2 border-gray-400">
+              <td class="w-full columns-1 px-4 py-3 text-center">
+                <input
+                  type="text"
+                  v-model="assignment.description"
+                  class="w-full columns-2 font-body text-xl"
+                  :class="{
+                    'subject-edit-input collapse-title': !subjectEdit[index],
+                  }"
+                  :disabled="subjectEdit[index]"
+                  placeholder="assignment description"
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  v-model="assignment.alloted_marks"
+                  class="columns-1 px-3 text-center font-body text-xl font-bold text-danger-dark"
+                  :class="{
+                    'subject-edit-input collapse-title': !subjectEdit[index],
+                  }"
+                  :disabled="subjectEdit[index]"
+                  placeholder="assignment description"
+                />
+              </td>
+              <td>
+                <input
+                  type="date"
+                  v-model="assignment.due_date"
+                  class="columns-1 px-3 font-body text-xl font-bold text-danger-dark"
+                  :class="{
+                    'subject-edit-input collapse-title': !subjectEdit[index],
+                  }"
+                  :disabled="subjectEdit[index]"
+                  pattern="\d{4}-\d{2}-\d{2}"
+                  placeholder="assignment description"
+                />
+              </td>
+              <td>
+                <input
+                  type="time"
+                  v-model="assignment.due_time"
+                  class="columns-1 px-3 font-body text-xl font-bold text-danger-dark"
+                  :class="{
+                    'subject-edit-input collapse-title': !subjectEdit[index],
+                  }"
+                  :disabled="subjectEdit[index]"
+                  pattern="\d{2}:\d{2}:\d{2}"
+                  placeholder="assignment description"
+                />
+              </td>
+            </tr>
+            <tr class="mx-2 py-2 px-4">
+              <td class="font-heading text-xl">Assignment PDF :</td>
+              <td>
+                <a
+                  class="slow-effect group bottom-5 flex flex-col items-center justify-evenly hover:scale-105 hover:animate-pulse hover:text-danger-light"
+                  :href="'http://localhost:8000' + assignment.attached_files"
+                >
+                  <DocumentDownloadIcon
+                    class="slow-effect slow-effect w-14 text-info-dark hover:scale-110 group-hover:text-danger-light"
+                  />
+                  <span
+                    class="slow-effect text-sm font-bold text-info-dark group-hover:text-danger-light"
+                    >attached file</span
+                  >
+                </a>
+              </td>
+              <td colspan="2" class="py-2 px-4">
+                <button
+                  class="slow-effect w-full rounded-xl bg-info-dark px-3 py-3 font-heading text-2xl font-bold text-bglight-base shadow-md hover:bg-info-light hover:shadow-xl"
+                  @click="
+                    showSubmissions(assignment.id, assignment.alloted_marks)
+                  "
+                >
+                  Evaluate
+                </button>
+              </td>
+            </tr>
+          </table>
+          <!-- <div class="col-span-1 row-span-1 w-full">
             <p for="px-2 inline-block text-2xl font-heading">Description :</p>
             <input
               type="text"
@@ -187,8 +273,8 @@
               :disabled="subjectEdit[index]"
               placeholder="assignment description"
             />
-          </div>
-          <div class="col-span-1 row-span-1 flex flex-col justify-evenly">
+          </div> -->
+          <!-- <div class="col-span-1 row-span-1 flex flex-col justify-evenly">
             <section
               class="flex flex-row flex-wrap items-center justify-start text-center align-middle"
             >
@@ -232,8 +318,8 @@
                 placeholder="assignment description"
               />
             </section>
-          </div>
-          <div
+          </div> -->
+          <!-- <div
             class="col-span-1 row-span-1 flex flex-row flex-wrap items-center justify-start space-x-2 rounded-lg bg-sky-100 shadow-md"
           >
             <label for="" class="ml-14 font-heading text-lg font-bold"
@@ -251,15 +337,15 @@
                 >attached file</span
               >
             </a>
-          </div>
-          <div class="w-full">
+          </div> -->
+          <!-- <div class="w-full">
             <button
               class="bttn w-full"
               @click="showSubmissions(assignment.id, assignment.alloted_marks)"
             >
               Show Submissions
             </button>
-          </div>
+          </div> -->
         </section>
       </section>
     </section>
@@ -267,7 +353,7 @@
 
     <!-- Assignment Submissions Cards -->
     <Transition>
-      <router-view class="col-span-5 mt-5" />
+      <router-view class="col-span-6 mt-5" />
     </Transition>
     <!--EOF --- Assignment Submissions Cards End-->
   </main>
