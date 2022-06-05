@@ -1,7 +1,7 @@
 <template>
   <!-- <h1>{{ assignments }}</h1> -->
   <main
-    class="mx-2 grid w-screen grid-flow-col gap-2"
+    class="mx-2 grid w-screen grid-flow-row gap-2 md:grid-flow-col"
     @click="openedNotes = -1"
   >
     <!-- <h1>{{attached_files}}</h1> -->
@@ -353,7 +353,7 @@
 
     <!-- Assignment Submissions Cards -->
     <Transition>
-      <router-view class="mt-5" />
+      <router-view class="row-start-1 mt-5" />
     </Transition>
     <!--EOF --- Assignment Submissions Cards End-->
   </main>
