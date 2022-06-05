@@ -14,8 +14,8 @@
     >
       <table class="group w-full table-auto">
         <tr class="border-x-2 border-t-2 border-gray-200 py-4">
-          <th v-show="!subjectEditArr[index]">Date & Time</th>
-          <th>Name</th>
+          <th>is Late?</th>
+          <!-- <th>Name</th> -->
           <th>Roll</th>
           <!-- <th>Email</th> -->
           <!-- <th>Answer Section</th> -->
@@ -28,9 +28,9 @@
           :key="submission.id"
           class="my-2 mx-1 rounded-lg border-x-2 border-gray-200 px-3 py-2 odd:bg-sky-100 even:bg-green-100"
         >
-          <td class="text-center" v-show="!subjectEditArr[index]">
+          <td class="text-center">
             <ClockIcon
-              class="w-6 text-bgdark-base"
+              class="w-7 text-bgdark-base"
               :class="{
                 'text-primary-dark': this.flag,
                 'text-danger-dark': !this.flag,
@@ -45,13 +45,13 @@
           <!-- <td>
             {{submission.}}
           </td> -->
-          <td class="font-heading text-lg font-bold">
+          <!-- <td class="font-heading text-lg font-bold">
             {{
               submission.submitted_by.user.first_name +
               " " +
               submission.submitted_by.user.last_name
             }}
-          </td>
+          </td> -->
           <td>{{ submission.submitted_by.university_roll }}</td>
           <!-- <td>{{ submission.submitted_by.user.email }}</td> -->
           <!-- <td>{{ submission.answer_section }}</td> -->
@@ -73,18 +73,21 @@
             />
             <!-- //TODO: Upper Limit check add -->
           </td>
-          <td class="odd:bg-sky-100">
+          <td class="even:bg-green-100">
             <input
               type="text"
               v-model="formValueList[index].remarks"
-              class="text-lg text-zinc-700 even:bg-green-100"
+              class="text-lg text-zinc-700 even:bg-sky-900"
               :class="{ 'subject-edit-input': !subjectEditArr[index] }"
               :disabled="subjectEditArr[index]"
             />
           </td>
           <td
             class="z-30 flex flex-col items-center justify-evenly"
-            :class="{ 'rounded-xl bg-bgdark-base p-3': !subjectEditArr[index] }"
+            :class="{
+              'absolute right-11 rounded-xl bg-bgdark-base p-3':
+                !subjectEditArr[index],
+            }"
           >
             <PencilIcon
               v-if="subjectEditArr[index]"
@@ -127,6 +130,7 @@ export default {
   },
   data() {
     return {
+      subjectEdit:true,
       flag: false,
       loader: false,
       subjectEditArr: [],
@@ -209,12 +213,12 @@ export default {
       // return flag;
     },
     async editPatch(submission, index) {
+      this.subjectEditArr[index] = !this.subjectEditArr[index];
       try {
         await axios.patch(
           `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${this.id}/submission/${submission.id}/`,
           this.formValueList[index]
         );
-        this.subjectEditArr[index] = !this.subjectEditArr[index];
         const submissionsResp = await axios.get(
           `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${this.id}/submission/`
         );
