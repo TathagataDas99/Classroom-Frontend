@@ -247,8 +247,8 @@ export default {
         ) {
           this.flagArr[index] = true;
         } else if (
-          new Date(assignment.due_date) ==
-            new Date(submission.submission_date) &&
+          // new Date(assignment.due_date) ===
+          //   new Date(submission.submission_date) &&
           assignment.due_time >= submission.submission_time.split(".")[0]
         ) {
           this.flagArr[index] = true;
