@@ -234,8 +234,8 @@ export default {
         //     assignment.due_time >= submission.submission_time.split(".")[0]
         // );
         if (
-          new Date(assignment.due_date) >=
-            new Date(submission.submission_date) &&
+          Date.parse(assignment.due_date) >=
+            Date.parse(submission.submission_date) &&
           assignment.due_time >= submission.submission_time.split(".")[0]
         ) {
           this.flagArr[index] = true;
