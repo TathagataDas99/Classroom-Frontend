@@ -14,7 +14,7 @@
     >
       <table class="group w-full table-auto">
         <tr class="border-x-2 border-t-2 border-gray-200 py-4">
-          <th>is Late?</th>
+          <th>On Time ?</th>
           <!-- <th>Name</th> -->
           <th>Roll</th>
           <!-- <th>Email</th> -->
@@ -34,7 +34,7 @@
           :key="submission.id"
           class="my-2 mx-1 rounded-lg border-x-2 border-gray-200 px-3 py-2 text-center odd:bg-sky-100 even:bg-green-100"
         >
-          <td class="text-center">
+          <td class="flex flex-col items-center justify-evenly text-center">
             <ClockIcon
               class="w-7 text-bgdark-base"
               :class="{
@@ -91,8 +91,7 @@
           <td
             class="z-30 flex flex-col items-center justify-evenly"
             :class="{
-              'absolute right-11 rounded-xl bg-bgdark-base p-3':
-                !subjectEditArr[index],
+              'rounded-xl bg-bgdark-base p-3': !subjectEditArr[index],
             }"
           >
             <PencilIcon
