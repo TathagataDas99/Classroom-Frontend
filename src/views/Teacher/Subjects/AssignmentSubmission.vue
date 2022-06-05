@@ -130,7 +130,7 @@ export default {
   },
   data() {
     return {
-      subjectEdit:true,
+      // subjectEdit:true,
       flag: false,
       loader: false,
       subjectEditArr: [],
