@@ -34,7 +34,7 @@
           :key="submission.id"
           class="my-2 mx-1 rounded-lg border-x-2 border-gray-200 px-3 py-2 text-center odd:bg-sky-100 even:bg-green-100"
         >
-          <td class="flex flex-col items-center justify-evenly text-center">
+          <td class="flex flex-row items-center justify-evenly text-center">
             <ClockIcon
               class="w-7 text-bgdark-base"
               :class="{
@@ -80,13 +80,15 @@
             <!-- //TODO: Upper Limit check add -->
           </td>
           <td class="even:bg-green-100">
-            <input
+            <textarea
               type="text"
               v-model="formValueList[index].remarks"
               class="text-lg text-zinc-700 even:bg-sky-900"
-              :class="{ 'subject-edit-input': !subjectEditArr[index] }"
+              :class="{
+                'subject-edit-input textarea ': !subjectEditArr[index],
+              }"
               :disabled="subjectEditArr[index]"
-            />
+            ></textarea>
           </td>
           <td
             class="z-30 flex flex-col items-center justify-evenly"
