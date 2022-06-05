@@ -237,7 +237,7 @@
               <td>
                 <span
                   v-if="
-                    subjectEdit[index] && typeof assignment.due_date == 'string'
+                    subjectEdit[index] && typeof assignment.due_time == 'string'
                   "
                 >
                   {{ assignment.due_time }}
@@ -247,14 +247,12 @@
                     subjectEdit[index] && typeof assignment.due_date == 'object'
                   "
                 >
-                  {{ assignment.due_date }}:
-                  <!-- {{ assignment.due_date.getHours() }}: -->
-                  <!-- {{ assignment.due_date.getMinutes() }} -->
-                  <!-- {{ assignment.due_date.hours }} -->
-                  <!-- :{{ assignment.due_date.minutes }} -->
+                  {{ assignment.due_time.getHours() }}:
+                  {{ assignment.due_time.getMinutes() }}
                 </span>
                 <Datepicker
                   v-else
+                  locale="en-IN"
                   :format="'HH:mm'"
                   :minTime="min_time"
                   timePicker
@@ -412,6 +410,7 @@
 
 <script>
 // import Datepicker from "@vuepic/vue-datepicker";
+// import {} from 'date-fns'
 // import "@vuepic/vue-datepicker/dist/main.css";
 import axios from "axios";
 import { mapGetters } from "vuex";
