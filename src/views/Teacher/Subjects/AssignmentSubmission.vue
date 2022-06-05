@@ -198,7 +198,7 @@ export default {
       this.formValueList = [];
       this.subjectEditArr = [];
       this.loader = true;
-      console.log("in be4 Mount");
+      //console.log("in be4 Mount");
       const submissionsResp = await axios.get(
         `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${newvalue}/submission/`
       );
