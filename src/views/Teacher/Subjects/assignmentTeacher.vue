@@ -172,8 +172,8 @@
           :disabled="subjectEdit[index]"
           placeholder="assignment title"
         />
-        <section class="collapse-content">
-          <table class="collapse-content w-full table-auto text-center">
+        <section class="collapse-content w-full">
+          <table class="collapse-content table-auto text-center">
             <tr class="border-b-2 border-gray-400">
               <!-- <th>-</th> -->
               <th>Description</th>
