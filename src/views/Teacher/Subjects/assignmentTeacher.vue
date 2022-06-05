@@ -517,6 +517,7 @@ export default {
       // console.log(this.min_time);
     },
     async editPatch(assignment, index) {
+      this.subjectEdit[index] = !this.subjectEdit[index];
       try {
         let dateVar = new Date(assignment.due_date);
         let timeVar = null;
@@ -536,7 +537,6 @@ export default {
         }-${dateVar.getDate()}`;
         const time = `${timeVar.hours}:${timeVar.minutes}:00.0000`;
 
-        this.subjectEdit[index] = !this.subjectEdit[index];
         const id = assignment.id;
 
         const FormValues = new FormData();
