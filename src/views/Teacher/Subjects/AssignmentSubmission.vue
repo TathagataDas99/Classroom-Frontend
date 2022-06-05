@@ -1,5 +1,6 @@
 <template>
   <!-- <h1>{{id}}, {{marks}}</h1> -->
+  <!-- <h1>{{ submissions }}</h1> -->
   <div
     class="mr-4 h-screen snap-mandatory overflow-y-scroll text-center scrollbar-hide"
   >
@@ -13,6 +14,7 @@
     >
       <table class="group w-full table-auto">
         <tr class="border-x-2 border-t-2 border-gray-200 py-4">
+          <th v-show="!subjectEditArr[index]">Date & Time</th>
           <th>Name</th>
           <th>Roll</th>
           <!-- <th>Email</th> -->
@@ -26,6 +28,23 @@
           :key="submission.id"
           class="my-2 mx-1 rounded-lg border-x-2 border-gray-200 px-3 py-2 odd:bg-sky-100 even:bg-green-100"
         >
+          <td class="text-center" v-show="!subjectEditArr[index]">
+            <ClockIcon
+              class="w-6 text-bgdark-base"
+              :class="{
+                'text-primary-dark': this.flag,
+                'text-danger-dark': !this.flag,
+              }"
+              @click="isLate(submission)"
+            />
+            <!-- <ExclamationCircleIcon
+              class="w-6 bg-danger-dark text-bglight-shade"
+            
+            /> -->
+          </td>
+          <!-- <td>
+            {{submission.}}
+          </td> -->
           <td class="font-heading text-lg font-bold">
             {{
               submission.submitted_by.user.first_name +
@@ -91,6 +110,8 @@ import LoaderView from "../../../components/LoaderView.vue";
 import {
   PencilIcon,
   CheckIcon,
+  ClockIcon,
+  // ExclamationCircleIcon,
   DocumentDownloadIcon,
   // TrashIcon,
   // ReplyIcon,
@@ -100,10 +121,13 @@ export default {
     PencilIcon,
     CheckIcon,
     DocumentDownloadIcon,
+    ClockIcon,
+    // ExclamationCircleIcon,
     LoaderView,
   },
   data() {
     return {
+      flag: false,
       loader: false,
       subjectEditArr: [],
       submissions: [],
@@ -116,6 +140,7 @@ export default {
   },
   async beforeUpdate() {
     // this.loader = true;
+    //  this.flag = false;
     const submissionsResp = await axios.get(
       `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${this.id}/submission/`
     );
@@ -132,6 +157,7 @@ export default {
   },
 
   async created() {
+    // this.flag = false;
     this.loader = true;
     const submissionsResp = await axios.get(
       `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${this.id}/submission/`
@@ -147,7 +173,41 @@ export default {
     }
     this.loader = false;
   },
+
   methods: {
+    async isLate(submission) {
+      this.flag = false;
+      try {
+        const assignmentResp = await axios.get(
+          `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${this.id}/`
+        );
+        const assignment = assignmentResp.data;
+        console.log("Assignment time");
+        console.log(assignment.due_time);
+        console.log("Submission time");
+        console.log(submission.submission_time.split(".")[0]);
+        // console.log("Submission_date");
+        // console.log(Date.parse(submission.submission_date));
+
+        console.log(
+          new Date(assignment.due_date) >=
+            new Date(submission.submission_date) &&
+            assignment.due_time >= submission.submission_time.split(".")[0]
+        );
+        if (
+          new Date(assignment.due_date) >=
+            new Date(submission.submission_date) &&
+          assignment.due_time >= submission.submission_time.split(".")[0]
+        ) {
+          this.flag = true;
+        }
+      } catch (e) {
+        console.log(e);
+      }
+      console.log("flag");
+      console.log(this.flag);
+      // return flag;
+    },
     async editPatch(submission, index) {
       try {
         await axios.patch(
