@@ -53,4 +53,16 @@ npm run lint
 
 # API Backend
 
-api back end url : [Click Here](https://lms-classroom-api.herokuapp.com/)
+> Backend of this project is Done By Pritam Chakraborty ([@PritamChk](https://github.com/PritamChk))
+
+Backend Setup Documentation:
+
+- ### [GitHub Link](https://github.com/PritamChk/ClassroomBackend)
+
+---
+
+<img src="./readme_docs/BackendAPI_Doc.jpeg" width="100%" style="border-radius:10px;box-shadow:2px 3px rgba(0,0,0,.2)">
+
+<img src="./readme_docs/DjangoADMIN.jpeg" width="100%" height="60%" style="border-radius:10px;box-shadow:2px 3px rgba(0,0,0,.2)">
+
+api backend v0.0.1 heroku url : [Click Here](https://lms-classroom-api.herokuapp.com/)
