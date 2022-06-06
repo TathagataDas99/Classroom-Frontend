@@ -65,4 +65,28 @@ Backend Setup Documentation:
 
 <img src="./readme_docs/DjangoADMIN.jpeg" width="100%" height="60%" style="border-radius:10px;box-shadow:2px 3px rgba(0,0,0,.2)">
 
-api backend v0.0.1 heroku url : [Click Here](https://lms-classroom-api.herokuapp.com/)
+api backend initial v0.0.1 heroku url : [Click Here](https://lms-classroom-api.herokuapp.com/)
+
+---
+
+## Some Screenshots
+
+---
+
+<img src="./readme_docs/LogInPage.jpeg" width="47%" height="40%" style="border-radius:10px;float: right;box-shadow:2px 3px rgba(0,0,0,.2);">
+
+<img src="./readme_docs/SignUpPage.jpeg" width="47%" height="40%" style="border-radius:10px;box-shadow:2px 3px rgba(0,0,0,.2)">
+
+---
+
+<img src="./readme_docs/OwnerDashBoard.jpeg" width="45%" height="40%" style="border-radius:10px;box-shadow:2px 3px rgba(0,0,0,.2)">
+
+<img src="./readme_docs/NormalDBADashBoard.jpeg" width="45%" height="40%" style="border-radius:10px;float: right;box-shadow:2px 3px rgba(0,0,0,.2);">
+
+---
+
+<img src="./readme_docs/StudentDashBoard.jpeg" width="47%" height="40%" style="border-radius:10px;float: right;box-shadow:2px 3px rgba(0,0,0,.2);">
+
+<img src="./readme_docs/TeahcerDashBoard.jpeg" width="47%" height="40%" style="border-radius:10px;box-shadow:2px 3px rgba(0,0,0,.2)">
+
+---
