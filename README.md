@@ -14,7 +14,23 @@
 > 1. Teacher
 > 1. Student
 
+---
+
+# Technology Stack
+
+---
+
+<p float="left">
+<img src="./readme_docs/vue.png" style="width: 60px" alt="no img found">
+<img src="./readme_docs/html-5.png" style="width: 50px;margin: 3px 2px" alt="no img found">
+<img src="./readme_docs/css.png" style="width: 50px;margin: 3px 2px" alt="no img found">
+<img src="./readme_docs/js.png" style="width: 50px;margin: 3px 2px" alt="no img found">
+<img src="https://raw.githubusercontent.com/npm/logos/master/npm%20logo/npm-logo-red.png" style="width: 100px;margin: 3px 2px" alt="no img found">
+</p>
+
 # Contributors
+
+---
 
 > - [@TathagataDas99 (Owner , Frontend Dev)](https://github.com/TathagataDas99)
 > - [@PritamChk (Backend Dev & Designer)](https://github.com/PritamChk)
