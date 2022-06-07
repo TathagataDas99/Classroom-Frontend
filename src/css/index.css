@@ -64,7 +64,7 @@
   @apply bg-bglight-shade font-heading font-semibold text-primary-light;
 }
 .navbar {
-  @apply sticky top-0 z-20 flex flex-row flex-wrap items-center justify-end rounded-b-lg bg-gray-300/30 shadow-lg backdrop-blur-sm backdrop-filter;
+  @apply sticky top-0 z-20 flex flex-row flex-wrap items-center justify-end rounded-b-lg bg-gray-300/30 shadow-lg backdrop-blur-sm backdrop-filter font-heading;
 }
 
 .link {
