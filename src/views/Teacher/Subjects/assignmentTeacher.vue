@@ -182,7 +182,7 @@
               <th>Description</th>
               <th>Marks</th>
               <th>Due Date [YYYY/MM/DD]</th>
-              <th>Due Time [24 Hour Format]</th>
+              <th>Due Time [24 Hours]</th>
             </tr>
             <tr class="border-b-2 border-gray-400">
               <td class="columns-1 px-4 py-3 text-center">
@@ -201,7 +201,7 @@
                 <input
                   type="number"
                   v-model="assignment.alloted_marks"
-                  class="columns-1 px-3 text-center font-body text-xl font-bold text-danger-dark"
+                  class="columns-1 px-3 text-center font-body text-xl font-bold text-primary-dark"
                   :class="{
                     'subject-edit-input collapse-title mx-2':
                       !subjectEdit[index],
@@ -239,7 +239,7 @@
                   placeholder="assignment description"
                 /> -->
               </td>
-              <td>
+              <td class="text-lg font-bold text-danger-dark">
                 <span
                   v-if="
                     subjectEdit[index] && typeof assignment.due_time == 'string'
@@ -424,7 +424,8 @@ export default {
     changeMinTime(modelData) {
       // console.log(modelData);
       this.min_time =
-        modelData.getDay() === new Date().getDay()
+        modelData.getDay() === new Date().getDay() &&
+        modelData.getMonth() === new Date().getMonth()
           ? {
               hours: this.min_due_time.getHours(),
               minutes: this.min_due_time.getMinutes(),
