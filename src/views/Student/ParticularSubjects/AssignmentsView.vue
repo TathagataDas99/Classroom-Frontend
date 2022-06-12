@@ -95,7 +95,7 @@
               <td
                 class="slow-effect flex flex-col items-center justify-evenly rounded-lg px-10 py-4"
               >
-                <DocumentDownloadIcon
+                <DocumentTextIcon
                   class="slow-effect group w-16 text-info-dark hover:scale-125"
                 />
                 <span class="group:hover:scale-125 uppercase text-info-dark">
@@ -166,7 +166,7 @@
 import axios from "axios";
 import LoaderView from "../../../components/LoaderView.vue";
 import { mapGetters } from "vuex";
-import { DocumentDownloadIcon } from "@heroicons/vue/solid";
+import { DocumentDownloadIcon, DocumentTextIcon } from "@heroicons/vue/solid";
 export default {
   props: ["subject_slug", "no"],
   data() {
@@ -187,6 +187,7 @@ export default {
   components: {
     LoaderView,
     DocumentDownloadIcon,
+    DocumentTextIcon,
   },
   computed: {
     ...mapGetters(["userType", "userProfile", "semCards"]),
