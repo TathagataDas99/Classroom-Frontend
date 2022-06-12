@@ -12,7 +12,7 @@
         :class="{ 'collapse-open': openedNotes === index }"
         @focusin="openedNotes = index"
       >
-        <div class="collapse-title font-heading text-xl font-medium">
+        <div class="collapse-title font-heading text-xl font-medium capitalize">
           <span class="text-primary-dark">{{ index + 1 }} .</span>
           {{ note.title }}
         </div>

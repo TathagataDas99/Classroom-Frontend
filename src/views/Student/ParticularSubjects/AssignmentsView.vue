@@ -14,7 +14,7 @@
         @focusin="openedNotes = index"
       >
         <div class="collapse-title font-heading text-xl font-medium">
-          <span class="text-primary-dark">{{ index + 1 }} .</span>
+          <span class="capitalize text-primary-dark">{{ index + 1 }} .</span>
           {{ assignment.title }}
         </div>
         <section class="collapse-content w-full">

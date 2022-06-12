@@ -44,6 +44,25 @@
           <h1
             class="subject-card-title text-primary-light group-hover:text-warning-dark"
           >
+            Type :
+          </h1>
+          <h2 v-show="subject.subject_type == 'TH'" class="subject-card-title">
+            Theory
+          </h2>
+          <h2 v-show="subject.subject_type == 'PRC'" class="subject-card-title">
+            Practical
+          </h2>
+          <h2 v-show="subject.subject_type == 'ELC'" class="subject-card-title">
+            Elective
+          </h2>
+          <h2 v-show="subject.subject_type == 'PRJ'" class="subject-card-title">
+            Project
+          </h2>
+        </div>
+        <div class="SubjectCard-section">
+          <h1
+            class="subject-card-title text-primary-light group-hover:text-warning-dark"
+          >
             Credit Points :
           </h1>
           <h2 class="subject-card-title">
