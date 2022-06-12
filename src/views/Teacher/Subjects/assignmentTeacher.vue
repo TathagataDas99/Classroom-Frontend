@@ -4,7 +4,7 @@
     <!-- <h1>{{attached_files}}</h1> -->
     <!-- assignment add form -->
     <button
-      class="absolute left-0 right-0 z-20 mx-auto my-2 w-48 rounded-md bg-pink-300 py-2 font-body font-bold shadow-md"
+      class="absolute left-0 right-0 z-10 mx-auto my-2 w-48 rounded-md bg-pink-300 py-2 font-body font-bold shadow-md"
       @click="openedNotes = -1"
     >
       Collapse all
@@ -181,8 +181,8 @@
               <!-- <th>-</th> -->
               <th>Description</th>
               <th>Marks</th>
-              <th>Due Date</th>
-              <th>Due Time</th>
+              <th>Due Date [YYYY/MM/DD]</th>
+              <th>Due Time [24 Hour Format]</th>
             </tr>
             <tr class="border-b-2 border-gray-400">
               <td class="columns-1 px-4 py-3 text-center">
@@ -249,11 +249,13 @@
                 </span>
                 <span
                   v-else-if="
-                    subjectEdit[index] && typeof assignment.due_date == 'object'
+                    subjectEdit[index] && typeof assignment.due_time == 'object'
                   "
                 >
-                  {{ assignment.due_time.getHours() }}:
-                  {{ assignment.due_time.getMinutes() }}
+                  {{ assignment.due_time.hours }}:
+                  {{ assignment.due_time.minutes }}
+                  <!-- {{ assignment.due_time.getHours() }}:
+                  {{ assignment.due_time.getMinutes() }} -->
                 </span>
                 <Datepicker
                   v-else
@@ -315,91 +317,6 @@
               </td>
             </tr>
           </table>
-          <!-- <div class="col-span-1 row-span-1 w-full">
-            <p for="px-2 inline-block text-2xl font-heading">Description :</p>
-            <input
-              type="text"
-              v-model="assignment.description"
-              class="w-full columns-2 font-body text-xl"
-              :class="{
-                'subject-edit-input collapse-title': !subjectEdit[index],
-              }"
-              :disabled="subjectEdit[index]"
-              placeholder="assignment description"
-            />
-          </div> -->
-          <!-- <div class="col-span-1 row-span-1 flex flex-col justify-evenly">
-            <section
-              class="flex flex-row flex-wrap items-center justify-start text-center align-middle"
-            >
-              <label class="label" for="marks">Marks</label>
-              <input
-                type="number"
-                v-model="assignment.alloted_marks"
-                class="columns-1 px-3 font-body text-xl font-bold text-danger-dark"
-                :class="{
-                  'subject-edit-input collapse-title': !subjectEdit[index],
-                }"
-                :disabled="subjectEdit[index]"
-                placeholder="assignment description"
-              />
-            </section>
-            <section class="flex flex-row flex-wrap items-center justify-start">
-              <label class="label" for="marks">Due Date</label>
-              <input
-                type="date"
-                v-model="assignment.due_date"
-                class="columns-1 px-3 font-body text-xl font-bold text-danger-dark"
-                :class="{
-                  'subject-edit-input collapse-title': !subjectEdit[index],
-                }"
-                :disabled="subjectEdit[index]"
-                pattern="\d{4}-\d{2}-\d{2}"
-                placeholder="assignment description"
-              />
-            </section>
-            <section class="flex flex-row flex-wrap items-center justify-start">
-              <label class="label" for="marks">Due Time</label>
-              <input
-                type="time"
-                v-model="assignment.due_time"
-                class="columns-1 px-3 font-body text-xl font-bold text-danger-dark"
-                :class="{
-                  'subject-edit-input collapse-title': !subjectEdit[index],
-                }"
-                :disabled="subjectEdit[index]"
-                pattern="\d{2}:\d{2}:\d{2}"
-                placeholder="assignment description"
-              />
-            </section>
-          </div> -->
-          <!-- <div
-            class="col-span-1 row-span-1 flex flex-row flex-wrap items-center justify-start space-x-2 rounded-lg bg-sky-100 shadow-md"
-          >
-            <label for="" class="ml-14 font-heading text-lg font-bold"
-              >Assignment</label
-            >
-            <a
-              class="slow-effect group bottom-5 flex flex-col items-center justify-evenly hover:scale-105 hover:animate-pulse hover:text-danger-light"
-              :href="'http://localhost:8000' + assignment.attached_files"
-            >
-              <DocumentDownloadIcon
-                class="slow-effect slow-effect w-14 text-info-dark hover:scale-110 group-hover:text-danger-light"
-              />
-              <span
-                class="slow-effect text-sm font-bold text-info-dark group-hover:text-danger-light"
-                >attached file</span
-              >
-            </a>
-          </div> -->
-          <!-- <div class="w-full">
-            <button
-              class="bttn w-full"
-              @click="showSubmissions(assignment.id, assignment.alloted_marks)"
-            >
-              Show Submissions
-            </button>
-          </div> -->
         </section>
       </section>
     </section>
@@ -517,7 +434,11 @@ export default {
       // console.log(this.min_time);
     },
     async editPatch(assignment, index) {
+      // console.log(assignment);
+      console.log(index);
+      console.log("here", this.subjectEdit[index]);
       this.subjectEdit[index] = !this.subjectEdit[index];
+      console.log(this.subjectEdit[index]);
       try {
         let dateVar = new Date(assignment.due_date);
         let timeVar = null;

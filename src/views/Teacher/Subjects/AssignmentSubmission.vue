@@ -79,11 +79,11 @@
             />
             <!-- //TODO: Upper Limit check add -->
           </td>
-          <td >
+          <td>
             <textarea
               type="text"
               v-model="formValueList[index].remarks"
-              class="text-lg text-zinc-700 "
+              class="text-lg text-zinc-700"
               :class="{
                 'subject-edit-input textarea ': !subjectEditArr[index],
               }"
@@ -175,7 +175,7 @@ export default {
     this.formValueList = [];
     this.subjectEditArr = [];
     this.loader = true;
-    console.log("in be4 Mount");
+    // console.log("in be4 Mount");
     const submissionsResp = await axios.get(
       `/classroom-app/teacher/${this.userProfile.teacher_id}/subject/${this.subject_slug}/assignment/${this.id}/submission/`
     );
