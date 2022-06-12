@@ -24,7 +24,7 @@
           <th>Remarks</th>
         </tr>
         <tr v-if="submissions.length === 0">
-          <td colspan="5" class="text-lg font-bold text-danger-dark">
+          <td colspan="6" class="text-lg font-bold text-danger-dark">
             No Submissions Yet
           </td>
         </tr>

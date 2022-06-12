@@ -226,18 +226,6 @@
                   }"
                   :disabled="subjectEdit[index]"
                 />
-                <!-- v-model="formValues.due_date" -->
-                <!-- <input
-                  type="date"
-                  v-model="assignment.due_date"
-                  class="columns-1 px-3 font-body text-xl font-bold text-danger-dark"
-                  :class="{
-                    'subject-edit-input collapse-title': !subjectEdit[index],
-                  }"
-                  :disabled="subjectEdit[index]"
-                  pattern="\d{4}-\d{2}-\d{2}"
-                  placeholder="assignment description"
-                /> -->
               </td>
               <td class="text-lg font-bold text-danger-dark">
                 <span
