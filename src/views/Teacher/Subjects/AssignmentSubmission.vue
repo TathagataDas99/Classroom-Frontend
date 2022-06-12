@@ -32,23 +32,21 @@
           v-else
           v-for="(submission, index) in submissions"
           :key="submission.id"
-          class="my-2 mx-1 rounded-lg border-x-2 border-gray-200 px-3 py-2 text-center odd:bg-sky-100 even:bg-green-100"
+          class="my-2 mx-1 rounded-lg border-x-2 border-gray-200 px-3 py-2 text-center odd:bg-sky-100 even:bg-yellow-50"
         >
           <td class="text-center">
-            <div class="flex h-full flex-row items-center justify-evenly">
+            <div
+              class="flex h-full cursor-pointer flex-row items-center justify-evenly"
+            >
               <ClockIcon
-                class="h-full w-7 text-bgdark-base"
-                :class="{
-                  'text-primary-dark': this.flagArr[index],
-                  'text-danger-dark': !this.flagArr[index],
-                }"
+                class="h-full w-7 text-primary-dark"
+                v-if="this.flagArr[index]"
+              />
+              <ExclamationCircleIcon
+                class="h-full w-7 text-danger-dark"
+                v-else
               />
             </div>
-            <!-- @click="isLate(submission, index)" -->
-            <!-- <ExclamationCircleIcon
-              class="w-6 bg-danger-dark text-bglight-shade"
-            
-            /> -->
           </td>
           <!-- <td>
             {{submission.}}
@@ -69,9 +67,9 @@
                 class="slow-effect w-8 text-center text-danger-light hover:scale-125"
             /></a>
           </td>
-          <td class="odd:bg-sky-100">
+          <td>
             <input
-              class="w-full text-center text-lg text-zinc-700 even:bg-green-100"
+              class="w-full text-center text-lg text-zinc-700"
               :class="{ 'subject-edit-input': !subjectEditArr[index] }"
               :disabled="subjectEditArr[index]"
               type="number"
@@ -81,11 +79,11 @@
             />
             <!-- //TODO: Upper Limit check add -->
           </td>
-          <td class="even:bg-green-100">
+          <td >
             <textarea
               type="text"
               v-model="formValueList[index].remarks"
-              class="text-lg text-zinc-700 even:bg-sky-900"
+              class="text-lg text-zinc-700 "
               :class="{
                 'subject-edit-input textarea ': !subjectEditArr[index],
               }"
@@ -123,7 +121,7 @@ import {
   PencilIcon,
   CheckIcon,
   ClockIcon,
-  // ExclamationCircleIcon,
+  ExclamationCircleIcon,
   DocumentDownloadIcon,
   // TrashIcon,
   // ReplyIcon,
@@ -134,7 +132,7 @@ export default {
     CheckIcon,
     DocumentDownloadIcon,
     ClockIcon,
-    // ExclamationCircleIcon,
+    ExclamationCircleIcon,
     LoaderView,
   },
   data() {
