@@ -15,7 +15,7 @@
       <table class="group w-full table-auto">
         <tr class="border-x-2 border-t-2 border-gray-200 py-4">
           <th>On Time ?</th>
-          <!-- <th>Name</th> -->
+          <th>Name</th>
           <th>Roll</th>
           <!-- <th>Email</th> -->
           <!-- <th>Answer Section</th> -->
@@ -34,14 +34,16 @@
           :key="submission.id"
           class="my-2 mx-1 rounded-lg border-x-2 border-gray-200 px-3 py-2 text-center odd:bg-sky-100 even:bg-green-100"
         >
-          <td class="flex flex-row items-center justify-evenly text-center">
-            <ClockIcon
-              class="w-7 text-bgdark-base"
-              :class="{
-                'text-primary-dark': this.flagArr[index],
-                'text-danger-dark': !this.flagArr[index],
-              }"
-            />
+          <td class="text-center">
+            <div class="flex h-full flex-row items-center justify-evenly">
+              <ClockIcon
+                class="h-full w-7 text-bgdark-base"
+                :class="{
+                  'text-primary-dark': this.flagArr[index],
+                  'text-danger-dark': !this.flagArr[index],
+                }"
+              />
+            </div>
             <!-- @click="isLate(submission, index)" -->
             <!-- <ExclamationCircleIcon
               class="w-6 bg-danger-dark text-bglight-shade"
@@ -51,13 +53,13 @@
           <!-- <td>
             {{submission.}}
           </td> -->
-          <!-- <td class="font-heading text-lg font-bold">
+          <td class="font-heading text-lg font-bold">
             {{
               submission.submitted_by.user.first_name +
               " " +
               submission.submitted_by.user.last_name
             }}
-          </td> -->
+          </td>
           <td>{{ submission.submitted_by.university_roll }}</td>
           <!-- <td>{{ submission.submitted_by.user.email }}</td> -->
           <!-- <td>{{ submission.answer_section }}</td> -->
