@@ -95,7 +95,16 @@
             {{ userProfile.user.email }}
           </p>
           <span class="collapse-content-label">Contact </span>
-          <p class="col-span-2">
+          <p class="relative col-span-2">
+            <span
+              class="absolute -bottom-6 text-sm text-danger-light"
+              v-show="
+                userProfile.user.contact_no &&
+                !contactEdit &&
+                userProfile.user.contact_no.length != 10
+              "
+              >*contact no must be 10 digit</span
+            >
             <input
               minlength="10"
               maxlength="10"
@@ -185,6 +194,9 @@ export default {
     async editContact() {
       try {
         this.contactEdit = !this.contactEdit;
+        if (this.userProfile.user.contact_no == "") {
+          this.userProfile.user.contact_no = null;
+        }
         await axios.patch(
           `/auth/users/me/`,
           { contact_no: this.userProfile.user.contact_no },
