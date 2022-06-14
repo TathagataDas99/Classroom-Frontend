@@ -62,11 +62,26 @@
       </section>
       <section class="form-section">
         <label class="label" for="password">password</label>
+        <div
+          class="mx-auto rounded-lg px-2 text-xs font-semibold text-danger-dark lg:absolute lg:right-48 lg:bottom-6 lg:scale-75 lg:bg-white"
+          v-show="!passwordPatternOk"
+        >
+          <ul>
+            <li
+              class="text-xl"
+              v-for="(msg, index) in passwordErrorMsg"
+              :key="index"
+            >
+              *
+              {{ msg }}
+            </li>
+          </ul>
+        </div>
         <section class="input-section">
           <input
             class="input-box"
             :type="typePassword"
-            v-model="formValues.password"
+            v-model="password"
             pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{6,15}$"
           />
           <LockClosedIcon
@@ -140,6 +155,13 @@ export default {
   },
   data() {
     return {
+      password: "",
+      passwordErrorMsg: [
+        "Should Contain mix of upper and lower case",
+        "Should Contain at least one special char ",
+        "Should have at least 6 characters",
+      ],
+      passwordPatternOk: false,
       error: [],
       formValues: {
         first_name: "",
@@ -163,6 +185,21 @@ export default {
   //     this.$router.push("/sign-in");
   //   }
   // },
+  watch: {
+    password(newValue) {
+      console.log(newValue);
+      const pattern = RegExp(
+        "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{6,15}$"
+      );
+
+      console.log(typeof pattern);
+      if (!pattern.test(newValue)) {
+        this.passwordPatternOk = false; // bad user input
+      } else {
+        this.passwordPatternOk = true; // bad user input
+      }
+    },
+  },
   methods: {
     closeNotification() {
       this.showError = !this.showError;
@@ -178,6 +215,7 @@ export default {
     async handelSignup() {
       this.error = [];
       this.loader = true;
+      this.formValues.password = this.password;
       try {
         if (this.formValues.password === this.formValues.confirmPassword) {
           const response = await axios.post("/auth/users/", this.formValues);
