@@ -30,6 +30,8 @@
           <input
             class="input-box"
             type="text"
+            pattern="[A-Za-z]+"
+            title="Only Alphabets allowed"
             v-model.trim="formValues.first_name"
           />
         </section>
@@ -40,7 +42,9 @@
           <UserIcon class="input-icon" />
           <input
             class="input-box"
+            title="Only Alphabets allowed"
             type="text"
+            pattern="[A-Za-z]+"
             v-model.trim="formValues.last_name"
           />
         </section>

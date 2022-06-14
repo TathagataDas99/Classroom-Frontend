@@ -23,6 +23,8 @@
           <input
             class="input-box"
             type="text"
+            pattern="[A-Za-z]+"
+            title="Only Alphabets allowed"
             placeholder="college name"
             v-model.trim.lazy="formValues.name"
           />
@@ -35,6 +37,8 @@
           <input
             class="input-box"
             type="text"
+            pattern="[A-Za-z\s]+"
+            title="Only Alphabets or space allowed"
             placeholder="college city"
             v-model.trim.lazy="formValues.city"
           />
@@ -47,6 +51,8 @@
           <input
             class="input-box"
             type="text"
+            pattern="[A-Za-z\s]+"
+            title="Only Alphabets or space allowed"
             placeholder="college state"
             v-model.trim.lazy="formValues.state"
           />
