@@ -44,10 +44,20 @@
         <section class="form-section">
           <label class="label">Password</label>
           <section class="input-section">
-            <LockClosedIcon class="input-icon" />
+            <LockClosedIcon
+              v-show="!isEyeOpen"
+              @click="openEye"
+              class="input-icon cursor-pointer"
+            ></LockClosedIcon>
+            <LockOpenIcon
+              class="input-icon cursor-pointer"
+              v-show="isEyeOpen"
+              @click="openEye"
+            ></LockOpenIcon>
+            <!-- <LockClosedIcon class="input-icon" /> -->
             <input
               required
-              type="password"
+              :type="typePassword"
               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{6,15}$"
               class="input-box"
               v-model="formValues.password"
@@ -74,7 +84,7 @@ import LoaderView from "../../components/LoaderView.vue";
 import {
   MailIcon,
   LockClosedIcon,
-  // LockOpenIcon,
+  LockOpenIcon,
   XCircleIcon,
 } from "@heroicons/vue/solid";
 
@@ -83,6 +93,7 @@ export default {
   components: {
     MailIcon,
     LockClosedIcon,
+    LockOpenIcon,
     XCircleIcon,
     LoaderView,
   },
@@ -103,9 +114,19 @@ export default {
       showError: false,
       loader: false,
       notificationInterval: 2000,
+      typePassword: "password",
+      isEyeOpen: false,
     };
   },
   methods: {
+    openEye() {
+      this.isEyeOpen = !this.isEyeOpen;
+      if (this.isEyeOpen) {
+        this.typePassword = "text";
+      } else {
+        this.typePassword = "password";
+      }
+    },
     closeNotification() {
       this.showError = !this.showError;
     },
