@@ -99,7 +99,7 @@
             <span
               class="absolute -bottom-6 text-sm text-danger-light"
               v-show="
-                userProfile.user.contact_no &&
+                userProfile.user.contact_no != null &&
                 !contactEdit &&
                 userProfile.user.contact_no.length != 10
               "
@@ -129,7 +129,12 @@
           />
           <CheckCircleIcon
             class="collapse-content-icon text-primary-light"
-            v-if="!contactEdit"
+            v-if="
+              !contactEdit &&
+              userProfile.user.contact_no != null &&
+              (userProfile.user.contact_no.length === 10 ||
+                userProfile.user.contact_no.length === 0)
+            "
             @click="editContact"
           />
         </div>
