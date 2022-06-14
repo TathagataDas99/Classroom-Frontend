@@ -60,9 +60,25 @@
               :type="typePassword"
               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{6,15}$"
               class="input-box"
-              v-model="formValues.password"
+              v-model="password"
+              @change="checkPassword"
             />
           </section>
+          <div
+            class="mx-auto rounded-lg px-2 text-xs font-semibold text-danger-dark lg:absolute lg:right-44 lg:scale-75 lg:bg-white"
+            v-show="!passwordPatternOk"
+          >
+            <ul>
+              <li
+                class="text-xl"
+                v-for="(msg, index) in passwordErrorMsg"
+                :key="index"
+              >
+                *
+                {{ msg }}
+              </li>
+            </ul>
+          </div>
         </section>
 
         <div class="button-section">
@@ -106,10 +122,17 @@ export default {
   // },//TODO: Delete this comment
   data() {
     return {
+      password: "",
       formValues: {
         email: "",
         password: "",
       },
+      passwordErrorMsg: [
+        "Should Contain mix of upper and lower case",
+        "Should Contain at least one special char ",
+        "Should have at least 6 characters",
+      ],
+      passwordPatternOk: false,
       error: "",
       showError: false,
       loader: false,
@@ -118,8 +141,33 @@ export default {
       isEyeOpen: false,
     };
   },
+  watch: {
+    password(newValue) {
+      console.log(newValue);
+      const pattern = RegExp(
+        "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{6,15}$"
+      );
+
+      console.log(typeof pattern);
+      if (!pattern.test(newValue)) {
+        this.passwordPatternOk = false; // bad user input
+      } else {
+        this.passwordPatternOk = true; // bad user input
+      }
+    },
+  },
   methods: {
+    // checkPassword() {
+    //   const pattern =
+    //     "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{6,15}$";
+    //   if (!pattern.test(this.password)) {
+    //     this.passwordPatternOk = false; // bad user input
+    //   } else {
+    //     this.passwordPatternOk = true; // bad user input
+    //   }
+    // },
     openEye() {
+      console.log("in open eye func");
       this.isEyeOpen = !this.isEyeOpen;
       if (this.isEyeOpen) {
         this.typePassword = "text";
@@ -133,6 +181,7 @@ export default {
     async handelLogin() {
       this.loader = true;
       this.error = "";
+      this.formValues.password = this.password;
       try {
         const response = await axios.post(
           "/login/jwt/create/",
