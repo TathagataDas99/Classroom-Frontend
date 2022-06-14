@@ -23,7 +23,7 @@
           <input
             class="input-box"
             type="text"
-            pattern="[A-Za-z]+"
+            pattern="[A-Za-z\s]+"
             title="Only Alphabets allowed"
             placeholder="college name"
             v-model.trim.lazy="formValues.name"
