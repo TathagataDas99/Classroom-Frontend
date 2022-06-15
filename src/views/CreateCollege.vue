@@ -1,4 +1,9 @@
 <template>
+  <div v-if="error && showError">
+    <template v-for="e in error" :key="e">
+      <notificationView :error="e" @close="showError = false" />
+    </template>
+  </div>
   <div v-if="loader">
     <LoaderView />
   </div>
@@ -134,6 +139,7 @@
 <script>
 import axios from "axios";
 import LoaderView from "../components/LoaderView.vue";
+import notificationView from "../components/notificationView.vue";
 import {
   AcademicCapIcon,
   LocationMarkerIcon,
@@ -146,12 +152,16 @@ export default {
     AcademicCapIcon,
     LocationMarkerIcon,
     MailIcon,
+    notificationView,
   },
   data() {
     return {
       count: 0,
       tempEmail: "",
       loader: false,
+      error: [],
+      notificationInterval: 8000,
+      showError: false,
       formValues: {
         name: "",
         city: "",
@@ -235,7 +245,11 @@ export default {
         console.log(res);
         // }
       } catch (e) {
-        console.log(e);
+        this.error = Object.values(e.response.data);
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, this.notificationInterval);
       }
       this.loader = false;
     },
