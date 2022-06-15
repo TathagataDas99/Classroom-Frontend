@@ -1,4 +1,9 @@
 <template>
+  <div v-if="error && showError">
+    <template v-for="e in error" :key="e">
+      <notificationView :error="e" @close="showError = false" />
+    </template>
+  </div>
   <div class="student-dashboard">
     <section v-if="loader" class="student-dashboard-card-section">
       <template v-for="i in 4" :key="i">
@@ -144,7 +149,7 @@
 
 <script>
 import axios from "axios";
-// import LoaderView from "../../components/LoaderView.vue";
+import notificationView from "../../components/notificationView.vue";
 import { mapGetters } from "vuex";
 import {
   BadgeCheckIcon,
@@ -160,6 +165,9 @@ export default {
       msg: "",
       loader: true,
       contactEdit: true,
+      showError: false,
+      error: [],
+      notificationInterval: 8000,
       // semCards: [],
     };
   },
@@ -169,6 +177,7 @@ export default {
     LoaderCard,
     PencilIcon,
     CheckCircleIcon,
+    notificationView
   },
   computed: {
     ...mapGetters(["userType", "userProfile", "semCards"]),
@@ -228,7 +237,12 @@ export default {
         );
         this.$router.go();
       } catch (e) {
-        console.log(e);
+        this.error = Object.values(e.response.data)[0];
+        this.showError = true;
+        this.userProfile.user.contact_no = null;
+        setTimeout(() => {
+          this.showError = false;
+        }, this.notificationInterval);
       }
     },
     handelOpen(no) {

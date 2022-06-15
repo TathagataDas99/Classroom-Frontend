@@ -1,4 +1,9 @@
 <template>
+  <div v-if="error && showError">
+    <template v-for="e in error" :key="e">
+      <notificationView :error="e" @close="showError = false" />
+    </template>
+  </div>
   <div
     class="grid min-h-screen grid-flow-row md:grid-flow-col md:grid-cols-5 md:grid-rows-1 lg:grid-cols-8"
   >
@@ -146,6 +151,7 @@
 <script>
 import axios from "axios";
 import { mapGetters } from "vuex";
+import notificationView from "../../components/notificationView.vue";
 import LoaderCard from "../../components/LoaderCard.vue";
 import { PencilIcon, CheckCircleIcon } from "@heroicons/vue/solid";
 import { LoginIcon } from "@heroicons/vue/outline";
@@ -156,6 +162,9 @@ export default {
       contactEdit: true,
       msg: "",
       loader: "",
+      showError: false,
+      error: [],
+      notificationInterval: 8000,
     };
   },
   components: {
@@ -163,6 +172,7 @@ export default {
     PencilIcon,
     CheckCircleIcon,
     LoginIcon,
+    notificationView
   },
   computed: {
     ...mapGetters(["userType", "userProfile"]),
@@ -213,7 +223,12 @@ export default {
         );
         this.$router.go();
       } catch (e) {
-        console.log(e);
+        this.error = Object.values(e.response.data)[0];
+        this.showError = true;
+        this.userProfile.user.contact_no = null;
+        setTimeout(() => {
+          this.showError = false;
+        }, this.notificationInterval);
       }
     },
     handelOpen(slug) {
