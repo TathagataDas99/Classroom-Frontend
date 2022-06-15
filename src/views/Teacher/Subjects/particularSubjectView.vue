@@ -66,7 +66,7 @@
         class="row-start-2 hidden md:col-span-2 md:col-start-3 md:row-start-1 md:block"
       >
         <div class="page-header-2">
-          <p>Subject -</p>
+          <p>Subject - {{ subject_slug.split("-")[0] }}...</p>
         </div>
       </div>
       <div class="col-span-1 row-start-1 place-self-center md:col-start-5">

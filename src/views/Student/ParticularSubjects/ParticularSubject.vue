@@ -46,7 +46,7 @@
       >
         <div class="page-header-2">
           <p>Semester - {{ no }}</p>
-          <p>Subject - {{ subject_slug.split('-')[0] }}...</p>
+          <p>Subject - {{ subject_slug.split("-")[0] }}...</p>
         </div>
       </div>
       <div class="col-span-1 row-start-1 place-self-center md:col-start-5">

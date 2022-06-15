@@ -177,7 +177,7 @@ export default {
     LoaderCard,
     PencilIcon,
     CheckCircleIcon,
-    notificationView
+    notificationView,
   },
   computed: {
     ...mapGetters(["userType", "userProfile", "semCards"]),

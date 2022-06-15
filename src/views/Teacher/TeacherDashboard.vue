@@ -172,7 +172,7 @@ export default {
     PencilIcon,
     CheckCircleIcon,
     LoginIcon,
-    notificationView
+    notificationView,
   },
   computed: {
     ...mapGetters(["userType", "userProfile"]),
