@@ -1,5 +1,5 @@
 <template>
-  <Transition>
+  <!-- <Transition>
     <div class="flex flex-row justify-evenly" v-if="error && showError">
       <div class="notification bg-danger-light">
         <p class="mx-1">
@@ -11,7 +11,12 @@
         />
       </div>
     </div>
-  </Transition>
+  </Transition> -->
+  <div v-if="error && showError">
+    <template v-for="e in error" :key="e">
+      <notificationView :error="e" @close="showError = false" />
+    </template>
+  </div>
   <div class="login-view">
     <div class="absolute" v-if="loader">
       <LoaderView />
@@ -97,11 +102,12 @@
 <script>
 import axios from "axios";
 import LoaderView from "../../components/LoaderView.vue";
+import notificationView from "../../components/notificationView.vue";
 import {
   MailIcon,
   LockClosedIcon,
   LockOpenIcon,
-  XCircleIcon,
+  // XCircleIcon,
 } from "@heroicons/vue/solid";
 
 export default {
@@ -110,8 +116,9 @@ export default {
     MailIcon,
     LockClosedIcon,
     LockOpenIcon,
-    XCircleIcon,
+    // XCircleIcon,
     LoaderView,
+    notificationView,
   },
   // created() {
   //   if (sessionStorage.getItem("token")) {
@@ -133,10 +140,10 @@ export default {
         "Should have at least 6 characters",
       ],
       passwordPatternOk: false,
-      error: "",
+      error: [],
       showError: false,
       loader: false,
-      notificationInterval: 2000,
+      notificationInterval: 5000,
       typePassword: "password",
       isEyeOpen: false,
     };
@@ -216,7 +223,7 @@ export default {
           this.$router.push({ name: "DbaDashboard" });
         }
       } catch (e) {
-        this.error = e.response.data.detail;
+        this.error = Object.values(e.response.data);
         this.showError = true;
         setTimeout(() => {
           this.showError = false;

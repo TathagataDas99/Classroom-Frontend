@@ -6,7 +6,7 @@
           {{ error }}
         </p>
         <XCircleIcon
-          @click="closeNotification"
+          @click="$emit('close')"
           class="inline-block h-10 w-10 font-bold text-bglight-shade md:h-6 md:w-6"
         />
       </div>
@@ -21,6 +21,7 @@ export default {
   components: {
     XCircleIcon,
   },
+  emits: ["close"],
 };
 </script>
 
