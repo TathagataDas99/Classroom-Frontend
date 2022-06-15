@@ -1,17 +1,4 @@
 <template>
-  <!-- <Transition>
-    <div class="flex flex-row justify-evenly" v-if="error && showError">
-      <div class="notification bg-danger-light">
-        <p class="mx-1">
-          {{ error }}
-        </p>
-        <XCircleIcon
-          @click="closeNotification"
-          class="inline-block h-10 w-10 font-bold text-bglight-shade md:h-6 md:w-6"
-        />
-      </div>
-    </div>
-  </Transition> -->
   <div v-if="error && showError">
     <template v-for="e in error" :key="e">
       <notificationView :error="e" @close="showError = false" />
@@ -103,12 +90,7 @@
 import axios from "axios";
 import LoaderView from "../../components/LoaderView.vue";
 import notificationView from "../../components/notificationView.vue";
-import {
-  MailIcon,
-  LockClosedIcon,
-  LockOpenIcon,
-  // XCircleIcon,
-} from "@heroicons/vue/solid";
+import { MailIcon, LockClosedIcon, LockOpenIcon } from "@heroicons/vue/solid";
 
 export default {
   name: "LoginForm",
@@ -116,17 +98,9 @@ export default {
     MailIcon,
     LockClosedIcon,
     LockOpenIcon,
-    // XCircleIcon,
     LoaderView,
     notificationView,
   },
-  // created() {
-  //   if (sessionStorage.getItem("token")) {
-  //     this.$router.push("/dashboard");
-  //   } else {
-  //     this.$router.push("/log-in");
-  //   }
-  // },//TODO: Delete this comment
   data() {
     return {
       password: "",
@@ -164,15 +138,6 @@ export default {
     },
   },
   methods: {
-    // checkPassword() {
-    //   const pattern =
-    //     "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{6,15}$";
-    //   if (!pattern.test(this.password)) {
-    //     this.passwordPatternOk = false; // bad user input
-    //   } else {
-    //     this.passwordPatternOk = true; // bad user input
-    //   }
-    // },
     openEye() {
       console.log("in open eye func");
       this.isEyeOpen = !this.isEyeOpen;
@@ -213,8 +178,6 @@ export default {
           userType: userTypeResponse.data.user_type,
           userTypeId: Object.values(userTypeResponse.data)[1],
         };
-        // console.log(user);
-        //this.$store.state.user = user;
         if (user.userType === "student") {
           this.$router.push({ name: "StudentDashboard" });
         } else if (user.userType === "teacher") {
