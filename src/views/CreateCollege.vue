@@ -219,6 +219,7 @@
           <input
             required
             type="email"
+            placeholder="owner@email.com"
             class="input-box"
             v-model.trim.lazy="formValues.owner_email_id"
           />
