@@ -106,7 +106,9 @@
       </section>
       <section class="form-section">
         <label class="label col-span-2">
-          <span> Confirm Password <span class="text-danger-dark">*</span> </span>
+          <span>
+            Confirm Password <span class="text-danger-dark">*</span>
+          </span>
         </label>
         <!-- <div class="input-box"> -->
         <section class="input-section">

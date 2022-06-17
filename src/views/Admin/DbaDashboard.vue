@@ -5,7 +5,7 @@
   </div>
   <div v-if="error && showError">
     <template v-for="e in error" :key="e">
-      <notificationView :error="e" @close="showError = false"/>
+      <notificationView :error="e" @close="showError = false" />
     </template>
   </div>
   <div v-if="successMsg && showSuccessMsg">
@@ -127,6 +127,7 @@
                           :value="dba.dba_id"
                         >
                           {{ dba.user.first_name + " " + dba.user.last_name }}
+                          || {{ dba.user.email }}
                         </option>
                       </template>
                     </select>
