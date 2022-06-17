@@ -412,7 +412,7 @@ export default {
     changeMinTime(modelData) {
       // console.log(modelData);
       this.min_time =
-        modelData.getDay() === new Date().getDay() &&
+        modelData.getDate() === new Date().getDate() &&
         modelData.getMonth() === new Date().getMonth()
           ? {
               hours: this.min_due_time.getHours(),
