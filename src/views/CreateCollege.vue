@@ -40,6 +40,88 @@
       </div>
     </div>
   </div>
+  <div class="modal" id="my-modal-2">
+    <div class="modal-box">
+      <h3 class="text-lg font-bold">File Format Should Be As Follow</h3>
+      <table class="w-full table-auto">
+        <tr>
+          <td>File Types allowed</td>
+          <td class="bg-warning-light text-center font-heading text-xl">
+            .csv , .xlsx
+          </td>
+        </tr>
+        <tr>
+          <td>Header Name</td>
+          <td class="bg-warning-light text-center font-heading text-xl">
+            email
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">Example Given Below</td>
+        </tr>
+      </table>
+      <table class="w-full table-auto">
+        <tr
+          class="border-2 border-gray-500 bg-sky-300 text-center font-heading text-lg"
+        >
+          <th>email</th>
+        </tr>
+        <tr class="border-2 border-gray-500 text-center">
+          <td>teacher1@gmail.com</td>
+        </tr>
+        <tr class="border-2 border-gray-500 text-center">
+          <td>teacher2@gmail.com</td>
+        </tr>
+        <tr class="border-2 border-gray-500 text-center">
+          <td class="font-heading text-xl">...</td>
+        </tr>
+      </table>
+      <div class="modal-action">
+        <a href="#" class="bttn text-center">Okay!</a>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="my-modal-3">
+    <div class="modal-box">
+      <h3 class="text-lg font-bold">File Format Should Be As Follow</h3>
+      <table class="w-full table-auto">
+        <tr>
+          <td>File Types allowed</td>
+          <td class="bg-warning-light text-center font-heading text-xl">
+            .csv , .xlsx
+          </td>
+        </tr>
+        <tr>
+          <td>Header Name</td>
+          <td class="bg-warning-light text-center font-heading text-xl">
+            email
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">Example Given Below</td>
+        </tr>
+      </table>
+      <table class="w-full table-auto">
+        <tr
+          class="border-2 border-gray-500 bg-sky-300 text-center font-heading text-lg"
+        >
+          <th>email</th>
+        </tr>
+        <tr class="border-2 border-gray-500 text-center">
+          <td>dba1@gmail.com</td>
+        </tr>
+        <tr class="border-2 border-gray-500 text-center">
+          <td>dba2@gmail.com</td>
+        </tr>
+        <tr class="border-2 border-gray-500 text-center">
+          <td class="font-heading text-xl">...</td>
+        </tr>
+      </table>
+      <div class="modal-action">
+        <a href="#" class="bttn text-center">Okay!</a>
+      </div>
+    </div>
+  </div>
   <div v-if="error && showError">
     <template v-for="e in error" :key="e">
       <notificationView :error="e" @close="showError = false" />
@@ -148,7 +230,12 @@
         </section>
       </section>
       <section class="form-section">
-        <label class="label col-span-2">Teachers list</label>
+        <label class="label col-span-2"
+          >Teachers list
+          <a href="#my-modal-2">
+            <InformationCircleIcon class="w-7 text-info-dark" />
+          </a>
+        </label>
         <section class="input-section-file">
           <input
             required
@@ -162,7 +249,12 @@
         </section>
       </section>
       <section class="form-section">
-        <label class="label">DBA list</label>
+        <label class="label"
+          >DBA list
+          <a href="#my-modal-3">
+            <InformationCircleIcon class="w-7 text-info-dark" />
+          </a>
+        </label>
         <section class="input-section-file">
           <input
             class="input-file"
