@@ -151,6 +151,7 @@
         <section class="input-section">
           <AcademicCapIcon class="input-icon" />
           <input
+            required
             class="input-box"
             type="text"
             pattern="[A-Za-z\s]+"
@@ -161,10 +162,13 @@
         </section>
       </section>
       <section class="form-section">
-        <label class="label">city</label>
+        <label class="label">
+          <span> City <span class="text-danger-dark">*</span> </span>
+        </label>
         <section class="input-section">
           <LocationMarkerIcon class="input-icon" />
           <input
+            required
             class="input-box"
             type="text"
             pattern="[A-Za-z\s]+"
@@ -175,10 +179,13 @@
         </section>
       </section>
       <section class="form-section">
-        <label class="label">state</label>
+        <label class="label">
+          <span> state <span class="text-danger-dark">*</span> </span>
+        </label>
         <section class="input-section">
           <LocationMarkerIcon class="input-icon" />
           <input
+            required
             class="input-box"
             type="text"
             pattern="[A-Za-z\s]+"
@@ -189,10 +196,13 @@
         </section>
       </section>
       <section class="form-section">
-        <label class="label">address</label>
+        <label class="label">
+          <span> address <span class="text-danger-dark">*</span> </span>
+        </label>
         <section class="input-section">
           <LocationMarkerIcon class="input-icon" />
           <input
+            required
             class="input-box"
             type="text"
             placeholder="college address"
@@ -201,7 +211,9 @@
         </section>
       </section>
       <section class="form-section">
-        <label class="label col-span-2">Owner Email</label>
+        <label class="label col-span-2">
+          <span> Owner Email <span class="text-danger-dark">*</span> </span>
+        </label>
         <section class="input-section">
           <MailIcon class="input-icon" />
           <input
@@ -213,8 +225,8 @@
         </section>
       </section>
       <section class="form-section">
-        <label class="label col-span-2"
-          >Stream list
+        <label class="label col-span-2">
+          <span> Stream list <span class="text-danger-dark">*</span> </span>
           <a href="#my-modal-1">
             <InformationCircleIcon class="w-7 text-info-dark" />
           </a>
@@ -232,8 +244,8 @@
         </section>
       </section>
       <section class="form-section">
-        <label class="label col-span-2"
-          >Teachers list
+        <label class="label col-span-2">
+          <span> Teachers list <span class="text-danger-dark">*</span> </span>
           <a href="#my-modal-2">
             <InformationCircleIcon class="w-7 text-info-dark" />
           </a>
@@ -251,14 +263,15 @@
         </section>
       </section>
       <section class="form-section">
-        <label class="label"
-          >DBA list
+        <label class="label">
+          <span> DBA list <span class="text-danger-dark">*</span> </span>
           <a href="#my-modal-3">
             <InformationCircleIcon class="w-7 text-info-dark" />
           </a>
         </label>
         <section class="input-section-file">
           <input
+            required
             class="input-file"
             ref="file_dba"
             @change="handleDBAFileUpload"
