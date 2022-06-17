@@ -5,7 +5,7 @@
   </div>
   <div v-if="error && showError">
     <template v-for="e in error" :key="e">
-      <notificationView :error="e" />
+      <notificationView :error="e" @close="showError = false"/>
     </template>
   </div>
   <div v-if="successMsg && showSuccessMsg">
@@ -1064,8 +1064,8 @@ export default {
       showError: false,
       successMsg: [],
       showSuccessMsg: false,
-      notificationInterval: 2500,
-      errorInterval: 5000,
+      notificationInterval: 8000,
+      errorInterval: 8000,
       loader: true,
       tempVal: null,
       contactEdit: true,
@@ -1280,7 +1280,7 @@ export default {
         //console.log("New Stream Added Successfully");
         //console.log(resp);
       } catch (e) {
-        this.error = Object.values(e.response.data);
+        this.error = Object.values(e.response.data)[0];
         this.showError = true;
         setTimeout(() => {
           this.showError = false;
@@ -1304,7 +1304,7 @@ export default {
           this.showSuccessMsg = false;
         }, this.notificationInterval);
       } catch (e) {
-        this.error = Object.values(e.response.data);
+        this.error = Object.values(e.response.data)[0];
         this.showError = true;
         setTimeout(() => {
           this.showError = false;
