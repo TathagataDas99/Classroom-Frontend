@@ -145,7 +145,9 @@
       @submit.prevent="createCollege"
     >
       <section class="form-section">
-        <label class="label">Name</label>
+        <label class="label">
+          <span> Name <span class="text-danger-dark">*</span> </span>
+        </label>
         <section class="input-section">
           <AcademicCapIcon class="input-icon" />
           <input
