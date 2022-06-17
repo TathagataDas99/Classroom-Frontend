@@ -24,7 +24,9 @@
       autocomplete="off"
     >
       <section class="form-section">
-        <label class="label" for="firstName">First name</label>
+        <label class="label" for="firstName">
+          <span> First name <span class="text-danger-dark">*</span> </span>
+        </label>
         <section class="input-section">
           <UserIcon class="input-icon" />
           <input
@@ -37,7 +39,9 @@
         </section>
       </section>
       <section class="form-section">
-        <label class="label" for="lastName">Last name</label>
+        <label class="label" for="lastName">
+          <span> Last name <span class="text-danger-dark">*</span> </span>
+        </label>
         <section class="input-section">
           <UserIcon class="input-icon" />
           <input
@@ -50,7 +54,9 @@
         </section>
       </section>
       <section class="form-section">
-        <label class="label" for="email">Email</label>
+        <label class="label" for="email">
+          <span> Email <span class="text-danger-dark">*</span> </span>
+        </label>
         <section class="input-section">
           <MailIcon class="input-icon" />
           <input
@@ -61,7 +67,9 @@
         </section>
       </section>
       <section class="form-section">
-        <label class="label" for="password">password</label>
+        <label class="label" for="password">
+          <span> password <span class="text-danger-dark">*</span> </span>
+        </label>
         <div
           class="mx-auto rounded-lg px-2 text-xs font-semibold text-danger-dark lg:absolute lg:right-48 lg:bottom-6 lg:scale-75 lg:bg-white"
           v-show="!passwordPatternOk"
@@ -97,7 +105,9 @@
         </section>
       </section>
       <section class="form-section">
-        <label class="label col-span-2">Confirm Password</label>
+        <label class="label col-span-2">
+          <span> Confirm Password <span class="text-danger-dark">*</span> </span>
+        </label>
         <!-- <div class="input-box"> -->
         <section class="input-section">
           <input
